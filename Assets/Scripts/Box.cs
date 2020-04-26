@@ -61,7 +61,10 @@ public class Box : MonoBehaviour
         CheckDurability(Vector3.Magnitude(rb.velocity));
     }
 
-
+    /// <summary>
+    /// Calculates how much force is absorbed on impact.
+    /// </summary>
+    /// <param name="magnitude">The object's rigibody magnitude.</param>
     private void CheckDurability(float magnitude)
     {
         int numDamageCycle = Mathf.FloorToInt(magnitude / forceMagnitudeThreshold);
@@ -74,6 +77,7 @@ public class Box : MonoBehaviour
     
     private void DestroyBox()
     {
+        //uncomment this after implementing the animations prefab
         //Instantiate(boxDestroyPrefab, this.transform.position, this.transform.rotation);
         Destroy(this.gameObject);
     }

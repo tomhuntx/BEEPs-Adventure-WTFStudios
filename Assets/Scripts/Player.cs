@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 [RequireComponent(typeof(FPSController))]
 public class Player : MonoBehaviour
 {
     public static Player Instance;
     private FPSController controller;
+    public Graphic crosshair;
 
     [Header("Box Handling Properties")]
+    [SerializeField] private float punchDamage = 3.0f;
+
     [Tooltip("Strength of impulse force applied upon throwing.")]
     [SerializeField] private float throwForce = 30.0f;
 
@@ -19,8 +22,13 @@ public class Player : MonoBehaviour
     [Tooltip("How far can the player can reach boxes and interaction.")]
     [SerializeField] private float interactionDistance = 3.0f;
 
+    [Tooltip("The area around the player where box placement should be ignored.")]
+    [SerializeField] private float boxPlacementDeadzone = 0.5f;
+
     private GameObject boxOutline;
-    private Collider outlineCollider;
+    private BoxPlacementChecker outlineCollider;
+    private Color originalOutlineColor;
+    private Renderer outlineRenderer;
     private GameObject currentBox;
     
     
@@ -38,18 +46,32 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Grab Box")) GrabBox();
-        
         if (currentBox != null)
         {
             ShowBoxPlacement();
-            if (Input.GetButtonDown("Place Box")) PlaceBox();
-            if (Input.GetButtonDown("Punch")) ThrowBox();
+
+            if (outlineCollider.isPlacable)
+            {
+                if (Input.GetButtonDown("Place Box")) PlaceBox();
+                if (Input.GetButtonDown("Punch")) ThrowBox();
+            }
         }
         else
         {
+            if (Input.GetButtonDown("Grab Box")) GrabBox();
             if (Input.GetButtonDown("Punch")) PunchBox();
         }
+
+        //Debugging
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Time.timeScale == 0)
+                Time.timeScale = 1;
+            else
+                Time.timeScale = 0;
+        }
+
+        ManageCrosshair();
     }
 
     private void GrabBox()
@@ -57,28 +79,50 @@ public class Player : MonoBehaviour
         RaycastHit hitInfo;
         if (DoRaycast(out hitInfo))
         {
-            //Debug.DrawLine(this.transform.position, controller.MainCam.transform.forward);
             if (hitInfo.transform.tag == "Box")
             {
                 currentBox = hitInfo.transform.gameObject;
 
+                //Disable physics and collision
                 currentBox.GetComponent<Rigidbody>().isKinematic = true;
                 currentBox.GetComponent<Collider>().enabled = false;
+                
+                //Set grabbed box as child of main cam
                 currentBox.transform.parent = controller.MainCam.transform;
                 currentBox.transform.localPosition = Vector3.zero + objectOffset;
                 currentBox.transform.rotation = Quaternion.identity;
 
+                //Clone grabbed box for outline setup
                 boxOutline = Instantiate(currentBox);
-                Destroy(boxOutline.GetComponent<Collider>());
-                //outlineCollider = boxOutline.GetComponent<Collider>();
-                //outlineCollider.isTrigger = true;
-                Renderer renderer = boxOutline.GetComponent<Renderer>();
-                RendererModeChanger.SetToTransparent(renderer);
-                Color alpha = renderer.material.color;
+
+                //Put grabbed box in different layer mask to prevent clipping
+                currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
+
+                //Remove physics and box component
+                Destroy(boxOutline.GetComponent<Box>());
+                Destroy(boxOutline.GetComponent<Rigidbody>());
+
+                //Tweak collider and add collision checker
+                boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
+                BoxCollider collider = boxOutline.GetComponent<BoxCollider>();
+                collider.size = new Vector3(0.9f, 0.9f, 0.9f);
+                collider.isTrigger = true;
+                collider.enabled = true;
+                outlineCollider = boxOutline.AddComponent<BoxPlacementChecker>();
+
+                //Set outline to semi-transparent
+                outlineRenderer = boxOutline.GetComponent<Renderer>();
+                RendererModeChanger.SetToTransparent(outlineRenderer);
+                Color alpha = outlineRenderer.material.color;
                 alpha.a = 0.5f;
-                renderer.material.color = alpha;
-                renderer.receiveShadows = false;
-                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                outlineRenderer.material.color = alpha;
+                originalOutlineColor = outlineRenderer.material.color;
+
+                //Remove shadows
+                outlineRenderer.receiveShadows = false;
+                outlineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                
+                //Hide after setup
                 boxOutline.SetActive(false);
             }
         }
@@ -87,23 +131,39 @@ public class Player : MonoBehaviour
     private void ShowBoxPlacement()
     {
         RaycastHit hitInfo;
-
-        
-
         if (DoRaycast(out hitInfo))
         {
-            boxOutline.SetActive(true);
-            if (hitInfo.transform.tag == "Box")
+            //if within deadzone, don't render the outline
+            if (hitInfo.distance >= boxPlacementDeadzone)
             {
-                boxOutline.transform.position = hitInfo.transform.position + hitInfo.normal;
-                //boxOutline.transform.rotation = Quaternion.Euler(hitInfo.normal) * hitInfo.transform.rotation;
-                boxOutline.transform.rotation = hitInfo.transform.rotation;
+                boxOutline.SetActive(true);
+                
+                //Set outline color to red if not placable
+                if (outlineCollider.isPlacable)
+                {
+                    outlineRenderer.material.color = originalOutlineColor;
+                }
+                else
+                {
+                    outlineRenderer.material.color = new Color(1, 0, 0, 0.5f);
+                }
+
+                //Box outline positioning and rotation
+                if (hitInfo.transform.tag == "Box")
+                {
+                    boxOutline.transform.position = hitInfo.transform.position + hitInfo.normal;
+                    boxOutline.transform.rotation = hitInfo.transform.rotation;
+                }
+                else if (hitInfo.transform.tag != "Player")
+                {
+                    boxOutline.transform.position = hitInfo.point + hitInfo.normal;
+                    boxOutline.transform.rotation = Quaternion.identity;
+                }
             }
-            else if (hitInfo.transform.tag != "Player")
+            else
             {
-                boxOutline.transform.position = hitInfo.point + hitInfo.normal;
-                boxOutline.transform.rotation = Quaternion.identity;
-            }
+                boxOutline.SetActive(false);
+            }    
         }
         else
         {
@@ -114,8 +174,20 @@ public class Player : MonoBehaviour
     private void PlaceBox()
     {
         currentBox.transform.parent = null;
-        currentBox.transform.position = boxOutline.transform.position;
-        currentBox.transform.rotation = boxOutline.transform.rotation;
+
+        if (boxOutline.activeSelf)
+        {
+            currentBox.transform.position = boxOutline.transform.position;
+            currentBox.transform.rotation = boxOutline.transform.rotation;
+        }
+        else
+        {
+            currentBox.transform.position = this.transform.position + this.transform.forward;
+            currentBox.transform.rotation = Quaternion.identity;
+        }
+
+        //Revert Box state
+        currentBox.layer = LayerMask.NameToLayer("Default");
         currentBox.GetComponent<Collider>().enabled = true;
         currentBox.GetComponent<Rigidbody>().isKinematic = false;
         currentBox = null;
@@ -126,6 +198,7 @@ public class Player : MonoBehaviour
     {
         Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
         currentBox.transform.parent = null;
+        currentBox.layer = LayerMask.NameToLayer("Default");
         currentBox.GetComponent<Collider>().enabled = true;
         boxRB.isKinematic = false;
         boxRB.AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
@@ -140,15 +213,33 @@ public class Player : MonoBehaviour
         {
             if (hitInfo.transform.tag == "Box")
             {
+                hitInfo.transform.GetComponent<Box>().DamageBox(punchDamage);
                 hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
             }
         }
     }
 
+    /// <summary>
+    /// Move crosshair onto raycast hit. If no hits or the hit point is too close, set position to center.
+    /// </summary>
+    private void ManageCrosshair()
+    {
+        RaycastHit hitInfo;
+        if (DoRaycast(out hitInfo) && 
+            Vector3.Distance(hitInfo.point, this.transform.position) >= boxPlacementDeadzone)
+        {
+            crosshair.transform.position = controller.MainCam.WorldToScreenPoint(hitInfo.point);
+        }
+        else
+        {
+            crosshair.transform.position = controller.MainCam.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0.5f));
+        }
+    }
+
     private bool DoRaycast (out RaycastHit hitInfo)
     {
-        Vector3 origin = this.transform.position;
-        origin.y += 0.5f;
+        Vector3 origin = controller.MainCam.transform.position;
+        origin.z += 0.5f;
         return Physics.Raycast(origin, controller.MainCam.transform.forward, out hitInfo, interactionDistance);
     }
 }

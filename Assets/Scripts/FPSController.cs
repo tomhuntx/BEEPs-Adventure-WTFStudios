@@ -43,6 +43,11 @@ public class FPSController : MonoBehaviour
 	private bool wasMoving = false;
 	//private float currentAcceleration;
 
+	/// <summary>
+	/// Used for scaled direction calculation
+	/// </summary>
+	private Vector3 initialPos;
+
 
 	public Vector3 CurrentDirection { get { return motionDirection; } }
 	public CharacterController Controller { get { return controller; } }
