@@ -39,8 +39,7 @@ public class Box : MonoBehaviour
     [SerializeField] GameObject boxDestroyPrefab;
 
     [Tooltip("Presets when changing visuals upon damage.")]
-    [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();    
-
+    [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();
 
     // Start is called before the first frame update
     void Start()
