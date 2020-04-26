@@ -22,8 +22,8 @@ public class FPSController : MonoBehaviour
 	[Tooltip("Affects jumping force.")]
 	[SerializeField] private float jumpAccelerationRate = 2.0f;
 
-	[Tooltip("Value below this will enable full speed mid-air control.")]
-	[SerializeField] private float jumpAccelerationThreshold = 0.5f;
+	//[Tooltip("Value below this will enable full speed mid-air control.")]
+	//[SerializeField] private float jumpAccelerationThreshold = 0.5f;
 
 	[SerializeField] private float gravity = -9f;
 	[SerializeField] private float jumpHeight = 3f;
@@ -39,7 +39,7 @@ public class FPSController : MonoBehaviour
 	private float directionTimer;
 	private float previousPosTimer;
 	private bool wasMoving = false;
-	private float currentAcceleration;
+	//private float currentAcceleration;
 
 
 	public Vector3 CurrentDirection { get { return motionDirection; } }
@@ -97,32 +97,36 @@ public class FPSController : MonoBehaviour
 		{
 			controller.Move(direction * moveSpeed * Time.deltaTime);
 
-			if (Input.GetAxis("Horizontal") == 0 &&
-				Input.GetAxis("Vertical") == 0)
+			if (!IsMoving())
 			{
 				wasMoving = false;
-				currentAcceleration = 0;
+				//currentAcceleration = 0;
 			}
-			else if (Input.GetAxis("Horizontal") != 0 ||
-					 Input.GetAxis("Vertical") != 0)
+			else
 			{
-				wasMoving = true;
-
 				//Acceleration
-				currentAcceleration += jumpAccelerationRate * Time.deltaTime;
-				currentAcceleration = Mathf.Clamp(currentAcceleration, 0, 1);
-				currentAcceleration = currentAcceleration <= jumpAccelerationThreshold ? 1 : currentAcceleration;
+				//currentAcceleration += jumpAccelerationRate * Time.deltaTime;
+				//currentAcceleration = Mathf.Clamp(currentAcceleration, 0, 1);
+
+				//if (currentAcceleration <= jumpAccelerationThreshold)
+				//	wasMoving = false;
+				//else
+				//	wasMoving = true;
+
+				wasMoving = true;
 			}
 		}
 		else
 		{
-			motionDirection += direction * Time.deltaTime * airControlSpeed;
-			motionDirection.x = Mathf.Clamp(motionDirection.x, -1, 1);
-			motionDirection.z = Mathf.Clamp(motionDirection.z, -1, 1);
-
 			if (wasMoving)
 			{
-				controller.Move(motionDirection * moveSpeed * currentAcceleration * Time.deltaTime);
+				if (!IsMoving()) direction = Vector3.zero;
+				motionDirection += direction * airControlSpeed * Time.deltaTime;
+				motionDirection.x = Mathf.Clamp(motionDirection.x, -1, 1);
+				motionDirection.z = Mathf.Clamp(motionDirection.z, -1, 1);
+
+				//controller.Move(motionDirection * currentAcceleration * moveSpeed * Time.deltaTime);
+				controller.Move(motionDirection * moveSpeed * Time.deltaTime);
 			}
 			else
 			{
@@ -160,5 +164,21 @@ public class FPSController : MonoBehaviour
 			directionTimer = Time.time;
 			previousPosTimer = Time.time;
 		}
+	}
+
+	/// <summary>
+	/// Checks for movement input activity.
+	/// </summary>
+	private bool IsMoving()
+	{
+		if (Input.GetAxis("Horizontal") != 0 ||
+			Input.GetAxis("Vertical") != 0)
+			return true;
+
+		else if (Input.GetAxis("Horizontal") == 0 &&
+			Input.GetAxis("Vertical") == 0)
+			return false;
+
+		return false;
 	}
 }
