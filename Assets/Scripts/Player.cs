@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     [Tooltip("How far can the player can reach boxes and interaction.")]
     [SerializeField] private float interactionDistance = 3.0f;
+
+    private GameObject boxOutline;
     
     
     private void Awake()
@@ -35,5 +37,28 @@ public class Player : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void GrabBox()
+    {
+        RaycastHit hitInfo;
+        if (Input.GetButtonDown("Grab Box") &&
+            Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, interactionDistance))
+        {
+            if (hitInfo.transform.tag == "Box")
+            {
+
+            }
+        }
+    }
+
+    private void ShowBoxPlacement()
+    {
+
+    }
+
+    private void PlaceBox()
+    {
+
     }
 }
