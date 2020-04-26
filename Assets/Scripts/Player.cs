@@ -96,7 +96,8 @@ public class Player : MonoBehaviour
             if (hitInfo.transform.tag == "Box")
             {
                 boxOutline.transform.position = hitInfo.transform.position + hitInfo.normal;
-                boxOutline.transform.rotation = Quaternion.Euler(hitInfo.normal) * hitInfo.transform.rotation;
+                //boxOutline.transform.rotation = Quaternion.Euler(hitInfo.normal) * hitInfo.transform.rotation;
+                boxOutline.transform.rotation = hitInfo.transform.rotation;
             }
             else if (hitInfo.transform.tag != "Player")
             {
