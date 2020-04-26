@@ -61,16 +61,6 @@ public class Player : MonoBehaviour
             if (Input.GetButtonDown("Grab Box")) GrabBox();
             if (Input.GetButtonDown("Punch")) PunchBox();
         }
-
-        //Debugging
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Time.timeScale == 0)
-                Time.timeScale = 1;
-            else
-                Time.timeScale = 0;
-        }
-
         ManageCrosshair();
     }
 
