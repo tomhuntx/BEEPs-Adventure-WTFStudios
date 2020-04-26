@@ -39,11 +39,16 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Grab Box")) GrabBox();
+        
         if (currentBox != null)
         {
             ShowBoxPlacement();
             if (Input.GetButtonDown("Place Box")) PlaceBox();
             if (Input.GetButtonDown("Punch")) ThrowBox();
+        }
+        else
+        {
+            if (Input.GetButtonDown("Punch")) PunchBox();
         }
     }
 
@@ -129,7 +134,14 @@ public class Player : MonoBehaviour
 
     private void PunchBox()
     {
-
+        RaycastHit hitInfo;
+        if (DoRaycast(out hitInfo))
+        {
+            if (hitInfo.transform.tag == "Box")
+            {
+                hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
+            }
+        }
     }
 
     private bool DoRaycast (out RaycastHit hitInfo)

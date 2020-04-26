@@ -16,7 +16,10 @@ public class FPSController : MonoBehaviour
 	private float mouseY;
 	
 	[Header("Movement Settings")]
-	[SerializeField] private float moveSpeed = 5f;
+	[SerializeField] private float walkSpeed = 5.0f;
+	[SerializeField] private float sprintSpeed = 7.0f;
+	private float currentSpeed = 0;
+
 	[SerializeField] private float airControlSpeed = 2.0f;
 
 	[Tooltip("Affects jumping force.")]
@@ -29,7 +32,6 @@ public class FPSController : MonoBehaviour
 	[SerializeField] private float jumpHeight = 3f;
 
 
-	private float currentSpeed;
 	private float horizonal;
 	private float vertical;
 	private Vector3 direction;
@@ -51,6 +53,7 @@ public class FPSController : MonoBehaviour
 	{
 		controller = GetComponent<CharacterController>();
 		Cursor.lockState = CursorLockMode.Locked;
+		currentSpeed = walkSpeed;
 	}
 
 	void Update()
@@ -58,6 +61,12 @@ public class FPSController : MonoBehaviour
 		Look();
 		Move();
 		GetMotionDirection();
+
+		if (controller.isGrounded)
+		{
+			if (Input.GetButton("Sprint")) currentSpeed = sprintSpeed;
+			else currentSpeed = walkSpeed;
+		}
 	}
 
 
@@ -95,7 +104,7 @@ public class FPSController : MonoBehaviour
 		// Move
 		if (controller.isGrounded)
 		{
-			controller.Move(direction * moveSpeed * Time.deltaTime);
+			controller.Move(direction * currentSpeed * Time.deltaTime);
 
 			if (!IsMoving())
 			{
@@ -126,11 +135,11 @@ public class FPSController : MonoBehaviour
 				motionDirection.z = Mathf.Clamp(motionDirection.z, -1, 1);
 
 				//controller.Move(motionDirection * currentAcceleration * moveSpeed * Time.deltaTime);
-				controller.Move(motionDirection * moveSpeed * Time.deltaTime);
+				controller.Move(motionDirection * currentSpeed * Time.deltaTime);
 			}
 			else
 			{
-				controller.Move(direction * moveSpeed * Time.deltaTime);
+				controller.Move(direction * currentSpeed * Time.deltaTime);
 			}
 		}
 
