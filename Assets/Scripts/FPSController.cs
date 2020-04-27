@@ -25,6 +25,9 @@ public class FPSController : MonoBehaviour
 	[Tooltip("Affects jumping force.")]
 	[SerializeField] private float jumpAccelerationRate = 2.0f;
 
+	[Tooltip("Strength of force applied when bumping into rigidbodies.")]
+	[SerializeField] private float bumpForce = 2.0f;
+
 	//[Tooltip("Value below this will enable full speed mid-air control.")]
 	//[SerializeField] private float jumpAccelerationThreshold = 0.5f;
 
@@ -194,5 +197,24 @@ public class FPSController : MonoBehaviour
 			return false;
 
 		return false;
+	}
+
+	/// <summary>
+	/// Push the rigidbodies of all boxes that the player touches
+	/// </summary>
+	void OnControllerColliderHit(ControllerColliderHit hit)
+	{
+		Rigidbody otherRB = hit.collider.attachedRigidbody;
+
+		// Return null for objects without rigidbodies or if object is below player
+		if (otherRB == null || otherRB.isKinematic || hit.moveDirection.y < -0.3f)
+			return;
+
+		// Only bump boxes
+		if (otherRB.tag == "Box")
+		{
+			// Bump
+			otherRB.velocity = transform.forward * bumpForce;
+		}
 	}
 }

@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [Tooltip("Strength of impulse force applied upon throwing.")]
     [SerializeField] private float throwForce = 30.0f;
 
-    [Tooltip("The position of the grabbed object in this transform's local space.")]
+	[Tooltip("The position of the grabbed object in this transform's local space.")]
     [SerializeField] private Vector3 objectOffset;
 
     [Tooltip("How far can the player can reach boxes and interaction.")]
@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
     private Color originalOutlineColor;
     private Renderer outlineRenderer;
     private GameObject currentBox;
-    
     
     private void Awake()
     {
