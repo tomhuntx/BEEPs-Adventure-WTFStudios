@@ -3645,13 +3645,23 @@ PrefabInstance:
     - target: {fileID: 4466297908715420556, guid: e655407984d313a41b3ba228b7403613,
         type: 3}
       propertyPath: interactionDistance
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4466297908715420556, guid: e655407984d313a41b3ba228b7403613,
         type: 3}
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 1902214817}
+    - target: {fileID: 4466297908715420556, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: throwForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: jumpHeight
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e655407984d313a41b3ba228b7403613, type: 3}
 --- !u!1 &1071629569
@@ -5890,7 +5900,6 @@ GameObject:
   - component: {fileID: 1805132134}
   - component: {fileID: 1805132133}
   - component: {fileID: 1805132132}
-  - component: {fileID: 1805132138}
   m_Layer: 0
   m_Name: sample box (2)
   m_TagString: Box
@@ -6014,18 +6023,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1805132138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1805132131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0eec3b986a7784ba4f9cfa7cbbd91d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1829745380 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3294954139307674383, guid: e655407984d313a41b3ba228b7403613,

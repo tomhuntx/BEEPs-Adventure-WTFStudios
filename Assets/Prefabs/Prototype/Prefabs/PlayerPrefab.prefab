@@ -225,6 +225,7 @@ MonoBehaviour:
   sprintSpeed: 7
   airControlSpeed: 2
   jumpAccelerationRate: 3
+  bumpForce: 2
   gravity: -20
   jumpHeight: 3
 --- !u!114 &4466297908715420556
@@ -239,9 +240,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a7bfe700657254ca813344977e8020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crosshair: {fileID: 0}
+  punchDamage: 3
   throwForce: 10
   objectOffset: {x: 1, y: -1, z: 1}
-  interactionDistance: 3
+  interactionDistance: 1
+  boxPlacementDeadzone: 0.5
 --- !u!1 &3294954139523927202
 GameObject:
   m_ObjectHideFlags: 0
