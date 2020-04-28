@@ -14,16 +14,16 @@ public class Player : MonoBehaviour
     [SerializeField] private float punchDamage = 3.0f;
 
     [Tooltip("Strength of impulse force applied upon throwing.")]
-    [SerializeField] private float throwForce = 30.0f;
+    [SerializeField] private float throwForce = 20.0f;
 
 	[Tooltip("The position of the grabbed object in this transform's local space.")]
     [SerializeField] private Vector3 objectOffset;
 
     [Tooltip("How far can the player can reach boxes and interaction.")]
-    [SerializeField] private float interactionDistance = 3.0f;
+    [SerializeField] private float interactionDistance = 4f;
 
     [Tooltip("The area around the player where box placement should be ignored.")]
-    [SerializeField] private float boxPlacementDeadzone = 0.5f;
+    [SerializeField] private float boxPlacementDeadzone = 1f;
 
     private GameObject boxOutline;
     private BoxPlacementChecker outlineCollider;
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
 
             if (outlineCollider.isPlacable)
             {
-                if (Input.GetButtonDown("Place Box")) PlaceBox();
+                if (Input.GetButtonDown("Place Box") && boxOutline.activeSelf) PlaceBox();
                 if (Input.GetButtonDown("Punch")) ThrowBox();
             }
         }
@@ -146,7 +146,7 @@ public class Player : MonoBehaviour
                 else if (hitInfo.transform.tag != "Player")
                 {
                     boxOutline.transform.position = hitInfo.point + hitInfo.normal;
-                    boxOutline.transform.rotation = Quaternion.identity;
+                    boxOutline.transform.rotation = transform.rotation;
                 }
             }
             else
@@ -190,7 +190,7 @@ public class Player : MonoBehaviour
         currentBox.layer = LayerMask.NameToLayer("Default");
         currentBox.GetComponent<Collider>().enabled = true;
         boxRB.isKinematic = false;
-        boxRB.AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
+		boxRB.AddForce((controller.MainCam.transform.forward + new Vector3(0, 0.75f, 0)) * throwForce, ForceMode.Impulse);
         currentBox = null;
         Destroy(boxOutline);
     }

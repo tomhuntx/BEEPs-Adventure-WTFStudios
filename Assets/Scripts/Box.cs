@@ -23,7 +23,7 @@ public class Box : MonoBehaviour
 {
     private Rigidbody rb;
     private MeshFilter mesh;
-    private MeshRenderer renderer;
+    private MeshRenderer mrenderer;
 
     [Header("Box Properties")]
     [SerializeField] private float durability = 10.0f;
@@ -46,7 +46,7 @@ public class Box : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         mesh = this.GetComponent<MeshFilter>();
-        renderer = this.GetComponent<MeshRenderer>();
+		mrenderer = this.GetComponent<MeshRenderer>();
         originalDurability = durability;
 
         //sort contents to descending based on their assigned values
@@ -85,7 +85,7 @@ public class Box : MonoBehaviour
     private void ChangeModelState(ModelStates preset)
     {
         mesh.mesh = preset.mesh;
-        renderer.material = preset.material;
+		mrenderer.material = preset.material;
     }
 
     public void DamageBox(float damage)
