@@ -28,6 +28,9 @@ public class FPSController : MonoBehaviour
 	[Tooltip("Strength of force applied when bumping into rigidbodies.")]
 	[SerializeField] private float bumpForce = 2.0f;
 
+	[Tooltip("Speed ratio while mid-air (1=velocity is not affected while mid-air).")]
+	[SerializeField] private float airSpeedRatio = 0.8f;
+
 	//[Tooltip("Value below this will enable full speed mid-air control.")]
 	//[SerializeField] private float jumpAccelerationThreshold = 0.5f;
 
@@ -107,7 +110,11 @@ public class FPSController : MonoBehaviour
 		// Set movement direction
 		horizonal = Input.GetAxis("Horizontal");
 		vertical = Input.GetAxis("Vertical");
+
 		direction = transform.right * horizonal + transform.forward * vertical;
+
+		// Prevent "diagonal springing"
+		direction.Normalize();
 
 		// Move
 		if (controller.isGrounded)
@@ -143,11 +150,11 @@ public class FPSController : MonoBehaviour
 				motionDirection.z = Mathf.Clamp(motionDirection.z, -1, 1);
 
 				//controller.Move(motionDirection * currentAcceleration * moveSpeed * Time.deltaTime);
-				controller.Move(motionDirection * currentSpeed * Time.deltaTime);
+				controller.Move(motionDirection * currentSpeed * airSpeedRatio * Time.deltaTime);
 			}
 			else
 			{
-				controller.Move(direction * currentSpeed * Time.deltaTime);
+				controller.Move(direction * currentSpeed * airSpeedRatio * Time.deltaTime);
 			}
 		}
 
