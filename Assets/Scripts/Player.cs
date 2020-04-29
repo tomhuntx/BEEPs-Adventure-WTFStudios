@@ -6,10 +6,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(FPSController))]
 public class Player : MonoBehaviour
 {
-    public static Player Instance;
-    private FPSController controller;
+    public static Player Instance;    
     public Graphic crosshair;
 
+    #region Exposed Variables
     [Header("Box Handling Properties")]
     [SerializeField] private float punchDamage = 3.0f;
 
@@ -24,13 +24,18 @@ public class Player : MonoBehaviour
 
     [Tooltip("The area around the player where box placement should be ignored.")]
     [SerializeField] private float boxPlacementDeadzone = 1f;
+    #endregion
 
+    #region Hidden Variables
     private GameObject boxOutline;
     private BoxPlacementChecker outlineCollider;
     private Color originalOutlineColor;
     private Renderer outlineRenderer;
     private GameObject currentBox;
-    
+    private FPSController controller;
+    #endregion
+
+
     private void Awake()
     {
         Instance = this;
@@ -64,6 +69,8 @@ public class Player : MonoBehaviour
         ManageCrosshair();
     }
 
+
+    #region Private Methods
     private void GrabBox()
     {
         RaycastHit hitInfo;
@@ -193,8 +200,8 @@ public class Player : MonoBehaviour
         {
             Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
             Vector3 newPos = controller.MainCam.transform.position;
-            //newPos.z = objectOffset.z;
-            //currentBox.transform.localPosition = newPos;
+            newPos.z = objectOffset.z;
+            currentBox.transform.localPosition = newPos;
             currentBox.transform.parent = null;
             currentBox.transform.position = newPos;
             currentBox.layer = LayerMask.NameToLayer("Default");
@@ -242,4 +249,5 @@ public class Player : MonoBehaviour
         origin.z += 0.5f;
         return Physics.Raycast(origin, controller.MainCam.transform.forward, out hitInfo, interactionDistance);
     }
+    #endregion
 }

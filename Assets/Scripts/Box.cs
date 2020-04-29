@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public struct ModelStates
 {
-
     /// <summary>
     /// [BACK-END] Float variable which can be used for anything.
     /// </summary>
@@ -21,10 +20,7 @@ public struct ModelStates
 [RequireComponent(typeof(Rigidbody))]
 public class Box : MonoBehaviour
 {
-    private Rigidbody rb;
-    private MeshFilter mesh;
-    private MeshRenderer mrenderer;
-
+    #region Exposed Variables
     [Header("Box Properties")]
     [SerializeField] private float durability = 10.0f;
     private float originalDurability = 0;
@@ -40,6 +36,14 @@ public class Box : MonoBehaviour
 
     [Tooltip("Presets when changing visuals upon damage.")]
     [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();
+    #endregion
+
+    #region Hidden Variables
+    private Rigidbody rb;
+    private MeshFilter mesh;
+    private MeshRenderer mrenderer;
+    #endregion;
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,9 +62,12 @@ public class Box : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        CheckDurability(Vector3.Magnitude(rb.velocity));
+        if (!isInvincible)
+            CheckDurability(Vector3.Magnitude(rb.velocity));
     }
 
+
+    #region Private Methods
     /// <summary>
     /// Calculates how much force is absorbed on impact.
     /// </summary>
@@ -87,7 +94,9 @@ public class Box : MonoBehaviour
         mesh.mesh = preset.mesh;
 		mrenderer.material = preset.material;
     }
+    #endregion
 
+    #region Public Methods
     public void DamageBox(float damage)
     {
         durability -= damage;
@@ -107,4 +116,5 @@ public class Box : MonoBehaviour
             DestroyBox();
         }
     }
+    #endregion
 }

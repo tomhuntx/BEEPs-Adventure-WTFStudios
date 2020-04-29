@@ -5,7 +5,8 @@ using System.Collections;
 [AddComponentMenu("First Person Player Controller")]
 public class FPSController : MonoBehaviour
 {
-	[SerializeField] private Transform parentTransform;
+    #region Exposed Variables
+    [SerializeField] private Transform parentTransform;
 	[SerializeField] private Camera mainCam;
 	private CharacterController controller;
 
@@ -31,14 +32,13 @@ public class FPSController : MonoBehaviour
 	[Tooltip("Speed ratio while mid-air (1=velocity is not affected while mid-air).")]
 	[SerializeField] private float airSpeedRatio = 0.8f;
 
-	//[Tooltip("Value below this will enable full speed mid-air control.")]
-	//[SerializeField] private float jumpAccelerationThreshold = 0.5f;
-
 	[SerializeField] private float gravity = -9f;
 	[SerializeField] private float jumpHeight = 3f;
+    #endregion
 
 
-	private float horizonal;
+    #region Hidden Variables
+    private float horizonal;
 	private float vertical;
 	private Vector3 direction;
 	private Vector3 velocity;
@@ -47,20 +47,18 @@ public class FPSController : MonoBehaviour
 	private float directionTimer;
 	private float previousPosTimer;
 	private bool wasMoving = false;
-	//private float currentAcceleration;
-
-	/// <summary>
-	/// Used for scaled direction calculation
-	/// </summary>
-	private Vector3 initialPos;
+	#endregion
 
 
-	public Vector3 CurrentDirection { get { return motionDirection; } }
+    #region Accessors
+    public Vector3 CurrentDirection { get { return motionDirection; } }
 	public CharacterController Controller { get { return controller; } }
 	public Camera MainCam { get { return mainCam; } set { mainCam = value; } }
+    #endregion
 
 
-	private void Start()
+
+    private void Start()
 	{
 		controller = GetComponent<CharacterController>();
 		Cursor.lockState = CursorLockMode.Locked;
@@ -80,8 +78,28 @@ public class FPSController : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Push the rigidbodies of all boxes that the player touches
+	/// </summary>
+	void OnControllerColliderHit(ControllerColliderHit hit)
+	{
+		Rigidbody otherRB = hit.collider.attachedRigidbody;
 
-	private void Look()
+		// Return null for objects without rigidbodies or if object is below player
+		if (otherRB == null || otherRB.isKinematic || hit.moveDirection.y < -0.3f)
+			return;
+
+		// Only bump boxes
+		if (otherRB.tag == "Box")
+		{
+			// Bump
+			otherRB.velocity = transform.forward * bumpForce;
+		}
+	}
+
+
+    #region Private Methods
+    private void Look()
 	{
 		mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 		mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
@@ -116,9 +134,6 @@ public class FPSController : MonoBehaviour
 		direction.z = Mathf.Clamp(direction.z, -1, 1);
 		direction.x = Mathf.Clamp(direction.x, -1, 1);
 
-		// Prevent "diagonal springing"
-		//direction.Normalize();
-
 		// Move
 		if (controller.isGrounded)
 		{
@@ -127,19 +142,9 @@ public class FPSController : MonoBehaviour
 			if (!IsMoving())
 			{
 				wasMoving = false;
-				//currentAcceleration = 0;
 			}
 			else
 			{
-				//Acceleration
-				//currentAcceleration += jumpAccelerationRate * Time.deltaTime;
-				//currentAcceleration = Mathf.Clamp(currentAcceleration, 0, 1);
-
-				//if (currentAcceleration <= jumpAccelerationThreshold)
-				//	wasMoving = false;
-				//else
-				//	wasMoving = true;
-
 				wasMoving = true;
 			}
 		}
@@ -152,7 +157,6 @@ public class FPSController : MonoBehaviour
 				motionDirection.x = Mathf.Clamp(motionDirection.x, -1, 1);
 				motionDirection.z = Mathf.Clamp(motionDirection.z, -1, 1);
 
-				//controller.Move(motionDirection * currentAcceleration * moveSpeed * Time.deltaTime);
 				controller.Move(motionDirection * currentSpeed * airSpeedRatio * Time.deltaTime);
 			}
 			else
@@ -208,23 +212,5 @@ public class FPSController : MonoBehaviour
 
 		return false;
 	}
-
-	/// <summary>
-	/// Push the rigidbodies of all boxes that the player touches
-	/// </summary>
-	void OnControllerColliderHit(ControllerColliderHit hit)
-	{
-		Rigidbody otherRB = hit.collider.attachedRigidbody;
-
-		// Return null for objects without rigidbodies or if object is below player
-		if (otherRB == null || otherRB.isKinematic || hit.moveDirection.y < -0.3f)
-			return;
-
-		// Only bump boxes
-		if (otherRB.tag == "Box")
-		{
-			// Bump
-			otherRB.velocity = transform.forward * bumpForce;
-		}
-	}
+    #endregion
 }
