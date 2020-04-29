@@ -262,11 +262,10 @@ public class Player : MonoBehaviour
             !DoRaycast(out hitinfo))
         {
             Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
-            Vector3 newPos = controller.MainCam.transform.position;
+            Vector3 newPos = controller.MainCam.transform.localPosition;
             newPos.z = objectOffset.z;
             currentBox.transform.localPosition = newPos;
             currentBox.transform.parent = null;
-            currentBox.transform.position = newPos;
             currentBox.layer = LayerMask.NameToLayer("Default");
             currentBox.GetComponent<Collider>().enabled = true;
             boxRB.isKinematic = false;
@@ -313,9 +312,7 @@ public class Player : MonoBehaviour
     /// <returns>Returns true if the raycast hits a collider.</returns>
     private bool DoRaycast (out RaycastHit hitInfo)
     {
-        Vector3 origin = controller.MainCam.transform.position;
-        origin.z += 0.5f;
-        return Physics.Raycast(origin, controller.MainCam.transform.forward, out hitInfo, interactionDistance);
+        return Physics.Raycast(controller.MainCam.transform.position, controller.MainCam.transform.forward, out hitInfo, interactionDistance);
     }
     #endregion
 }
