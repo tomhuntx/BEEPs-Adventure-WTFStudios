@@ -171,7 +171,7 @@ public class FPSController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Only calculate movement direction when grounded.
+	/// Only calculates movement direction when grounded.
 	/// </summary>
 	private void GetMotionDirection()
 	{

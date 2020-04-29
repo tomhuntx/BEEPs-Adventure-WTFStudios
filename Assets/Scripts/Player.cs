@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     private GameObject currentBox;
     private FPSController controller;
+    private RaycastHit hitInfo;
+    private bool isRaycastHit = false;
     #endregion
 
 
@@ -57,6 +59,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isRaycastHit = DoRaycast(out hitInfo);
+
+        //Only adjust crosshair position if deadzone exist
+        if (boxPlacementDeadzone > 0) ManageCrosshair();
+
         if (currentBox != null)
         {
             ShowBoxPlacement();
@@ -74,15 +81,20 @@ public class Player : MonoBehaviour
             if (Input.GetButtonDown("Punch")) PunchBox();
             HighlightTarget();
         }
-        ManageCrosshair();
+
+        //Debug raycast
+        //if (isRaycastHit) Debug.DrawLine(controller.MainCam.transform.position, hitInfo.point, Color.green);
+        //else              Debug.DrawRay(controller.MainCam.transform.position, controller.MainCam.transform.forward, Color.red);
     }
 
 
     #region Private Methods
+    /// <summary>
+    /// Set the targeted box's parent to this transform then instanciates an outline.
+    /// </summary>
     private void GrabBox()
     {
-        RaycastHit hitInfo;
-        if (DoRaycast(out hitInfo))
+        if (isRaycastHit)
         {
             if (hitInfo.transform.tag == "Box")
             {
@@ -138,10 +150,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Locks on other boxes sides else just sits on top of the currently targeted surface.
+    /// </summary>
     private void ShowBoxPlacement()
     {
-        RaycastHit hitInfo;
-        if (DoRaycast(out hitInfo))
+        if (isRaycastHit)
         {
             //if within deadzone, don't render the outline
             if (hitInfo.distance >= boxPlacementDeadzone)
@@ -181,10 +195,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Instanciates a copy of the current box target then changes its color for highlight effect.
+    /// </summary>
     private void HighlightTarget()
     {
-        RaycastHit hitInfo;
-        if (DoRaycast(out hitInfo))
+        if (isRaycastHit)
         {
             if (hitInfo.transform.tag == "Box")
             {
@@ -231,6 +247,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Grabbed box copies the outline transform before placement.
+    /// </summary>
     private void PlaceBox()
     {
         currentBox.transform.parent = null;
@@ -254,12 +273,13 @@ public class Player : MonoBehaviour
         Destroy(boxOutline);
     }
 
+    /// <summary>
+    /// Applies offset position before throwing.
+    /// </summary>
     private void ThrowBox()
     {
-        RaycastHit hitinfo;
-
-        if (DoRaycast(out hitinfo) && Vector3.Distance(hitinfo.point, this.transform.position) >= 2.5 ||
-            !DoRaycast(out hitinfo))
+        if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
+            !isRaycastHit)
         {
             Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
             Vector3 newPos = controller.MainCam.transform.localPosition;
@@ -275,10 +295,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Applies impulse force on boxes.
+    /// </summary>
     private void PunchBox()
     {
-        RaycastHit hitInfo;
-        if (DoRaycast(out hitInfo))
+        if (isRaycastHit)
         {
             if (hitInfo.transform.tag == "Box")
             {
@@ -293,8 +315,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ManageCrosshair()
     {
-        RaycastHit hitInfo;
-        if (DoRaycast(out hitInfo) && 
+        if (isRaycastHit && 
             Vector3.Distance(hitInfo.point, this.transform.position) >= boxPlacementDeadzone)
         {
             crosshair.transform.position = controller.MainCam.WorldToScreenPoint(hitInfo.point);

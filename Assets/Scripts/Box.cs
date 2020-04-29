@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Used to store model presets.
+/// </summary>
 [System.Serializable]
 public struct ModelStates
 {
@@ -82,6 +85,9 @@ public class Box : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Instanciates the explosion prefab before destroying this game object.
+    /// </summary>
     private void DestroyBox()
     {
         //uncomment this after implementing the animations prefab
@@ -89,6 +95,9 @@ public class Box : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    /// <summary>
+    /// Changes this game object's look.
+    /// </summary>
     private void ChangeModelState(ModelStates preset)
     {
         mesh.mesh = preset.mesh;
