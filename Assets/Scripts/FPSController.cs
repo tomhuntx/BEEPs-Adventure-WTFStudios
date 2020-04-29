@@ -111,10 +111,13 @@ public class FPSController : MonoBehaviour
 		horizonal = Input.GetAxis("Horizontal");
 		vertical = Input.GetAxis("Vertical");
 
+		//prevents exceeding movement speed
 		direction = transform.right * horizonal + transform.forward * vertical;
+		direction.z = Mathf.Clamp(direction.z, -1, 1);
+		direction.x = Mathf.Clamp(direction.x, -1, 1);
 
 		// Prevent "diagonal springing"
-		direction.Normalize();
+		//direction.Normalize();
 
 		// Move
 		if (controller.isGrounded)
