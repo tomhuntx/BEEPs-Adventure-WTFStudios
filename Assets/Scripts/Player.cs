@@ -192,7 +192,7 @@ public class Player : MonoBehaviour
                     renderer.material = materialHighlight;
                     renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                     renderer.receiveShadows = false;
-                    boxHighlight.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                    boxHighlight.transform.localScale += new Vector3(0.0001f, 0.0001f, 0.0001f);
                 }
                 else
                 {
