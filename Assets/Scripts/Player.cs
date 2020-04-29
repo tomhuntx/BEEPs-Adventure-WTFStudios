@@ -86,6 +86,11 @@ public class Player : MonoBehaviour
         {
             if (hitInfo.transform.tag == "Box")
             {
+                if (boxHighlight != null)
+                {
+                    Destroy(boxHighlight);
+                }
+
                 currentBox = hitInfo.transform.gameObject;
 
                 //Clone grabbed box for outline setup
