@@ -116,15 +116,5 @@ public class Box : MonoBehaviour
             DestroyBox();
         }
     }
-
-
-    /// <summary>
-    /// Removes rigidbody and box components.
-    /// </summary>
-    public void RemoveComponents()
-    {
-        Destroy(rb);
-        Destroy(this);
-    }
     #endregion
 }

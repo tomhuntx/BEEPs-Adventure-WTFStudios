@@ -104,7 +104,8 @@ public class Player : MonoBehaviour
                 currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
 
                 //Remove physics and box component
-                boxOutline.GetComponent<Box>().RemoveComponents();
+                Destroy(boxOutline.GetComponent<Box>());
+                Destroy(boxOutline.GetComponent<Rigidbody>());
 
                 //Tweak collider and add collision checker
                 boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
@@ -185,13 +186,21 @@ public class Player : MonoBehaviour
                 if (boxHighlight == null)
                 {                
                     boxHighlight = Instantiate(hitInfo.transform.gameObject);
-                    boxHighlight.GetComponent<Box>().RemoveComponents();
+                    
+                    //Remove physics and colliders
                     Destroy(boxHighlight.GetComponent<Collider>());
+                    Destroy(boxHighlight.GetComponent<Box>());
+                    Destroy(boxHighlight.GetComponent<Rigidbody>());
 
+                    //Retain mesh and replace material
                     Renderer renderer = boxHighlight.GetComponent<Renderer>();
                     renderer.material = materialHighlight;
+
+                    //Disable shadows
                     renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                     renderer.receiveShadows = false;
+
+                    //Slight size offset just to prevent "z-fighting"
                     boxHighlight.transform.localScale += new Vector3(0.0001f, 0.0001f, 0.0001f);
                 }
                 else
@@ -206,6 +215,13 @@ public class Player : MonoBehaviour
                 {
                     Destroy(boxHighlight);
                 }
+            }
+        }
+        else
+        {
+            if (boxHighlight != null)
+            {
+                Destroy(boxHighlight);
             }
         }
     }
