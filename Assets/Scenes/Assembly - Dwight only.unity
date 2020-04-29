@@ -1514,7 +1514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &519470310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2234,7 +2234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 50
-  isInvincible: 0
+  isInvincible: 1
   forceMagnitudeThreshold: 5
   boxDestroyPrefab: {fileID: 0}
   modelPresets:
@@ -3692,10 +3692,50 @@ PrefabInstance:
       propertyPath: objectOffset.y
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 4466297908715420556, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: meshHighlight
+      value: 
+      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 4466297908715420556, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: materialHighlight
+      value: 
+      objectReference: {fileID: 2100000, guid: d11678e5824856f4584192fc53a31da6, type: 2}
+    - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: OnGrounded.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
         type: 3}
       propertyPath: jumpHeight
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: OnGrounded.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: OnGrounded.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: OnGrounded.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1829745382}
+    - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: OnGrounded.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TEST
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+        type: 3}
+      propertyPath: OnGrounded.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e655407984d313a41b3ba228b7403613, type: 3}
@@ -3812,7 +3852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1082736569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5804,7 +5844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1779246666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6064,6 +6104,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1052497566}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1829745382 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5843238877847826943, guid: e655407984d313a41b3ba228b7403613,
+    type: 3}
+  m_PrefabInstance: {fileID: 1052497566}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829745380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ace84e5f58fbe4685a3c166086a7b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &1829745387
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6193,7 +6245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1838329070
 MonoBehaviour:
   m_ObjectHideFlags: 0

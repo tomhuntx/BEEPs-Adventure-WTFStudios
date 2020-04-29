@@ -24,13 +24,20 @@ public class Player : MonoBehaviour
 
     [Tooltip("The area around the player where box placement should be ignored.")]
     [SerializeField] private float boxPlacementDeadzone = 1f;
+
+    [SerializeField] private Material materialHighlight;
     #endregion
 
     #region Hidden Variables
+    //outline
     private GameObject boxOutline;
     private BoxPlacementChecker outlineCollider;
     private Color originalOutlineColor;
     private Renderer outlineRenderer;
+
+    //highlight
+    private GameObject boxHighlight;
+
     private GameObject currentBox;
     private FPSController controller;
     #endregion
@@ -65,6 +72,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetButtonDown("Grab Box")) GrabBox();
             if (Input.GetButtonDown("Punch")) PunchBox();
+            HighlightTarget();
         }
         ManageCrosshair();
     }
@@ -96,8 +104,7 @@ public class Player : MonoBehaviour
                 currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
 
                 //Remove physics and box component
-                Destroy(boxOutline.GetComponent<Box>());
-                Destroy(boxOutline.GetComponent<Rigidbody>());
+                boxOutline.GetComponent<Box>().RemoveComponents();
 
                 //Tweak collider and add collision checker
                 boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
@@ -153,7 +160,7 @@ public class Player : MonoBehaviour
                 }
                 else if (hitInfo.transform.tag != "Player")
                 {
-                    boxOutline.transform.position = hitInfo.point + hitInfo.normal;
+                    boxOutline.transform.position = hitInfo.point + hitInfo.normal / 2;
                     boxOutline.transform.rotation = transform.rotation;
                 }
             }
@@ -165,6 +172,41 @@ public class Player : MonoBehaviour
         else
         {
             boxOutline.SetActive(false);
+        }
+    }
+
+    private void HighlightTarget()
+    {
+        RaycastHit hitInfo;
+        if (DoRaycast(out hitInfo))
+        {
+            if (hitInfo.transform.tag == "Box")
+            {
+                if (boxHighlight == null)
+                {                
+                    boxHighlight = Instantiate(hitInfo.transform.gameObject);
+                    boxHighlight.GetComponent<Box>().RemoveComponents();
+                    Destroy(boxHighlight.GetComponent<Collider>());
+
+                    Renderer renderer = boxHighlight.GetComponent<Renderer>();
+                    renderer.material = materialHighlight;
+                    renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    renderer.receiveShadows = false;
+                    boxHighlight.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                }
+                else
+                {
+                    boxHighlight.transform.position = hitInfo.transform.position;
+                    boxHighlight.transform.rotation = hitInfo.transform.rotation;
+                }
+            }
+            else
+            {
+                if (boxHighlight != null)
+                {
+                    Destroy(boxHighlight);
+                }
+            }
         }
     }
 
@@ -243,6 +285,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Do a raycast from the player cam.
+    /// </summary>
+    /// <param name="hitInfo">Raycast output</param>
+    /// <returns>Returns true if the raycast hits a collider.</returns>
     private bool DoRaycast (out RaycastHit hitInfo)
     {
         Vector3 origin = controller.MainCam.transform.position;
