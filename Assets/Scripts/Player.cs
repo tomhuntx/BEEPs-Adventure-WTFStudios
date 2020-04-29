@@ -51,9 +51,10 @@ public class Player : MonoBehaviour
 
             if (outlineCollider.isPlacable)
             {
-                if (Input.GetButtonDown("Place Box") && boxOutline.activeSelf) PlaceBox();
-                if (Input.GetButtonDown("Punch")) ThrowBox();
+                if (Input.GetButtonDown("Place Box") && boxOutline.activeSelf) PlaceBox();                
             }
+
+            if (Input.GetButtonDown("Punch")) ThrowBox();
         }
         else
         {
@@ -185,14 +186,24 @@ public class Player : MonoBehaviour
 
     private void ThrowBox()
     {
-        Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
-        currentBox.transform.parent = null;
-        currentBox.layer = LayerMask.NameToLayer("Default");
-        currentBox.GetComponent<Collider>().enabled = true;
-        boxRB.isKinematic = false;
-		boxRB.AddForce((controller.MainCam.transform.forward + new Vector3(0, 0.75f, 0)) * throwForce, ForceMode.Impulse);
-        currentBox = null;
-        Destroy(boxOutline);
+        RaycastHit hitinfo;
+
+        if (DoRaycast(out hitinfo) && Vector3.Distance(hitinfo.point, this.transform.position) >= 2.5 ||
+            !DoRaycast(out hitinfo))
+        {
+            Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
+            Vector3 newPos = controller.MainCam.transform.position;
+            //newPos.z = objectOffset.z;
+            //currentBox.transform.localPosition = newPos;
+            currentBox.transform.parent = null;
+            currentBox.transform.position = newPos;
+            currentBox.layer = LayerMask.NameToLayer("Default");
+            currentBox.GetComponent<Collider>().enabled = true;
+            boxRB.isKinematic = false;
+            boxRB.AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
+            currentBox = null;
+            Destroy(boxOutline);
+        }
     }
 
     private void PunchBox()
