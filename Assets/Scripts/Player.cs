@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
                 currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
 
                 //Remove physics and box component
-                Destroy(boxOutline.GetComponent<Box>());
+                Destroy(boxOutline.GetComponent<DestructibleObject>());
                 Destroy(boxOutline.GetComponent<Rigidbody>());
 
                 //Tweak collider and add collision checker
@@ -210,7 +210,7 @@ public class Player : MonoBehaviour
                     
                     //Remove physics and colliders
                     Destroy(boxHighlight.GetComponent<Collider>());
-                    Destroy(boxHighlight.GetComponent<Box>());
+                    Destroy(boxHighlight.GetComponent<DestructibleObject>());
                     Destroy(boxHighlight.GetComponent<Rigidbody>());
 
                     //Retain mesh and replace material
@@ -304,7 +304,7 @@ public class Player : MonoBehaviour
         {
             if (hitInfo.transform.tag == "Box")
             {
-                hitInfo.transform.GetComponent<Box>().DamageBox(punchDamage);
+                hitInfo.transform.GetComponent<DestructibleObject>().ApplyDamage(punchDamage);
                 hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
             }
         }

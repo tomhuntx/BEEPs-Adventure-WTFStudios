@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Used to store model presets.
@@ -11,7 +12,7 @@ public struct ModelStates
     /// <summary>
     /// [BACK-END] Float variable which can be used for anything.
     /// </summary>
-    [Tooltip("Assigned box health based on percentage.")]
+    [Tooltip("Assigned object health based on percentage.")]
     [Range(1, 100)]
     public float assignedValue;
 
@@ -21,10 +22,11 @@ public struct ModelStates
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class Box : MonoBehaviour
+public class DestructibleObject : MonoBehaviour
 {
     #region Exposed Variables
-    [Header("Box Properties")]
+    [Header("Destructible Object Properties")]
+    [Tooltip("How much damage it can take before breaking.")]
     [SerializeField] private float durability = 10.0f;
     private float originalDurability = 0;
 
@@ -35,7 +37,7 @@ public class Box : MonoBehaviour
     [SerializeField] private float forceMagnitudeThreshold = 1.5f;
 
     [Header("Other Properties")]
-    [SerializeField] GameObject boxDestroyPrefab;
+    [SerializeField] GameObject objectDestroyPrefab;
 
     [Tooltip("Presets when changing visuals upon damage.")]
     [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();
@@ -46,6 +48,13 @@ public class Box : MonoBehaviour
     private MeshFilter mesh;
     private MeshRenderer mrenderer;
     #endregion;
+
+    #region Events
+    [Header("Events")]
+    public UnityEvent OnImpactDamage;
+    public UnityEvent OnImpactGeneral;
+    public UnityEvent OnObjectDestroy;
+    #endregion
 
 
     // Start is called before the first frame update
@@ -65,8 +74,15 @@ public class Box : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        OnImpactGeneral.Invoke();
+
         if (!isInvincible)
             CheckDurability(Vector3.Magnitude(rb.velocity));
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        //print(collision.transform);
     }
 
 
@@ -81,17 +97,18 @@ public class Box : MonoBehaviour
 
         if (numDamageCycle > 0)
         {
-            DamageBox(magnitude * numDamageCycle);
+            ApplyDamage(magnitude * numDamageCycle);
         }
     }
     
     /// <summary>
     /// Instanciates the explosion prefab before destroying this game object.
     /// </summary>
-    private void DestroyBox()
+    private void DestroyObject()
     {
+        OnObjectDestroy.Invoke();
         //uncomment this after implementing the animations prefab
-        //Instantiate(boxDestroyPrefab, this.transform.position, this.transform.rotation);
+        //Instantiate(objectDestroyPrefab, this.transform.position, this.transform.rotation);
         Destroy(this.gameObject);
     }
 
@@ -100,29 +117,34 @@ public class Box : MonoBehaviour
     /// </summary>
     private void ChangeModelState(ModelStates preset)
     {
+        //can inject code for instanciating destruction transition prefab here
         mesh.mesh = preset.mesh;
 		mrenderer.material = preset.material;
     }
     #endregion
 
     #region Public Methods
-    public void DamageBox(float damage)
+    public void ApplyDamage(float damage)
     {
-        durability -= damage;
-        if (durability > 0)
+        if (!isInvincible)
         {
-            foreach (ModelStates preset in modelPresets)
+            durability -= damage;
+            if (durability > 0)
             {
-                if (preset.assignedValue <= (durability / originalDurability) * 100)
+                foreach (ModelStates preset in modelPresets)
                 {
-                    ChangeModelState(preset);
-                    break;
+                    if (preset.assignedValue <= (durability / originalDurability) * 100)
+                    {
+                        OnImpactDamage.Invoke();
+                        ChangeModelState(preset);
+                        break;
+                    }
                 }
             }
-        }
-        else
-        {
-            DestroyBox();
+            else
+            {
+                DestroyObject();
+            }
         }
     }
     #endregion
