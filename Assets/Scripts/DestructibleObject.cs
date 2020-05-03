@@ -101,12 +101,12 @@ public class DestructibleObject : MonoBehaviour
     private void DestroyObject()
     {
         OnObjectDestroy.Invoke();
-        //uncomment this after implementing the animations prefab
-		//if (objectDestroyPrefab != null)
-		//{
-		//	Instantiate(objectDestroyPrefab, this.transform.position, this.transform.rotation);
-		//}
-        Destroy(this.gameObject);
+		//uncomment this after implementing the animations prefab
+		if (objectDestroyPrefab != null)
+		{
+			Instantiate(objectDestroyPrefab, this.transform.position, this.transform.rotation);
+		}
+		Destroy(this.gameObject);
     }
 
     /// <summary>

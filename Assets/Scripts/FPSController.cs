@@ -15,7 +15,7 @@ public class FPSController : MonoBehaviour
 	private float xRotation = 0f;
 	private float mouseX;
 	private float mouseY;
-	
+
 	[Header("Movement Settings")]
 	[SerializeField] private float walkSpeed = 5.0f;
 	[SerializeField] private float sprintSpeed = 7.0f;
@@ -32,13 +32,16 @@ public class FPSController : MonoBehaviour
 	[Tooltip("Speed ratio while mid-air (1=velocity is not affected while mid-air).")]
 	[SerializeField] private float airSpeedRatio = 0.8f;
 
-	[SerializeField] private float gravity = -9f;
+	[Tooltip("Maximum force that the player can be pushed by explosive boxes.")]
+	[SerializeField] private float maxExpForce = 40;
+
+	[SerializeField] private float gravity = -8f;
 	[SerializeField] private float jumpHeight = 3f;
-    #endregion
+	#endregion
 
 
-    #region Hidden Variables
-    private float horizonal;
+	#region Hidden Variables
+	private float horizonal;
 	private float vertical;
 	private Vector3 direction;
 	private Vector3 velocity;
@@ -241,6 +244,12 @@ public class FPSController : MonoBehaviour
 		
 		// Create impact force in this direction
 		impact += direction * force / 2; //2 represents object mass
+
+		// Clamp the impact force to stop the player being sent to space
+		if (impact.magnitude > maxExpForce)
+		{
+			impact = Vector3.ClampMagnitude(impact, maxExpForce); ;
+		}
 	}
 	#endregion
 }
