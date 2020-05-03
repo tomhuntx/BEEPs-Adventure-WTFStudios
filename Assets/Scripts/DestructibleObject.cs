@@ -79,11 +79,6 @@ public class DestructibleObject : MonoBehaviour
             CheckDurability(Vector3.Magnitude(rb.velocity));
 	}
 
-    private void OnCollisionStay(Collision collision)
-    {
-        //print(collision.transform);
-    }
-
 
     #region Private Methods
     /// <summary>
