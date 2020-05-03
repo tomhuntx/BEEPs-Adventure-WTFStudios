@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5133357178356861968}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &5133357176682430608
 ParticleSystem:
@@ -46,7 +46,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4767,8 +4767,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d823989936521274f842d6a2fafbc598, type: 2}
-  - {fileID: 2100000, guid: d823989936521274f842d6a2fafbc598, type: 2}
+  - {fileID: 2100000, guid: 75e0c4659565b9845909c37aee18100d, type: 2}
+  - {fileID: 2100000, guid: 75e0c4659565b9845909c37aee18100d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4824,6 +4824,7 @@ GameObject:
   - component: {fileID: 5301024575654313288}
   - component: {fileID: 3250754747111162263}
   - component: {fileID: 4715216967649074737}
+  - component: {fileID: 5572503445899059905}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -4840,10 +4841,10 @@ Transform:
   m_GameObject: {fileID: 5133357178356861969}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.12, y: 1.1, z: 2.05}
-  m_LocalScale: {x: 4, y: 4, z: 1400}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
-  - {fileID: 5133357176682430615}
   - {fileID: 5133357178401192725}
+  - {fileID: 5133357176682430615}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4886,7 +4887,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f06ba8cafebff8045908e0eff93e0eb3, type: 2}
+  - {fileID: 2100000, guid: 14311483d70c70b4e8f46623e540e395, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4907,6 +4908,23 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5572503445899059905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5133357178356861969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111421999a91ca545977e42488668618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 5133357178356861969}
+  power: 10
+  radius: 6
+  upforce: 1
+  destroyTime: 5
 --- !u!1 &5133357178401192726
 GameObject:
   m_ObjectHideFlags: 0
@@ -4919,7 +4937,7 @@ GameObject:
   - component: {fileID: 5133357178401192731}
   - component: {fileID: 5133357178401192724}
   m_Layer: 0
-  m_Name: Explosion-Mididle
+  m_Name: Explosion-Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4937,7 +4955,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5133357178356861968}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &5133357178401192731
 ParticleSystem:
@@ -4953,7 +4971,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9674,8 +9692,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f3da5fc0be07ccf4f9654af42f455018, type: 2}
-  - {fileID: 2100000, guid: f3da5fc0be07ccf4f9654af42f455018, type: 2}
+  - {fileID: 2100000, guid: b28443ac209e11b4ab8192317d5d68b8, type: 2}
+  - {fileID: 2100000, guid: b28443ac209e11b4ab8192317d5d68b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-	// Timeframe that explosion effects surroundings
-	private float explosionTime = 1;
-	private float time;
+	public GameObject explosion;
+
+	// Explosion variables
+	private float power = 10.0f;
+	private float radius = 7.0f;
+	private float upforce = 1.0f;
 
 	// Time before this object is removed for cleanup reasons
 	public float destroyTime = 5;
@@ -15,24 +18,42 @@ public class Explosion : MonoBehaviour
 	{
 		// Destroy this object after the set time
 		Destroy(gameObject, destroyTime);
+
+		Explode();
 	}
 
-	private void Update()
+	public void Spawn (GameObject origin)
 	{
-		time += Time.deltaTime;
+		Instantiate(explosion, origin.transform.position, origin.transform.rotation);
 	}
 
-	void OnTriggerStay(Collider other)
+	void Explode()
 	{
-		if (time < explosionTime)
+		// Get all colliders in range
+		Collider[] collidersInRange = Physics.OverlapSphere(transform.position, radius);
+
+		// Cycle through colliders
+		foreach (Collider hit in collidersInRange)
 		{
-			if (other.transform.tag == "Player")
+			Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+			if (rb != null)
 			{
-				Debug.Log("Player in range of explosion");
+				rb.AddExplosionForce(power, transform.position, radius, upforce, ForceMode.Impulse);
+
+				if (hit.tag == "Box")
+				{
+					// Deals damage to boxes based on distance
+					hit.GetComponent<DestructibleObject>().ApplyDamage(5 * power / Vector3.Distance(transform.position, hit.transform.position));
+				}
 			}
-			if (other.transform.tag == "Box")
+			if (hit.tag == "Player")
 			{
-				Debug.Log("Box in range of explosion");
+				// Base power on distance between player and object
+				float pow = 6 * power / Vector3.Distance(transform.position, hit.transform.position);
+
+				// Push player
+				hit.GetComponent<FPSController>().PushFromPoint(transform.position, pow);
 			}
 		}
 	}

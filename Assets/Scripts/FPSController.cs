@@ -44,14 +44,15 @@ public class FPSController : MonoBehaviour
 	private Vector3 velocity;
 	private Vector3 motionDirection;
 	private Vector3 previousPosition;
+	private Vector3 impact = Vector3.zero;
 	private float directionTimer;
 	private float previousPosTimer;
 	private bool wasMoving = false;
 	#endregion
 
 
-    #region Accessors
-    public Vector3 CurrentDirection { get { return motionDirection; } }
+	#region Accessors
+	public Vector3 CurrentDirection { get { return motionDirection; } }
 	public CharacterController Controller { get { return controller; } }
 	public Camera MainCam { get { return mainCam; } set { mainCam = value; } }
     #endregion
@@ -164,10 +165,20 @@ public class FPSController : MonoBehaviour
 				controller.Move(direction * currentSpeed * airSpeedRatio * Time.deltaTime);
 			}
 		}
-
 		// Apply gravity
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move(velocity * Time.deltaTime);
+
+		// Explosion impact
+		if (impact.magnitude > 0.2f)
+		{
+			// Apply impact force
+			controller.Move(impact * Time.deltaTime);
+
+			// Reduce impact force over time
+			impact = Vector3.Lerp(impact, Vector3.zero, 3 * Time.deltaTime);
+			wasMoving = false;
+		}
 	}
 
 	/// <summary>
@@ -212,5 +223,24 @@ public class FPSController : MonoBehaviour
 
 		return false;
 	}
-    #endregion
+	#endregion
+
+	#region Public Methods
+	/// <summary>
+	///	Pushes the player from a point by a force
+	/// Used by the explosive box's explosion
+	/// </summary>
+	/// <param name="pos">Position of explosion</param>
+	/// <param name="force">Force of explosion (relative to range)</param>
+	public void PushFromPoint(Vector3 pos, float force)
+	{
+		// Direction of push-back
+		Vector3 direction = transform.position - pos;
+		direction.y += 4;
+		direction.Normalize();
+		
+		// Create impact force in this direction
+		impact += direction * force / 2; //2 represents object mass
+	}
+	#endregion
 }

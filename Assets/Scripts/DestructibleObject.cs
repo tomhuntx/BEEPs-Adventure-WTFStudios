@@ -20,7 +20,6 @@ public struct ModelStates
     public Material material;
 }
 
-
 [RequireComponent(typeof(Rigidbody))]
 public class DestructibleObject : MonoBehaviour
 {
@@ -78,7 +77,7 @@ public class DestructibleObject : MonoBehaviour
 
         if (!isInvincible)
             CheckDurability(Vector3.Magnitude(rb.velocity));
-    }
+	}
 
     private void OnCollisionStay(Collision collision)
     {
@@ -108,7 +107,10 @@ public class DestructibleObject : MonoBehaviour
     {
         OnObjectDestroy.Invoke();
         //uncomment this after implementing the animations prefab
-        //Instantiate(objectDestroyPrefab, this.transform.position, this.transform.rotation);
+		//if (objectDestroyPrefab != null)
+		//{
+		//	Instantiate(objectDestroyPrefab, this.transform.position, this.transform.rotation);
+		//}
         Destroy(this.gameObject);
     }
 
