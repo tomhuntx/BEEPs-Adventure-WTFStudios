@@ -975,7 +975,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 15
+        scalar: 5
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -4857,7 +4857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111421999a91ca545977e42488668618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 5133357178356861969}
+  power: 10
+  radius: 7
+  upforce: 1
   destroyTime: 5
 --- !u!1 &5133357178401192726
 GameObject:
@@ -5834,7 +5836,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 8
+        scalar: 3
         minScalar: 30
         maxCurve:
           serializedVersion: 2

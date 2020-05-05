@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8948450110406902010}
   - component: {fileID: 8948450110406902011}
   - component: {fileID: 8948450110406902012}
+  - component: {fileID: 1547355851}
   m_Layer: 0
   m_Name: ExplosiveBox
   m_TagString: Box
@@ -127,16 +128,7 @@ MonoBehaviour:
   isInvincible: 0
   forceMagnitudeThreshold: 0.3
   objectDestroyPrefab: {fileID: 0}
-  modelPresets:
-  - assignedValue: 75
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
-  - assignedValue: 50
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
-  - assignedValue: 10
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    material: {fileID: 2100000, guid: 3334bb6f0010d4741bc4a2099cc404ad, type: 2}
+  modelPresets: []
   OnImpactDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -146,15 +138,27 @@ MonoBehaviour:
   OnObjectDestroy:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5572503445899059905, guid: 1ce788a566922fe41a13b7cbd13b1001,
-          type: 3}
-        m_MethodName: Spawn
+      - m_Target: {fileID: 1547355851}
+        m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8948450110406902013}
+          m_ObjectArgument: {fileID: 5133357178356861969, guid: 1ce788a566922fe41a13b7cbd13b1001,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1547355851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8948450110406902013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

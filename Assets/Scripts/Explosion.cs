@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-	public GameObject explosion;
-
 	// Explosion variables
-	private float power = 10.0f;
-	private float radius = 7.0f;
-	private float upforce = 1.0f;
+	[SerializeField] private float power = 10.0f;
+	[SerializeField] private float radius = 7.0f;
+	[SerializeField] private float upforce = 1.0f;
 
 	// Time before this object is removed for cleanup reasons
 	public float destroyTime = 5;
@@ -20,11 +18,6 @@ public class Explosion : MonoBehaviour
 		Destroy(gameObject, destroyTime);
 
 		Explode();
-	}
-
-	public void Spawn (GameObject origin)
-	{
-		Instantiate(explosion, origin.transform.position, origin.transform.rotation);
 	}
 
 	void Explode()

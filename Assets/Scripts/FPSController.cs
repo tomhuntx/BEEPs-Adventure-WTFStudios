@@ -239,7 +239,7 @@ public class FPSController : MonoBehaviour
 	{
 		// Direction of push-back
 		Vector3 direction = transform.position - pos;
-		direction.y += 4;
+		//direction.y += 4;
 		direction.Normalize();
 		
 		// Create impact force in this direction
@@ -248,7 +248,7 @@ public class FPSController : MonoBehaviour
 		// Clamp the impact force to stop the player being sent to space
 		if (impact.magnitude > maxExpForce)
 		{
-			impact = Vector3.ClampMagnitude(impact, maxExpForce); ;
+			impact = Vector3.ClampMagnitude(impact, maxExpForce);
 		}
 	}
 	#endregion
