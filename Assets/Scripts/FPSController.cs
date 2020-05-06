@@ -253,16 +253,11 @@ public class FPSController : MonoBehaviour
 		//Apply gravity
 		velocity.y += gravity * mass * Time.deltaTime;
 
-		print(externalForce.magnitude);
-
 		//Apply movement
 		if (isCeilingHit)
 		{
 			if (velocity.y > 0) velocity.y *= -1f;
 			if (externalForce.y > 0) externalForce.y *= -1f;
-
-			//velocity.y = 0;
-			//externalForce.y = 0;
 		}
 
 		//Decay external force only when grounded
