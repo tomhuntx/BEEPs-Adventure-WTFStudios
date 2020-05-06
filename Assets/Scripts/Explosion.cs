@@ -8,6 +8,7 @@ public class Explosion : MonoBehaviour
 	[SerializeField] private float power = 10.0f;
 	[SerializeField] private float radius = 7.0f;
 	[SerializeField] private float upforce = 1.0f;
+	[SerializeField] private ForceMode forceType = ForceMode.Impulse;
 
 	// Time before this object is removed for cleanup reasons
 	public float destroyTime = 5;
@@ -32,7 +33,7 @@ public class Explosion : MonoBehaviour
 
 			if (rb != null)
 			{
-				rb.AddExplosionForce(power, transform.position, radius, upforce, ForceMode.Impulse);
+				rb.AddExplosionForce(power, transform.position, radius, upforce, forceType);
 
 				if (hit.tag == "Box")
 				{
@@ -48,7 +49,7 @@ public class Explosion : MonoBehaviour
 				// Push player
 				//hit.GetComponent<FPSController>().PushFromPoint(transform.position, pow);
 				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow, 
-																   FPSController.ForceType.Impulse);
+																   FPSController.ConvertFromForceMode(forceType));
 			}
 		}
 	}

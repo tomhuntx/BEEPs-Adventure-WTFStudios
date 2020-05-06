@@ -103,17 +103,7 @@ public class PersistentForceRigidbody : MonoBehaviour
 
     private void ApplyForceToPlayer()
     {
-        FPSController.ForceType convertedType = FPSController.ForceType.Force;
-
-        switch(forceType)
-        {
-            case ForceMode.Impulse | ForceMode.VelocityChange:
-                convertedType = FPSController.ForceType.Impulse;
-                break;
-            case ForceMode.Acceleration | ForceMode.Force:
-                convertedType = FPSController.ForceType.Force;
-                break;
-        }
+        FPSController.ForceType convertedType = FPSController.ConvertFromForceMode(forceType);
 
         switch (forceDirection)
         {

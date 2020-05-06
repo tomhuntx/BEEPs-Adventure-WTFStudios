@@ -60,6 +60,7 @@ public class FPSController : MonoBehaviour
 	private bool wasMoving = false;
 
 	private Vector3 externalForce;
+	private bool isCeilingHit = false;
 	#endregion
 
 
@@ -91,7 +92,8 @@ public class FPSController : MonoBehaviour
 			else currentSpeed = walkSpeed;
 		}
 
-		if (mass <= 0) mass = 0.00000001f;
+		if (mass <= 0) 
+			mass = 0.00000001f;		
 	}
 
 	/// <summary>
@@ -251,12 +253,30 @@ public class FPSController : MonoBehaviour
 		//Apply gravity
 		velocity.y += gravity * mass * Time.deltaTime;
 
+		print(externalForce.magnitude);
+
 		//Apply movement
-		controller.Move(((velocity + externalForce) / mass) * Time.deltaTime);
+		if (isCeilingHit)
+		{
+			if (velocity.y > 0) velocity.y *= -1f;
+			if (externalForce.y > 0) externalForce.y *= -1f;
+
+			//velocity.y = 0;
+			//externalForce.y = 0;
+		}
 
 		//Decay external force only when grounded
 		if (controller.isGrounded)
+		{
+			externalForce.y = 0;
 			externalForce = Vector3.Lerp(externalForce, Vector3.zero, externalForceFalloff * Time.deltaTime);
+		}
+
+		// Cap external force to prevent overshooting to space
+		if (externalForce.magnitude > maxExpForce)
+			externalForce = Vector3.ClampMagnitude(externalForce, maxExpForce);
+
+		controller.Move(((velocity + externalForce) / mass) * Time.deltaTime);
 	}
 
 	/// <summary>
@@ -342,12 +362,6 @@ public class FPSController : MonoBehaviour
 				externalForce += motion * Time.deltaTime;
 				break;
 			case ForceType.Impulse:
-				if (maxExpForce > 0)
-				{
-					// Clamp the impact force to stop the player being sent to space
-					if (motion.magnitude > maxExpForce)
-						motion = Vector3.ClampMagnitude(motion, maxExpForce);
-				}
 				externalForce += motion;
 				break;
 		}		
@@ -359,7 +373,29 @@ public class FPSController : MonoBehaviour
 	/// <param name="isHit">Reverses upward motion.</param>
 	public void CeilingHit (bool isHit)
 	{
-		if (velocity.y > 0 && isHit) velocity.y *= -0.3f; 
+		//if (velocity.y > 0 && isHit) velocity.y *= -1f;
+		isCeilingHit = isHit;
+	}
+
+	public static ForceType ConvertFromForceMode(ForceMode forceMode)
+	{
+		switch(forceMode)
+		{
+            case ForceMode.Impulse:
+				return ForceType.Impulse;
+
+			case ForceMode.VelocityChange:
+				return ForceType.Impulse;
+
+			case ForceMode.Force:
+				return ForceType.Force;
+
+			case ForceMode.Acceleration:
+				return ForceType.Force;
+
+			default:
+				return ForceType.Force;
+		}
 	}
 	#endregion
 }
