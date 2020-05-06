@@ -20,6 +20,7 @@ public class PersistentForceRigidbody : MonoBehaviour
 
     private Collider trigger;
     private List<Rigidbody> rbs = new List<Rigidbody>();
+    private bool isPlayerInside = false;
 
     
     
@@ -38,6 +39,12 @@ public class PersistentForceRigidbody : MonoBehaviour
             ApplyForce();
             if (isOneShot) Destroy(this.gameObject);
         }
+
+        if (isPlayerInside)
+        {
+            ApplyForceToPlayer();
+            if (isOneShot) Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,6 +54,11 @@ public class PersistentForceRigidbody : MonoBehaviour
             Rigidbody reference = other.transform.GetComponent<Rigidbody>();
             if (!rbs.Contains(reference)) rbs.Add(reference);
         }
+        
+        if (other.tag == "Player")
+        {
+            isPlayerInside = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -55,6 +67,11 @@ public class PersistentForceRigidbody : MonoBehaviour
         {
             Rigidbody reference = other.transform.GetComponent<Rigidbody>();
             if (rbs.Contains(reference)) rbs.Remove(reference);
+        }
+        
+        if (other.tag == "Player")
+        {
+            isPlayerInside = false;
         }
     }
 
@@ -67,19 +84,46 @@ public class PersistentForceRigidbody : MonoBehaviour
         switch (forceDirection)
         {
             case Direction.Omnidirectional:
-                foreach (Rigidbody rb in rbs)
+                for (int i = 0; i < rbs.Count; i++)
                 {
-                    if (rb == null) rbs.Remove(rb);
-                    rb.AddExplosionForce(force, this.transform.position, Vector3.Magnitude(trigger.bounds.size) / 2, default, forceType);
+                    if (rbs[i] == null) rbs.Remove(rbs[i]);
+                    rbs[i].AddExplosionForce(force, this.transform.position, Vector3.Magnitude(trigger.bounds.size) / 2, default, forceType);
                 }
                 break;
 
             default:
-                foreach (Rigidbody rb in rbs)
+                for (int i = 0; i < rbs.Count; i++)
                 {
-                    if (rb == null) rbs.Remove(rb);
-                    rb.AddForce(GetDirection(forceDirection) * force, forceType);
-                }
+                    if (rbs[i] == null) rbs.Remove(rbs[i]);
+                    rbs[i].AddForce(GetDirection(forceDirection) * force, forceType);
+                }                
+                break;
+        }
+    }
+
+    private void ApplyForceToPlayer()
+    {
+        FPSController.ForceType convertedType = FPSController.ForceType.Force;
+
+        switch(forceType)
+        {
+            case ForceMode.Impulse | ForceMode.VelocityChange:
+                convertedType = FPSController.ForceType.Impulse;
+                break;
+            case ForceMode.Acceleration | ForceMode.Force:
+                convertedType = FPSController.ForceType.Force;
+                break;
+        }
+
+        switch (forceDirection)
+        {
+            case Direction.Omnidirectional:
+                Vector3 direction = Player.Instance.transform.position - this.transform.position;
+                Player.Instance.PlayerMovementControls.ApplyForce(direction * force, convertedType);
+                break;
+
+            default:
+                Player.Instance.PlayerMovementControls.ApplyForce(GetDirection(forceDirection) * force, convertedType);
                 break;
         }
     }

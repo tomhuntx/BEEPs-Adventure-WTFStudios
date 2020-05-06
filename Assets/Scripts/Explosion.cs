@@ -43,10 +43,12 @@ public class Explosion : MonoBehaviour
 			if (hit.tag == "Player")
 			{
 				// Base power on distance between player and object
-				float pow = 6 * power / Vector3.Distance(transform.position, hit.transform.position);
+				float pow = power / Vector3.Distance(transform.position, hit.transform.position);
 
 				// Push player
-				hit.GetComponent<FPSController>().PushFromPoint(transform.position, pow);
+				//hit.GetComponent<FPSController>().PushFromPoint(transform.position, pow);
+				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow, 
+																   FPSController.ForceType.Impulse);
 			}
 		}
 	}

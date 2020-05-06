@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 [RequireComponent(typeof(CharacterController))]
 [AddComponentMenu("First Person Player Controller")]
 public class FPSController : MonoBehaviour
 {
+	public enum ForceType { Force, Impulse}
+
     #region Exposed Variables
     [SerializeField] private Transform parentTransform;
 	[SerializeField] private Camera mainCam;
@@ -17,6 +20,7 @@ public class FPSController : MonoBehaviour
 	private float mouseY;
 
 	[Header("Movement Settings")]
+	[SerializeField] private float mass = 1.0f;
 	[SerializeField] private float walkSpeed = 5.0f;
 	[SerializeField] private float sprintSpeed = 7.0f;
 	private float currentSpeed = 0;
@@ -35,8 +39,11 @@ public class FPSController : MonoBehaviour
 	[Tooltip("Maximum force that the player can be pushed by explosive boxes.")]
 	[SerializeField] private float maxExpForce = 40;
 
-	[SerializeField] private float gravity = -8f;
-	[SerializeField] private float jumpHeight = 3f;
+	[Tooltip("How much the external forces dies down.")]
+	[SerializeField] private float externalForceFalloff = 3.0f;
+
+	[SerializeField] private float gravity = -20.0f;
+	[SerializeField] private float jumpForce = 10.0f;
 	#endregion
 
 
@@ -51,6 +58,8 @@ public class FPSController : MonoBehaviour
 	private float directionTimer;
 	private float previousPosTimer;
 	private bool wasMoving = false;
+
+	private Vector3 externalForce;
 	#endregion
 
 
@@ -74,12 +83,15 @@ public class FPSController : MonoBehaviour
 		Look();
 		Move();
 		GetMotionDirection();
+		ApplyPhysics();
 
 		if (controller.isGrounded)
 		{
 			if (Input.GetButton("Sprint")) currentSpeed = sprintSpeed;
 			else currentSpeed = walkSpeed;
 		}
+
+		if (mass <= 0) mass = 0.00000001f;
 	}
 
 	/// <summary>
@@ -115,6 +127,7 @@ public class FPSController : MonoBehaviour
 		parentTransform.Rotate(Vector3.up * mouseX);
 	}
 
+	/* OLD MOVEMENT
 	private void Move()
 	{
 		// Reset velocity when on ground
@@ -183,6 +196,68 @@ public class FPSController : MonoBehaviour
 			wasMoving = false;
 		}
 	}
+	*/
+
+	private void Move()
+	{
+		Vector3 newVelocity = Vector3.zero;
+
+		//Movement direction
+		direction = Input.GetAxis("Horizontal") * transform.right +
+					Input.GetAxis("Vertical") * transform.forward;
+		direction.z = Mathf.Clamp(direction.z, -1, 1);
+		direction.x = Mathf.Clamp(direction.x, -1, 1);
+
+		if (controller.isGrounded)
+		{
+			if (velocity.y < 0) velocity.y = -2.0f;
+
+			if (Input.GetButtonDown("Jump"))
+				velocity.y += jumpForce;
+
+			if (IsMoving())
+				wasMoving = true;
+			else
+				wasMoving = false;
+
+			newVelocity = direction * currentSpeed;		
+		}
+		else
+		{
+			Vector3 newDirection = Vector3.zero;
+
+			if (wasMoving)
+			{
+				if (!IsMoving()) direction = Vector3.zero;
+				motionDirection += direction * airControlSpeed * Time.deltaTime;
+				motionDirection.x = Mathf.Clamp(motionDirection.x, -1, 1);
+				motionDirection.z = Mathf.Clamp(motionDirection.z, -1, 1);
+
+				newDirection = motionDirection;
+			}
+			else
+			{
+				newDirection = direction;
+			}
+			newVelocity = newDirection * currentSpeed * airSpeedRatio;
+		}
+		velocity = new Vector3(newVelocity.x,
+							   velocity.y,
+							   newVelocity.z);			
+	}
+
+	private void ApplyPhysics()
+	{
+		//Apply gravity
+		velocity.y += gravity * mass * Time.deltaTime;
+
+		//Apply movement
+		controller.Move(((velocity + externalForce) / mass) * Time.deltaTime);
+
+		//Decay external force only when grounded
+		if (controller.isGrounded)
+			externalForce = Vector3.Lerp(externalForce, Vector3.zero, externalForceFalloff * Time.deltaTime);
+	}
 
 	/// <summary>
 	/// Only calculates movement direction when grounded.
@@ -229,6 +304,7 @@ public class FPSController : MonoBehaviour
 	#endregion
 
 	#region Public Methods
+	/* Push From Point - Unused
 	/// <summary>
 	///	Pushes the player from a point by a force
 	/// Used by the explosive box's explosion
@@ -243,13 +319,47 @@ public class FPSController : MonoBehaviour
 		direction.Normalize();
 		
 		// Create impact force in this direction
-		impact += direction * force / 2; //2 represents object mass
+		impact += direction * force / mass; //2 represents object mass
 
 		// Clamp the impact force to stop the player being sent to space
 		if (impact.magnitude > maxExpForce)
 		{
 			impact = Vector3.ClampMagnitude(impact, maxExpForce);
 		}
+	}
+	*/
+
+	/// <summary>
+	/// Moves the transform of the game object this FPSController attached to.
+	/// </summary>
+	/// <param name="motion">Direction x Force - Exclude time delta multiplication.</param>
+	/// <param name="forceType">Type of force applied.</param>
+	public void ApplyForce(Vector3 motion, ForceType forceType)
+	{
+		switch (forceType)
+		{
+			case ForceType.Force:
+				externalForce += motion * Time.deltaTime;
+				break;
+			case ForceType.Impulse:
+				if (maxExpForce > 0)
+				{
+					// Clamp the impact force to stop the player being sent to space
+					if (motion.magnitude > maxExpForce)
+						motion = Vector3.ClampMagnitude(motion, maxExpForce);
+				}
+				externalForce += motion;
+				break;
+		}		
+	}
+
+	/// <summary>
+	/// Bounce off this transform if it hits a ceiling.
+	/// </summary>
+	/// <param name="isHit">Reverses upward motion.</param>
+	public void CeilingHit (bool isHit)
+	{
+		if (velocity.y > 0 && isHit) velocity.y *= -0.3f; 
 	}
 	#endregion
 }

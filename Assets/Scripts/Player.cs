@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     private bool isRaycastHit = false;
     #endregion
 
+    public FPSController PlayerMovementControls { get { return controller; } }
+
 
     private void Awake()
     {
@@ -115,7 +117,7 @@ public class Player : MonoBehaviour
                 //Set grabbed box as child of main cam
                 currentBox.transform.parent = controller.MainCam.transform;
                 currentBox.transform.localPosition = Vector3.zero + objectOffset;
-                currentBox.transform.rotation = controller.MainCam.transform.rotation;                
+                currentBox.transform.rotation = controller.MainCam.transform.rotation;
 
                 //Put grabbed box in different layer mask to prevent clipping
                 currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
