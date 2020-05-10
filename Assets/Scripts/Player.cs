@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;    
     public Graphic crosshair;
+	public TaskList taskList;
 
     #region Exposed Variables
     [Header("Box Handling Properties")]
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<FPSController>();
+		taskList = FindObjectOfType<TaskList>();
     }
 
     // Update is called once per frame
@@ -94,7 +96,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Set the targeted box's parent to this transform then instanciates an outline.
     /// </summary>
-    private void GrabBox()
+    public void GrabBox()
     {
         if (isRaycastHit)
         {
@@ -148,7 +150,7 @@ public class Player : MonoBehaviour
                 
                 //Hide after setup
                 boxOutline.SetActive(false);
-            }
+			}
         }
     }
 
@@ -278,7 +280,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Applies offset position before throwing.
     /// </summary>
-    private void ThrowBox()
+    public void ThrowBox()
     {
         if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
             !isRaycastHit)
