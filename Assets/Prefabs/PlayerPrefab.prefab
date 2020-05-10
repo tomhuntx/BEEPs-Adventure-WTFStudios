@@ -201,15 +201,17 @@ MonoBehaviour:
   parentTransform: {fileID: 1295017912428381506}
   mainCam: {fileID: 1295017912379769573}
   sensitivity: 200
-  walkSpeed: 5
-  sprintSpeed: 7
+  mass: 1
+  walkSpeed: 4
+  sprintSpeed: 6
   airControlSpeed: 2
   jumpAccelerationRate: 3
-  bumpForce: 2
+  bumpForce: 1
   airSpeedRatio: 0.8
-  maxExpForce: 40
-  gravity: -20
-  jumpHeight: 1
+  maxExpForce: 30
+  externalForceFalloff: 3
+  gravity: -18
+  jumpForce: 9
 --- !u!114 &124322827164825029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshair: {fileID: 0}
   punchDamage: 3
-  throwForce: 10
+  throwForce: 12
   objectOffset: {x: 2, y: -2, z: 2}
   interactionDistance: 4
   boxPlacementDeadzone: 2
