@@ -6,9 +6,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof(FPSController))]
 public class Player : MonoBehaviour
 {
+	// Prototype
+	public Task stackBox;
+	//
+
     public static Player Instance;    
     public Graphic crosshair;
-	public TaskList taskList;
 
     #region Exposed Variables
     [Header("Box Handling Properties")]
@@ -57,7 +60,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<FPSController>();
-		taskList = FindObjectOfType<TaskList>();
     }
 
     // Update is called once per frame
@@ -262,12 +264,16 @@ public class Player : MonoBehaviour
         {
             currentBox.transform.position = boxOutline.transform.position;
             currentBox.transform.rotation = boxOutline.transform.rotation;
-        }
+
+			// Stack box task
+			stackBox.Contribute();
+			//
+		}
         else
         {
             currentBox.transform.position = this.transform.position + this.transform.forward;
             currentBox.transform.rotation = Quaternion.identity;
-        }
+		}
 
         //Revert Box state
         currentBox.layer = LayerMask.NameToLayer("Default");
@@ -275,7 +281,8 @@ public class Player : MonoBehaviour
         currentBox.GetComponent<Rigidbody>().isKinematic = false;
         currentBox = null;
         Destroy(boxOutline);
-    }
+
+	}
 
     /// <summary>
     /// Applies offset position before throwing.

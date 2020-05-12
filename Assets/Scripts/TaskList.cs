@@ -10,7 +10,7 @@ public class TaskList : MonoBehaviour
 	public List<TextMeshProUGUI> taskTexts = new List<TextMeshProUGUI>();
 	public List<bool> tasksComplete = new List<bool>();
 
-	public string[] texts;
+	public string[] completeTexts;
 
 	private void Start()
 	{
@@ -30,13 +30,13 @@ public class TaskList : MonoBehaviour
 	/// <param name="taskNum">Current task in question</param>
 	public void CompleteTask(int taskNum)
 	{
-		if (!tasksComplete[taskNum])
+		if (!tasksComplete[taskNum - 1])
 		{
 			// Ensure task number correlates to the correct index
 			taskNum--;
 
 			// Cross out text
-			taskTexts[taskNum].SetText(texts[taskNum]);
+			taskTexts[taskNum].SetText(completeTexts[taskNum]);
 
 			// Record task as complete
 			tasksComplete[taskNum] = true;

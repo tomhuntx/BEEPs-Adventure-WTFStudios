@@ -23,16 +23,19 @@ public class Task : MonoBehaviour
 
 	public void Contribute()
 	{
-		Debug.Log("+1 contribution for task " + taskNumber);
-		currentContributes++;
+		if (currentContributes < requiredContributes)
+		{
+			Debug.Log("+1 contribution for task " + taskNumber);
+			currentContributes++;
 
-		if (currentContributes >= requiredContributes)
-		{
-			taskList.CompleteTask(taskNumber);
-		}
-		else
-		{
-			taskList.IncreaseContributions(taskNumber, currentContributes, requiredContributes);
+			if (currentContributes >= requiredContributes)
+			{
+				taskList.CompleteTask(taskNumber);
+			}
+			else
+			{
+				taskList.IncreaseContributions(taskNumber, currentContributes, requiredContributes);
+			}
 		}
 	}
 }
