@@ -12,6 +12,9 @@ public class PersistentForceRigidbody : MonoBehaviour
     [Tooltip("How much force is applied.")]
     [SerializeField] private float force = 20.0f;
 
+    [Tooltip("Tick this to use translate movement instead of adding force to the rigidbody.")]
+    [SerializeField] private bool doTranslateMovement = false;
+
     [Tooltip("Type of force applied to rigidbodies.")]
     [SerializeField] private ForceMode forceType = ForceMode.Force;
 
@@ -87,7 +90,16 @@ public class PersistentForceRigidbody : MonoBehaviour
                 for (int i = 0; i < rbs.Count; i++)
                 {
                     if (rbs[i] == null) rbs.Remove(rbs[i]);
-                    rbs[i].AddExplosionForce(force, this.transform.position, Vector3.Magnitude(trigger.bounds.size) / 2, default, forceType);
+
+                    if (doTranslateMovement)
+                    {
+                        Vector3 direction = rbs[i].transform.position - this.transform.position;
+                        rbs[i].transform.position += direction.normalized * force * Time.deltaTime;
+                    }
+                    else
+                    {
+                        rbs[i].AddExplosionForce(force, this.transform.position, Vector3.Magnitude(trigger.bounds.size) / 2, default, forceType);
+                    }
                 }
                 break;
 
@@ -95,7 +107,11 @@ public class PersistentForceRigidbody : MonoBehaviour
                 for (int i = 0; i < rbs.Count; i++)
                 {
                     if (rbs[i] == null) rbs.Remove(rbs[i]);
-                    rbs[i].AddForce(GetDirection(forceDirection) * force, forceType);
+
+                    if (doTranslateMovement)
+                        rbs[i].transform.position += GetDirection(forceDirection) * force * Time.deltaTime;
+                    else
+                        rbs[i].AddForce(GetDirection(forceDirection) * force, forceType);
                 }                
                 break;
         }

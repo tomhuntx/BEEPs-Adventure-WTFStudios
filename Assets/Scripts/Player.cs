@@ -108,16 +108,16 @@ public class Player : MonoBehaviour
                 currentBox = hitInfo.transform.gameObject;
 
                 //Clone grabbed box for outline setup
-                boxOutline = Instantiate(currentBox);
-
-                //Disable physics and collision
-                currentBox.GetComponent<Rigidbody>().isKinematic = true;
-                currentBox.GetComponent<Collider>().enabled = false;
+                boxOutline = Instantiate(currentBox);                
                 
                 //Set grabbed box as child of main cam
                 currentBox.transform.parent = controller.MainCam.transform;
                 currentBox.transform.localPosition = Vector3.zero + objectOffset;
                 currentBox.transform.rotation = controller.MainCam.transform.rotation;
+
+                //Disable physics and collision
+                currentBox.GetComponent<Rigidbody>().isKinematic = true;
+                currentBox.GetComponent<Collider>().enabled = false;
 
                 //Put grabbed box in different layer mask to prevent clipping
                 currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
