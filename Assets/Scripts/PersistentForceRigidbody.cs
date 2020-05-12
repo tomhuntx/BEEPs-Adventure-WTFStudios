@@ -56,6 +56,11 @@ public class PersistentForceRigidbody : MonoBehaviour
         {
             Rigidbody reference = other.transform.GetComponent<Rigidbody>();
             if (!rbs.Contains(reference)) rbs.Add(reference);
+
+            if (other.GetComponent<DestructibleObject>() != null)
+            {
+                other.GetComponent<DestructibleObject>().AddForceApplierReference(this);
+            }
         }
         
         if (other.tag == "Player")
@@ -149,6 +154,18 @@ public class PersistentForceRigidbody : MonoBehaviour
                 return this.transform.up;
             default:
                 return Vector3.zero;
+        }
+    }
+
+    /// <summary>
+    /// Removes reference to a rigidbody that is affected by this force applier.
+    /// </summary>
+    /// <param name="target">Affected rigidbody.</param>
+    public void RemoveReference(Rigidbody target)
+    {
+        if (rbs.Contains(target))
+        {
+            rbs.Remove(target);
         }
     }
 }

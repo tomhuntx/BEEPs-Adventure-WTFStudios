@@ -46,6 +46,7 @@ public class DestructibleObject : MonoBehaviour
     private Rigidbody rb;
     private MeshFilter mesh;
     private MeshRenderer mrenderer;
+    private List<PersistentForceRigidbody> forceAppliers = new List<PersistentForceRigidbody>();
     #endregion;
 
     #region Events
@@ -121,6 +122,10 @@ public class DestructibleObject : MonoBehaviour
     #endregion
 
     #region Public Methods
+    /// <summary>
+    /// Reduces durability and manages model changing.
+    /// </summary>
+    /// <param name="damage">Amount from durability will be taken away.</param>
     public void ApplyDamage(float damage)
     {
         if (!isInvincible)
@@ -143,6 +148,28 @@ public class DestructibleObject : MonoBehaviour
                 DestroyObject();
             }
         }
+    }
+
+    /// <summary>
+    /// Add reference for removing force applier later.
+    /// </summary>
+    /// <param name="source">The force applier that affects this rigidbody.</param>
+    public void AddForceApplierReference(PersistentForceRigidbody source)
+    {
+        forceAppliers.Add(source);
+    }
+
+    /// <summary>
+    /// Stop external force appliers. 
+    /// </summary>
+    public void DetachForceAppliers()
+    {
+        foreach(PersistentForceRigidbody source in forceAppliers)
+        {
+            source.RemoveReference(rb);
+        }
+
+        forceAppliers.Clear();
     }
     #endregion
 }

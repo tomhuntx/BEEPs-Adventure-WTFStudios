@@ -111,6 +111,9 @@ public class Player : MonoBehaviour
 
                 currentBox = hitInfo.transform.gameObject;
 
+                //Remove any external force appliers
+                currentBox.GetComponent<DestructibleObject>().DetachForceAppliers();
+
                 //Clone grabbed box for outline setup
                 boxOutline = Instantiate(currentBox);                
                 
@@ -265,9 +268,12 @@ public class Player : MonoBehaviour
             currentBox.transform.position = boxOutline.transform.position;
             currentBox.transform.rotation = boxOutline.transform.rotation;
 
-			// Stack box task
-			stackBox.Contribute();
-			//
+            // Stack box task
+            if (stackBox != null)
+            {
+                stackBox.Contribute();
+                //
+            }
 		}
         else
         {
