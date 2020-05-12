@@ -6,6 +6,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(FPSController))]
 public class Player : MonoBehaviour
 {
+	// Prototype
+	public Task stackBox;
+	//
+
     public static Player Instance;    
     public Graphic crosshair;
 
@@ -94,7 +98,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Set the targeted box's parent to this transform then instanciates an outline.
     /// </summary>
-    private void GrabBox()
+    public void GrabBox()
     {
         if (isRaycastHit)
         {
@@ -148,7 +152,7 @@ public class Player : MonoBehaviour
                 
                 //Hide after setup
                 boxOutline.SetActive(false);
-            }
+			}
         }
     }
 
@@ -260,12 +264,16 @@ public class Player : MonoBehaviour
         {
             currentBox.transform.position = boxOutline.transform.position;
             currentBox.transform.rotation = boxOutline.transform.rotation;
-        }
+
+			// Stack box task
+			stackBox.Contribute();
+			//
+		}
         else
         {
             currentBox.transform.position = this.transform.position + this.transform.forward;
             currentBox.transform.rotation = Quaternion.identity;
-        }
+		}
 
         //Revert Box state
         currentBox.layer = LayerMask.NameToLayer("Default");
@@ -273,12 +281,13 @@ public class Player : MonoBehaviour
         currentBox.GetComponent<Rigidbody>().isKinematic = false;
         currentBox = null;
         Destroy(boxOutline);
-    }
+
+	}
 
     /// <summary>
     /// Applies offset position before throwing.
     /// </summary>
-    private void ThrowBox()
+    public void ThrowBox()
     {
         if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
             !isRaycastHit)
