@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
         isRaycastHit = DoRaycast(out hitInfo);
 
         //Only adjust crosshair position if deadzone exist
-        if (boxPlacementDeadzone > 0) ManageCrosshair();
+        if (crosshair != null && boxPlacementDeadzone > 0) ManageCrosshair();
 
         if (currentBox != null)
         {
