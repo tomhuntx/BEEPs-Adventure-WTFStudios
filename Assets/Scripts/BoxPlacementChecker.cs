@@ -19,7 +19,7 @@ public class BoxPlacementChecker : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //workaround for real time checking
-        checkerTimer = Time.time + 0.1f;
+		//workaround for real time checking
+		checkerTimer = Time.time + 0.1f;
     }
 }

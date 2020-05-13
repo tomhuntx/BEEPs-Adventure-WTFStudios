@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
 	// Prototype
 	public Task stackBox;
+	bool boxStacking = false;
 	//
 
     public static Player Instance;    
@@ -124,7 +125,7 @@ public class Player : MonoBehaviour
 
                 //Disable physics and collision
                 currentBox.GetComponent<Rigidbody>().isKinematic = true;
-                currentBox.GetComponent<Collider>().enabled = false;
+				currentBox.GetComponent<Collider>().enabled = false;
 
                 //Put grabbed box in different layer mask to prevent clipping
                 currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
@@ -186,11 +187,15 @@ public class Player : MonoBehaviour
                 {
                     boxOutline.transform.position = hitInfo.transform.position + hitInfo.normal;
                     boxOutline.transform.rotation = hitInfo.transform.rotation;
-                }
+
+					boxStacking = true; ////
+				}
                 else if (hitInfo.transform.tag != "Player")
                 {
                     boxOutline.transform.position = hitInfo.point + hitInfo.normal / 2;
                     boxOutline.transform.rotation = transform.rotation;
+
+					boxStacking = false; ////
                 }
             }
             else
@@ -263,13 +268,13 @@ public class Player : MonoBehaviour
     {
         currentBox.transform.parent = null;
 
-        if (boxOutline.activeSelf)
+		if (boxOutline.activeSelf)
         {
             currentBox.transform.position = boxOutline.transform.position;
             currentBox.transform.rotation = boxOutline.transform.rotation;
 
             // Stack box task
-            if (stackBox != null)
+            if (stackBox != null && boxStacking)
             {
                 stackBox.Contribute();
                 //

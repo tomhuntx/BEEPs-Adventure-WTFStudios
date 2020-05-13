@@ -20,8 +20,8 @@ public class TaskManager : MonoBehaviour
 
 	void Update()
 	{
-		// (Prototype) Detect if the player reaches above y 30
-		if (player.transform.position.y > 15)
+		// (Prototype) Detect if the player reaches above y 8
+		if (player.transform.position.y > 8)
 		{
 			enterSpace.Contribute();
 		}
