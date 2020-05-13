@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
         GManager = this;
     }
 
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-
-    //}
+    // Start is called before the first frame update
+    void Start()
+    {
+		Cursor.visible = false;
+    }
 
     // Update is called once per frame
     void Update()
