@@ -15,10 +15,9 @@ public class TaskList : MonoBehaviour
 	private void Start()
 	{
 		// Get task objects and text boxes
-		taskObjects = GameObject.FindGameObjectsWithTag("Task");
 		for (int i = 0; i < taskObjects.Length; i++)
 		{
-			taskTexts.Add(taskObjects[i].GetComponent<TextMeshProUGUI>());
+			taskTexts.Add(taskObjects[i].GetComponentInChildren<TextMeshProUGUI>());
 			tasksComplete.Add(false);
 		}
 	}

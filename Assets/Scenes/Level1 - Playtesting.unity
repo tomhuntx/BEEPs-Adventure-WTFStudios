@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 87970341}
   m_Layer: 5
   m_Name: Controls
-  m_TagString: Task
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1299,7 +1299,7 @@ GameObject:
   - component: {fileID: 626870414}
   m_Layer: 5
   m_Name: Controls Text
-  m_TagString: Task
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2847,8 +2847,8 @@ RectTransform:
   - {fileID: 87970340}
   - {fileID: 626870413}
   - {fileID: 1790832282}
-  - {fileID: 9052248969933011598}
   - {fileID: 9052248969427031633}
+  - {fileID: 9052248969933011598}
   - {fileID: 1082489428}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -3098,7 +3098,7 @@ GameObject:
   - component: {fileID: 1790832283}
   m_Layer: 5
   m_Name: Version
-  m_TagString: Task
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3140,7 +3140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BEEP's Adventures - Prototype 1.0
+  m_text: BEEP's Adventures - Prototype 1.2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4055,7 +4055,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1472385333}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4083,7 +4083,7 @@ GameObject:
   - component: {fileID: 9052248969427031632}
   m_Layer: 5
   m_Name: Bonus Text
-  m_TagString: Task
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4136,7 +4136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4484353bf62ddb54cbf3eb3e6f30e424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskObjects: []
+  taskObjects:
+  - {fileID: 9052248971070153670}
+  - {fileID: 9052248970021820276}
+  - {fileID: 9052248970722624097}
+  - {fileID: 9052248969421693767}
   taskTexts: []
   tasksComplete: 
   completeTexts:
@@ -4162,7 +4166,7 @@ RectTransform:
   - {fileID: 9052248970722624096}
   - {fileID: 9052248969421693766}
   m_Father: {fileID: 1472385333}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
