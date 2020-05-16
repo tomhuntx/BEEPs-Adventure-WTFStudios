@@ -116,18 +116,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentTransform: {fileID: 8553445276220426504}
   mainCam: {fileID: 8553445276427931850}
-  sensitivity: 200
+  sensitivity: 150
   mass: 1
   walkSpeed: 4
   sprintSpeed: 6
   airControlSpeed: 1
   jumpAccelerationRate: 3
-  bumpForce: 0.8
+  bumpForce: 1
   airSpeedRatio: 0.8
-  maxExpForce: 30
+  maxExpForce: 20
   externalForceFalloff: 3
   gravity: -18
-  jumpForce: 8
+  jumpForce: 8.5
 --- !u!114 &8553445276220426509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,8 +145,8 @@ MonoBehaviour:
   punchDamage: 3
   throwForce: 14
   objectOffset: {x: 0, y: 19, z: 1.25}
-  interactionDistance: 3
-  boxPlacementDeadzone: 1
+  interactionDistance: 3.5
+  boxPlacementDeadzone: 0.1
   materialHighlight: {fileID: 2100000, guid: d11678e5824856f4584192fc53a31da6, type: 2}
 --- !u!1 &8553445276427931851
 GameObject:
@@ -174,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8553445276427931851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.99, z: 0}
+  m_LocalPosition: {x: 0, y: 0.699, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8553445276999267578}

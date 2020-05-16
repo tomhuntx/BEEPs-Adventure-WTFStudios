@@ -8,7 +8,6 @@ public class TaskManager : MonoBehaviour
 	//public Task[] tasks;
 
 	GameObject player;
-	public Task enterSpace;
 
 	void Start()
     {
@@ -20,11 +19,7 @@ public class TaskManager : MonoBehaviour
 
 	void Update()
 	{
-		// (Prototype) Detect if the player reaches above y 8
-		if (player.transform.position.y > 8)
-		{
-			enterSpace.Contribute();
-		}
+		
 	}
 
 	// Called by unity events

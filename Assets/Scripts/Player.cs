@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
 	// Prototype
 	public Task stackBox;
 	bool boxStacking = false;
+
+	public Task knockHat;
 	//
 
-    public static Player Instance;    
+	public static Player Instance;    
     public Graphic crosshair;
 
     #region Exposed Variables
@@ -80,7 +82,7 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Place Box") && boxOutline.activeSelf) PlaceBox();                
             }
 
-            if (Input.GetButtonDown("Punch")) ThrowBox();
+            if (Input.GetButtonDown("Throw Box")) ThrowBox();
         }
         else
         {
@@ -110,7 +112,7 @@ public class Player : MonoBehaviour
                     Destroy(boxHighlight);
                 }
 
-                currentBox = hitInfo.transform.gameObject;
+				currentBox = hitInfo.transform.gameObject;
 
                 //Remove any external force appliers
                 currentBox.GetComponent<DestructibleObject>().DetachForceAppliers();
@@ -329,7 +331,14 @@ public class Player : MonoBehaviour
                 hitInfo.transform.GetComponent<DestructibleObject>().ApplyDamage(punchDamage);
                 hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
             }
-        }
+			if (hitInfo.transform.tag == "Hardhat")
+			{
+				hitInfo.transform.GetComponent<Rigidbody>().isKinematic = false;
+				hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
+
+				knockHat.Contribute();
+			}
+		}
     }
 
     /// <summary>
