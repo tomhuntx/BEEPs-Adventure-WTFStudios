@@ -10,14 +10,14 @@ public class BoxPlacementChecker : MonoBehaviour
         if (checkerTimer < Time.time)
         {
             isPlacable = true;
-        }
+		}
         else
         {
             isPlacable = false;
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    void OnTriggerStay(Collider other)
     {
 		//workaround for real time checking
 		checkerTimer = Time.time + 0.1f;

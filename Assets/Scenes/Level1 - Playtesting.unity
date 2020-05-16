@@ -900,26 +900,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90cad881093dbd24783b092ac1edaa54, type: 3}
---- !u!1 &199548650 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8573611410220306816, guid: 138e791638c97d34d84dffecfe3d7ca5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1148350078808535342}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &199548657
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 199548650}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 1
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.65, z: -0.1}
 --- !u!1 &284015788
 GameObject:
   m_ObjectHideFlags: 0
@@ -5193,7 +5173,7 @@ PrefabInstance:
     - target: {fileID: 1148350077281872463, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.42
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 1148350077281872463, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
@@ -5245,10 +5225,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1148350078701301699, guid: 138e791638c97d34d84dffecfe3d7ca5,
+    - target: {fileID: 5937899370075674331, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
-      propertyPath: m_Mass
-      value: 1
+      propertyPath: m_Radius
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1148350078701301698, guid: 138e791638c97d34d84dffecfe3d7ca5, type: 3}
@@ -5403,7 +5383,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: -61.5}
+  m_AnchoredPosition: {x: 6, y: -73.4}
   m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9052248969421693767
@@ -5684,7 +5664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: -49.900005}
+  m_AnchoredPosition: {x: 6, y: -61.800003}
   m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9052248969427031635
@@ -5739,7 +5719,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a67d23058997fa244867693733f8d826, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ebd08a6b8bdf5014cb7abb7986f4a76f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5772,8 +5752,8 @@ MonoBehaviour:
   - "\u2022 S\u0336t\u0336a\u0336c\u0336k\u0336 \u0336a\u0336 \u0336b\u0336o\u0336x\u0336"
   - "\u2022 D\u0336e\u0336s\u0336t\u0336r\u0336o\u0336y\u0336 \u0336f\u0336i\u0336v\u0336e\u0336
     \u0336b\u0336o\u0336x\u0336e\u0336s\u0336 \u0336(\u03365\u0336/\u03365\u0336)\u0336"
-  - "\u2022 K\u0336n\u0336o\u0336c\u0336k\u0336 \u0336o\u0336f\u0336f\u0336 \u0336t\u0336h\u0336e\u0336
-    \u0336M\u0336a\u0336n\u0336a\u0336g\u0336e\u0336r\u0336'\u0336s\u0336 \u0336h\u0336a\u0336t\u0336"
+  - "\u2022 P\u0336u\u0336t\u0336 \u0336t\u0336h\u0336e\u0336 \u0336M\u0336a\u0336n\u0336a\u0336g\u0336e\u0336r\u0336'\u0336s\u0336
+    \u0336s\u0336a\u0336f\u0336e\u0336t\u0336y\u0336 \u0336l\u0336a\u0336s\u0336t\u0336"
   - "\u2022 F\u0336i\u0336n\u0336d\u0336 \u0336t\u0336h\u0336e\u0336 \u0336b\u0336l\u0336u\u0336e\u0336
     \u0336c\u0336u\u0336b\u0336e\u0336 "
 --- !u!224 &9052248969933011598
@@ -6054,7 +6034,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Knock off the Manager's hat"
+  m_text: "\u2022 Put the Manager's safety last"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6123,7 +6103,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 9052248970722624099}
-    characterCount: 29
+    characterCount: 31
     spriteCount: 0
     spaceCount: 5
     wordCount: 5

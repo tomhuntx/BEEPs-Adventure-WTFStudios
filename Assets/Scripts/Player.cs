@@ -134,12 +134,13 @@ public class Player : MonoBehaviour
 
                 //Remove physics and box component
                 Destroy(boxOutline.GetComponent<DestructibleObject>());
-                Destroy(boxOutline.GetComponent<Rigidbody>());
+				//Destroy(boxOutline.GetComponent<Rigidbody>()); // CAUSES TRIGGERS TO NOT WORK
+				boxOutline.GetComponent<Rigidbody>().isKinematic = true; 
 
                 //Tweak collider and add collision checker
                 boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
                 BoxCollider collider = boxOutline.GetComponent<BoxCollider>();
-                collider.size = new Vector3(0.9f, 0.9f, 0.9f);
+                collider.size = new Vector3(0.99f, 0.99f, 0.99f);
                 collider.isTrigger = true;
                 collider.enabled = true;
                 outlineCollider = boxOutline.AddComponent<BoxPlacementChecker>();
