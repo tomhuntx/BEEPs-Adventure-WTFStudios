@@ -21,6 +21,7 @@ public struct ModelStates
 }
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SpawnerRemote))]
 public class DestructibleObject : MonoBehaviour
 {
     #region Exposed Variables
@@ -36,8 +37,6 @@ public class DestructibleObject : MonoBehaviour
     [SerializeField] private float forceMagnitudeThreshold = 1.5f;
 
     [Header("Other Properties")]
-    [SerializeField] GameObject objectDestroyPrefab;
-
     [Tooltip("Presets when changing visuals upon damage.")]
     [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();
     #endregion
@@ -51,15 +50,22 @@ public class DestructibleObject : MonoBehaviour
 
     #region Events
     [Header("Events")]
-    public UnityEvent OnImpactDamage;
+    public UnityEvent OnColliderEnter;
     public UnityEvent OnImpactGeneral;
+    public UnityEvent OnImpactDamage;    
     public UnityEvent OnObjectDestroy;
     #endregion
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        if (this.GetComponent<Collider>() == null) 
+            Debug.LogError(this.gameObject + 
+                " Doesn't have a collider attached to it, please attach a collider before playing!");
+
+
         rb = this.GetComponent<Rigidbody>();
         mesh = this.GetComponent<MeshFilter>();
 		mrenderer = this.GetComponent<MeshRenderer>();
@@ -74,11 +80,18 @@ public class DestructibleObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        OnImpactGeneral.Invoke();
+        OnColliderEnter.Invoke();
+
+        float impactMagnitude = Vector3.Magnitude(rb.velocity);
+        if (impactMagnitude > 0.15f)
+            OnImpactGeneral.Invoke();
 
         if (!isInvincible)
-            CheckDurability(Vector3.Magnitude(rb.velocity));
+            CheckDurability(impactMagnitude);
+
+        //print(Time.time + "-" +this.transform + ":" + impactMagnitude);
 	}
+
 
 
     #region Private Methods
@@ -102,11 +115,6 @@ public class DestructibleObject : MonoBehaviour
     private void DestroyObject()
     {
         OnObjectDestroy.Invoke();
-		//uncomment this after implementing the animations prefab
-		if (objectDestroyPrefab != null)
-		{
-			Instantiate(objectDestroyPrefab, this.transform.position, this.transform.rotation);
-		}
 		Destroy(this.gameObject);
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,9 +17,24 @@ public class UnityEventsHandler : MonoBehaviour
     public UnityEvent onTriggerStay;
     public UnityEvent onTriggerExit;
 
+    private List<GameObject> objectsOnCollider = new List<GameObject>();
+    private List<GameObject> objectsInTrigger = new List<GameObject>();
+
+    public List<GameObject> ObjectsOnCollder { get { return objectsOnCollider; } }
+    public List<GameObject> ObjectsInTrigger { get { return objectsInTrigger; } }
+
+
+    private void Start()
+    {
+        StartCoroutine("UpdateLists");
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!DoIgnore(collision)) onCollisionEnter.Invoke();
+
+        if (!objectsOnCollider.Contains(collision.gameObject)) 
+            objectsOnCollider.Add(collision.gameObject);
     }
 
     private void OnCollisionStay(Collision collision)
@@ -29,11 +45,17 @@ public class UnityEventsHandler : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         if (!DoIgnore(collision)) onCollisionExit.Invoke();
+
+        if (objectsOnCollider.Contains(collision.gameObject)) 
+            objectsOnCollider.Remove(collision.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!DoIgnore(other)) onTriggerEnter.Invoke();
+
+        if (!objectsInTrigger.Contains(other.gameObject))
+            objectsInTrigger.Add(other.gameObject);
     }
 
     private void OnTriggerStay(Collider other)
@@ -44,6 +66,9 @@ public class UnityEventsHandler : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (!DoIgnore(other)) onTriggerExit.Invoke();
+
+        if (objectsInTrigger.Contains(other.gameObject))
+            objectsInTrigger.Remove(other.gameObject);
     }
 
 
@@ -65,5 +90,35 @@ public class UnityEventsHandler : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    /// <summary>
+    /// Update lists to prevent null reference
+    /// </summary>
+    private IEnumerator UpdateLists()
+    {
+        while (true)
+        {            
+            for (int i = 0; i < objectsOnCollider.Count; i++)
+            {
+                if (objectsOnCollider[i] == null)
+                {
+                    objectsOnCollider.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            for (int i = 0; i < objectsInTrigger.Count; i++)
+            {
+                if (objectsInTrigger[i] == null)
+                {
+                    objectsInTrigger.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            //repeat every 3 seconds
+            yield return new WaitForSeconds(3);
+        }
     }
 }

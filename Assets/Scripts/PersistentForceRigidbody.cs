@@ -37,16 +37,20 @@ public class PersistentForceRigidbody : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rbs.Count > 0)
+        //prevent from stacking forces
+        if (Time.timeScale == 1)
         {
-            ApplyForce();
-            if (isOneShot) Destroy(this.gameObject);
-        }
+            if (rbs.Count > 0)
+            {
+                ApplyForce();
+                if (isOneShot) Destroy(this.gameObject);
+            }
 
-        if (isPlayerInside)
-        {
-            ApplyForceToPlayer();
-            if (isOneShot) Destroy(this.gameObject);
+            if (isPlayerInside)
+            {
+                ApplyForceToPlayer();
+                if (isOneShot) Destroy(this.gameObject);
+            }
         }
     }
 

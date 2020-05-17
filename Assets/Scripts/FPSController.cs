@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(CharacterController))]
 [AddComponentMenu("First Person Player Controller")]
@@ -61,6 +62,11 @@ public class FPSController : MonoBehaviour
 
 	private Vector3 externalForce;
 	private bool isCeilingHit = false;
+
+	private bool doMoveSpeedOverride = false;
+	private bool doLookSpeedOverride = false;
+	private bool jumpingEnabled = true;
+	private float currentLookSpeed;
 	#endregion
 
 
@@ -68,15 +74,22 @@ public class FPSController : MonoBehaviour
 	public Vector3 CurrentDirection { get { return motionDirection; } }
 	public CharacterController Controller { get { return controller; } }
 	public Camera MainCam { get { return mainCam; } set { mainCam = value; } }
-    #endregion
+	public float Mass { get { return mass; } }
+	public float WalkSpeed { get { return walkSpeed; } }
+	public float SprintSpeed { get { return sprintSpeed; } }
+	public float CurrentSpeed { get { return currentSpeed; } }
+	public float LookSensitivity { get { return sensitivity; } }
+	public bool JumpingEnabled { get { return jumpingEnabled; } set { jumpingEnabled = value; } }
+	#endregion
 
 
 
-    private void Start()
+	private void Start()
 	{
 		controller = GetComponent<CharacterController>();
 		Cursor.lockState = CursorLockMode.Locked;
 		currentSpeed = walkSpeed;
+		currentLookSpeed = sensitivity;
 	}
 
 	void Update()
@@ -88,8 +101,11 @@ public class FPSController : MonoBehaviour
 
 		if (controller.isGrounded)
 		{
-			if (Input.GetButton("Sprint")) currentSpeed = sprintSpeed;
-			else currentSpeed = walkSpeed;
+			if (!doMoveSpeedOverride)
+			{
+				if (Input.GetButton("Sprint")) currentSpeed = sprintSpeed;
+				else currentSpeed = walkSpeed;
+			}
 		}
 
 		if (mass <= 0) 
@@ -119,8 +135,10 @@ public class FPSController : MonoBehaviour
     #region Private Methods
     private void Look()
 	{
-		mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
-		mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+		if (!doLookSpeedOverride) currentLookSpeed = sensitivity;
+
+		mouseX = Input.GetAxis("Mouse X") * currentLookSpeed * Time.deltaTime;
+		mouseY = Input.GetAxis("Mouse Y") * currentLookSpeed * Time.deltaTime;
 
 		xRotation -= mouseY;
 		xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -214,8 +232,11 @@ public class FPSController : MonoBehaviour
 		{
 			if (velocity.y < 0) velocity.y = -2.0f;
 
-			if (Input.GetButtonDown("Jump"))
+			if (jumpingEnabled && Input.GetButtonDown("Jump"))
+			{
 				velocity.y += jumpForce;
+				//print("Jumped");
+			}
 
 			if (IsMoving())
 				wasMoving = true;
@@ -391,6 +412,28 @@ public class FPSController : MonoBehaviour
 			default:
 				return ForceType.Force;
 		}
+	}
+
+	public void OverrideMoveSpeed(float newSpeed)
+	{
+		currentSpeed = newSpeed;
+		doMoveSpeedOverride = true;
+	}
+
+	public void OverrideLookSpeed(float newSpeed)
+	{
+		currentLookSpeed = newSpeed;
+		doLookSpeedOverride = true;
+	}
+
+	public void RevertMoveSpeed()
+	{
+		doMoveSpeedOverride = false;
+	}
+
+	public void RevertLookSpeed()
+	{
+		doLookSpeedOverride = false;
 	}
 	#endregion
 }

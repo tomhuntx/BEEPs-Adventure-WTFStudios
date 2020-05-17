@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     public Graphic crosshair;
 
     #region Exposed Variables
+    [SerializeField] private UnityEventsHandler groundCheck;
+
     [Header("Box Handling Properties")]
     [SerializeField] private float punchDamage = 3.0f;
 
@@ -49,6 +52,9 @@ public class Player : MonoBehaviour
     private FPSController controller;
     private RaycastHit hitInfo;
     private bool isRaycastHit = false;
+
+    private GameObject heavyBox;
+    private Rigidbody heavyBoxRB;
     #endregion
 
     public FPSController PlayerMovementControls { get { return controller; } }
@@ -73,22 +79,26 @@ public class Player : MonoBehaviour
         //Only adjust crosshair position if deadzone exist
         if (crosshair != null && boxPlacementDeadzone > 0) ManageCrosshair();
 
-        if (currentBox != null)
+        if (Time.timeScale == 1)
         {
-            ShowBoxPlacement();
-
-            if (outlineCollider.isPlacable)
+            if (currentBox != null)
             {
-                if (Input.GetButtonDown("Place Box") && boxOutline.activeSelf) PlaceBox();                
-            }
+                ShowBoxPlacement();
 
-            if (Input.GetButtonDown("Throw Box")) ThrowBox();
-        }
-        else
-        {
-            if (Input.GetButtonDown("Grab Box")) GrabBox();
-            if (Input.GetButtonDown("Punch")) PunchBox();
-            HighlightTarget();
+                if (outlineCollider.isPlacable)
+                {
+                    if (Input.GetButtonDown("Place Box") && boxOutline.activeSelf) PlaceBox();
+                }
+
+                if (Input.GetButtonDown("Throw Box")) ThrowBox();
+            }
+            else
+            {
+                if (Input.GetButtonDown("Grab Box")) GrabBox();
+                if (Input.GetButtonDown("Punch")) PunchBox();
+                HighlightTarget();
+                DragHeavyBox();
+            }
         }
 
         //Debug raycast
@@ -98,10 +108,51 @@ public class Player : MonoBehaviour
 
 
     #region Private Methods
+    private void DragHeavyBox()
+    {
+        if (heavyBox == null)
+        {
+            if (controller.Controller.isGrounded &&
+                isRaycastHit &&
+                Input.GetButtonDown("Grab Box") &&
+                AllowHeavyBox())
+            {
+                heavyBox = hitInfo.transform.gameObject;
+                heavyBox.transform.parent = this.transform;
+                heavyBoxRB = heavyBox.GetComponent<Rigidbody>();
+                controller.JumpingEnabled = false;
+            }
+        }
+        else
+        {
+            bool heavyBoxOnSight = isRaycastHit &&
+                                   hitInfo.transform.gameObject == heavyBox;
+
+            if (Input.GetButtonUp("Grab Box") ||
+                !heavyBoxOnSight)
+            {
+                heavyBox.transform.parent = null;
+                heavyBox = null;
+                heavyBoxRB = null;
+                controller.RevertMoveSpeed();
+                controller.RevertLookSpeed();
+                controller.JumpingEnabled = true;
+            }
+            else
+            {
+                float newSpeed = 0;
+                if (Input.GetButtonDown("Sprint")) newSpeed = controller.SprintSpeed;
+                else newSpeed = controller.WalkSpeed;
+                controller.OverrideMoveSpeed(newSpeed / heavyBoxRB.mass);
+                controller.OverrideLookSpeed(controller.LookSensitivity / heavyBoxRB.mass);
+            }
+        }        
+    }
+
     /// <summary>
     /// Set the targeted box's parent to this transform then instanciates an outline.
     /// </summary>
-    public void GrabBox()
+    private void GrabBox()
     {
         if (isRaycastHit)
         {
@@ -118,12 +169,13 @@ public class Player : MonoBehaviour
                 currentBox.GetComponent<DestructibleObject>().DetachForceAppliers();
 
                 //Clone grabbed box for outline setup
-                boxOutline = Instantiate(currentBox);                
-                
+                boxOutline = Instantiate(currentBox);
+                boxOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
+
                 //Set grabbed box as child of main cam
                 currentBox.transform.parent = controller.MainCam.transform;
                 currentBox.transform.localPosition = Vector3.zero + objectOffset;
-                currentBox.transform.rotation = controller.MainCam.transform.rotation;
+                currentBox.transform.rotation = controller.MainCam.transform.rotation;                
 
                 //Disable physics and collision
                 currentBox.GetComponent<Rigidbody>().isKinematic = true;
@@ -185,7 +237,8 @@ public class Player : MonoBehaviour
                 }
 
                 //Box outline positioning and rotation
-                if (hitInfo.transform.tag == "Box")
+                if (hitInfo.transform.tag == "Box" ||
+                    hitInfo.transform.tag == "Heavy Box")
                 {
                     boxOutline.transform.position = hitInfo.transform.position + hitInfo.normal;
                     boxOutline.transform.rotation = hitInfo.transform.rotation;
@@ -218,7 +271,8 @@ public class Player : MonoBehaviour
     {
         if (isRaycastHit)
         {
-            if (hitInfo.transform.tag == "Box")
+            if (hitInfo.transform.tag == "Box" ||
+                hitInfo.transform.tag == "Heavy Box")
             {
                 if (boxHighlight == null)
                 {                
@@ -242,8 +296,16 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    boxHighlight.transform.position = hitInfo.transform.position;
-                    boxHighlight.transform.rotation = hitInfo.transform.rotation;
+                    if (heavyBox != null)
+                    {
+                        boxHighlight.transform.position = heavyBox.transform.position;
+                        boxHighlight.transform.rotation = heavyBox.transform.rotation;
+                    }
+                    else
+                    {
+                        boxHighlight.transform.position = hitInfo.transform.position;
+                        boxHighlight.transform.rotation = hitInfo.transform.rotation;
+                    }
                 }
             }
             else
@@ -365,6 +427,19 @@ public class Player : MonoBehaviour
     private bool DoRaycast (out RaycastHit hitInfo)
     {
         return Physics.Raycast(controller.MainCam.transform.position, controller.MainCam.transform.forward, out hitInfo, interactionDistance);
+    }
+
+    private bool AllowHeavyBox()
+    {
+        if (isRaycastHit &&
+            hitInfo.transform.tag == "Heavy Box")
+        {
+            GameObject currentTarget = hitInfo.transform.gameObject;
+            
+            if (!groundCheck.ObjectsInTrigger.Contains(currentTarget))
+                return true;
+        }
+        return false;
     }
     #endregion
 }
