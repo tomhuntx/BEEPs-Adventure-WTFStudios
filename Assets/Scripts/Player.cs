@@ -29,8 +29,11 @@ public class Player : MonoBehaviour
 	[Tooltip("The position of the grabbed object in this transform's local space.")]
     [SerializeField] private Vector3 objectOffset;
 
-    [Tooltip("How far can the player can reach boxes and interaction.")]
-    [SerializeField] private float interactionDistance = 4f;
+    [Tooltip("How far the raycast is.")]
+    [SerializeField] private float raycastDistance = 4f;
+
+    [Tooltip("How far from the player's body is an object interactable.")]
+    [SerializeField] private Vector3 interactionDistance = new Vector3(2, 10, 2);
 
     [Tooltip("The area around the player where box placement should be ignored.")]
     [SerializeField] private float boxPlacementDeadzone = 1f;
@@ -73,8 +76,27 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        isRaycastHit = DoRaycast(out hitInfo);
+    { 
+        //Do check if there's a hit, else no hit
+        if (DoRaycast(out hitInfo))
+        {
+            //Get Distance from player's center to ray hit point
+            Vector3 diff = hitInfo.point - this.transform.position;
+
+            //Prevent negative values
+            diff.x = Mathf.Abs(diff.x);
+            diff.y = Mathf.Abs(diff.y);
+            diff.z = Mathf.Abs(diff.z);
+
+            //Check if the ray hit is within interaction specifications
+            isRaycastHit = diff.x <= interactionDistance.x &&
+                           diff.y <= interactionDistance.y &&
+                           diff.z <= interactionDistance.z;
+        }
+        else
+        {
+            isRaycastHit = false;
+        }
 
         //Only adjust crosshair position if deadzone exist
         if (crosshair != null && boxPlacementDeadzone > 0) ManageCrosshair();
@@ -167,6 +189,7 @@ public class Player : MonoBehaviour
 
                 //Remove any external force appliers
                 currentBox.GetComponent<DestructibleObject>().DetachForceAppliers();
+                currentBox.GetComponent<BoxDragSFX>().ToggleThis(false);
 
                 //Clone grabbed box for outline setup
                 boxOutline = Instantiate(currentBox);
@@ -283,6 +306,7 @@ public class Player : MonoBehaviour
                     Destroy(boxHighlight.GetComponent<Collider>());
                     Destroy(boxHighlight.GetComponent<DestructibleObject>());
                     Destroy(boxHighlight.GetComponent<Rigidbody>());
+                    Destroy(boxHighlight.GetComponent<BoxDragSFX>());
 
                     //Retain mesh and replace material
                     Renderer renderer = boxHighlight.GetComponent<Renderer>();
@@ -355,6 +379,7 @@ public class Player : MonoBehaviour
         currentBox.layer = LayerMask.NameToLayer("Default");
         currentBox.GetComponent<Collider>().enabled = true;
         currentBox.GetComponent<Rigidbody>().isKinematic = false;
+        currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
         currentBox = null;
         Destroy(boxOutline);
 
@@ -375,6 +400,7 @@ public class Player : MonoBehaviour
             currentBox.transform.parent = null;
             currentBox.layer = LayerMask.NameToLayer("Default");
             currentBox.GetComponent<Collider>().enabled = true;
+            currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
             boxRB.isKinematic = false;
             boxRB.AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
             currentBox = null;
@@ -389,11 +415,16 @@ public class Player : MonoBehaviour
     {
         if (isRaycastHit)
         {
-            if (hitInfo.transform.tag == "Box")
+            if (hitInfo.transform.tag == "Box" || 
+                hitInfo.transform.tag == "Heavy Box")
             {
-                hitInfo.transform.GetComponent<DestructibleObject>().ApplyDamage(punchDamage);
-                hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
+                DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
+                target.ApplyDamage(punchDamage);
+                target.OnPlayerPunch.Invoke();
+                Rigidbody boxRB = hitInfo.transform.GetComponent<Rigidbody>();
+                boxRB.AddForce(controller.MainCam.transform.forward * throwForce / boxRB.mass, ForceMode.Impulse);
             }
+
 			if (hitInfo.transform.tag == "Hardhat")
 			{
 				hitInfo.transform.GetComponent<Rigidbody>().isKinematic = false;
@@ -427,7 +458,7 @@ public class Player : MonoBehaviour
     /// <returns>Returns true if the raycast hits a collider.</returns>
     private bool DoRaycast (out RaycastHit hitInfo)
     {
-        return Physics.Raycast(controller.MainCam.transform.position, controller.MainCam.transform.forward, out hitInfo, interactionDistance);
+        return Physics.Raycast(controller.MainCam.transform.position, controller.MainCam.transform.forward, out hitInfo, raycastDistance);
     }
 
     private bool AllowHeavyBox()

@@ -36,7 +36,11 @@ public class DestructibleObject : MonoBehaviour
     [Tooltip("How much force it can take before registering damage.")]
     [SerializeField] private float forceMagnitudeThreshold = 1.5f;
 
+    
     [Header("Other Properties")]
+    [Tooltip("How much impact magnitude before triggering OnImpactGeneral unity event.")]
+    [SerializeField] private float generalImpactThreshold = 0.55f;
+
     [Tooltip("Presets when changing visuals upon damage.")]
     [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();
     #endregion
@@ -50,6 +54,7 @@ public class DestructibleObject : MonoBehaviour
 
     #region Events
     [Header("Events")]
+    public UnityEvent OnPlayerPunch;
     public UnityEvent OnColliderEnter;
     public UnityEvent OnImpactGeneral;
     public UnityEvent OnImpactDamage;    
@@ -83,7 +88,7 @@ public class DestructibleObject : MonoBehaviour
         OnColliderEnter.Invoke();
 
         float impactMagnitude = Vector3.Magnitude(rb.velocity);
-        if (impactMagnitude > 0.15f)
+        if (impactMagnitude > generalImpactThreshold)
             OnImpactGeneral.Invoke();
 
         if (!isInvincible)

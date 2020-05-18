@@ -99,15 +99,17 @@ public class PersistentForceRigidbody : MonoBehaviour
                 for (int i = 0; i < rbs.Count; i++)
                 {
                     if (rbs[i] == null) rbs.Remove(rbs[i]);
-
-                    if (doTranslateMovement)
-                    {
-                        Vector3 direction = rbs[i].transform.position - this.transform.position;
-                        rbs[i].transform.position += direction.normalized * force * Time.deltaTime;
-                    }
                     else
                     {
-                        rbs[i].AddExplosionForce(force, this.transform.position, Vector3.Magnitude(trigger.bounds.size) / 2, default, forceType);
+                        if (doTranslateMovement)
+                        {
+                            Vector3 direction = rbs[i].transform.position - this.transform.position;
+                            rbs[i].transform.position += direction.normalized * force * Time.deltaTime;
+                        }
+                        else
+                        {
+                            rbs[i].AddExplosionForce(force, this.transform.position, Vector3.Magnitude(trigger.bounds.size) / 2, default, forceType);
+                        }
                     }
                 }
                 break;
@@ -116,11 +118,13 @@ public class PersistentForceRigidbody : MonoBehaviour
                 for (int i = 0; i < rbs.Count; i++)
                 {
                     if (rbs[i] == null) rbs.Remove(rbs[i]);
-
-                    if (doTranslateMovement)
-                        rbs[i].transform.position += GetDirection(forceDirection) * force * Time.deltaTime;
                     else
-                        rbs[i].AddForce(GetDirection(forceDirection) * force, forceType);
+                    {
+                        if (doTranslateMovement)
+                            rbs[i].transform.position += GetDirection(forceDirection) * force * Time.deltaTime;
+                        else
+                            rbs[i].AddForce(GetDirection(forceDirection) * force, forceType);
+                    }
                 }                
                 break;
         }

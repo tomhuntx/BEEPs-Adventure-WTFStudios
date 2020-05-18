@@ -13,8 +13,11 @@ GameObject:
   - component: {fileID: 2229526011650007077}
   - component: {fileID: 2229526011650007078}
   - component: {fileID: 2229526011650007079}
+  - component: {fileID: 308457322}
   - component: {fileID: 2229526011650007080}
+  - component: {fileID: 308457323}
   - component: {fileID: 2229526011650007081}
+  - component: {fileID: 308457324}
   m_Layer: 0
   m_Name: Carboard Box
   m_TagString: Box
@@ -30,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2229526011650007082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 9.17, z: 2.02}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -62,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6175733b5ecf83046bfceec7f97cad9f, type: 2}
+  - {fileID: 2100000, guid: 844be0cf060813844b5e61770b16889e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,7 +93,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2229526011650007082}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7c7181f08398f0240a46c79b296a0836, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -112,6 +115,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &308457322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229526011650007082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e8897b72f0cf14f991f9eae9e50793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDeadzone: 0.1
+  boxPlaceSFXPrefab: {fileID: 3550898150191051073, guid: 7724d282dd97d5d41864ca81f0decf0e,
+    type: 3}
 --- !u!114 &2229526011650007080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +145,7 @@ MonoBehaviour:
   durability: 50
   isInvincible: 0
   forceMagnitudeThreshold: 8
+  generalImpactThreshold: 0.55
   modelPresets:
   - assignedValue: 75
     mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
@@ -137,6 +156,21 @@ MonoBehaviour:
   - assignedValue: 10
     mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     material: {fileID: 2100000, guid: 3334bb6f0010d4741bc4a2099cc404ad, type: 2}
+  OnPlayerPunch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2229526011650007081}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3550898150191051073, guid: 75b6542b765c2474e86cd3d52086bee2,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnColliderEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -185,6 +219,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &308457323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229526011650007082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreTags:
+  - Conveyor Belt
+  onCollisionEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollisionStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollisionExit:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2229526011650007081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,3 +263,99 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &308457324
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229526011650007082}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 57ddc0cee6e308842acbd36ade4c52fd, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
