@@ -510,18 +510,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 803354984}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &164672625 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8794794228066944928, guid: 68c65f2d1c958334091447d500f3b1a8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1796791886}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ab04b0083af144299452d722576d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &179439496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -864,6 +852,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1389810187}
     m_Modifications:
+    - target: {fileID: 755221010604098942, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: robotHat
+      value: 
+      objectReference: {fileID: 9052248969421693785}
     - target: {fileID: 4492943516801982939, guid: a4d4165efe676b6489195423e5189fcf,
         type: 3}
       propertyPath: m_Name
@@ -1631,6 +1624,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1107748111}
     m_Modifications:
+    - target: {fileID: 755221010604098942, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: robotHat
+      value: 
+      objectReference: {fileID: 9052248969421693785}
+    - target: {fileID: 2398991888043045318, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: onCollisionEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 9052248969421693767}
+    - target: {fileID: 2398991888043045318, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: onTriggerEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 9052248969421693767}
     - target: {fileID: 4492943516801982939, guid: a4d4165efe676b6489195423e5189fcf,
         type: 3}
       propertyPath: m_Name
@@ -2626,6 +2634,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 100449694}
     m_Modifications:
+    - target: {fileID: 755221010604098942, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: robotHat
+      value: 
+      objectReference: {fileID: 9052248969421693785}
+    - target: {fileID: 2398991888043045318, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: onCollisionEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398991888043045318, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: onTriggerEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4492943516801982939, guid: a4d4165efe676b6489195423e5189fcf,
         type: 3}
       propertyPath: m_Name
@@ -2686,7 +2709,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2398991888043045318, guid: a4d4165efe676b6489195423e5189fcf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a4d4165efe676b6489195423e5189fcf, type: 3}
 --- !u!1001 &1151012853
 PrefabInstance:
@@ -4104,6 +4128,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 338176447}
     m_Modifications:
+    - target: {fileID: 755221010604098942, guid: a4d4165efe676b6489195423e5189fcf,
+        type: 3}
+      propertyPath: robotHat
+      value: 
+      objectReference: {fileID: 9052248969421693785}
     - target: {fileID: 4492943516801982939, guid: a4d4165efe676b6489195423e5189fcf,
         type: 3}
       propertyPath: m_Name
@@ -4318,7 +4347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1608034732}
   m_Layer: 0
-  m_Name: Conveyor Robots
+  m_Name: Assembly Robots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6284,6 +6313,21 @@ PrefabInstance:
       propertyPath: Priority
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 1162793327718628171, guid: 22f4e3bb75d94114ab01e51ad843d90b,
+        type: 3}
+      propertyPath: knockHat
+      value: 
+      objectReference: {fileID: 9052248970722624101}
+    - target: {fileID: 1162793327718628171, guid: 22f4e3bb75d94114ab01e51ad843d90b,
+        type: 3}
+      propertyPath: stackBox
+      value: 
+      objectReference: {fileID: 9052248971070153690}
+    - target: {fileID: 1162793327718628171, guid: 22f4e3bb75d94114ab01e51ad843d90b,
+        type: 3}
+      propertyPath: punchRobot
+      value: 
+      objectReference: {fileID: 9052248970021820232}
     - target: {fileID: 1162793327718628172, guid: 22f4e3bb75d94114ab01e51ad843d90b,
         type: 3}
       propertyPath: airSpeedRatio
@@ -6365,18 +6409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 164672625}
-        m_MethodName: ContributeToTask
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 9052248969421693767}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!4 &2405771096874478033
 Transform:
   m_ObjectHideFlags: 0
@@ -6501,7 +6534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: -73.4}
+  m_AnchoredPosition: {x: 6, y: -72.9}
   m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9052248969421693767
@@ -6541,7 +6574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Find the blue cube"
+  m_text: "\u2022 Give a robot a new hat"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6610,10 +6643,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 9052248969421693784}
-    characterCount: 20
+    characterCount: 24
     spriteCount: 0
-    spaceCount: 4
-    wordCount: 4
+    spaceCount: 6
+    wordCount: 6
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -6782,7 +6815,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: -61.800003}
+  m_AnchoredPosition: {x: 6, y: -61.299995}
   m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9052248969427031635
@@ -6868,12 +6901,12 @@ MonoBehaviour:
   tasksComplete: 
   completeTexts:
   - "\u2022 S\u0336t\u0336a\u0336c\u0336k\u0336 \u0336a\u0336 \u0336b\u0336o\u0336x\u0336"
-  - "\u2022 D\u0336e\u0336s\u0336t\u0336r\u0336o\u0336y\u0336 \u0336f\u0336i\u0336v\u0336e\u0336
-    \u0336b\u0336o\u0336x\u0336e\u0336s\u0336 \u0336(\u03365\u0336/\u03365\u0336)\u0336"
+  - "\u2022 D\u0336i\u0336s\u0336r\u0336u\u0336p\u0336t\u0336 \u0336t\u0336h\u0336e\u0336
+    \u0336a\u0336s\u0336s\u0336e\u0336m\u0336b\u0336l\u0336y\u0336 \u0336l\u0336i\u0336n\u0336e\u0336"
   - "\u2022 P\u0336u\u0336t\u0336 \u0336t\u0336h\u0336e\u0336 \u0336M\u0336a\u0336n\u0336a\u0336g\u0336e\u0336r\u0336'\u0336s\u0336
     \u0336s\u0336a\u0336f\u0336e\u0336t\u0336y\u0336 \u0336l\u0336a\u0336s\u0336t\u0336"
-  - "\u2022 F\u0336i\u0336n\u0336d\u0336 \u0336t\u0336h\u0336e\u0336 \u0336b\u0336l\u0336u\u0336e\u0336
-    \u0336c\u0336u\u0336b\u0336e\u0336 "
+  - "\u2022 G\u0336i\u0336v\u0336e\u0336 \u0336a\u0336 \u0336r\u0336o\u0336b\u0336o\u0336t\u0336
+    \u0336a\u0336 \u0336n\u0336e\u0336w\u0336 \u0336h\u0336a\u0336t\u0336"
 --- !u!224 &9052248969933011598
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6930,7 +6963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskNumber: 2
-  requiredContributes: 5
+  requiredContributes: 1
   currentContributes: 0
 --- !u!222 &9052248970021820233
 CanvasRenderer:
@@ -6977,7 +7010,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Destroy five boxes"
+  m_text: "\u2022 Disrupt the assembly line"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7046,10 +7079,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 9052248970021820278}
-    characterCount: 20
+    characterCount: 27
     spriteCount: 0
-    spaceCount: 3
-    wordCount: 3
+    spaceCount: 4
+    wordCount: 4
     linkCount: 0
     lineCount: 1
     pageCount: 1

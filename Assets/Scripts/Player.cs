@@ -7,10 +7,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(FPSController))]
 public class Player : MonoBehaviour
 {
-	// Prototype
+	// Prototype Tasks
 	public Task stackBox;
 	bool boxStacking = false;
 
+	public Task punchRobot;
 	public Task knockHat;
 	//
 
@@ -431,6 +432,11 @@ public class Player : MonoBehaviour
 				hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
 
 				knockHat.Contribute();
+			}
+
+			if (hitInfo.transform.tag == "Bot")
+			{
+				punchRobot.Contribute();
 			}
 		}
     }
