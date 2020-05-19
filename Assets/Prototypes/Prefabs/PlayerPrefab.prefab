@@ -524,7 +524,8 @@ MonoBehaviour:
   punchDamage: 3
   throwForce: 10
   objectOffset: {x: 2, y: -2, z: 3}
-  interactionDistance: 2
+  raycastDistance: 4
+  interactionDistance: {x: 2, y: 10, z: 2}
   boxPlacementDeadzone: 0.1
   materialHighlight: {fileID: 2100000, guid: d11678e5824856f4584192fc53a31da6, type: 2}
 --- !u!54 &1730440466
