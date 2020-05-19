@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
+//using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(CharacterController))]
 [AddComponentMenu("First Person Player Controller")]

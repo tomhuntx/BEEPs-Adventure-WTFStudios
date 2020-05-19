@@ -679,6 +679,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3294954139307674383, guid: 98791cc9c3150f14fbde45cb3d36ab71,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294954139523927212, guid: 98791cc9c3150f14fbde45cb3d36ab71,
+        type: 3}
+      propertyPath: field of view
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
         type: 3}
       propertyPath: stackBox
@@ -697,17 +707,17 @@ PrefabInstance:
     - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
         type: 3}
       propertyPath: objectOffset.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
-        type: 3}
-      propertyPath: objectOffset.x
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
         type: 3}
+      propertyPath: objectOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
+        type: 3}
       propertyPath: objectOffset.y
-      value: -1.5
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
         type: 3}
@@ -717,7 +727,7 @@ PrefabInstance:
     - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
         type: 3}
       propertyPath: interactionDistance.y
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4466297908715420556, guid: 98791cc9c3150f14fbde45cb3d36ab71,
         type: 3}
@@ -773,6 +783,11 @@ PrefabInstance:
         type: 3}
       propertyPath: jumpAccelerationRate
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967625038663908661, guid: 98791cc9c3150f14fbde45cb3d36ab71,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98791cc9c3150f14fbde45cb3d36ab71, type: 3}
