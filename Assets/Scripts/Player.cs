@@ -338,7 +338,7 @@ public class Player : MonoBehaviour
             {
                 if (boxHighlight != null)
                 {
-                    Destroy(boxHighlight);
+					Destroy(boxHighlight);
                 }
             }
         }
@@ -436,6 +436,8 @@ public class Player : MonoBehaviour
 
 			if (hitInfo.transform.tag == "Bot")
 			{
+				hitInfo.transform.GetComponent<RobotPunch>().GetPunched(this);
+
 				punchRobot.Contribute();
 			}
 		}
