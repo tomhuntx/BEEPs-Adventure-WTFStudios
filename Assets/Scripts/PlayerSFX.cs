@@ -12,8 +12,8 @@ public class PlayerSFX : MonoBehaviour
     private float originalPitch;
     private float sprintPitch;
     private bool isLanded = true;
-    [SerializeField] private float pitchMult = 0.1f;
-    [SerializeField] private float landSFXThreshold = 6.0f;
+    [SerializeField] private float pitchMult = 0.5f;
+    [SerializeField] private float landSFXThreshold = 3.0f;
     [SerializeField] private GameObject jumpSFXPrefab;
     [SerializeField] private GameObject landSFXPrefab;
 
