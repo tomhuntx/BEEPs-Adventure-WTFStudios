@@ -88,7 +88,6 @@ public class FPSController : MonoBehaviour
 	private void Start()
 	{
 		controller = GetComponent<CharacterController>();
-		Cursor.lockState = CursorLockMode.Locked;
 		currentSpeed = walkSpeed;
 		currentLookSpeed = sensitivity;
 	}
