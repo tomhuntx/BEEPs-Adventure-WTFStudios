@@ -15,18 +15,20 @@ public class Robot : MonoBehaviour
 	private bool canBePunched = true;
 	private int patienceLimit = 5;
 	private int patience = 0;
+	private float expDistance = 2f;
 
 	// Saving Positions
 	private Vector3 originalDirection;
 	private Vector3 originalPosition;
 
-	private Player thePlayer = null;
+	private Player thePlayer;
 	public Task punchRobot;
 
 	void Awake()
 	{
 		originalDirection = transform.forward;
 		originalPosition = transform.position;
+		thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 	}
 
 	void FixedUpdate()
@@ -63,16 +65,13 @@ public class Robot : MonoBehaviour
 		}
 	}
 
-	public void GetPunched(Player player)
+	public void GetPunched(Vector3 direction)
 	{
-		// ALSO WANT SFX & SLIGHT BUMP
-		// & anims ofc
-		thePlayer = player;
 		patience++;
 
 		if (canBePunched)
 		{
-			transform.position += punchDistance * player.PlayerMovementControls.MainCam.transform.forward;
+			transform.position += punchDistance * direction;
 			canBePunched = false;
 		}
 
@@ -80,6 +79,23 @@ public class Robot : MonoBehaviour
 		{
 			punchRobot.Contribute();
 			lookAtPlayer = true;
+		}
+	}
+
+	public void GetBlownUp(GameObject explosion)
+	{
+		patience = patienceLimit;
+		lookAtPlayer = true;
+
+		// Prevents multiple explosive boxes from sending robots flying
+		if (canBePunched)
+		{
+			// Punch bump (temp)
+			punchRobot.Contribute();
+			Vector3 direction = this.transform.position - explosion.transform.position;
+			direction.Normalize();
+			transform.position += direction * expDistance;
+			canBePunched = false;
 		}
 	}
 }

@@ -437,7 +437,7 @@ public class Player : MonoBehaviour
 			{
 				DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
 				target.OnPlayerPunch.Invoke();
-				hitInfo.transform.GetComponent<Robot>().GetPunched(this);
+				hitInfo.transform.GetComponent<Robot>().GetPunched(this.PlayerMovementControls.MainCam.transform.forward);
 			}
 		}
     }
