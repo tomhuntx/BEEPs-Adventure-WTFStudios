@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
 	public Task stackBox;
 	bool boxStacking = false;
 
-	public Task punchRobot;
 	public Task knockHat;
 	//
 
@@ -436,9 +435,9 @@ public class Player : MonoBehaviour
 
 			if (hitInfo.transform.tag == "Bot")
 			{
-				hitInfo.transform.GetComponent<RobotPunch>().GetPunched(this);
-
-				punchRobot.Contribute();
+				DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
+				target.OnPlayerPunch.Invoke();
+				hitInfo.transform.GetComponent<Robot>().GetPunched(this);
 			}
 		}
     }

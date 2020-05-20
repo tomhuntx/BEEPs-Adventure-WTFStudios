@@ -2,32 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobotPunch : MonoBehaviour
+public class Robot : MonoBehaviour
 {
-	// Speed of moving to look
+	// Look Variables
 	private float lookSpeed = 2.5f;
-
-	// Max range that the bot will keep looking at the player
 	private float lookRange = 6f;
-
-	// Ensure the robot looks at the player for at least x seconds
 	private float lookTime = 3f;
-
-
 	private bool lookAtPlayer = false;
-	private Player thePlayer = null;
+
+	// Punch Variables
+	private float punchDistance = 0.5f;
+	private bool canBePunched = true;
+	private int patienceLimit = 5;
+	private int patience = 0;
+
+	// Saving Positions
 	private Vector3 originalDirection;
 	private Vector3 originalPosition;
 
-	private Vector3 origPlayerPos = Vector3.zero;
+	private Player thePlayer = null;
+	public Task punchRobot;
 
-	private void Start()
+	void Awake()
 	{
 		originalDirection = transform.forward;
 		originalPosition = transform.position;
 	}
 
-	// Update is called once per frame
 	void FixedUpdate()
     {
 		// Look at the player
@@ -50,14 +51,35 @@ public class RobotPunch : MonoBehaviour
 			Quaternion rotateTo = Quaternion.LookRotation(originalDirection);
 			transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
 		}
+
+		// Move back to the position if it leaves
+		if (Vector3.Distance(transform.position, originalPosition) > 0.1f)
+		{
+			transform.position = Vector3.MoveTowards(transform.position, originalPosition, 1f * Time.deltaTime);
+		}
+		else
+		{
+			canBePunched = true;
+		}
 	}
 
 	public void GetPunched(Player player)
 	{
 		// ALSO WANT SFX & SLIGHT BUMP
 		// & anims ofc
-
 		thePlayer = player;
-		lookAtPlayer = true;
+		patience++;
+
+		if (canBePunched)
+		{
+			transform.position += punchDistance * player.PlayerMovementControls.MainCam.transform.forward;
+			canBePunched = false;
+		}
+
+		if (patience >= patienceLimit)
+		{
+			punchRobot.Contribute();
+			lookAtPlayer = true;
+		}
 	}
 }
