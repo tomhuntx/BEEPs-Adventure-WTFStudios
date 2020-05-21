@@ -30,6 +30,9 @@ public class Player : MonoBehaviour
     [Tooltip("Strength of impulse force applied upon throwing.")]
     [SerializeField] private float throwForce = 20.0f;
 
+	[Tooltip("Strength of impulse force applied upon dropping a non-box object.")]
+	[SerializeField] private float dropForce = 10.0f;
+
 	[Tooltip("The position of the grabbed object in this transform's local space.")]
     [SerializeField] private Vector3 objectOffset;
 
@@ -116,7 +119,7 @@ public class Player : MonoBehaviour
 
                 if (outlineCollider.isPlacable)
                 {
-                    if (Input.GetButtonDown("Place Box") && boxOutline.activeSelf) PlaceBox();
+                    if (Input.GetButtonDown("Place Box") && (boxOutline.activeSelf)) PlaceBox();
                 }
 
                 if (Input.GetButtonDown("Throw Box")) ThrowBox();
@@ -264,17 +267,23 @@ public class Player : MonoBehaviour
 				//Remove any external force appliers
 				grabbedObject.GetComponent<DestructibleObject>().DetachForceAppliers();
 
-				// Rotate (hardhat only?)
-				//grabbedObject.transform.Rotate(0, -90, 0, 0);
-
 				//Set grabbed box as child of main cam
 				grabbedObject.transform.parent = controller.MainCam.transform;
 				grabbedObject.transform.localPosition = Vector3.zero + otherObjectOffset;
 				grabbedObject.transform.rotation = controller.MainCam.transform.rotation;
 
+				// Rotate (hardhat only?)
+				grabbedObject.transform.Rotate(0, -20, 0);
+
 				//Disable physics and collision
 				grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
-				grabbedObject.GetComponent<Collider>().enabled = false;
+
+				// Get multiple colliders if they have them
+				Collider[] colliders = grabbedObject.GetComponentsInChildren<Collider>();
+				foreach (Collider col in colliders)
+				{
+					col.enabled = false;
+				}
 
 				//Put grabbed box in different layer mask to prevent clipping
 				grabbedObject.layer = LayerMask.NameToLayer("Grabbed Object");
@@ -428,6 +437,12 @@ public class Player : MonoBehaviour
     /// </summary>
     private void PlaceBox()
     {
+		if (grabbedObject)
+		{
+			currentBox = grabbedObject;
+			grabbedObject = null;
+		}
+
         currentBox.transform.parent = null;
 
 		if (boxOutline.activeSelf)
@@ -448,14 +463,19 @@ public class Player : MonoBehaviour
             currentBox.transform.rotation = Quaternion.identity;
 		}
 
-        //Revert Box state
-        currentBox.layer = LayerMask.NameToLayer("Default");
+		//Revert Box state
+		currentBox.layer = LayerMask.NameToLayer("Default");
         currentBox.GetComponent<Collider>().enabled = true;
         currentBox.GetComponent<Rigidbody>().isKinematic = false;
-        currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
+		if (currentBox.GetComponent<BoxDragSFX>())
+		{
+			currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
+		}
         currentBox = null;
-        Destroy(boxOutline);
-
+		if (boxOutline)
+		{
+			Destroy(boxOutline);
+		}
 	}
 
     /// <summary>
@@ -467,6 +487,7 @@ public class Player : MonoBehaviour
             !isRaycastHit)
         {
 			Vector3 newPos;
+			float force;
 			if (grabbedObject)
 			{
 				currentBox = grabbedObject;
@@ -475,24 +496,34 @@ public class Player : MonoBehaviour
 				newPos = controller.MainCam.transform.localPosition;
 				newPos.z = otherObjectOffset.z;
 				newPos.y -= 2;
+				force = dropForce;
 			}
 			else
 			{
 				newPos = controller.MainCam.transform.localPosition;
 				newPos.z = objectOffset.z;
+				force = throwForce;
 			}
-            Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
+			Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
 
             currentBox.transform.localPosition = newPos;
             currentBox.transform.parent = null;
             currentBox.layer = LayerMask.NameToLayer("Default");
-            currentBox.GetComponent<Collider>().enabled = true;
+            //currentBox.GetComponent<Collider>().enabled = true;
+
+			// Multiple collider check
+			Collider[] colliders = currentBox.GetComponentsInChildren<Collider>();
+			foreach (Collider col in colliders)
+			{
+				col.enabled = true;
+			}
+
 			if (currentBox.GetComponent<BoxDragSFX>())
 			{
 				currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
 			}
             boxRB.isKinematic = false;
-            boxRB.AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
+            boxRB.AddForce(controller.MainCam.transform.forward * force, ForceMode.Impulse);
             currentBox = null;
 			Debug.Log("aaaa");
 			if (boxOutline)
@@ -500,11 +531,6 @@ public class Player : MonoBehaviour
 				Destroy(boxOutline);
 			}
         }
-
-		if (grabbedObject)
-		{
-
-		}
     }
 
     /// <summary>
