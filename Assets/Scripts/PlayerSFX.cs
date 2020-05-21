@@ -12,8 +12,15 @@ public class PlayerSFX : MonoBehaviour
     private float originalPitch;
     private float sprintPitch;
     private bool isLanded = true;
+    private float heightDisplacement;
+    
+    [Tooltip("How much pitch will be increase from the current pitch when moving.")]
     [SerializeField] private float pitchMult = 0.5f;
-    [SerializeField] private float landSFXThreshold = 3.0f;
+
+    [Tooltip("How much distance displacement before playing the effect.")]
+    [SerializeField] private float landSFXThreshold = 2.5f;
+
+
     [SerializeField] private GameObject jumpSFXPrefab;
     [SerializeField] private GameObject landSFXPrefab;
 
@@ -55,23 +62,21 @@ public class PlayerSFX : MonoBehaviour
         {
             if (!isLanded)
             {
-                isLanded = true;
-                sprintPitch = 0;
-
-                if (controller.Controller.velocity.magnitude > landSFXThreshold)
+                if (heightDisplacement > landSFXThreshold)
                 {
                     Instantiate(landSFXPrefab, this.transform.position, this.transform.rotation);
                 }
-                else
-                {
-
-                }
+                heightDisplacement = 0;
+                sprintPitch = 0;
+                isLanded = true;
             }
 
+            //Get movement direction
             Vector3 movement = (Input.GetAxis("Horizontal") * this.transform.right) +
                                (Input.GetAxis("Vertical") * this.transform.forward);
             movement = Vector3.ClampMagnitude(movement, 1);
 
+            //Play and pitch up sound when moving
             if (movement.magnitude > 0)
             {
                 if (!source.loop) source.loop = true;
@@ -83,8 +88,8 @@ public class PlayerSFX : MonoBehaviour
                 float max = originalPitch + pitchMult;
                 newPitch = Mathf.Clamp(newPitch, min, max);
                 source.pitch = newPitch + sprintPitch;
-                //print(source.isPlaying);
             }
+            //Pitch down then stop when not moving
             else
             {
                 if (source.pitch > 0)
@@ -102,6 +107,7 @@ public class PlayerSFX : MonoBehaviour
         {
             isLanded = false;
 
+            //Pitch down when mid-air
             if (source.pitch > 0)
             {
                 if (source.isPlaying) source.pitch -= Time.deltaTime;
@@ -110,6 +116,14 @@ public class PlayerSFX : MonoBehaviour
             {
                 source.pitch = originalPitch;
                 source.Stop();
+            }
+
+            //Check highest point before losing height
+            RaycastHit hitInfo;
+            if (Physics.Raycast(this.transform.position, -this.transform.up, out hitInfo, Mathf.Infinity))
+            {
+                if (hitInfo.distance > heightDisplacement)
+                    heightDisplacement = hitInfo.distance;
             }
         }
     }
