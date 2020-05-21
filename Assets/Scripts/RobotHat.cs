@@ -8,7 +8,7 @@ public class RobotHat : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Box")
+        if (other.tag == "Box" || other.tag == "Hardhat")
 		{
 			if (!other.transform.GetComponent<Rigidbody>().isKinematic)
 			{

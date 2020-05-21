@@ -6,7 +6,7 @@ public class Robot : MonoBehaviour
 {
 	// Look Variables
 	private float lookSpeed = 2.5f;
-	private float lookRange = 6f;
+	private float lookRange = 8f;
 	private float lookTime = 3f;
 	private bool lookAtPlayer = false;
 
@@ -23,12 +23,15 @@ public class Robot : MonoBehaviour
 
 	private Player thePlayer;
 	public Task punchRobot;
+	private GameObject[] robots;
 
 	void Awake()
 	{
 		originalDirection = transform.forward;
 		originalPosition = transform.position;
 		thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+		robots = GameObject.FindGameObjectsWithTag("Bot");
 	}
 
 	void FixedUpdate()
@@ -54,8 +57,8 @@ public class Robot : MonoBehaviour
 			transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
 		}
 
-		// Move back to the position if it leaves
-		if (Vector3.Distance(transform.position, originalPosition) > 0.1f)
+		// Move back to start position if it leaves
+		if (Vector3.Distance(transform.position, originalPosition) > 0.01f)
 		{
 			transform.position = Vector3.MoveTowards(transform.position, originalPosition, 1f * Time.deltaTime);
 		}
@@ -63,10 +66,27 @@ public class Robot : MonoBehaviour
 		{
 			canBePunched = true;
 		}
+
+		if (patience >= patienceLimit)
+		{
+			if (punchRobot)
+			{
+				punchRobot.Contribute();
+			}
+
+			foreach (GameObject robot in robots)
+			{
+				robot.GetComponent<Robot>().lookAtPlayer = true;
+			}
+
+			patience = 0;
+		}
 	}
 
 	public void GetPunched(Vector3 direction)
 	{
+		lookAtPlayer = true;
+
 		patience++;
 
 		if (canBePunched)
@@ -74,24 +94,17 @@ public class Robot : MonoBehaviour
 			transform.position += punchDistance * direction;
 			canBePunched = false;
 		}
-
-		if (patience >= patienceLimit)
-		{
-			punchRobot.Contribute();
-			lookAtPlayer = true;
-		}
 	}
 
 	public void GetBlownUp(GameObject explosion)
 	{
-		patience = patienceLimit;
 		lookAtPlayer = true;
+
+		patience = patienceLimit;
 
 		// Prevents multiple explosive boxes from sending robots flying
 		if (canBePunched)
 		{
-			// Punch bump (temp)
-			punchRobot.Contribute();
 			Vector3 direction = this.transform.position - explosion.transform.position;
 			direction.Normalize();
 			transform.position += direction * expDistance;

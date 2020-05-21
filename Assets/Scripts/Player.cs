@@ -33,7 +33,10 @@ public class Player : MonoBehaviour
 	[Tooltip("The position of the grabbed object in this transform's local space.")]
     [SerializeField] private Vector3 objectOffset;
 
-    [Tooltip("How far the raycast is.")]
+	[Tooltip("A variant of the object offset for non-box items.")]
+	[SerializeField] private Vector3 otherObjectOffset;
+
+	[Tooltip("How far the raycast is.")]
     [SerializeField] private float raycastDistance = 4f;
 
     [Tooltip("How far from the player's body is an object interactable.")]
@@ -55,16 +58,16 @@ public class Player : MonoBehaviour
     //highlight
     private GameObject boxHighlight;
 
-    private GameObject currentBox;
+	private GameObject currentBox;
     private FPSController controller;
     private RaycastHit hitInfo;
     private bool isRaycastHit = false;
-
     private GameObject heavyBox;
     private Rigidbody heavyBoxRB;
-    #endregion
+	private GameObject grabbedObject;
+	#endregion
 
-    public FPSController PlayerMovementControls { get { return controller; } }
+	public FPSController PlayerMovementControls { get { return controller; } }
 
 
     private void Awake()
@@ -118,6 +121,9 @@ public class Player : MonoBehaviour
 
                 if (Input.GetButtonDown("Throw Box")) ThrowBox();
             }
+			else if (grabbedObject != null) {
+				if (Input.GetButtonDown("Throw Box")) ThrowBox();
+			}
             else
             {
                 if (Input.GetButtonDown("Grab Box")) GrabBox();
@@ -249,6 +255,29 @@ public class Player : MonoBehaviour
 				{
 					Destroy(highlight);
 				}
+			}
+
+			if (hitInfo.transform.tag == "Hardhat")
+			{
+				grabbedObject = hitInfo.transform.gameObject;
+
+				//Remove any external force appliers
+				grabbedObject.GetComponent<DestructibleObject>().DetachForceAppliers();
+
+				// Rotate (hardhat only?)
+				//grabbedObject.transform.Rotate(0, -90, 0, 0);
+
+				//Set grabbed box as child of main cam
+				grabbedObject.transform.parent = controller.MainCam.transform;
+				grabbedObject.transform.localPosition = Vector3.zero + otherObjectOffset;
+				grabbedObject.transform.rotation = controller.MainCam.transform.rotation;
+
+				//Disable physics and collision
+				grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+				grabbedObject.GetComponent<Collider>().enabled = false;
+
+				//Put grabbed box in different layer mask to prevent clipping
+				grabbedObject.layer = LayerMask.NameToLayer("Grabbed Object");
 			}
 		}
     }
@@ -437,19 +466,45 @@ public class Player : MonoBehaviour
         if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
             !isRaycastHit)
         {
+			Vector3 newPos;
+			if (grabbedObject)
+			{
+				currentBox = grabbedObject;
+				grabbedObject = null;
+
+				newPos = controller.MainCam.transform.localPosition;
+				newPos.z = otherObjectOffset.z;
+				newPos.y -= 2;
+			}
+			else
+			{
+				newPos = controller.MainCam.transform.localPosition;
+				newPos.z = objectOffset.z;
+			}
             Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
-            Vector3 newPos = controller.MainCam.transform.localPosition;
-            newPos.z = objectOffset.z;
+
             currentBox.transform.localPosition = newPos;
             currentBox.transform.parent = null;
             currentBox.layer = LayerMask.NameToLayer("Default");
             currentBox.GetComponent<Collider>().enabled = true;
-            currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
+			if (currentBox.GetComponent<BoxDragSFX>())
+			{
+				currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
+			}
             boxRB.isKinematic = false;
             boxRB.AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
             currentBox = null;
-            Destroy(boxOutline);
+			Debug.Log("aaaa");
+			if (boxOutline)
+			{
+				Destroy(boxOutline);
+			}
         }
+
+		if (grabbedObject)
+		{
+
+		}
     }
 
     /// <summary>
@@ -471,13 +526,16 @@ public class Player : MonoBehaviour
 
 			if (hitInfo.transform.tag == "Hardhat")
 			{
+				DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
+				target.OnPlayerPunch.Invoke();
+
 				hitInfo.transform.GetComponent<Rigidbody>().isKinematic = false;
 				hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
-
+				
 				knockHat.Contribute();
 			}
 
-			if (hitInfo.transform.tag == "Bot")
+			if (hitInfo.transform.tag == "Bot" || hitInfo.transform.tag == "ManagerBot")
 			{
 				DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
 				target.OnPlayerPunch.Invoke();
