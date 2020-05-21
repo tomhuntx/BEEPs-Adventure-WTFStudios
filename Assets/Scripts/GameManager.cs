@@ -11,7 +11,12 @@ public class GameManager : MonoBehaviour
 	public int targetFPS = 60;
     [SerializeField] private GameObject pauseMenu;
 
-    private void Awake()
+	//
+	bool moveControls = false;
+	RectTransform rect;
+	//
+
+	private void Awake()
     {
         GManager = this;
     }
@@ -26,11 +31,26 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		//Confirm  (enter key)
+		/////// Would move to GUI MANAGER
+		//Store controls
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
-			controls.SetActive(false);
+			rect = controls.GetComponent<RectTransform>();
+			moveControls = true;
 		}
+
+		if (moveControls)
+		{
+			if (rect.localPosition.y > -400f)
+			{
+				rect.localPosition += 600 * Vector3.down * Time.deltaTime;
+			}
+			else if (controls.activeSelf)
+			{
+				controls.SetActive(false);
+			}
+		}
+		///////
 
         //Simple pause
         if (Input.GetKeyDown(KeyCode.Escape))
