@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
     private GameObject heavyBox;
     private Rigidbody heavyBoxRB;
 	private GameObject grabbedObject;
+    private Transform previousRaycastTarget;
 	#endregion
 
 	public FPSController PlayerMovementControls { get { return controller; } }
@@ -137,8 +138,15 @@ public class Player : MonoBehaviour
         }
 
         //Debug raycast
-        //if (isRaycastHit) Debug.DrawLine(controller.MainCam.transform.position, hitInfo.point, Color.green);
-        //else              Debug.DrawRay(controller.MainCam.transform.position, controller.MainCam.transform.forward, Color.red);
+        //if (isRaycastHit)
+        //{
+        //    Debug.DrawLine(controller.MainCam.transform.position, hitInfo.point, Color.green);
+        //    print(hitInfo.transform);
+        //}
+        //else
+        //{
+        //    Debug.DrawRay(controller.MainCam.transform.position, controller.MainCam.transform.forward, Color.red);
+        //}
     }
 
 
@@ -218,8 +226,15 @@ public class Player : MonoBehaviour
 				currentBox.GetComponent<Rigidbody>().isKinematic = true;
 				currentBox.GetComponent<Collider>().enabled = false;
 
-				//Put grabbed box in different layer mask to prevent clipping
-				currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
+                //Put grabbed box in different layer mask to prevent clipping
+                if (targetBox.TargetGameObject != null)
+                {
+                    targetBox.TargetGameObject.layer = LayerMask.NameToLayer("Grabbed Object");
+                }
+                else
+                {
+                    currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
+                }
 
 				//Tweak collider and add collision checker
 				boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
@@ -387,11 +402,20 @@ public class Player : MonoBehaviour
 				}
 			}
 
-			if (hitInfo.transform.tag == "Box" ||
+            if (hitInfo.transform.tag == "Box" ||
                 hitInfo.transform.tag == "Heavy Box")
             {
+                if (previousRaycastTarget != hitInfo.transform)
+                {
+                    if (boxHighlight != null)
+                    {
+                        Destroy(boxHighlight);
+                    }
+                }
+
                 if (boxHighlight == null)
-                {                
+                {
+                    previousRaycastTarget = hitInfo.transform;
                     boxHighlight = Instantiate(hitInfo.transform.gameObject);
                     DestructibleObject target = boxHighlight.GetComponent<DestructibleObject>();
 
@@ -473,6 +497,7 @@ public class Player : MonoBehaviour
         {
             currentBox.transform.position = boxOutline.transform.position;
             currentBox.transform.rotation = boxOutline.transform.rotation;
+            currentBox.transform.localScale = Vector3.one;
 
             // Stack box task
             if (stackBox != null && boxStacking)
@@ -487,8 +512,16 @@ public class Player : MonoBehaviour
             currentBox.transform.rotation = Quaternion.identity;
 		}
 
-		//Revert Box state
-		currentBox.layer = LayerMask.NameToLayer("Default");
+        //Revert Box state
+        DestructibleObject targetBox = currentBox.GetComponent<DestructibleObject>();
+        if (targetBox.TargetGameObject != null)
+        {
+            targetBox.TargetGameObject.layer = LayerMask.NameToLayer("Default");
+        }
+        else
+        {
+            currentBox.layer = LayerMask.NameToLayer("Default");
+        }
         currentBox.GetComponent<Collider>().enabled = true;
         currentBox.GetComponent<Rigidbody>().isKinematic = false;
 		if (currentBox.GetComponent<BoxDragSFX>())

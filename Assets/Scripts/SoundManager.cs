@@ -61,6 +61,15 @@ public class SoundManager : MonoBehaviour
             masterVol = masterSlider.value;
             musicVol = musicSlider.value;
             soundEffectsVol = soundEffectsSlider.value;
+
+            //Mute sounds when paused
+            masterMixer.SetFloat("Music_Sidechain_Level", -80);
+            masterMixer.SetFloat("SFX_Sidechain_Level", -80);
+        }
+        else
+        {
+            masterMixer.SetFloat("Music_Sidechain_Level", 0);
+            masterMixer.SetFloat("SFX_Sidechain_Level", 0);
         }
 
         masterMixer.SetFloat("Master_Levels", masterVol);

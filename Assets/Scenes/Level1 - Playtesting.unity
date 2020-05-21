@@ -4324,7 +4324,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 95, y: -70}
+  m_AnchoredPosition: {x: 95, y: -60}
   m_SizeDelta: {x: 190, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887092771 stripped
@@ -4567,7 +4567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 95, y: -170}
+  m_AnchoredPosition: {x: 95, y: -140}
   m_SizeDelta: {x: 190, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &922370943
@@ -9592,7 +9592,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 95, y: -120}
+  m_AnchoredPosition: {x: 95, y: -100}
   m_SizeDelta: {x: 190, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2109870567
@@ -11186,7 +11186,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0000019073486, y: 0.0000076293945}
-  m_SizeDelta: {x: 190, y: 190}
+  m_SizeDelta: {x: 190, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5253954558451869997
 GameObject:
@@ -11286,7 +11286,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5253954560091101840}
   m_HandleRect: {fileID: 5253954560091101841}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12216,7 +12216,7 @@ PrefabInstance:
     - target: {fileID: 7043323893566995244, guid: 5d8e6f61161f90c448be47a4aeb1c217,
         type: 3}
       propertyPath: otherObjectOffset.y
-      value: -7
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7043323893566995244, guid: 5d8e6f61161f90c448be47a4aeb1c217,
         type: 3}
@@ -12232,6 +12232,11 @@ PrefabInstance:
         type: 3}
       propertyPath: dropForce
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043323893566995244, guid: 5d8e6f61161f90c448be47a4aeb1c217,
+        type: 3}
+      propertyPath: objectOffset.y
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7043323893566995247, guid: 5d8e6f61161f90c448be47a4aeb1c217,
         type: 3}
