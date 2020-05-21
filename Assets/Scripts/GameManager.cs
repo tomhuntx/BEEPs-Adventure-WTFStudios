@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager GManager;
+	public GameObject controls;
 
-    public int targetFPS = 60;
+	public int targetFPS = 60;
     [SerializeField] private GameObject pauseMenu;
 
     private void Awake()
@@ -25,6 +26,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		//Confirm  (enter key)
+		if (Input.GetKeyDown(KeyCode.Return))
+		{
+			controls.SetActive(false);
+		}
+
         //Simple pause
         if (Input.GetKeyDown(KeyCode.Escape))
         {

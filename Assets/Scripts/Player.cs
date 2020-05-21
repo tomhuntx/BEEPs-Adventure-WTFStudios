@@ -9,9 +9,13 @@ public class Player : MonoBehaviour
 {
 	// Prototype Tasks
 	public Task stackBox;
+	public Task knockHat;
 	bool boxStacking = false;
 
-	public Task knockHat;
+	public GameObject controls;
+	public GameObject controlsObject;
+	public Material controlsHighlight;
+	private GameObject highlight;
 	//
 
 	public static Player Instance;    
@@ -176,66 +180,77 @@ public class Player : MonoBehaviour
     /// </summary>
     private void GrabBox()
     {
-        if (isRaycastHit)
-        {
-            if (hitInfo.transform.tag == "Box")
-            {
-                if (boxHighlight != null)
-                {
-                    Destroy(boxHighlight);
-                }
+		if (isRaycastHit)
+		{
+			if (hitInfo.transform.tag == "Box")
+			{
+				if (boxHighlight != null)
+				{
+					Destroy(boxHighlight);
+				}
 
 				currentBox = hitInfo.transform.gameObject;
 
-                //Remove any external force appliers
-                currentBox.GetComponent<DestructibleObject>().DetachForceAppliers();
-                currentBox.GetComponent<BoxDragSFX>().ToggleThis(false);
+				//Remove any external force appliers
+				currentBox.GetComponent<DestructibleObject>().DetachForceAppliers();
+				currentBox.GetComponent<BoxDragSFX>().ToggleThis(false);
 
-                //Clone grabbed box for outline setup
-                boxOutline = Instantiate(currentBox);
-                boxOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
+				//Clone grabbed box for outline setup
+				boxOutline = Instantiate(currentBox);
+				boxOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
 
-                //Set grabbed box as child of main cam
-                currentBox.transform.parent = controller.MainCam.transform;
-                currentBox.transform.localPosition = Vector3.zero + objectOffset;
-                currentBox.transform.rotation = controller.MainCam.transform.rotation;                
+				//Set grabbed box as child of main cam
+				currentBox.transform.parent = controller.MainCam.transform;
+				currentBox.transform.localPosition = Vector3.zero + objectOffset;
+				currentBox.transform.rotation = controller.MainCam.transform.rotation;
 
-                //Disable physics and collision
-                currentBox.GetComponent<Rigidbody>().isKinematic = true;
+				//Disable physics and collision
+				currentBox.GetComponent<Rigidbody>().isKinematic = true;
 				currentBox.GetComponent<Collider>().enabled = false;
 
-                //Put grabbed box in different layer mask to prevent clipping
-                currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
+				//Put grabbed box in different layer mask to prevent clipping
+				currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
 
-                //Remove physics and box component
-                Destroy(boxOutline.GetComponent<DestructibleObject>());
+				//Remove physics and box component
+				Destroy(boxOutline.GetComponent<DestructibleObject>());
 				//Destroy(boxOutline.GetComponent<Rigidbody>()); // CAUSES TRIGGERS TO NOT WORK
-				boxOutline.GetComponent<Rigidbody>().isKinematic = true; 
+				boxOutline.GetComponent<Rigidbody>().isKinematic = true;
 
-                //Tweak collider and add collision checker
-                boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
-                BoxCollider collider = boxOutline.GetComponent<BoxCollider>();
-                collider.size = new Vector3(0.99f, 0.99f, 0.99f);
-                collider.isTrigger = true;
-                collider.enabled = true;
-                outlineCollider = boxOutline.AddComponent<BoxPlacementChecker>();
+				//Tweak collider and add collision checker
+				boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
+				BoxCollider collider = boxOutline.GetComponent<BoxCollider>();
+				collider.size = new Vector3(0.99f, 0.99f, 0.99f);
+				collider.isTrigger = true;
+				collider.enabled = true;
+				outlineCollider = boxOutline.AddComponent<BoxPlacementChecker>();
 
-                //Set outline to semi-transparent
-                outlineRenderer = boxOutline.GetComponent<Renderer>();
-                RendererModeChanger.SetToTransparent(outlineRenderer);
-                Color alpha = outlineRenderer.material.color;
-                alpha.a = 0.5f;
-                outlineRenderer.material.color = alpha;
-                originalOutlineColor = outlineRenderer.material.color;
+				//Set outline to semi-transparent
+				outlineRenderer = boxOutline.GetComponent<Renderer>();
+				RendererModeChanger.SetToTransparent(outlineRenderer);
+				Color alpha = outlineRenderer.material.color;
+				alpha.a = 0.5f;
+				outlineRenderer.material.color = alpha;
+				originalOutlineColor = outlineRenderer.material.color;
 
-                //Remove shadows
-                outlineRenderer.receiveShadows = false;
-                outlineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                
-                //Hide after setup
-                boxOutline.SetActive(false);
+				//Remove shadows
+				outlineRenderer.receiveShadows = false;
+				outlineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+				//Hide after setup
+				boxOutline.SetActive(false);
 			}
-        }
+
+			if (hitInfo.transform.tag == "FloorControls")
+			{
+				controls.SetActive(true);
+				controlsObject.SetActive(false);
+
+				if (highlight != null)
+				{
+					Destroy(highlight);
+				}
+			}
+		}
     }
 
     /// <summary>
@@ -293,9 +308,33 @@ public class Player : MonoBehaviour
     /// </summary>
     private void HighlightTarget()
     {
-        if (isRaycastHit)
-        {
-            if (hitInfo.transform.tag == "Box" ||
+		if (isRaycastHit)
+		{
+			// Prototype control highlight
+			if (hitInfo.transform.tag == "FloorControls")
+			{
+				if (highlight == null)
+				{
+					highlight = Instantiate(hitInfo.transform.gameObject);
+
+					Renderer renderer = highlight.GetComponent<Renderer>();
+					renderer.material = controlsHighlight;
+
+					highlight.transform.position = hitInfo.transform.position;
+					highlight.transform.rotation = hitInfo.transform.rotation;
+
+					highlight.transform.localScale += new Vector3(0.0001f, 0.0001f, 0.0001f);
+				}
+			}
+			else
+			{
+				if (highlight != null)
+				{
+					Destroy(highlight);
+				}
+			}
+
+			if (hitInfo.transform.tag == "Box" ||
                 hitInfo.transform.tag == "Heavy Box")
             {
                 if (boxHighlight == null)
@@ -347,8 +386,13 @@ public class Player : MonoBehaviour
             {
                 Destroy(boxHighlight);
             }
-        }
-    }
+
+			if (highlight != null)
+			{
+				Destroy(highlight);
+			}
+		}
+	}
 
     /// <summary>
     /// Grabbed box copies the outline transform before placement.
