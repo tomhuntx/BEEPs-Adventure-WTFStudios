@@ -198,15 +198,16 @@ public class Player : MonoBehaviour
 					Destroy(boxHighlight);
 				}
 
-				currentBox = hitInfo.transform.gameObject;
+				currentBox = hitInfo.transform.gameObject;                
+                DestructibleObject targetBox = currentBox.GetComponent<DestructibleObject>();
 
-				//Remove any external force appliers
-				currentBox.GetComponent<DestructibleObject>().DetachForceAppliers();
+                //Clone grabbed box for outline setup
+                boxOutline = Instantiate(currentBox);
+                boxOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
+
+                //Remove any external force appliers
+                targetBox.DetachForceAppliers();
 				currentBox.GetComponent<BoxDragSFX>().ToggleThis(false);
-
-				//Clone grabbed box for outline setup
-				boxOutline = Instantiate(currentBox);
-				boxOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
 
 				//Set grabbed box as child of main cam
 				currentBox.transform.parent = controller.MainCam.transform;
@@ -220,11 +221,6 @@ public class Player : MonoBehaviour
 				//Put grabbed box in different layer mask to prevent clipping
 				currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
 
-				//Remove physics and box component
-				Destroy(boxOutline.GetComponent<DestructibleObject>());
-				//Destroy(boxOutline.GetComponent<Rigidbody>()); // CAUSES TRIGGERS TO NOT WORK
-				boxOutline.GetComponent<Rigidbody>().isKinematic = true;
-
 				//Tweak collider and add collision checker
 				boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
 				BoxCollider collider = boxOutline.GetComponent<BoxCollider>();
@@ -233,20 +229,33 @@ public class Player : MonoBehaviour
 				collider.enabled = true;
 				outlineCollider = boxOutline.AddComponent<BoxPlacementChecker>();
 
-				//Set outline to semi-transparent
-				outlineRenderer = boxOutline.GetComponent<Renderer>();
+                //Check if the rendered game object is childed or not
+                if (boxOutline.GetComponent<DestructibleObject>().TargetGameObject != null)
+                {
+                    outlineRenderer = boxOutline.GetComponent<DestructibleObject>().TargetGameObject.GetComponent<Renderer>();
+                }
+                else
+                {
+                    outlineRenderer = boxOutline.GetComponent<Renderer>();
+                }
+
+                //Set outline to semi-transparent
 				RendererModeChanger.SetToTransparent(outlineRenderer);
 				Color alpha = outlineRenderer.material.color;
 				alpha.a = 0.5f;
 				outlineRenderer.material.color = alpha;
 				originalOutlineColor = outlineRenderer.material.color;
 
-				//Remove shadows
-				outlineRenderer.receiveShadows = false;
+                //Remove shadowsoutlineRenderer.receiveShadows = false;
 				outlineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-				//Hide after setup
-				boxOutline.SetActive(false);
+                //Remove physics and box component
+                Destroy(boxOutline.GetComponent<DestructibleObject>());
+                //Destroy(boxOutline.GetComponent<Rigidbody>()); // CAUSES TRIGGERS TO NOT WORK
+                boxOutline.GetComponent<Rigidbody>().isKinematic = true;
+
+                //Hide after setup
+                boxOutline.SetActive(false);
 			}
 
 			if (hitInfo.transform.tag == "FloorControls")
@@ -384,15 +393,18 @@ public class Player : MonoBehaviour
                 if (boxHighlight == null)
                 {                
                     boxHighlight = Instantiate(hitInfo.transform.gameObject);
-                    
-                    //Remove physics and colliders
-                    Destroy(boxHighlight.GetComponent<Collider>());
-                    Destroy(boxHighlight.GetComponent<DestructibleObject>());
-                    Destroy(boxHighlight.GetComponent<Rigidbody>());
-                    Destroy(boxHighlight.GetComponent<BoxDragSFX>());
+                    DestructibleObject target = boxHighlight.GetComponent<DestructibleObject>();
 
                     //Retain mesh and replace material
-                    Renderer renderer = boxHighlight.GetComponent<Renderer>();
+                    Renderer renderer = null;
+                    if (target.TargetGameObject != null)
+                    {
+                        renderer = target.TargetGameObject.GetComponent<Renderer>();
+                    }
+                    else
+                    {
+                        renderer = boxHighlight.GetComponent<Renderer>();
+                    }
                     renderer.material = materialHighlight;
 
                     //Disable shadows
@@ -401,6 +413,12 @@ public class Player : MonoBehaviour
 
                     //Slight size offset just to prevent "z-fighting"
                     boxHighlight.transform.localScale += new Vector3(0.0001f, 0.0001f, 0.0001f);
+
+                    //Remove physics and colliders
+                    Destroy(boxHighlight.GetComponent<Collider>());
+                    Destroy(boxHighlight.GetComponent<DestructibleObject>());
+                    Destroy(boxHighlight.GetComponent<Rigidbody>());
+                    Destroy(boxHighlight.GetComponent<BoxDragSFX>());
                 }
                 else
                 {

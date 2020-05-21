@@ -26,6 +26,9 @@ public class DestructibleObject : MonoBehaviour
 {
     #region Exposed Variables
     [Header("Destructible Object Properties")]
+    [Tooltip("Assign a value if the game object to be affected is a child of this transform. Otherwise, you can leave it blank/unassigned.")]
+    [SerializeField] private GameObject targetGameObject;
+
     [Tooltip("How much damage it can take before breaking.")]
     [SerializeField] private float durability = 10.0f;
     private float originalDurability = 0;
@@ -61,20 +64,26 @@ public class DestructibleObject : MonoBehaviour
     public UnityEvent OnObjectDestroy;
     #endregion
 
+    public GameObject TargetGameObject { get { return targetGameObject; } }
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (this.GetComponent<Collider>() == null) 
-            Debug.LogError(this.gameObject + 
-                " Doesn't have a collider attached to it, please attach a collider before playing!");
+        GameObject referenceGameObject = this.gameObject;
 
+        //Target game object is assigned, assigning references according to that.
+        if (targetGameObject != null) referenceGameObject = targetGameObject;
 
+        mesh = referenceGameObject.GetComponent<MeshFilter>();
+        mrenderer = referenceGameObject.GetComponent<MeshRenderer>();
         rb = this.GetComponent<Rigidbody>();
-        mesh = this.GetComponent<MeshFilter>();
-		mrenderer = this.GetComponent<MeshRenderer>();
         originalDurability = durability;
+
+        if (this.GetComponent<Collider>() == null)
+            Debug.LogError(this.gameObject +
+                " Doesn't have a collider attached to it, please attach a collider before playing!");
 
         //sort contents to descending based on their assigned values
         modelPresets.Sort(delegate (ModelStates a, ModelStates b)

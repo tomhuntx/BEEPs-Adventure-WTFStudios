@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2229526011650007082
+--- !u!1 &174886150102809406
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,30 +8,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2229526011650007075}
-  - component: {fileID: 2229526011650007076}
-  - component: {fileID: 2229526011650007077}
-  - component: {fileID: 2229526011650007078}
-  - component: {fileID: 2229526011650007079}
-  - component: {fileID: 308457322}
-  - component: {fileID: 2229526011650007080}
-  - component: {fileID: 308457323}
-  - component: {fileID: 2229526011650007081}
-  - component: {fileID: 308457324}
+  - component: {fileID: 174886150102809351}
+  - component: {fileID: 174886150102809348}
+  - component: {fileID: 174886150102809349}
+  - component: {fileID: 174886150102809402}
+  - component: {fileID: 174886150102809403}
+  - component: {fileID: 206311395}
+  - component: {fileID: 174886150102809400}
+  - component: {fileID: 7200270194104322544}
+  - component: {fileID: 174886150102809401}
+  - component: {fileID: 206311396}
   m_Layer: 0
-  m_Name: Carboard Box
-  m_TagString: Box
+  m_Name: Heavy Box
+  m_TagString: Heavy Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2229526011650007075
+--- !u!4 &174886150102809351
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -39,21 +39,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2229526011650007076
+--- !u!33 &174886150102809348
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2229526011650007077
+--- !u!23 &174886150102809349
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 844be0cf060813844b5e61770b16889e, type: 2}
+  - {fileID: 2100000, guid: 7979bdb11f801af4f96695aad93945be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,81 +86,70 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2229526011650007078
+--- !u!65 &174886150102809402
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
-  m_Material: {fileID: 0}
+  m_GameObject: {fileID: 174886150102809406}
+  m_Material: {fileID: 13400000, guid: 04d51bf8bba07244383dda79fe8c6aba, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &2229526011650007079
+--- !u!54 &174886150102809403
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 3
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &308457322
+--- !u!114 &206311395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13e8897b72f0cf14f991f9eae9e50793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveDeadzone: 0.1
-  boxPlaceSFXPrefab: {fileID: 3550898150191051073, guid: 7724d282dd97d5d41864ca81f0decf0e,
-    type: 3}
---- !u!114 &2229526011650007080
+  boxPlaceSFXPrefab: {fileID: 0}
+--- !u!114 &174886150102809400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f87038210d4c974aa7f1e58a53f0953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetGameObject: {fileID: 0}
-  durability: 50
-  isInvincible: 0
-  forceMagnitudeThreshold: 8
+  durability: 10
+  isInvincible: 1
+  forceMagnitudeThreshold: 1.5
   generalImpactThreshold: 0.55
-  modelPresets:
-  - assignedValue: 75
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
-  - assignedValue: 50
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
-  - assignedValue: 10
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    material: {fileID: 2100000, guid: 3334bb6f0010d4741bc4a2099cc404ad, type: 2}
+  modelPresets: []
   OnPlayerPunch:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
+      - m_Target: {fileID: 174886150102809401}
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
@@ -178,11 +167,11 @@ MonoBehaviour:
   OnImpactGeneral:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
+      - m_Target: {fileID: 174886150102809401}
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 7724d282dd97d5d41864ca81f0decf0e,
+          m_ObjectArgument: {fileID: 5691244010909103157, guid: 36ea8333de5965549bd734277866ca31,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
@@ -192,53 +181,17 @@ MonoBehaviour:
         m_CallState: 2
   OnImpactDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: dcfc15c9856f69847ae827519f4795bc,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnObjectDestroy:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 4500cb3482aec864ea899b58aabfd9ab,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 5133357178356861969, guid: ff3dd16c73697a4468adaa156f4ed3fa,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &308457323
+      m_Calls: []
+--- !u!114 &7200270194104322544
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
@@ -264,30 +217,30 @@ MonoBehaviour:
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2229526011650007081
+--- !u!114 &174886150102809401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &308457324
+--- !u!82 &206311396
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
+  m_GameObject: {fileID: 174886150102809406}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -7467328680918501842, guid: 7a0787fffa79329419d584a9b440bd62,
+  OutputAudioMixerGroup: {fileID: 142757112038810043, guid: 7a0787fffa79329419d584a9b440bd62,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 57ddc0cee6e308842acbd36ade4c52fd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3f90d223b3905d348b05616a58d715af, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
