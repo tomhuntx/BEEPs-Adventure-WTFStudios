@@ -16,7 +16,6 @@ public class RobotHat : MonoBehaviour
 			{
 				robotHat.Contribute();
 			}
-			
 		}
     }
 }

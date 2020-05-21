@@ -25,6 +25,9 @@ public class Robot : MonoBehaviour
 	public Task punchRobot;
 	private GameObject[] robots;
 
+	// Manager is unique variant
+	public bool manager = false;
+
 	void Awake()
 	{
 		originalDirection = transform.forward;
@@ -67,7 +70,7 @@ public class Robot : MonoBehaviour
 			canBePunched = true;
 		}
 
-		if (patience >= patienceLimit)
+		if (patience >= patienceLimit && !manager)
 		{
 			if (punchRobot)
 			{
@@ -110,5 +113,11 @@ public class Robot : MonoBehaviour
 			transform.position += direction * expDistance;
 			canBePunched = false;
 		}
+	}
+
+	public void GetAnnoyed()
+	{
+		lookAtPlayer = true;
+		patience = patienceLimit;
 	}
 }

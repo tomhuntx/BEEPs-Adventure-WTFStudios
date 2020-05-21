@@ -264,6 +264,12 @@ public class Player : MonoBehaviour
 			{
 				grabbedObject = hitInfo.transform.gameObject;
 
+				// annoy grandparent if hat hasn't left the house yet
+				if (hitInfo.transform.GetComponentInParent<Robot>())
+				{
+					hitInfo.transform.GetComponentInParent<Robot>().GetAnnoyed();
+				}
+
 				//Remove any external force appliers
 				grabbedObject.GetComponent<DestructibleObject>().DetachForceAppliers();
 
@@ -525,7 +531,7 @@ public class Player : MonoBehaviour
             boxRB.isKinematic = false;
             boxRB.AddForce(controller.MainCam.transform.forward * force, ForceMode.Impulse);
             currentBox = null;
-			Debug.Log("aaaa");
+
 			if (boxOutline)
 			{
 				Destroy(boxOutline);
@@ -557,7 +563,8 @@ public class Player : MonoBehaviour
 
 				hitInfo.transform.GetComponent<Rigidbody>().isKinematic = false;
 				hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
-				
+				hitInfo.transform.parent = null;
+
 				knockHat.Contribute();
 			}
 
