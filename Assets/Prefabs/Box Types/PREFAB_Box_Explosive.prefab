@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 1547355851}
   - component: {fileID: 53658663}
   m_Layer: 0
-  m_Name: ExplosiveBox
+  m_Name: PREFAB_Box_Explosive
   m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f87038210d4c974aa7f1e58a53f0953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetGameObject: {fileID: 0}
   durability: 5
   isInvincible: 0
   forceMagnitudeThreshold: 0.5
@@ -183,6 +184,9 @@ MonoBehaviour:
   OnImpactDamage:
     m_PersistentCalls:
       m_Calls: []
+  OnObjectDamagedDestroy:
+    m_PersistentCalls:
+      m_Calls: []
   OnObjectDestroy:
     m_PersistentCalls:
       m_Calls:
@@ -222,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableIgnore: 1
   ignoreTags:
   - Conveyor Belt
   onCollisionEnter:

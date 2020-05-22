@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class UnityEventsHandler : MonoBehaviour
+public class UnityEventsHandler : TagFilterer
 {
     #region Exposed Variables
-    [Tooltip("Tags of gameobjects that will be ignored. Leave blank if everything will be detected.")]
-    [SerializeField] private List<string> ignoreTags = new List<string>();
-
     [Header("Events")]
     public UnityEvent onCollisionEnter;
     public UnityEvent onCollisionStay;
@@ -43,7 +40,7 @@ public class UnityEventsHandler : MonoBehaviour
     #region Collider
     private void OnCollisionEnter(Collision collision)
     {
-        if (!DoIgnore(collision))
+        if (!DoIgnore(collision.transform.tag))
         {
             onCollisionEnter.Invoke();
 
@@ -54,12 +51,12 @@ public class UnityEventsHandler : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (!DoIgnore(collision)) onCollisionStay.Invoke();
+        if (!DoIgnore(collision.transform.tag)) onCollisionStay.Invoke();
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (!DoIgnore(collision)) onCollisionExit.Invoke();
+        if (!DoIgnore(collision.transform.tag)) onCollisionExit.Invoke();
 
         if (objectsOnCollider.Contains(collision.gameObject)) 
             objectsOnCollider.Remove(collision.gameObject);
@@ -71,7 +68,7 @@ public class UnityEventsHandler : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter(Collider other)
     {
-        if (!DoIgnore(other))
+        if (!DoIgnore(other.tag))
         {
             onTriggerEnter.Invoke();
 
@@ -82,12 +79,12 @@ public class UnityEventsHandler : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!DoIgnore(other)) onTriggerStay.Invoke();
+        if (!DoIgnore(other.tag)) onTriggerStay.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!DoIgnore(other)) onTriggerExit.Invoke();
+        if (!DoIgnore(other.tag)) onTriggerExit.Invoke();
 
         if (objectsInTrigger.Contains(other.gameObject))
             objectsInTrigger.Remove(other.gameObject);
@@ -97,26 +94,6 @@ public class UnityEventsHandler : MonoBehaviour
 
 
     #region Private Methods
-    private bool DoIgnore(Collision col)
-    {
-        if (ignoreTags.Count == 0) return false;
-
-        if (ignoreTags.Contains(col.transform.tag))
-            return true;
-        else
-            return false;
-    }
-
-    private bool DoIgnore(Collider col)
-    {
-        if (ignoreTags.Count == 0) return false;
-
-        if (ignoreTags.Contains(col.tag))
-            return true;
-        else
-            return false;
-    }
-
     /// <summary>
     /// Update lists to prevent null reference
     /// </summary>

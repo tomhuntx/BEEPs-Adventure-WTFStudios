@@ -107,7 +107,6 @@ public class DestructibleObject : MonoBehaviour
 	}
 
 
-
     #region Private Methods
     /// <summary>
     /// Calculates how much force is absorbed on impact.
@@ -121,15 +120,6 @@ public class DestructibleObject : MonoBehaviour
         {
             ApplyDamage(magnitude * numDamageCycle);
         }
-    }
-    
-    /// <summary>
-    /// Instanciates the explosion prefab before destroying this game object.
-    /// </summary>
-    private void DestroyObject()
-    {
-        OnObjectDestroy.Invoke();
-		Destroy(this.gameObject);
     }
 
     /// <summary>
@@ -167,7 +157,8 @@ public class DestructibleObject : MonoBehaviour
             }
             else
             {
-                DestroyObject();
+                OnObjectDestroy.Invoke();
+                Destroy(this.transform.gameObject);
             }
         }
     }

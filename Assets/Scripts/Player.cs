@@ -409,7 +409,7 @@ public class Player : MonoBehaviour
                 {
                     if (boxHighlight != null)
                     {
-                        Destroy(boxHighlight);
+                       // Destroy(boxHighlight);
                     }
                 }
 
