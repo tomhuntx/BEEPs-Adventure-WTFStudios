@@ -565,11 +565,20 @@ public class Player : MonoBehaviour
 
             currentBox.transform.localPosition = newPos;
             currentBox.transform.parent = null;
-            currentBox.layer = LayerMask.NameToLayer("Default");
+
+            DestructibleObject targetBox = currentBox.GetComponent<DestructibleObject>();
+            if (targetBox.TargetGameObject != null)
+            {
+                targetBox.TargetGameObject.layer = LayerMask.NameToLayer("Default");
+            }
+            else
+            {
+                currentBox.layer = LayerMask.NameToLayer("Default");
+            }
             //currentBox.GetComponent<Collider>().enabled = true;
 
-			// Multiple collider check
-			Collider[] colliders = currentBox.GetComponentsInChildren<Collider>();
+            // Multiple collider check
+            Collider[] colliders = currentBox.GetComponentsInChildren<Collider>();
 			foreach (Collider col in colliders)
 			{
 				col.enabled = true;

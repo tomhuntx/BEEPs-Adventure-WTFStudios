@@ -22,18 +22,21 @@ public class FPSController : MonoBehaviour
 	private float mouseX;
 	private float mouseY;
 
-	[Header("Movement Settings")]
+
+	[Header("Physics")]
+	[SerializeField] private float gravity = -20.0f;
 	[SerializeField] private float mass = 1.0f;
+
+	[Header("Movement Settings")]	
 	[SerializeField] private float walkSpeed = 5.0f;
 	[SerializeField] private float sprintSpeed = 7.0f;
 	[SerializeField] private float maxAirSpeed = 10.0f;
+	[SerializeField] private float airSpeedMagnitude = 3.0f;
 	private float currentSpeed = 0;
 	
+	[Header("Other Forces")]
 	[Tooltip("Strength of force applied when bumping into rigidbodies.")]
 	[SerializeField] private float bumpForce = 2.0f;
-
-	[Tooltip("Speed ratio while mid-air (1 = velocity is not affected while mid-air).")]
-	[SerializeField] private float airSpeedRatio = 0.8f;
 
 	[Tooltip("Maximum force that the player can be pushed by explosive boxes.")]
 	[SerializeField] private float maxExpForce = 40;
@@ -41,7 +44,6 @@ public class FPSController : MonoBehaviour
 	[Tooltip("How much the external forces dies down.")]
 	[SerializeField] private float externalForceFalloff = 3.0f;
 
-	[SerializeField] private float gravity = -20.0f;
 	[SerializeField] private float jumpForce = 10.0f;
 	#endregion
 
@@ -174,7 +176,7 @@ public class FPSController : MonoBehaviour
 
 			newVelocity = direction * currentSpeed;
 			groundedMotion = direction;
-			currentAirSpeed = 0;
+			currentAirSpeed = currentSpeed;
 		}
 		else
 		{
@@ -182,19 +184,16 @@ public class FPSController : MonoBehaviour
 			
 			if (wasMoving)
 			{
-				groundedMotion.x = Mathf.Clamp(groundedMotion.x, -1, 1);
-				groundedMotion.z = Mathf.Clamp(groundedMotion.z, -1, 1);
-
 				newDirection = groundedMotion;
 				currentAirSpeed += newDirection.magnitude * currentSpeed * Time.deltaTime;
-				currentAirSpeed = Mathf.Clamp(currentAirSpeed, currentSpeed, maxAirSpeed);
 			}
 			else
 			{
 				newDirection = direction;
 				currentAirSpeed = direction.magnitude * currentSpeed;
 			}
-			newVelocity = newDirection * currentAirSpeed * airSpeedRatio;
+			newVelocity = newDirection * currentAirSpeed + (direction * airSpeedMagnitude);
+			newVelocity = Vector3.ClampMagnitude(newVelocity, maxAirSpeed);
 		}
 		velocity = new Vector3(newVelocity.x,
 							   velocity.y,
