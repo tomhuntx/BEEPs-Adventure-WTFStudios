@@ -6,11 +6,34 @@ using TMPro;
 [System.Serializable]
 public class TaskList : MonoBehaviour
 {
+	public static TaskList Instance;
+
 	public GameObject[] taskObjects;
 	public List<TextMeshProUGUI> taskTexts = new List<TextMeshProUGUI>();
 	public List<bool> tasksComplete = new List<bool>();
 
 	public string[] completeTexts;
+	private int numTasksDone = 0;
+	
+	[Tooltip("How fast will the UI will be scaled down during emphasis.")]
+	[SerializeField] private float uiTransitionSpeed = 5.0f;
+
+	public int NumTasksDone { get { return numTasksDone; } }
+
+
+	private void Awake()
+	{
+		//prevent other instances
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Debug.LogWarning("Another TaskList instance is already existing, deleting this one...");
+			Destroy(this);
+		}
+	}
 
 	private void Start()
 	{
@@ -19,6 +42,7 @@ public class TaskList : MonoBehaviour
 		{
 			taskTexts.Add(taskObjects[i].GetComponentInChildren<TextMeshProUGUI>());
 			tasksComplete.Add(false);
+			taskObjects[i].GetComponent<Task>().UITransitionSpeed = uiTransitionSpeed;
 		}
 	}
 
@@ -39,6 +63,10 @@ public class TaskList : MonoBehaviour
 
 			// Record task as complete
 			tasksComplete[taskNum] = true;
+
+			//Increase count - used by sound manager
+			if (numTasksDone < tasksComplete.Count)
+				numTasksDone++;
 		}
 	}
 

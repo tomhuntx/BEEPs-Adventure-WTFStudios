@@ -15,7 +15,7 @@ public class SoundRandomizer : MonoBehaviour
         source = gameObject.GetComponent<AudioSource>();
         int i = Random.Range(0, clips.Length);
         source.clip = clips[i];
-        source.pitch = Random.Range(0.8f, 1.1f);   
+        if (enablePitchRandomization) source.pitch = Random.Range(0.8f, 1.1f);   
         source.Play();
     }
 

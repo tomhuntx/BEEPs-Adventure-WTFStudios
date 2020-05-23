@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
+    [Header("Audio Settings")]
     [SerializeField] private AudioMixer masterMixer;
     [Range(-80, 20)] [SerializeField] private float masterVol;
     [Range(-80, 20)] [SerializeField] private float musicVol;
@@ -20,17 +22,22 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private SliderInitializer soundEffects;
     private Slider soundEffectsSlider;
-    
 
     private float originalMasterLevels;
     private float originalMusicLevels;
     private float originalSFXLevels;
     private float compressorDiffThreshold;
+
+    [Header("Main Game Song Loop")]
+    [Tooltip("Please arrange according to intensity where 0 is to least intense.")]
+    [SerializeField] private AudioClip[] clips;
+    private AudioSource audioSource;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        //Setup levels
         masterMixer.GetFloat("Master_Levels", out originalMasterLevels);
         masterMixer.GetFloat("Music_Levels", out originalMusicLevels);
 
@@ -50,10 +57,31 @@ public class SoundManager : MonoBehaviour
 
         soundEffects.Initialize(-80, 20, soundEffectsVol, "Sound Effects");
         soundEffectsSlider = soundEffects.AssignedSlider;
+
+        //Look for tasklist instance
+        audioSource = this.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        ManageGameAudio();
+        ManageMainGameMusic();
+    }
+
+
+    private void ManageMainGameMusic()
+    {
+        int index = TaskList.Instance.NumTasksDone;
+        if (index < clips.Length &&
+            audioSource.clip != clips[index])
+        {
+            audioSource.clip = clips[index];
+        }
+        if (!audioSource.isPlaying) audioSource.Play();
+    }
+
+    private void ManageGameAudio()
     {
         //only adjust volume when paused;
         if (Time.timeScale == 0)
