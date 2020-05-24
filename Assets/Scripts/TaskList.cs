@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class TaskList : MonoBehaviour
@@ -17,6 +18,11 @@ public class TaskList : MonoBehaviour
 	
 	[Tooltip("How fast will the UI will be scaled down during emphasis.")]
 	[SerializeField] private float uiTransitionSpeed = 5.0f;
+
+	[Header("Events")]
+	public UnityEvent onMainTasksComplete;
+	public UnityEvent onSideTasksComplete;
+	public UnityEvent onAllTasksComplete;
 
 	public int NumTasksDone { get { return numTasksDone; } }
 
@@ -46,6 +52,14 @@ public class TaskList : MonoBehaviour
 		}
 	}
 
+	private void CheckTasks()
+	{
+		if (numTasksDone >= tasksComplete.Count)
+		{
+			onAllTasksComplete.Invoke();
+		}
+	}
+
 	/// <summary>
 	/// Complete a task and set its text to a crossed-out version
 	/// -Crossed-out versions defined publicly in TaskList object
@@ -67,6 +81,8 @@ public class TaskList : MonoBehaviour
 			//Increase count - used by sound manager
 			if (numTasksDone < tasksComplete.Count)
 				numTasksDone++;
+
+			CheckTasks();
 		}
 	}
 

@@ -14322,7 +14322,7 @@ MonoBehaviour:
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 3478222338120085789, guid: 704d1223706a373488ba1072fa1406e8,
+          m_ObjectArgument: {fileID: 3478222338120085789, guid: a614c8306924b3d409679255a2e05379,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
@@ -14558,6 +14558,27 @@ MonoBehaviour:
   - "\u2022 G\u0336i\u0336v\u0336e\u0336 \u0336a\u0336 \u0336r\u0336o\u0336b\u0336o\u0336t\u0336
     \u0336a\u0336 \u0336n\u0336e\u0336w\u0336 \u0336h\u0336a\u0336t\u0336"
   uiTransitionSpeed: 3
+  onMainTasksComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onSideTasksComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllTasksComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9052248969933011600}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8369074721216352910, guid: 5d2a6407abef0064e95f608993752c9d,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &9052248969933011598
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14595,6 +14616,7 @@ GameObject:
   - component: {fileID: 9052248969933011584}
   - component: {fileID: 9052248969933011585}
   - component: {fileID: 9052248969933011587}
+  - component: {fileID: 9052248969933011600}
   m_Layer: 5
   m_Name: TaskList (Prototype)
   m_TagString: Untagged
@@ -14602,6 +14624,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9052248969933011600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052248969933011599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9052248970021820232
 MonoBehaviour:
   m_ObjectHideFlags: 0
