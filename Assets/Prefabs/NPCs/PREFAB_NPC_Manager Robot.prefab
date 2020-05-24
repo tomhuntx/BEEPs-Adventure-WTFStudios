@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 2889841212770385107}
   - component: {fileID: 9103494068728334369}
   m_Layer: 0
-  m_Name: ManagerRobot
+  m_Name: PREFAB_NPC_Manager Robot
   m_TagString: ManagerBot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f87038210d4c974aa7f1e58a53f0953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetGameObject: {fileID: 0}
   durability: 10
   isInvincible: 1
   forceMagnitudeThreshold: 1.5
@@ -149,6 +150,18 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 3550898150191051073, guid: 75b6542b765c2474e86cd3d52086bee2,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2407708900354487301}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3334267170322057064, guid: 4ead4740808483c4896f03434b9b2a00,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
@@ -181,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   punchRobot: {fileID: 0}
+  boxProcessor: {fileID: 0}
   manager: 0
 --- !u!65 &9103494068728334369
 BoxCollider:

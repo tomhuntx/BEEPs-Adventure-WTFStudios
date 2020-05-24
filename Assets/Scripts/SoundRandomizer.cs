@@ -9,14 +9,14 @@ public class SoundRandomizer : MonoBehaviour
     private AudioSource source;
     [SerializeField] private bool enablePitchRandomization;
 
+    [Tooltip("Keep doing this task and disable destroy on end.")]
+    [SerializeField] private bool repeatOnEnd = false;
+
     // Start is called before the first frame update
     void Start()
     {
         source = gameObject.GetComponent<AudioSource>();
-        int i = Random.Range(0, clips.Length);
-        source.clip = clips[i];
-        if (enablePitchRandomization) source.pitch = Random.Range(0.8f, 1.1f);   
-        source.Play();
+        PickClip();
     }
 
     // Update is called once per frame
@@ -24,7 +24,22 @@ public class SoundRandomizer : MonoBehaviour
     {
         if (!source.isPlaying)
         {
-            Destroy(this.gameObject);
+            if (repeatOnEnd)
+            {
+                PickClip();
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
+    }
+
+    private void PickClip()
+    {
+        int i = Random.Range(0, clips.Length);
+        source.clip = clips[i];
+        if (enablePitchRandomization) source.pitch = Random.Range(0.8f, 1.1f);
+        source.Play();
     }
 }
