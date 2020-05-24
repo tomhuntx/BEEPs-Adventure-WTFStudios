@@ -24,6 +24,7 @@ public class Robot : MonoBehaviour
 	private Player thePlayer;
 	public Task punchRobot;
 	private GameObject[] robots;
+	public GameObject boxProcessor;
 
 	// Manager is unique variant
 	public bool manager = false;
@@ -50,6 +51,11 @@ public class Robot : MonoBehaviour
 			{
 				lookAtPlayer = false;
 				lookTime = 3f;
+
+				if (boxProcessor && !manager)
+				{
+					boxProcessor.SetActive(true);
+				}
 			}
 			lookTime -= Time.deltaTime;
 		}
@@ -82,6 +88,11 @@ public class Robot : MonoBehaviour
 				robot.GetComponent<Robot>().lookAtPlayer = true;
 			}
 
+			if (boxProcessor && !manager)
+			{
+				boxProcessor.SetActive(false);
+			}
+			
 			patience = 0;
 		}
 	}
