@@ -17,11 +17,6 @@ public class TaskManager : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
-	void Update()
-	{
-		
-	}
-
 	// Called by unity events
 	public void ContributeToTask(GameObject task)
 	{
