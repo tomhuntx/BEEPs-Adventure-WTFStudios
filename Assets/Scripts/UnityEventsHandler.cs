@@ -100,33 +100,28 @@ public class UnityEventsHandler : TagFilterer
     private IEnumerator UpdateLists()
     {
         while (true)
-        {
-            ClearNullReference();
+        {            
+            for (int i = 0; i < objectsOnCollider.Count; i++)
+            {
+                if (objectsOnCollider[i] == null)
+                {
+                    objectsOnCollider.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            for (int i = 0; i < objectsInTrigger.Count; i++)
+            {
+                if (objectsInTrigger[i] == null)
+                {
+                    objectsInTrigger.RemoveAt(i);
+                    i--;
+                }
+            }
 
             //repeat every 3 seconds
             yield return new WaitForSeconds(3);
         }
     }
     #endregion
-
-    public void ClearNullReference()
-    {
-        for (int i = 0; i < objectsOnCollider.Count; i++)
-        {
-            if (objectsOnCollider[i] == null)
-            {
-                objectsOnCollider.RemoveAt(i);
-                i--;
-            }
-        }
-
-        for (int i = 0; i < objectsInTrigger.Count; i++)
-        {
-            if (objectsInTrigger[i] == null)
-            {
-                objectsInTrigger.RemoveAt(i);
-                i--;
-            }
-        }
-    }
 }
