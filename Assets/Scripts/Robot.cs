@@ -6,7 +6,7 @@ public class Robot : MonoBehaviour
 {
 	// Look Variables
 	private float lookSpeed = 2.5f;
-	private float lookRange = 8f;
+	private float lookRange = 12f;
 	private float lookTime = 3f;
 	private bool lookAtPlayer = false;
 
@@ -26,10 +26,15 @@ public class Robot : MonoBehaviour
 	private GameObject[] robots;
 	public GameObject boxProcessor;
 
+	// The Bot's Animator (Different based on type)
+	public Animator anim;
+
+	public MatDetector matDetector;
+
 	// Manager is unique variant
 	public bool manager = false;
 
-	void Awake()
+	void Start()
 	{
 		originalDirection = transform.forward;
 		originalPosition = transform.position;
@@ -94,6 +99,16 @@ public class Robot : MonoBehaviour
 			}
 			
 			patience = 0;
+		}
+
+		// Tell animator when an assembly box exists
+		if (!manager && matDetector.boxExists)
+		{
+			anim.SetBool("assemblyBox", true);
+		}
+		else
+		{
+			anim.SetBool("assemblyBox", false);
 		}
 	}
 
