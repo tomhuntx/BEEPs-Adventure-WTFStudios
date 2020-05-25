@@ -245,8 +245,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2020266733508846685}
+  - component: {fileID: 1042013002188467067}
   m_Layer: 0
-  m_Name: NormalRobotPrefab
+  m_Name: BotAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -267,6 +268,25 @@ Transform:
   m_Father: {fileID: 6172793634504472936}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1042013002188467067
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952850212005952493}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: fae4e84769c74534e8c7d9400eedd08f, type: 3}
+  m_Controller: {fileID: 9100000, guid: c70339d08e2dc4e4fa29766599412943, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2120430212953472412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,9 +1286,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6172793634504472936}
-  - component: {fileID: 7777733365782907841}
   m_Layer: 0
-  m_Name: NormalBotPrefab
+  m_Name: BotModel (Motion)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1291,25 +1310,6 @@ Transform:
   m_Father: {fileID: 7777733366518838710}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &7777733365782907841
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6172793634504472943}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: debd916cad3f8d046819529ca269088b, type: 3}
-  m_Controller: {fileID: 9100000, guid: c70339d08e2dc4e4fa29766599412943, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6585354118968280697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,7 +1861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punchRobot: {fileID: 0}
   boxProcessor: {fileID: 0}
-  anim: {fileID: 7777733365782907841}
+  anim: {fileID: 1042013002188467067}
   matDetector: {fileID: 0}
   manager: 0
 --- !u!54 &2826928090126029312

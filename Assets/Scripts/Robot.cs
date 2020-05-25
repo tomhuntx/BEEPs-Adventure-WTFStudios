@@ -26,21 +26,27 @@ public class Robot : MonoBehaviour
 	private GameObject[] robots;
 	public GameObject boxProcessor;
 
+	// Model for maintaining position
+	private GameObject model;
+
 	// The Bot's Animator (Different based on type)
 	public Animator anim;
 
 	public MatDetector matDetector;
+	private float punchTime = 0f;
 
 	// Manager is unique variant
 	public bool manager = false;
 
 	void Start()
 	{
-		originalDirection = transform.forward;
-		originalPosition = transform.position;
 		thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
 		robots = GameObject.FindGameObjectsWithTag("Bot");
+
+		model = transform.GetChild(0).gameObject;
+		originalDirection = model.transform.forward;
+		originalPosition = model.transform.position;
 	}
 
 	void FixedUpdate()
@@ -48,7 +54,10 @@ public class Robot : MonoBehaviour
 		if (patience >= patienceLimit)
 		{
 			anim.SetBool("isAngry", true);
-			Debug.Log("anger");
+		} 
+		else
+		{
+			anim.SetBool("isAngry", false);
 		}
 
 		// Tell animator when an assembly box exists
@@ -56,7 +65,7 @@ public class Robot : MonoBehaviour
 		{
 			anim.SetBool("assemblyBox", true);
 		}
-		else
+		else if (!manager)
 		{
 			anim.SetBool("assemblyBox", false);
 		}
@@ -70,7 +79,6 @@ public class Robot : MonoBehaviour
 			anim.SetBool("isDisturbed", false);
 		}
 
-		
 		// Look at the player
 		if (lookAtPlayer && thePlayer != null)
 		{
@@ -78,14 +86,16 @@ public class Robot : MonoBehaviour
 			Quaternion rotateTo = Quaternion.LookRotation(relativePos);
 			rotateTo.x = 0;
 			rotateTo.z = 0;
-			transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
-			
-			if (Vector3.Distance(transform.position, thePlayer.transform.position) > lookRange && lookTime < 0)
+			model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
+
+			if (Vector3.Distance(transform.position, thePlayer.transform.position) > lookRange || lookTime < 0)
 			{
 				lookAtPlayer = false;
 				lookTime = 3f;
+				patience = 3;
+
 				anim.SetBool("isAngry", false);
-				anim.SetBool("isDisturbed", true);
+				anim.SetBool("isDisturbed", false);
 
 				if (boxProcessor && !manager)
 				{
@@ -98,15 +108,13 @@ public class Robot : MonoBehaviour
 		else if (thePlayer)
 		{
 			Quaternion rotateTo = Quaternion.LookRotation(originalDirection);
-			transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
+			model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
 		}
 
-		transform.position = Vector3.MoveTowards(transform.position, originalPosition, 1f * Time.deltaTime);
-
 		// Move back to start position if it leaves
-		if (Vector3.Distance(transform.position, originalPosition) > 0.1f)
+		if (Vector3.Distance(model.transform.position, originalPosition) > 0.1f)
 		{
-			
+			model.transform.position = Vector3.MoveTowards(model.transform.position, originalPosition, 2f * Time.deltaTime);
 		}
 		else
 		{
@@ -125,12 +133,10 @@ public class Robot : MonoBehaviour
 				robot.GetComponent<Robot>().lookAtPlayer = true;
 			}
 
-			if (boxProcessor && !manager)
+			if (boxProcessor)
 			{
 				boxProcessor.SetActive(false);
 			}
-			
-			patience = 0;
 		}
 	}
 
@@ -140,9 +146,12 @@ public class Robot : MonoBehaviour
 
 		patience++;
 
+		lookTime = 3f;
+
 		if (canBePunched)
 		{
-			transform.position += punchDistance * direction;
+			model.transform.position += direction * punchDistance;
+
 			canBePunched = false;
 		}
 	}
@@ -153,12 +162,14 @@ public class Robot : MonoBehaviour
 
 		patience = patienceLimit;
 
+		lookTime = 3f;
+
 		// Prevents multiple explosive boxes from sending robots flying
 		if (canBePunched)
 		{
-			Vector3 direction = this.transform.position - explosion.transform.position;
+			Vector3 direction = transform.position - explosion.transform.position;
 			direction.Normalize();
-			transform.position += direction * expDistance;
+			model.transform.position += direction * expDistance;
 			canBePunched = false;
 		}
 	}
@@ -167,5 +178,6 @@ public class Robot : MonoBehaviour
 	{
 		lookAtPlayer = true;
 		patience = patienceLimit;
+		lookTime = 3f;
 	}
 }
