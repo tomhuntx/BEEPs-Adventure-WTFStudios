@@ -45,17 +45,47 @@ public class Robot : MonoBehaviour
 
 	void FixedUpdate()
     {
+		if (patience >= patienceLimit)
+		{
+			anim.SetBool("isAngry", true);
+			Debug.Log("anger");
+		}
+
+		// Tell animator when an assembly box exists
+		if (!manager && matDetector.boxExists)
+		{
+			anim.SetBool("assemblyBox", true);
+		}
+		else
+		{
+			anim.SetBool("assemblyBox", false);
+		}
+
+		if (lookAtPlayer)
+		{
+			anim.SetBool("isDisturbed", true);
+		}
+		else
+		{
+			anim.SetBool("isDisturbed", false);
+		}
+
+		
 		// Look at the player
 		if (lookAtPlayer && thePlayer != null)
 		{
 			Vector3 relativePos = thePlayer.transform.position - transform.position;
 			Quaternion rotateTo = Quaternion.LookRotation(relativePos);
+			rotateTo.x = 0;
+			rotateTo.z = 0;
 			transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
-
+			
 			if (Vector3.Distance(transform.position, thePlayer.transform.position) > lookRange && lookTime < 0)
 			{
 				lookAtPlayer = false;
 				lookTime = 3f;
+				anim.SetBool("isAngry", false);
+				anim.SetBool("isDisturbed", true);
 
 				if (boxProcessor && !manager)
 				{
@@ -71,10 +101,12 @@ public class Robot : MonoBehaviour
 			transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
 		}
 
+		transform.position = Vector3.MoveTowards(transform.position, originalPosition, 1f * Time.deltaTime);
+
 		// Move back to start position if it leaves
-		if (Vector3.Distance(transform.position, originalPosition) > 0.01f)
+		if (Vector3.Distance(transform.position, originalPosition) > 0.1f)
 		{
-			transform.position = Vector3.MoveTowards(transform.position, originalPosition, 1f * Time.deltaTime);
+			
 		}
 		else
 		{
@@ -99,16 +131,6 @@ public class Robot : MonoBehaviour
 			}
 			
 			patience = 0;
-		}
-
-		// Tell animator when an assembly box exists
-		if (!manager && matDetector.boxExists)
-		{
-			anim.SetBool("assemblyBox", true);
-		}
-		else
-		{
-			anim.SetBool("assemblyBox", false);
 		}
 	}
 
