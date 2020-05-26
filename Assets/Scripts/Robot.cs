@@ -59,7 +59,7 @@ public class Robot : MonoBehaviour
 			anim.SetBool("isAngry", true);
 			animFace.SetBool("isAngry", true);
 			animScreen.SetBool("isAngry", true);
-		} 
+		}
 		else
 		{
 			anim.SetBool("isAngry", false);
