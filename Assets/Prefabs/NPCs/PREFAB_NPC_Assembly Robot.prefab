@@ -10,7 +10,7 @@ Animator:
   m_GameObject: {fileID: 321598245180381019}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fae4e84769c74534e8c7d9400eedd08f, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c70339d08e2dc4e4fa29766599412943, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1206,7 +1206,7 @@ Animator:
   m_GameObject: {fileID: 5623821731783541786}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fae4e84769c74534e8c7d9400eedd08f, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c70339d08e2dc4e4fa29766599412943, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1862,6 +1862,8 @@ MonoBehaviour:
   punchRobot: {fileID: 0}
   boxProcessor: {fileID: 0}
   anim: {fileID: 1042013002188467067}
+  animFace: {fileID: 301740626389150036}
+  animScreen: {fileID: 3429358978136921496}
   matDetector: {fileID: 0}
   manager: 0
 --- !u!54 &2826928090126029312
@@ -2675,6 +2677,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: c6e2ba4eb25252847a91b7912f3070a5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: c6e2ba4eb25252847a91b7912f3070a5,
         type: 3}

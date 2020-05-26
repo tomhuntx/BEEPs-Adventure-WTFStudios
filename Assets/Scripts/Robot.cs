@@ -30,7 +30,10 @@ public class Robot : MonoBehaviour
 	private GameObject model;
 
 	// The Bot's Animator (Different based on type)
+	// If anyone can find a different method, that would be great
 	public Animator anim;
+	public Animator animFace;
+	public Animator animScreen;
 
 	public MatDetector matDetector;
 	private float punchTime = 0f;
@@ -54,29 +57,41 @@ public class Robot : MonoBehaviour
 		if (patience >= patienceLimit)
 		{
 			anim.SetBool("isAngry", true);
+			animFace.SetBool("isAngry", true);
+			animScreen.SetBool("isAngry", true);
 		} 
 		else
 		{
 			anim.SetBool("isAngry", false);
+			animFace.SetBool("isAngry", false);
+			animScreen.SetBool("isAngry", false);
 		}
 
 		// Tell animator when an assembly box exists
 		if (!manager && matDetector.boxExists)
 		{
 			anim.SetBool("assemblyBox", true);
+			animFace.SetBool("assemblyBox", true);
+			animScreen.SetBool("assemblyBox", true);
 		}
 		else if (!manager)
 		{
 			anim.SetBool("assemblyBox", false);
+			animFace.SetBool("assemblyBox", false);
+			animScreen.SetBool("assemblyBox", false);
 		}
 
 		if (lookAtPlayer)
 		{
 			anim.SetBool("isDisturbed", true);
+			animFace.SetBool("isDisturbed", true);
+			animScreen.SetBool("isDisturbed", true);
 		}
 		else
 		{
 			anim.SetBool("isDisturbed", false);
+			animFace.SetBool("isDisturbed", false);
+			animScreen.SetBool("isDisturbed", false);
 		}
 
 		// Look at the player
@@ -95,7 +110,12 @@ public class Robot : MonoBehaviour
 				patience = 3;
 
 				anim.SetBool("isAngry", false);
+				animFace.SetBool("isAngry", false);
+				animScreen.SetBool("isAngry", false);
+
 				anim.SetBool("isDisturbed", false);
+				animFace.SetBool("isDisturbed", false);
+				animScreen.SetBool("isDisturbed", false);
 
 				if (boxProcessor && !manager)
 				{

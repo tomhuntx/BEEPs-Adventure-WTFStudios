@@ -315,6 +315,8 @@ public class Player : MonoBehaviour
 					col.enabled = false;
 				}
 
+				knockHat.Contribute();
+
 				//Put grabbed box in different layer mask to prevent clipping
 				grabbedObject.layer = LayerMask.NameToLayer("Grabbed Object");
 			}
