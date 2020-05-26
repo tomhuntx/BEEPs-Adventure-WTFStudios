@@ -142,10 +142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f87038210d4c974aa7f1e58a53f0953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetGameObject: {fileID: 0}
   durability: 5
   isInvincible: 0
-  forceMagnitudeThreshold: 0.5
-  generalImpactThreshold: 0.55
+  forceMagnitudeThreshold: 0.3
+  generalImpactThreshold: 0.4
   modelPresets: []
   OnPlayerPunch:
     m_PersistentCalls:
@@ -222,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableIgnore: 1
   ignoreTags:
   - Conveyor Belt
   onCollisionEnter:
