@@ -303,7 +303,7 @@ public class Player : MonoBehaviour
 				grabbedObject.transform.rotation = controller.MainCam.transform.rotation;
 
 				// Rotate (hardhat only?)
-				grabbedObject.transform.Rotate(0, -20, 0);
+				grabbedObject.transform.Rotate(0, 0, 0);
 
 				//Disable physics and collision
 				grabbedObject.GetComponent<Rigidbody>().isKinematic = true;

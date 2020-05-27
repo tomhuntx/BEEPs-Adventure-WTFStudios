@@ -17,7 +17,6 @@ public class PunchArm : MonoBehaviour
     {
         if (Input.GetButtonDown("Punch"))
         {
-            Debug.Log("Punch!");
             anim.SetBool("isPunching", true);
         }
         else
