@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
 	public GameObject controlsObject;
 	public Material controlsHighlight;
 	private GameObject highlight;
+
+	public GameObject hand;
+	private Animator handAnim;
 	//
 
 	public static Player Instance;    
@@ -83,7 +86,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<FPSController>();
-    }
+		handAnim = hand.GetComponent<Animator>();
+	}
 
     // Update is called once per frame
     void Update()
@@ -131,7 +135,15 @@ public class Player : MonoBehaviour
             else
             {
                 if (Input.GetButtonDown("Grab Box")) GrabBox();
-                if (Input.GetButtonDown("Punch")) PunchBox();
+				if (Input.GetButtonDown("Punch")) 
+				{
+					PunchBox();
+					handAnim.SetBool("isPunching", true);
+				}
+				else
+				{
+					handAnim.SetBool("isPunching", false);
+				}
                 HighlightTarget();
                 DragHeavyBox();
             }
