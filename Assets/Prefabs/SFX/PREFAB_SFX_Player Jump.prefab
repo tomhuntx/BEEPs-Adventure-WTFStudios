@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1131028061467601513}
   - component: {fileID: 951533580524850846}
   m_Layer: 0
-  m_Name: SFX_Player Jump
+  m_Name: PREFAB_SFX_Player Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: a1b60c63fff2fcb43a67fd081fdfb979, type: 3}
   enablePitchRandomization: 1
+  repeatOnEnd: 0
 --- !u!82 &951533580524850846
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2058061106204230083}
   - component: {fileID: 1190053427980013917}
   - component: {fileID: 9155751991092138518}
+  - component: {fileID: 1908217095155293356}
   m_Layer: 0
   m_Name: PREFAB_SFX_TaskDone_Main
   m_TagString: Untagged
@@ -41,7 +42,7 @@ AudioSource:
   m_GameObject: {fileID: 3478222338120085789}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3972081726554238845, guid: 7a0787fffa79329419d584a9b440bd62,
+  OutputAudioMixerGroup: {fileID: -2563686412379665033, guid: 7a0787fffa79329419d584a9b440bd62,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
@@ -144,3 +145,13 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 4a7f5777a7f91d04aaee070cb77695fe, type: 3}
   enablePitchRandomization: 0
+  repeatOnEnd: 0
+--- !u!170 &1908217095155293356
+AudioDistortionFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478222338120085789}
+  m_Enabled: 1
+  m_DistortionLevel: 0.5

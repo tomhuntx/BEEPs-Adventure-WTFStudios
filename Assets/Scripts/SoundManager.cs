@@ -31,8 +31,12 @@ public class SoundManager : MonoBehaviour
     [Header("Main Game Song Loop")]
     [Tooltip("Please arrange according to intensity where 0 is to least intense.")]
     [SerializeField] private AudioClip[] clips;
+    [SerializeField] private float fadeOutRate = 1.5f;
+    [SerializeField] private float fadeInRate = 0.8f;
     private AudioSource audioSource;
-    
+    private bool fadeOutMusic = false;
+    private float originalVolume;
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +64,7 @@ public class SoundManager : MonoBehaviour
 
         //Look for tasklist instance
         audioSource = this.GetComponent<AudioSource>();
+        originalVolume = audioSource.volume;
     }
 
     // Update is called once per frame
@@ -67,6 +72,23 @@ public class SoundManager : MonoBehaviour
     {
         ManageGameAudio();
         ManageMainGameMusic();
+
+        if (fadeOutMusic)
+        {
+            if (audioSource.volume > 0)
+            {
+                audioSource.volume -= fadeOutRate * Time.deltaTime;
+            }
+            audioSource.volume = Mathf.Clamp(audioSource.volume, 0, originalVolume);
+        }
+        else
+        {
+            if (audioSource.volume < originalVolume)
+            {
+                audioSource.volume += fadeInRate * Time.deltaTime;
+            }
+            audioSource.volume = Mathf.Clamp(audioSource.volume, 0, originalVolume);
+        }
     }
 
 
@@ -111,5 +133,17 @@ public class SoundManager : MonoBehaviour
         masterVol = originalMasterLevels;
         musicVol = originalMusicLevels;
         soundEffectsVol = originalSFXLevels;
+    }
+
+    public void FadeMusic(float time)
+    {
+        StartCoroutine(DoFadeMusic(time));
+    }
+
+    private IEnumerator DoFadeMusic(float time)
+    {
+        fadeOutMusic = true;
+        yield return new WaitForSeconds(time);
+        fadeOutMusic = false;
     }
 }

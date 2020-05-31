@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1131028061467601513}
   - component: {fileID: 951533580524850846}
   m_Layer: 0
-  m_Name: SFX_Explosion
+  m_Name: PREFAB_SFX_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 9a11d881fe00032478c05b6b510ccc4a, type: 3}
   enablePitchRandomization: 1
+  repeatOnEnd: 0
 --- !u!82 &951533580524850846
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -104,7 +105,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.3
       inSlope: 0
       outSlope: 0
       tangentMode: 0

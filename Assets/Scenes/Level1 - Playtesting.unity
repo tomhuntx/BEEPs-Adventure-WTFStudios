@@ -2552,6 +2552,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 50e5f726fcc98354babc6f249d1536e8, type: 3}
   - {fileID: 8300000, guid: d1d6957de6ea2ea4dadf95aed7218e4c, type: 3}
   - {fileID: 8300000, guid: b61fc5cdd68c27146aaa2d68e186f8f3, type: 3}
+  fadeOutRate: 0.5
+  fadeInRate: 0.3
 --- !u!114 &567811579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2577,7 +2579,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3971,6 +3973,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: afc63695318dd404fbcde1e22724393d,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: afc63695318dd404fbcde1e22724393d,
         type: 3}
@@ -9272,7 +9279,7 @@ GameObject:
   - component: {fileID: 1582914730}
   - component: {fileID: 1582914729}
   - component: {fileID: 1582914728}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BoxDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10984,7 +10991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12da56077e74da3449ab2be3c2b479a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableIgnore: 0
+  enableIgnore: 1
   ignoreTags:
   - Box
   - Heavy Box
@@ -15734,6 +15741,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7043323893566995232, guid: 5d8e6f61161f90c448be47a4aeb1c217,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7043323893566995233, guid: 5d8e6f61161f90c448be47a4aeb1c217,
         type: 3}
       propertyPath: pitchMult
@@ -16593,6 +16605,17 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 567811578}
+        m_MethodName: FadeMusic
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
