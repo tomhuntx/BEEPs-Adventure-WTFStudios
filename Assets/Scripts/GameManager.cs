@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public bool displayFPS = false;
     public bool capFPS = true;
     [SerializeField] private TextMeshProUGUI FPSDisplay;
+	private bool locked = false;
 
 	//
 	bool moveControls = false;
@@ -32,8 +33,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
+		
     }
 
     // Update is called once per frame
@@ -54,6 +54,14 @@ public class GameManager : MonoBehaviour
             if (FPSDisplay.gameObject.activeSelf != displayFPS)
                 FPSDisplay.gameObject.SetActive(displayFPS);
         }
+
+		// WEBGL Fix - Only lock cursor clicked when it's visible & not paused
+		if (Input.GetMouseButtonDown(0) && Cursor.visible && !pauseMenu.activeSelf)
+		{
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+			locked = true;
+		}
 
 		/////// Would move to GUI MANAGER
 		//Store controls

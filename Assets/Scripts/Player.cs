@@ -450,7 +450,7 @@ public class Player : MonoBehaviour
                     renderer.receiveShadows = false;
 
                     //Slight size offset just to prevent "z-fighting"
-                    boxHighlight.transform.localScale += new Vector3(0.0001f, 0.0001f, 0.0001f);
+                    boxHighlight.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
 
                     //Remove physics and colliders
                     Destroy(boxHighlight.GetComponent<Collider>());
