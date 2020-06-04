@@ -223,6 +223,7 @@ public class Player : MonoBehaviour
 
                 //Clone grabbed box for outline setup
                 boxOutline = Instantiate(currentBox);
+                boxOutline.tag = "Outline";
                 boxOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
 
                 //Remove any external force appliers
