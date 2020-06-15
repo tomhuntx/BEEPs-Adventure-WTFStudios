@@ -14,6 +14,13 @@ public class Data
 		//...
 	}
 
+	// Used for new data
+	public Data()
+	{
+		level = 1;
+		//...
+	}
+
 	public int GetLevel()
 	{
 		return level;

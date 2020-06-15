@@ -5,16 +5,33 @@ using System;
 
 public class DataSaver : MonoBehaviour
 {
+	/// <summary>
+	/// Creates a new binary file
+	/// </summary>
+	public static Data NewData()
+	{
+		BinaryFormatter format = new BinaryFormatter();
+
+		// Saves in ../AppData/LocalLow/DefaultCompany/BoxGame/player.data
+		string path = Application.persistentDataPath + "/player.data";
+		FileStream stream = new FileStream(path, FileMode.CreateNew);
+
+		Data data = new Data();
+
+		format.Serialize(stream, data);
+		stream.Close();
+
+		return data;
+	}
 
 	/// <summary>
 	/// Saves current progress data into a binary file
 	/// </summary>
 	/// <param name="gm">The GameManager script in the open scene</param>
-    public static void SaveProgress(GameManager gm)
+	public static void SaveProgress(GameManager gm)
 	{
 		BinaryFormatter format = new BinaryFormatter();
 
-		// Saves in ../AppData/LocalLow/DefaultCompany/BoxGame/player.data
 		string path = Application.persistentDataPath + "/player.data";
 		FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -43,7 +60,7 @@ public class DataSaver : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogError("Save file not found in directory " + path);
+			Debug.LogError("Save file not found in directory " + path + " \nCreating new file...");
 			return null;
 		}
 	}
