@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameManager GManager;
 	public GameObject controls;
 
+	// The level of the scene as a build ranking (tutorial = 1, level 1 = 2, etc)
+	public int thisLevel;
 	
     [SerializeField] private GameObject pauseMenu;
 
@@ -18,7 +20,6 @@ public class GameManager : MonoBehaviour
     public bool displayFPS = false;
     public bool capFPS = true;
     [SerializeField] private TextMeshProUGUI FPSDisplay;
-	private bool locked = false;
 
 	//
 	bool moveControls = false;
@@ -28,7 +29,16 @@ public class GameManager : MonoBehaviour
 	private void Awake()
     {
         GManager = this;
-    }
+
+		// Should only occur if game is started from the level scene
+		if (Cursor.lockState != CursorLockMode.Locked)
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+		}
+
+		// Save current level
+		Save();
+	}
 
     // Start is called before the first frame update
     void Start()
@@ -54,14 +64,6 @@ public class GameManager : MonoBehaviour
             if (FPSDisplay.gameObject.activeSelf != displayFPS)
                 FPSDisplay.gameObject.SetActive(displayFPS);
         }
-
-		// WEBGL Fix - Only lock cursor clicked when it's visible & not paused
-		if (Input.GetMouseButtonDown(0) && Cursor.visible && !pauseMenu.activeSelf)
-		{
-			Cursor.visible = false;
-			Cursor.lockState = CursorLockMode.Locked;
-			locked = true;
-		}
 
 		/////// Would move to GUI MANAGER
 		//Store controls
@@ -163,6 +165,30 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
-    }
+		pauseMenu.SetActive(false);
+		Save();
+		//Application.Quit();
+		SceneManager.LoadScene(0);
+	}
+
+	// Save level data from the game manager
+	public void Save()
+	{
+		DataSaver.SaveProgress(this);
+	}
+
+	public void Load()
+	{
+		Data data = DataSaver.LoadData();
+	}
+
+	public void LoadScene(string name)
+	{
+		SceneManager.LoadScene(name);
+	}
+
+	public void LoadScene(int scene)
+	{
+		SceneManager.LoadScene(scene);
+	}
 }
