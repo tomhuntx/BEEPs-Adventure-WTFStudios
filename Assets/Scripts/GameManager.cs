@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 			Cursor.lockState = CursorLockMode.Locked;
 		}
 
-		// Save current level
+		// Save current level progress
 		Save();
 	}
 
@@ -65,8 +65,7 @@ public class GameManager : MonoBehaviour
                 FPSDisplay.gameObject.SetActive(displayFPS);
         }
 
-		/////// Would move to GUI MANAGER
-		//Store controls
+		//// TEMP Controls Icon & movement
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
 			rect = controls.GetComponent<RectTransform>();
@@ -84,7 +83,7 @@ public class GameManager : MonoBehaviour
 				controls.SetActive(false);
 			}
 		}
-		///////
+		////
 
         //Simple pause
         if (Input.GetKeyDown(KeyCode.Escape))

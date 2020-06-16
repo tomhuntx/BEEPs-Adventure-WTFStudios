@@ -60,7 +60,7 @@ public class DataSaver : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogError("Save file not found in directory " + path + " \nCreating new file...");
+			Debug.LogWarning("Save file not found in directory " + path);
 			return null;
 		}
 	}

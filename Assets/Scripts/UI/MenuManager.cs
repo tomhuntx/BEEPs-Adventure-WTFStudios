@@ -18,10 +18,11 @@ public class MenuManager : MonoBehaviour
 		}
 		catch (Exception ex)
 		{
+			Debug.Log("Creating new file...");
 			Data data = DataSaver.NewData();
 		}
 
-		Debug.Log("Player is currently on level = " + (levelProgress - 1));
+		Debug.Log("Player is currently up to level " + (levelProgress - 1));
 	}
 
 	public void Load()
@@ -61,7 +62,7 @@ public class MenuManager : MonoBehaviour
 
 	}
 
-	public void QuitGame()
+	public void Quit()
 	{
 		Application.Quit();
 	}

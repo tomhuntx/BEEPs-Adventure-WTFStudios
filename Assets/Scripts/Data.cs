@@ -8,13 +8,14 @@ public class Data
 	private int level;
 	//...
 
+	// Set data to that of the current level
 	public Data(GameManager gm)
 	{
 		level = gm.thisLevel;
 		//...
 	}
 
-	// Used for new data
+	// Set data to defaults (for new game)
 	public Data()
 	{
 		level = 1;
@@ -26,7 +27,6 @@ public class Data
 		return level;
 	}
 
-	// Used to reset or set level
 	public void SetLevel(int set)
 	{
 		level = set;
