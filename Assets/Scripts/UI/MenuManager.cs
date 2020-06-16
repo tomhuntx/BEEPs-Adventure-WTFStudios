@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
 	private int levelProgress = 1;
 
-    void Awake()
+	// Loading Screen
+	[SerializeField] private GameObject loadingScreen;
+
+	void Awake()
     {
 		Time.timeScale = 1;
 
@@ -42,7 +46,10 @@ public class MenuManager : MonoBehaviour
 	public void NewGame()
 	{
 		DataSaver.ResetProgress();
-		SceneManager.LoadScene(1);
+
+		// Load tutorial level
+		LoadScene(1);
+
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
 		Debug.Log("Started new game!");
@@ -50,8 +57,8 @@ public class MenuManager : MonoBehaviour
 
 	public void Play()
 	{
-		// Load level of current progress - starting with the tutorial
-		SceneManager.LoadScene(levelProgress);
+		// Load level of current progress 
+		LoadScene(levelProgress);
 
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
@@ -65,5 +72,28 @@ public class MenuManager : MonoBehaviour
 	public void Quit()
 	{
 		Application.Quit();
+	}
+
+	public void LoadScene(int scene)
+	{
+		StartCoroutine(LoadNewScene(scene));
+	}
+
+	IEnumerator LoadNewScene(int scene)
+	{
+		Instantiate(loadingScreen, FindObjectOfType<Canvas>().transform);
+
+		// Wait at least 2 seconds for loading (waits 2 seconds plus time to load the scene)
+		// Realtime to not be affected by timescale
+		yield return new WaitForSecondsRealtime(2);
+
+		// Load the passed scene
+		AsyncOperation async = SceneManager.LoadSceneAsync(scene);
+
+		// Wait until the scene is loaded
+		while (!async.isDone)
+		{
+			yield return null;
+		}
 	}
 }

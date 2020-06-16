@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager GManager;
 	public GameObject controls;
+	private MenuManager mm;
 
 	// The level of the scene as a build ranking (tutorial = 1, level 1 = 2, etc)
 	public int thisLevel;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
 	private void Awake()
     {
         GManager = this;
+		mm = FindObjectOfType<MenuManager>();
 
 		// Should only occur if game is started from the level scene
 		if (Cursor.lockState != CursorLockMode.Locked)
@@ -147,27 +149,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public void ResumeGame()
     {
-        Time.timeScale = 1;
-        Cursor.visible = false;
+		Time.timeScale = 1;
+		Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
     }
 
     public void RestartScene()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+		LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
 
-    public void QuitGame()
+	public void QuitGame()
     {
 		pauseMenu.SetActive(false);
 		Save();
 		//Application.Quit();
-		SceneManager.LoadScene(0);
+		LoadScene(0);
 	}
 
 	// Save level data from the game manager
@@ -181,13 +181,9 @@ public class GameManager : MonoBehaviour
 		Data data = DataSaver.LoadData();
 	}
 
-	public void LoadScene(string name)
-	{
-		SceneManager.LoadScene(name);
-	}
-
 	public void LoadScene(int scene)
 	{
-		SceneManager.LoadScene(scene);
+		Time.timeScale = 0;
+		mm.LoadScene(scene);
 	}
 }
