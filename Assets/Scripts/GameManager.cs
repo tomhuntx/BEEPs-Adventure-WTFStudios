@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
     public static GameManager GManager;
 	public GameObject controls;
 
-	
+    public const float MIN_CAM_FOV = 30.0f;
+    public const float MAX_CAM_FOV = 120;
+
+
     [SerializeField] private GameObject pauseMenu;
 
     [Header("FPS Management")]
@@ -20,6 +23,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI FPSDisplay;
 	private bool locked = false;
 
+    [Header("Object Interaction Settings")]
+    [SerializeField] private Material highlighterMaterial;
+    [SerializeField] private Color normalHighlightColor;
+    [SerializeField] private Color invalidHighlightColor;
+
 	//
 	bool moveControls = false;
 	RectTransform rect;
@@ -28,12 +36,11 @@ public class GameManager : MonoBehaviour
 	private void Awake()
     {
         GManager = this;
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-		
+        //Highlighter setup
+        InteractableObject.highlighterMaterial = highlighterMaterial;
+        InteractableObject.normalHighlightColor = normalHighlightColor;
+        InteractableObject.invalidHighlightColor = invalidHighlightColor;
     }
 
     // Update is called once per frame
@@ -56,12 +63,12 @@ public class GameManager : MonoBehaviour
         }
 
 		// WEBGL Fix - Only lock cursor clicked when it's visible & not paused
-		if (Input.GetMouseButtonDown(0) && Cursor.visible && !pauseMenu.activeSelf)
-		{
-			Cursor.visible = false;
-			Cursor.lockState = CursorLockMode.Locked;
-			locked = true;
-		}
+		//if (Input.GetMouseButtonDown(0) && Cursor.visible && !pauseMenu.activeSelf)
+		//{
+		//	Cursor.visible = false;
+		//	Cursor.lockState = CursorLockMode.Locked;
+		//	locked = true;
+		//}
 
 		/////// Would move to GUI MANAGER
 		//Store controls

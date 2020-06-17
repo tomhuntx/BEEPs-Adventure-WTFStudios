@@ -52,11 +52,12 @@ public class DestructibleObject : MonoBehaviour
     private Rigidbody rb;
     private MeshFilter mesh;
     private MeshRenderer mrenderer;
+    private Collider[] colliders;
     private List<PersistentForceRigidbody> forceAppliers = new List<PersistentForceRigidbody>();
     #endregion;
 
     #region Events
-    [Header("Events")]
+    [Header("Destructible Object Events")]
     public UnityEvent OnPlayerPunch;
     public UnityEvent OnColliderEnter;
     public UnityEvent OnImpactGeneral;
@@ -65,23 +66,27 @@ public class DestructibleObject : MonoBehaviour
     #endregion
 
     public GameObject TargetGameObject { get { return targetGameObject; } }
+    public Rigidbody RigidbodyComponent { get { return rb; } }
+    public MeshFilter MeshFilterComponent { get { return mesh; } }
+    public MeshRenderer MeshRendererComponent { get { return mrenderer; } }
+    public Collider[] ColliderComponents { get { return colliders; } }
 
 
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GameObject referenceGameObject = this.gameObject;
 
         //Target game object is assigned, assigning references according to that.
         if (targetGameObject != null) referenceGameObject = targetGameObject;
+        else targetGameObject = referenceGameObject;
 
         mesh = referenceGameObject.GetComponent<MeshFilter>();
         mrenderer = referenceGameObject.GetComponent<MeshRenderer>();
         rb = this.GetComponent<Rigidbody>();
         originalDurability = durability;
 
-        if (this.GetComponent<Collider>() == null)
+        colliders = this.GetComponents<Collider>();
+        if (colliders.Length <= 0)
             Debug.LogError(this.gameObject +
                 " Doesn't have a collider attached to it, please attach a collider before playing!");
 
@@ -177,12 +182,15 @@ public class DestructibleObject : MonoBehaviour
     /// </summary>
     public void DetachForceAppliers()
     {
-        foreach(PersistentForceRigidbody source in forceAppliers)
+        if (forceAppliers.Count > 0)
         {
-            source.RemoveReference(rb);
-        }
+            foreach (PersistentForceRigidbody source in forceAppliers)
+            {
+                source.RemoveReference(rb);
+            }
 
-        forceAppliers.Clear();
+            forceAppliers.Clear();
+        }
     }
     #endregion
 }

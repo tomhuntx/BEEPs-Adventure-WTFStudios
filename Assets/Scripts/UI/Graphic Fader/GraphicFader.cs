@@ -32,6 +32,7 @@ public class GraphicFader : MonoBehaviour
     [SerializeField] private DestroyType destroyType = DestroyType.Disabled;
     [SerializeField] private float sequenceStartDelay = 0.0f;
     [SerializeField] private bool ignoreDelayOnLoop = false;
+    [SerializeField] private bool playOnAwake = true;
     [SerializeField] private bool loopSequence = false;
     [SerializeField] private FadeSequence[] sequence;
 
@@ -51,12 +52,14 @@ public class GraphicFader : MonoBehaviour
     private bool isFadingIn = false;
     private bool isFadingOut = false;
     private bool isSequenceFinished = false;
+    private bool enablePlay;
     private float currentTimer;
     private float delayTimer;
     private int currentIndex = 0;
     #endregion
 
     public bool LoopSequence { get { return loopSequence; } set { loopSequence = value; } }
+    public bool IsSequenceFinished { get { return isSequenceFinished; } }
 
 
 
@@ -68,7 +71,11 @@ public class GraphicFader : MonoBehaviour
             graphicColor = targetGraphic.color;
 
         fadeType = sequence[currentIndex].sequenceType;
-        delayTimer = sequenceStartDelay + Time.time;
+        if (playOnAwake)
+        {
+            enablePlay = true;
+            delayTimer = sequenceStartDelay + Time.time;
+        }
     }
 
     private void Update()
@@ -86,6 +93,7 @@ public class GraphicFader : MonoBehaviour
 
                     currentIndex = 0;
                     isSequenceFinished = false;
+                    enablePlay = true;
                     onLoopSequence.Invoke();
                 }
                 else
@@ -93,6 +101,7 @@ public class GraphicFader : MonoBehaviour
                     if (!isSequenceFinished)
                     {
                         isSequenceFinished = true;
+                        enablePlay = false;
                         onSequenceDone.Invoke();
                     }
 
@@ -115,62 +124,65 @@ public class GraphicFader : MonoBehaviour
             //If sequence is not yet done
             else
             {
-                //If the current sequence is done, move to the next one
-                if (isCurrentSequenceDone)
+                if (enablePlay)
                 {
-                    isCurrentSequenceDone = false;
-                    fadeType = sequence[currentIndex].sequenceType;
-                    sequence[currentIndex].onSequenceEntry.Invoke();
-
-                    //Check for errors and swap if necessary
-                    if (sequence[currentIndex].minOpacity > sequence[currentIndex].maxOpacity)
+                    //If the current sequence is done, move to the next one
+                    if (isCurrentSequenceDone)
                     {
-                        Debug.LogWarning(string.Format("Sequence number {0}'s min opacity > max opacity, swapping values...", currentIndex));
-                        float newMax = sequence[currentIndex].minOpacity;
-                        sequence[currentIndex].minOpacity = sequence[currentIndex].maxOpacity;
-                        sequence[currentIndex].maxOpacity = newMax;
+                        isCurrentSequenceDone = false;
+                        fadeType = sequence[currentIndex].sequenceType;
+                        sequence[currentIndex].onSequenceEntry.Invoke();
+
+                        //Check for errors and swap if necessary
+                        if (sequence[currentIndex].minOpacity > sequence[currentIndex].maxOpacity)
+                        {
+                            Debug.LogWarning(string.Format("Sequence number {0}'s min opacity > max opacity, swapping values...", currentIndex));
+                            float newMax = sequence[currentIndex].minOpacity;
+                            sequence[currentIndex].minOpacity = sequence[currentIndex].maxOpacity;
+                            sequence[currentIndex].maxOpacity = newMax;
+                        }
+
+                        //Properly visualize change
+                        switch (fadeType)
+                        {
+                            case FadeSequence.SequenceType.FadeIn:
+                                graphicColor.a = sequence[currentIndex].minOpacity;
+                                break;
+
+                            case FadeSequence.SequenceType.FadeOut:
+                                graphicColor.a = sequence[currentIndex].maxOpacity;
+                                break;
+                        }
                     }
-
-                    //Properly visualize change
-                    switch (fadeType)
+                    //Do current sequence and check if it's done
+                    else
                     {
-                        case FadeSequence.SequenceType.FadeIn:
-                            graphicColor.a = sequence[currentIndex].minOpacity;
-                            break;
+                        switch (fadeType)
+                        {
+                            case FadeSequence.SequenceType.FadeIn:
+                                isCurrentSequenceDone =
+                                    FadeIn(sequence[currentIndex].minOpacity,
+                                           sequence[currentIndex].maxOpacity,
+                                           sequence[currentIndex].fadeRate,
+                                           sequence[currentIndex].duration);
+                                break;
 
-                        case FadeSequence.SequenceType.FadeOut:
-                            graphicColor.a = sequence[currentIndex].maxOpacity;
-                            break;
-                    }
-                }
-                //Do current sequence and check if it's done
-                else
-                {
-                    switch (fadeType)
-                    {
-                        case FadeSequence.SequenceType.FadeIn:
-                            isCurrentSequenceDone =
-                                FadeIn(sequence[currentIndex].minOpacity,
-                                       sequence[currentIndex].maxOpacity,
-                                       sequence[currentIndex].fadeRate,
-                                       sequence[currentIndex].duration);
-                            break;
+                            case FadeSequence.SequenceType.FadeOut:
+                                isCurrentSequenceDone =
+                                    FadeOut(sequence[currentIndex].minOpacity,
+                                            sequence[currentIndex].maxOpacity,
+                                            sequence[currentIndex].fadeRate,
+                                            sequence[currentIndex].duration);
+                                break;
 
-                        case FadeSequence.SequenceType.FadeOut:
-                            isCurrentSequenceDone =
-                                FadeOut(sequence[currentIndex].minOpacity,
-                                        sequence[currentIndex].maxOpacity,
-                                        sequence[currentIndex].fadeRate,
-                                        sequence[currentIndex].duration);
-                            break;
-
-                        case FadeSequence.SequenceType.Flash:
-                            isCurrentSequenceDone =
-                                Flash(sequence[currentIndex].minOpacity,
-                                      sequence[currentIndex].maxOpacity,
-                                      sequence[currentIndex].fadeRate,
-                                      sequence[currentIndex].duration);
-                            break;
+                            case FadeSequence.SequenceType.Flash:
+                                isCurrentSequenceDone =
+                                    Flash(sequence[currentIndex].minOpacity,
+                                          sequence[currentIndex].maxOpacity,
+                                          sequence[currentIndex].fadeRate,
+                                          sequence[currentIndex].duration);
+                                break;
+                        }
                     }
                 }
             }
@@ -297,6 +309,18 @@ public class GraphicFader : MonoBehaviour
             }
             return false;
         }
+    }
+    #endregion
+
+
+
+    #region Other Methods
+    public void PlaySequence()
+    {
+        currentIndex = 0;
+        isSequenceFinished = false;
+        enablePlay = true;
+        delayTimer = sequenceStartDelay + Time.time;
     }
     #endregion
 }

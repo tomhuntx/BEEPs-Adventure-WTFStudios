@@ -48,8 +48,11 @@ public class Explosion : MonoBehaviour
 
 				// Push player
 				//hit.GetComponent<FPSController>().PushFromPoint(transform.position, pow);
-				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow, 
-																   FPSController.ConvertFromForceMode(forceType));
+				//Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow, 
+				//												   FPSController.ConvertFromForceMode(forceType));
+
+				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow,
+																	   PlayerCharacterController.ConvertFromForceMode(forceType));
 			}
 			if (hit.tag == "Bot")
 			{

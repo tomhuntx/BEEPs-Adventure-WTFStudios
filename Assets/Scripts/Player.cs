@@ -1,13 +1,42 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(FPSController))]
+
+//[System.Serializable]
+//public struct GrabbableObject
+//{
+//    //Required
+//    public Transform transform { get; private set; }
+//    public Renderer renderer { get; private set; }
+
+//    //Can be null
+//    public Rigidbody rigidbodyComponent { get; set; }
+//    public DestructibleObject destructibleComponent { get; set; }
+    
+//    public GrabbableObject(Transform thisTransform,
+//                           Renderer thisRenderer,
+//                           Rigidbody thisRigidbody = null,
+//                           DestructibleObject thisDestructible = null)
+//    {
+//        transform = thisTransform;
+//        renderer = thisRenderer;
+//        rigidbodyComponent = thisRigidbody;
+//        destructibleComponent = thisDestructible;
+//    }
+//}
+
+
+[RequireComponent(typeof(PlayerCharacterController))]
 public class Player : MonoBehaviour
 {
-	// Prototype Tasks
+    public static Player Instance;
+
+
+    [Header("Prototype Tasks")]
 	public Task stackBox;
 	public Task knockHat;
 	bool boxStacking = false;
@@ -19,12 +48,11 @@ public class Player : MonoBehaviour
 
 	public GameObject hand;
 	private Animator handAnim;
-	//
-
-	public static Player Instance;    
-    public Graphic crosshair;
+    	
 
     #region Exposed Variables
+    [Space]
+    public Graphic crosshair;
     [SerializeField] private UnityEventsHandler groundCheck;
 
     [Header("Box Handling Properties")]
@@ -36,13 +64,20 @@ public class Player : MonoBehaviour
 	[Tooltip("Strength of impulse force applied upon dropping a non-box object.")]
 	[SerializeField] private float dropForce = 10.0f;
 
+    [SerializeField] private Transform thirdPersonObjectOffset;
+    [SerializeField] private Transform firstPersonObjectOffset;
+    [SerializeField] private Vector3 thrownObjectOffsetPos;
+ 
 	[Tooltip("The position of the grabbed object in this transform's local space.")]
     [SerializeField] private Vector3 objectOffset;
 
 	[Tooltip("A variant of the object offset for non-box items.")]
 	[SerializeField] private Vector3 otherObjectOffset;
 
-	[Tooltip("How far the raycast is.")]
+    [Tooltip("The transform where the raycast will originate.")]
+    [SerializeField] private Transform raycastOrigin;
+
+    [Tooltip("How far the raycast is.")]
     [SerializeField] private float raycastDistance = 4f;
 
     [Tooltip("How far from the player's body is an object interactable.")]
@@ -56,25 +91,29 @@ public class Player : MonoBehaviour
 
     #region Hidden Variables
     //outline
-    private GameObject boxOutline;
-    private BoxPlacementChecker outlineCollider;
-    private Color originalOutlineColor;
-    private Renderer outlineRenderer;
+    //private GameObject grabbedObjectOutline;
+    //private GrabbableObjectPlacementChecker outlineCollider;
+    //private Color originalOutlineColor;
+    //private Renderer outlineRenderer;
 
     //highlight
-    private GameObject boxHighlight;
+    //private GameObject boxHighlight;
 
-	private GameObject currentBox;
-    private FPSController controller;
+    private PlayerCharacterController controller;
     private RaycastHit hitInfo;
     private bool isRaycastHit = false;
     private GameObject heavyBox;
     private Rigidbody heavyBoxRB;
-	private GameObject grabbedObject;
+    private GrabbableObject grabbedObject;
     private Transform previousRaycastTarget;
+
+    /// <summary>
+    /// Checker if the raycast target is behind an object.
+    /// </summary>
+    private bool isTargetBehindSometing = false;
 	#endregion
 
-	public FPSController PlayerMovementControls { get { return controller; } }
+	public PlayerCharacterController PlayerMovementControls { get { return controller; } }
 
 
     private void Awake()
@@ -85,13 +124,20 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = this.GetComponent<FPSController>();
-		handAnim = hand.GetComponent<Animator>();
+        controller = this.GetComponent<PlayerCharacterController>();
+        //handAnim = hand.GetComponent<Animator>();
 	}
 
+    private void Update()
+    {
+        //Place crosshair management to avoid jittering
+        //Only adjust crosshair position if deadzone exist
+        //if (crosshair != null) ManageCrosshair();
+    }
+
     // Update is called once per frame
-    void Update()
-    { 
+    void LateUpdate()
+    {
         //Do check if there's a hit, else no hit
         if (DoRaycast(out hitInfo))
         {
@@ -113,55 +159,323 @@ public class Player : MonoBehaviour
             isRaycastHit = false;
         }
 
-        //Only adjust crosshair position if deadzone exist
-        if (crosshair != null && boxPlacementDeadzone > 0) ManageCrosshair();
-
-        if (Time.timeScale == 1)
+        
+        if (Time.timeScale > 0)
         {
-            if (currentBox != null)
-            {
-                ShowBoxPlacement();
+            ManageCrosshair();
 
-                if (outlineCollider.isPlacable)
+            if (grabbedObject != null)
+            {
+                VisualizeHighlighter();
+
+                if (controller.IsFirstPerson)
                 {
-                    if (Input.GetButtonDown("Place Box") && (boxOutline.activeSelf)) PlaceBox();
+                    grabbedObject.RenderToLayer("Grabbed Object");
+                    grabbedObject.transform.parent = firstPersonObjectOffset;
+                    grabbedObject.transform.position = firstPersonObjectOffset.position;
+                    grabbedObject.transform.rotation = firstPersonObjectOffset.rotation;
+                }
+                else
+                {
+                    grabbedObject.RenderToLayer("Default");
+                    grabbedObject.transform.parent = thirdPersonObjectOffset;
+                    grabbedObject.transform.position = thirdPersonObjectOffset.position;
+                    grabbedObject.transform.rotation = thirdPersonObjectOffset.rotation;
+
                 }
 
-                if (Input.GetButtonDown("Throw Box")) ThrowBox();
+                //if (outlineCollider.isPlacable)
+                //{
+                //    if (Input.GetButtonDown("Place Box") && (boxOutline.activeSelf)) PlaceBox();
+                //}
+
+                if (Input.GetButtonDown("Place Object")) PlaceGrabbedObject();
+                if (Input.GetButtonDown("Throw Object")) ThrowGrabbedObject();
+                if (Input.GetButtonDown("Drop Object")) DropGrabbedObject();
             }
-			else if (grabbedObject != null) {
-				if (Input.GetButtonDown("Throw Box")) ThrowBox();
-			}
             else
             {
-                if (Input.GetButtonDown("Grab Box")) GrabBox();
-				if (Input.GetButtonDown("Punch")) 
-				{
-					PunchBox();
-					handAnim.SetBool("isPunching", true);
-				}
-				else
-				{
-					handAnim.SetBool("isPunching", false);
-				}
-                HighlightTarget();
-                DragHeavyBox();
+                if (Input.GetButtonDown("Grab Object")) GrabObject();
+                if (Input.GetButtonDown("Punch"))
+                {
+                    PunchObject();
+                    //handAnim.SetBool("isPunching", true);
+                }
+                else
+                {
+                    //handAnim.SetBool("isPunching", false);
+                }
+                HighlightTargetObject();
+                //DragHeavyBox();
             }
         }
 
+
         //Debug raycast
-        //if (isRaycastHit)
-        //{
-        //    Debug.DrawLine(controller.MainCam.transform.position, hitInfo.point, Color.green);
-        //    print(hitInfo.transform);
-        //}
-        //else
-        //{
-        //    Debug.DrawRay(controller.MainCam.transform.position, controller.MainCam.transform.forward, Color.red);
-        //}
+        if (Input.GetKeyDown(KeyCode.P)) EditorApplication.isPaused = true;
+        if (isRaycastHit)
+        {
+            Debug.DrawLine(raycastOrigin.position, hitInfo.point, Color.green);
+            //print(hitInfo.transform);
+        }
+        else
+        {
+            Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * raycastDistance, Color.cyan);
+        }
+        
+    }
+
+    #region Compact
+    private void HighlightTargetObject()
+    {
+        if (isRaycastHit)
+        {
+            InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
+
+            if (interactable == null &&
+                previousRaycastTarget != null)
+            {
+                previousRaycastTarget.GetComponentInChildren<InteractableObject>().ShowHighlighter(false);
+            }
+
+            if (interactable != null)
+            {
+                interactable.ShowHighlighter(true);
+                previousRaycastTarget = hitInfo.transform;
+            }
+        }
+        else if (!isRaycastHit &&
+                 previousRaycastTarget != null)
+        {
+            previousRaycastTarget.GetComponentInChildren<InteractableObject>().ShowHighlighter(false);
+        }
+    }
+
+    private void VisualizeHighlighter()
+    {
+        if (isRaycastHit)
+        {
+            bool isBox = IsGameObjectBox(grabbedObject.gameObject);
+
+
+            if (isBox &&
+                IsGameObjectBox(hitInfo.transform.gameObject))
+            {
+                grabbedObject.ManagePlacementHighlighter(true,
+                                                         hitInfo.transform.position + hitInfo.normal,
+                                                         hitInfo.transform.rotation);
+            }
+            else if (!isBox ||
+                     !IsGameObjectBox(hitInfo.transform.gameObject))
+            {
+                grabbedObject.ManagePlacementHighlighter(true,
+                                                         hitInfo.point + hitInfo.normal / 2,
+                                                         this.transform.rotation);
+            }
+        }
+        else
+        {
+            grabbedObject.HidePlacementHighlighter();
+        }
+    }
+
+    private void PunchObject()
+    {
+        if (isRaycastHit)
+        {
+            if (IsGameObjectBox(hitInfo.transform.gameObject))
+            {
+                DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
+                target.ApplyDamage(punchDamage);
+                target.OnPlayerPunch.Invoke();
+                Rigidbody boxRB = hitInfo.transform.GetComponent<Rigidbody>();
+                boxRB.AddForce(controller.CharacterCam.transform.forward * throwForce / boxRB.mass, ForceMode.Impulse);
+            }
+            else
+            {
+                DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
+                target.OnPlayerPunch.Invoke();
+
+                switch (hitInfo.transform.tag)
+                {
+                    case "Hardhat":
+                        hitInfo.transform.GetComponent<Rigidbody>().isKinematic = false;
+                        hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
+                        hitInfo.transform.parent = null;
+                        knockHat.Contribute();
+                        break;
+
+                    case "Bot":
+                    case "ManagerBot":
+                        hitInfo.transform.GetComponent<Robot>().GetPunched(this.PlayerMovementControls.CharacterCam.transform.forward);
+                        break;
+                }
+            }
+        }
+    }
+
+    private void GrabObject()
+    {
+        if (isRaycastHit &&
+            hitInfo.transform.GetComponent<GrabbableObject>() != null)
+        {
+            grabbedObject = hitInfo.transform.GetComponent<GrabbableObject>();
+            Transform objectParent = thirdPersonObjectOffset;
+            if (controller.IsFirstPerson) objectParent = firstPersonObjectOffset;
+            grabbedObject.GrabObject(objectParent);
+        }
+    }
+
+    private void PlaceGrabbedObject()
+    {
+        if (isRaycastHit &&
+            grabbedObject.interactionComponent.HighlighterInstance.activeSelf &&
+            grabbedObject.PlaceObject())
+        {
+            grabbedObject = null;
+        }
+    }
+
+    private void ThrowGrabbedObject()
+    {
+        if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
+            !isRaycastHit)
+        {
+            Direction throwDirection = new Direction(thrownObjectOffsetPos,
+                                                     thrownObjectOffsetPos + raycastOrigin.forward.normalized);
+            grabbedObject.ThrowObject(throwDirection.worldDirection * throwForce, ForceMode.Impulse);
+            grabbedObject = null;
+        }
+    }
+
+    private void DropGrabbedObject()
+    {
+        Direction checkerDirection = new Direction(this.transform.position + thrownObjectOffsetPos,
+                                                   this.transform.position + this.transform.forward);
+        if (!Physics.Raycast(checkerDirection.relativePosition, checkerDirection.worldDirection, checkerDirection.localScaledDirection.magnitude) &&
+            !Physics.SphereCast(new Ray(checkerDirection.relativePosition, checkerDirection.worldDirection), 1.5f))
+        {
+            grabbedObject.DropObject(this.transform.position + thrownObjectOffsetPos);
+            grabbedObject = null;
+        }
+    }
+
+    private bool IsGameObjectBox(GameObject target)
+    {
+        switch (target.tag)
+        {
+            case "Box":
+                return true;
+            
+            case "Heavy Box":
+                return true;
+            
+            default:
+                return false;
+        }
     }
 
 
+    /// <summary>
+    /// Move crosshair onto raycast hit. If no hits or the hit point is too close, set position to center.
+    /// </summary>
+    private void ManageCrosshair()
+    {
+        if (isRaycastHit)
+        {
+            if (hitInfo.transform.GetComponentInChildren<InteractableObject>() != null)
+            {
+                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.transform.position);
+            }
+            else
+            {
+                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+            }
+        }
+        else
+        {
+            //crosshair.transform.position = controller.CharacterCam.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0.5f));
+            Vector3 rayPoint = raycastOrigin.position + raycastOrigin.forward * raycastDistance;
+            crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(rayPoint);
+        }
+
+        //manage crosshair opacity
+        Direction toCamera = new Direction(raycastOrigin.position + raycastOrigin.forward * raycastDistance,
+                                           controller.CharacterCam.transform.position);
+
+        bool isPlayerRayHit = Physics.Raycast(toCamera.relativePosition, toCamera.localDirection,
+                                              out RaycastHit rayHit, toCamera.localScaledDirection.magnitude,
+                                              Physics.IgnoreRaycastLayer, QueryTriggerInteraction.Collide) &&
+                              rayHit.transform.tag == "Player";
+
+        Vector3 rayOrigin = toCamera.relativePosition;
+        if (DoRaycast(out RaycastHit toObjectHit)) rayOrigin = toObjectHit.point;
+        bool isObjectRayHit = Physics.Raycast(rayOrigin, toCamera.localDirection,
+                                              toCamera.localScaledDirection.magnitude);
+
+        if (isPlayerRayHit || isObjectRayHit)
+        {
+            Color newColor = crosshair.color;
+            newColor.a = 0.5f;
+            crosshair.color = newColor;
+            isTargetBehindSometing = true;
+        }
+        else if (!isPlayerRayHit && !isObjectRayHit)
+        {
+            //make crosshair opaque
+            Color newColor = crosshair.color;
+            newColor.a = 1;
+            crosshair.color = newColor;
+            isTargetBehindSometing = false;
+        }
+
+        //Debug.DrawLine(toCamera.relativePosition, toCamera.worldScaledDirection, Color.yellow);
+    }
+
+    /// <summary>
+    /// Do a raycast from the given raycast origin transform.
+    /// </summary>
+    /// <param name="hitInfo">Raycast output</param>
+    /// <returns>Returns true if the raycast hits a collider.</returns>
+    private bool DoRaycast(out RaycastHit hitInfo)
+    {
+        return Physics.Raycast(raycastOrigin.transform.position, raycastOrigin.transform.forward, out hitInfo, raycastDistance);
+    }
+
+    private bool AllowHeavyBox()
+    {
+        if (isRaycastHit &&
+            hitInfo.transform.tag == "Heavy Box")
+        {
+            GameObject currentTarget = hitInfo.transform.gameObject;
+
+            if (!groundCheck.ObjectsInTrigger.Contains(currentTarget))
+                return true;
+        }
+        return false;
+    }
+
+    //private void GrabbedObjectToFirstPerson(bool isFirstPerson)
+    //{
+    //    GameObject targetGO = null;
+    //    if (grabbedObject.destructibleComponent != null &&
+    //        grabbedObject.destructibleComponent.TargetGameObject != null)
+    //    {
+    //        targetGO = grabbedObject.destructibleComponent.TargetGameObject;
+    //    }
+    //    else
+    //    {
+    //        targetGO = grabbedObject.transform.gameObject;
+    //    }
+
+    //    if (isFirstPerson)
+    //        targetGO.layer = LayerMask.NameToLayer("Grabbed Object");
+    //    else
+    //        targetGO.layer = LayerMask.NameToLayer("Default");
+    //}
+    #endregion
+
+    /*
     #region Private Methods
     private void DragHeavyBox()
     {
@@ -211,60 +525,68 @@ public class Player : MonoBehaviour
     {
 		if (isRaycastHit)
 		{
-			if (hitInfo.transform.tag == "Box")
+            grabbedObject = hitInfo.transform.gameObject;
+
+            //Put grabbed object as child of grabbed object offset transform
+            grabbedObject.transform.parent = grabbedObjectOffset;
+            grabbedObject.transform.localPosition = grabbedObjectOffset.localPosition;
+            grabbedObject.transform.rotation = grabbedObjectOffset.rotation;
+
+
+            if (hitInfo.transform.tag == "Box")
 			{
 				if (boxHighlight != null)
 				{
 					Destroy(boxHighlight);
 				}
 
-				currentBox = hitInfo.transform.gameObject;                
-                DestructibleObject targetBox = currentBox.GetComponent<DestructibleObject>();
+				//grabbedObject = hitInfo.transform.gameObject;                
+                DestructibleObject targetBox = grabbedObject.GetComponent<DestructibleObject>();
 
                 //Clone grabbed box for outline setup
-                boxOutline = Instantiate(currentBox);
-                boxOutline.tag = "Outline";
-                boxOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
+                grabbedObjectOutline = Instantiate(grabbedObject);
+                grabbedObjectOutline.tag = "Outline";
+                grabbedObjectOutline.transform.localScale += new Vector3(0.00001f, 0.00001f, 0.00001f); //prevent z-fighting
 
                 //Remove any external force appliers
                 targetBox.DetachForceAppliers();
-				currentBox.GetComponent<BoxDragSFX>().ToggleThis(false);
+				grabbedObject.GetComponent<BoxDragSFX>().ToggleThis(false);
 
-				//Set grabbed box as child of main cam
-				currentBox.transform.parent = controller.MainCam.transform;
-				currentBox.transform.localPosition = Vector3.zero + objectOffset;
-				currentBox.transform.rotation = controller.MainCam.transform.rotation;
+				//Put grabbed object as child of grabbed object offset transform
+				//grabbedObject.transform.parent = grabbedObjectOffset;
+				//grabbedObject.transform.localPosition = grabbedObjectOffset.localPosition;
+				//grabbedObject.transform.rotation = grabbedObjectOffset.rotation;
 
 				//Disable physics and collision
-				currentBox.GetComponent<Rigidbody>().isKinematic = true;
-				currentBox.GetComponent<Collider>().enabled = false;
+				grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+				grabbedObject.GetComponent<Collider>().enabled = false;
 
                 //Put grabbed box in different layer mask to prevent clipping
-                if (targetBox.TargetGameObject != null)
-                {
-                    targetBox.TargetGameObject.layer = LayerMask.NameToLayer("Grabbed Object");
-                }
-                else
-                {
-                    currentBox.layer = LayerMask.NameToLayer("Grabbed Object");
-                }
+                //if (targetBox.TargetGameObject != null)
+                //{
+                //    targetBox.TargetGameObject.layer = LayerMask.NameToLayer("Grabbed Object");
+                //}
+                //else
+                //{
+                //    grabbedObject.layer = LayerMask.NameToLayer("Grabbed Object");
+                //}
 
-				//Tweak collider and add collision checker
-				boxOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
-				BoxCollider collider = boxOutline.GetComponent<BoxCollider>();
+                //Tweak collider and add collision checker
+                grabbedObjectOutline.layer = LayerMask.NameToLayer("Ignore Raycast"); //ignore raycast to prevent placement jittering
+				BoxCollider collider = grabbedObjectOutline.GetComponent<BoxCollider>();
 				collider.size = new Vector3(0.99f, 0.99f, 0.99f);
 				collider.isTrigger = true;
 				collider.enabled = true;
-				outlineCollider = boxOutline.AddComponent<BoxPlacementChecker>();
+				outlineCollider = grabbedObjectOutline.AddComponent<BoxPlacementChecker>();
 
                 //Check if the rendered game object is childed or not
-                if (boxOutline.GetComponent<DestructibleObject>().TargetGameObject != null)
+                if (grabbedObjectOutline.GetComponent<DestructibleObject>().TargetGameObject != null)
                 {
-                    outlineRenderer = boxOutline.GetComponent<DestructibleObject>().TargetGameObject.GetComponent<Renderer>();
+                    outlineRenderer = grabbedObjectOutline.GetComponent<DestructibleObject>().TargetGameObject.GetComponent<Renderer>();
                 }
                 else
                 {
-                    outlineRenderer = boxOutline.GetComponent<Renderer>();
+                    outlineRenderer = grabbedObjectOutline.GetComponent<Renderer>();
                 }
 
                 //Set outline to semi-transparent
@@ -278,12 +600,11 @@ public class Player : MonoBehaviour
 				outlineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
                 //Remove physics and box component
-                Destroy(boxOutline.GetComponent<DestructibleObject>());
-                //Destroy(boxOutline.GetComponent<Rigidbody>()); // CAUSES TRIGGERS TO NOT WORK
-                boxOutline.GetComponent<Rigidbody>().isKinematic = true;
+                Destroy(grabbedObjectOutline.GetComponent<DestructibleObject>());
+                grabbedObjectOutline.GetComponent<Rigidbody>().isKinematic = true;
 
                 //Hide after setup
-                boxOutline.SetActive(false);
+                grabbedObjectOutline.SetActive(false);
 			}
 
 			if (hitInfo.transform.tag == "FloorControls")
@@ -311,9 +632,9 @@ public class Player : MonoBehaviour
 				grabbedObject.GetComponent<DestructibleObject>().DetachForceAppliers();
 
 				//Set grabbed box as child of main cam
-				grabbedObject.transform.parent = controller.MainCam.transform;
+				grabbedObject.transform.parent = controller.CharacterCam.transform;
 				grabbedObject.transform.localPosition = Vector3.zero + otherObjectOffset;
-				grabbedObject.transform.rotation = controller.MainCam.transform.rotation;
+				grabbedObject.transform.rotation = controller.CharacterCam.transform.rotation;
 
 				// Rotate (hardhat only?)
 				grabbedObject.transform.Rotate(0, 0, 0);
@@ -502,17 +823,17 @@ public class Player : MonoBehaviour
     {
 		if (grabbedObject)
 		{
-			currentBox = grabbedObject;
+			grabbedObject = grabbedObject;
 			grabbedObject = null;
 		}
 
-        currentBox.transform.parent = null;
+        grabbedObject.transform.parent = null;
 
 		if (boxOutline.activeSelf)
         {
-            currentBox.transform.position = boxOutline.transform.position;
-            currentBox.transform.rotation = boxOutline.transform.rotation;
-            currentBox.transform.localScale = Vector3.one;
+            grabbedObject.transform.position = boxOutline.transform.position;
+            grabbedObject.transform.rotation = boxOutline.transform.rotation;
+            grabbedObject.transform.localScale = Vector3.one;
 
             // Stack box task
             if (stackBox != null && boxStacking)
@@ -523,27 +844,27 @@ public class Player : MonoBehaviour
 		}
         else
         {
-            currentBox.transform.position = this.transform.position + this.transform.forward;
-            currentBox.transform.rotation = Quaternion.identity;
+            grabbedObject.transform.position = this.transform.position + this.transform.forward;
+            grabbedObject.transform.rotation = Quaternion.identity;
 		}
 
         //Revert Box state
-        DestructibleObject targetBox = currentBox.GetComponent<DestructibleObject>();
+        DestructibleObject targetBox = grabbedObject.GetComponent<DestructibleObject>();
         if (targetBox.TargetGameObject != null)
         {
             targetBox.TargetGameObject.layer = LayerMask.NameToLayer("Default");
         }
         else
         {
-            currentBox.layer = LayerMask.NameToLayer("Default");
+            grabbedObject.layer = LayerMask.NameToLayer("Default");
         }
-        currentBox.GetComponent<Collider>().enabled = true;
-        currentBox.GetComponent<Rigidbody>().isKinematic = false;
-		if (currentBox.GetComponent<BoxDragSFX>())
+        grabbedObject.GetComponent<Collider>().enabled = true;
+        grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+		if (grabbedObject.GetComponent<BoxDragSFX>())
 		{
-			currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
+			grabbedObject.GetComponent<BoxDragSFX>().ToggleThis(true);
 		}
-        currentBox = null;
+        grabbedObject = null;
 		if (boxOutline)
 		{
 			Destroy(boxOutline);
@@ -562,50 +883,50 @@ public class Player : MonoBehaviour
 			float force;
 			if (grabbedObject)
 			{
-				currentBox = grabbedObject;
+				grabbedObject = grabbedObject;
 				grabbedObject = null;
 
-				newPos = controller.MainCam.transform.localPosition;
+				newPos = controller.CharacterCam.transform.localPosition;
 				newPos.z = otherObjectOffset.z;
 				newPos.y -= 2;
 				force = dropForce;
 			}
 			else
 			{
-				newPos = controller.MainCam.transform.localPosition;
+				newPos = controller.CharacterCam.transform.localPosition;
 				newPos.z = objectOffset.z;
 				force = throwForce;
 			}
-			Rigidbody boxRB = currentBox.GetComponent<Rigidbody>();
+			Rigidbody boxRB = grabbedObject.GetComponent<Rigidbody>();
 
-            currentBox.transform.localPosition = newPos;
-            currentBox.transform.parent = null;
+            grabbedObject.transform.localPosition = newPos;
+            grabbedObject.transform.parent = null;
 
-            DestructibleObject targetBox = currentBox.GetComponent<DestructibleObject>();
+            DestructibleObject targetBox = grabbedObject.GetComponent<DestructibleObject>();
             if (targetBox.TargetGameObject != null)
             {
                 targetBox.TargetGameObject.layer = LayerMask.NameToLayer("Default");
             }
             else
             {
-                currentBox.layer = LayerMask.NameToLayer("Default");
+                grabbedObject.layer = LayerMask.NameToLayer("Default");
             }
-            //currentBox.GetComponent<Collider>().enabled = true;
+            //grabbedObject.GetComponent<Collider>().enabled = true;
 
             // Multiple collider check
-            Collider[] colliders = currentBox.GetComponentsInChildren<Collider>();
+            Collider[] colliders = grabbedObject.GetComponentsInChildren<Collider>();
 			foreach (Collider col in colliders)
 			{
 				col.enabled = true;
 			}
 
-			if (currentBox.GetComponent<BoxDragSFX>())
+			if (grabbedObject.GetComponent<BoxDragSFX>())
 			{
-				currentBox.GetComponent<BoxDragSFX>().ToggleThis(true);
+				grabbedObject.GetComponent<BoxDragSFX>().ToggleThis(true);
 			}
             boxRB.isKinematic = false;
-            boxRB.AddForce(controller.MainCam.transform.forward * force, ForceMode.Impulse);
-            currentBox = null;
+            boxRB.AddForce(controller.CharacterCam.transform.forward * force, ForceMode.Impulse);
+            grabbedObject = null;
 
 			if (boxOutline)
 			{
@@ -628,7 +949,7 @@ public class Player : MonoBehaviour
                 target.ApplyDamage(punchDamage);
                 target.OnPlayerPunch.Invoke();
                 Rigidbody boxRB = hitInfo.transform.GetComponent<Rigidbody>();
-                boxRB.AddForce(controller.MainCam.transform.forward * throwForce / boxRB.mass, ForceMode.Impulse);
+                boxRB.AddForce(controller.CharacterCam.transform.forward * throwForce / boxRB.mass, ForceMode.Impulse);
             }
 
 			if (hitInfo.transform.tag == "Hardhat")
@@ -637,7 +958,7 @@ public class Player : MonoBehaviour
 				target.OnPlayerPunch.Invoke();
 
 				hitInfo.transform.GetComponent<Rigidbody>().isKinematic = false;
-				hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.MainCam.transform.forward * throwForce, ForceMode.Impulse);
+				hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
 				hitInfo.transform.parent = null;
 
 				knockHat.Contribute();
@@ -647,7 +968,7 @@ public class Player : MonoBehaviour
 			{
 				DestructibleObject target = hitInfo.transform.GetComponent<DestructibleObject>();
 				target.OnPlayerPunch.Invoke();
-				hitInfo.transform.GetComponent<Robot>().GetPunched(this.PlayerMovementControls.MainCam.transform.forward);
+				hitInfo.transform.GetComponent<Robot>().GetPunched(this.PlayerMovementControls.CharacterCam.transform.forward);
 			}
 		}
     }
@@ -657,25 +978,65 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ManageCrosshair()
     {
-        if (isRaycastHit && 
-            Vector3.Distance(hitInfo.point, this.transform.position) >= boxPlacementDeadzone)
+        if (isRaycastHit)
         {
-            crosshair.transform.position = controller.MainCam.WorldToScreenPoint(hitInfo.point);
+            if (hitInfo.transform.tag == "Box")
+            {
+                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.transform.position);
+            }
+            else
+            {
+                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+            }
         }
         else
         {
-            crosshair.transform.position = controller.MainCam.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0.5f));
+            //crosshair.transform.position = controller.CharacterCam.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0.5f));
+            Vector3 rayPoint = raycastOrigin.position + raycastOrigin.forward * raycastDistance;
+            crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(rayPoint);
         }
+
+        //manage crosshair opacity
+        Direction toCamera = new Direction(raycastOrigin.position + raycastOrigin.forward * raycastDistance,
+                                           controller.CharacterCam.transform.position);
+
+        bool isPlayerRayHit = Physics.Raycast(toCamera.relativePosition, toCamera.localDirection,
+                                              out RaycastHit rayHit, toCamera.localScaledDirection.magnitude,
+                                              Physics.IgnoreRaycastLayer, QueryTriggerInteraction.Collide) &&
+                              rayHit.transform.tag == "Player";
+
+        Vector3 rayOrigin = toCamera.relativePosition;
+        if (DoRaycast(out RaycastHit toObjectHit)) rayOrigin = toObjectHit.point;
+        bool isObjectRayHit = Physics.Raycast(rayOrigin, toCamera.localDirection,
+                                              toCamera.localScaledDirection.magnitude);
+
+        if (isPlayerRayHit || isObjectRayHit)
+        {
+            Color newColor = crosshair.color;
+            newColor.a = 0.5f;
+            crosshair.color = newColor;
+            isTargetBehindSometing = true;
+        }
+        else if (!isPlayerRayHit && !isObjectRayHit)
+        {
+            //make crosshair opaque
+            Color newColor = crosshair.color;
+            newColor.a = 1;
+            crosshair.color = newColor;
+            isTargetBehindSometing = false;
+        }
+
+        //Debug.DrawLine(toCamera.relativePosition, toCamera.worldScaledDirection, Color.yellow);
     }
 
     /// <summary>
-    /// Do a raycast from the player cam.
+    /// Do a raycast from the given raycast origin transform.
     /// </summary>
     /// <param name="hitInfo">Raycast output</param>
     /// <returns>Returns true if the raycast hits a collider.</returns>
     private bool DoRaycast (out RaycastHit hitInfo)
     {
-        return Physics.Raycast(controller.MainCam.transform.position, controller.MainCam.transform.forward, out hitInfo, raycastDistance);
+        return Physics.Raycast(raycastOrigin.transform.position, raycastOrigin.transform.forward, out hitInfo, raycastDistance);
     }
 
     private bool AllowHeavyBox()
@@ -690,5 +1051,20 @@ public class Player : MonoBehaviour
         }
         return false;
     }
+
+    private void GrabbedBoxToFirstPerson(bool isFirstPerson)
+    {
+        DestructibleObject targetBox = grabbedObject.GetComponent<DestructibleObject>();
+        GameObject targetGO = grabbedObject;
+
+        if (targetBox.TargetGameObject != null)
+            targetGO = targetBox.TargetGameObject;
+
+        if (isFirstPerson)
+            targetGO.layer = LayerMask.NameToLayer("Grabbed Object");
+        else
+            targetGO.layer = LayerMask.NameToLayer("Default");        
+    }
     #endregion
+    */
 }

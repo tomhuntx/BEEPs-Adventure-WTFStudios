@@ -132,7 +132,8 @@ public class PersistentForceRigidbody : MonoBehaviour
 
     private void ApplyForceToPlayer()
     {
-        FPSController.ForceType convertedType = FPSController.ConvertFromForceMode(forceType);
+        //FPSController.ForceType convertedType = FPSController.ConvertFromForceMode(forceType);
+        PlayerCharacterController.ForceType convertedType = PlayerCharacterController.ConvertFromForceMode(forceType);
 
         switch (forceDirection)
         {
