@@ -121,7 +121,7 @@ public class GrabbableObject : DestructibleObject
 
 
     #region Private Methods
-    private void DetachFromParent()
+    public void DetachFromParent()
     {
         this.transform.parent = null;
         RenderToLayer("Default");
@@ -136,7 +136,7 @@ public class GrabbableObject : DestructibleObject
         interactionComponent.ResetHighlighter();
     }
 
-    private void AttachToParent(Transform parentTransform)
+    public void AttachToParent(Transform parentTransform)
     {
         this.transform.parent = parentTransform;
         this.transform.localRotation = parentTransform.rotation;

@@ -58,11 +58,11 @@ public class DestructibleObject : MonoBehaviour
 
     #region Events
     [Header("Destructible Object Events")]
-    public UnityEvent OnPlayerPunch;
-    public UnityEvent OnColliderEnter;
-    public UnityEvent OnImpactGeneral;
-    public UnityEvent OnImpactDamage;    
-    public UnityEvent OnObjectDestroy;
+    public UnityEvent onPlayerPunch;
+    public UnityEvent onColliderEnter;
+    public UnityEvent onImpactGeneral;
+    public UnityEvent onImpactDamage;    
+    public UnityEvent onObjectDestroy;
     #endregion
 
     public GameObject TargetGameObject { get { return targetGameObject; } }
@@ -99,11 +99,11 @@ public class DestructibleObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        OnColliderEnter.Invoke();
+        onColliderEnter.Invoke();
 
         float impactMagnitude = Vector3.Magnitude(rb.velocity);
         if (impactMagnitude > generalImpactThreshold)
-            OnImpactGeneral.Invoke();
+            onImpactGeneral.Invoke();
 
         if (!isInvincible)
             CheckDurability(impactMagnitude);
@@ -154,7 +154,7 @@ public class DestructibleObject : MonoBehaviour
                 {
                     if (preset.assignedValue <= (durability / originalDurability) * 100)
                     {
-                        OnImpactDamage.Invoke();
+                        onImpactDamage.Invoke();
                         ChangeModelState(preset);
                         break;
                     }
@@ -162,7 +162,7 @@ public class DestructibleObject : MonoBehaviour
             }
             else
             {
-                OnObjectDestroy.Invoke();
+                onObjectDestroy.Invoke();
                 Destroy(this.transform.gameObject);
             }
         }

@@ -26,9 +26,12 @@ public class PlayerCharacterController : MonoBehaviour
 
     [Header("Camera Settings")]
     [SerializeField] private Camera characterCam;
-    private Camera firstPersonCam;
+    /// <summary>
+    /// Camera responsible for preventing clipping objects when in first person.
+    /// </summary>
+    private Camera fpAntiClipCam;
     [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)][SerializeField] private float thirdPersonFOV = 60.0f;
-    [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)] [SerializeField] private float firstPersonFOV = 90.0f;
+    [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)][SerializeField] private float firstPersonFOV = 90.0f;
     [SerializeField] private float lookSensitivity = 150.0f;
     [SerializeField] private float camTransitionSpeed = 5.0f;
     [Range(0.0001f, 0.5f)] [SerializeField] private float camFlipDistanceDeadzone = 0.3f;
@@ -42,6 +45,8 @@ public class PlayerCharacterController : MonoBehaviour
     private Vector3 currentCamPos;
     private Vector2 mouseVector;
     private float headRotX;
+    [SerializeField] private GameObject[] firstPersonGameObjects;
+    [SerializeField] private GameObject[] thirdPersonGameObjects;
 
 
     [Header("Physics")]
@@ -105,7 +110,6 @@ public class PlayerCharacterController : MonoBehaviour
 
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -113,12 +117,27 @@ public class PlayerCharacterController : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         antiCamClip = this.GetComponent<ProtectCameraFromWallClip>();
         graphicFader = this.GetComponent<GraphicFader>();
+        
         isFirstPerson = Vector3.Distance(characterHead.position, characterCam.transform.position) <= 1;
         currentCamPos = camOffsets[currentCamOffsetIndex];
         camFlipDistanceTreshold = camOffsets[currentCamOffsetIndex].magnitude * camFlipDistanceDeadzone;
-        firstPersonCam = characterCam.transform.GetChild(0).GetComponent<Camera>();
+        
+        //First person anti clip camera setup
+        fpAntiClipCam = characterCam.transform.GetChild(0).GetComponent<Camera>();
 
-        SetCameraFOV(thirdPersonFOV, firstPersonFOV);
+        //No camera detected, create a new one...
+        if (fpAntiClipCam == null)
+        {
+            GameObject newCam = new GameObject();
+            newCam.transform.parent = characterCam.transform;
+            newCam.transform.localPosition = Vector3.zero;
+            fpAntiClipCam = newCam.AddComponent<Camera>();
+        }
+
+        if (isFirstPerson) 
+            UpdateCamFOV(firstPersonFOV);
+        else
+            UpdateCamFOV(thirdPersonFOV);
     }
 
     // Update is called once per frame
@@ -157,7 +176,8 @@ public class PlayerCharacterController : MonoBehaviour
             return;
 
         // Only bump boxes
-        if (otherRB.tag == "Box")
+        if (otherRB.tag == "Box" ||
+            otherRB.tag == "Heavy Box")
         {
             // Bump
             otherRB.velocity = transform.forward * bumpForce;
@@ -184,6 +204,8 @@ public class PlayerCharacterController : MonoBehaviour
             if (Vector3.Distance(characterHead.localPosition, newCamPos) <= 1.5f)
             {
                 isFirstPerson = true;
+                ManageRendering(isFirstPerson);
+                UpdateCamFOV(firstPersonFOV);
                 graphicFader.PlaySequence();
             }
             else
@@ -195,6 +217,8 @@ public class PlayerCharacterController : MonoBehaviour
                     
                     antiCamClip.enabled = true;
                     isFirstPerson = false;
+                    UpdateCamFOV(thirdPersonFOV);
+                    ManageRendering(isFirstPerson);
                 }                
             }
         }
@@ -387,21 +411,57 @@ public class PlayerCharacterController : MonoBehaviour
 
         return false;
     }
+
+    /// <summary>
+    /// Switches game objects' layer masks.
+    /// </summary>
+    private void ManageRendering(bool doRenderFirstperson)
+    {
+        string thirdPersonLayer = string.Empty;
+        string firstPersonLayer = string.Empty;
+
+        if (doRenderFirstperson)
+        {
+            thirdPersonLayer = "Ignore Render";
+            firstPersonLayer = "Grabbed Object";
+        }
+        else
+        {
+            thirdPersonLayer = "Default";
+            firstPersonLayer = "Ignore Render";
+        }
+
+        if (thirdPersonGameObjects.Length > 0)
+        {
+            for (int i = 0; i < thirdPersonGameObjects.Length; i++)
+            {
+                thirdPersonGameObjects[i].gameObject.layer = LayerMask.NameToLayer(thirdPersonLayer);
+            }
+        }
+
+        if (firstPersonGameObjects.Length > 0)
+        {
+            for (int i = 0; i < firstPersonGameObjects.Length; i++)
+            {
+                firstPersonGameObjects[i].gameObject.layer = LayerMask.NameToLayer(firstPersonLayer);
+            }
+        }
+    }
     #endregion
 
 
 
     #region Public Methods
-    public void SetCameraFOV(float thirdPerson = float.NaN, float firstPerson = float.NaN)
+    public void UpdateCamFOV(float FoV = float.NaN)
     {
         Camera thirdPersonCam = characterCam;
-        Camera firstPersonCam = thirdPersonCam.transform.GetChild(0).GetComponent<Camera>();
 
-        if (thirdPerson != float.NaN)
-            thirdPersonCam.fieldOfView = thirdPerson;
-        
-        if (firstPerson != float.NaN)
-            firstPersonCam.fieldOfView = firstPerson;
+        if (FoV != float.NaN)
+        {
+            characterCam.fieldOfView = FoV;
+            fpAntiClipCam.fieldOfView = FoV;
+        }
+            
     }
 
     /// <summary>

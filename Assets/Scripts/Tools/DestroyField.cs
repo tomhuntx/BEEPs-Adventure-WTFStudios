@@ -27,7 +27,7 @@ public class DestroyField : TagFilterer
             if (!forceDestroy && 
                 other.transform.GetComponent<DestructibleObject>() != null)
             {
-                other.transform.GetComponent<DestructibleObject>().OnObjectDestroy.Invoke();
+                other.transform.GetComponent<DestructibleObject>().onObjectDestroy.Invoke();
             }
             Destroy(other.gameObject);
         }
@@ -40,7 +40,7 @@ public class DestroyField : TagFilterer
             if (!forceDestroy && 
                 collision.transform.GetComponent<DestructibleObject>() != null)
             {
-                collision.transform.GetComponent<DestructibleObject>().OnObjectDestroy.Invoke();
+                collision.transform.GetComponent<DestructibleObject>().onObjectDestroy.Invoke();
             }
             Destroy(collision.gameObject); 
         }

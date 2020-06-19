@@ -33,6 +33,12 @@ public class InteractableObject : MonoBehaviour
             highlighterBasis = this.gameObject;
     }
 
+    private void Update()
+    {
+        if (highlighterInstance == null)
+            SetupHighlighter();
+    }
+
     public void ShowHighlighter(bool state)
     {
         highlighterInstance.SetActive(state);
@@ -68,7 +74,14 @@ public class InteractableObject : MonoBehaviour
         }
 
         BoxDragSFX boxSFXComponent = highlighterInstance.GetComponent<BoxDragSFX>();
-        if (boxSFXComponent != null) boxSFXComponent.ToggleThis(false);
+        //if (boxSFXComponent != null) boxSFXComponent.ToggleThis(false);
+        if (boxSFXComponent != null) Destroy(boxSFXComponent);
+
+        Destroy(highlighterInstance.GetComponent<InteractableObject>());
+        Destroy(highlighterInstance.GetComponent<DestructibleObject>());
+        Destroy(highlighterInstance.GetComponent<Rigidbody>());
+
+        
 
         //Setup trigger check
         Collider[] colliders = highlighterInstance.GetComponents<Collider>();

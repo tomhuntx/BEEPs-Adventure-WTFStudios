@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Robot : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class Robot : MonoBehaviour
 	private Vector3 originalPosition;
 
 	private Player thePlayer;
-	public Task punchRobot;
+	//public Task punchRobot;
 	private GameObject[] robots;
 	public GameObject boxProcessor;
 
@@ -35,11 +36,17 @@ public class Robot : MonoBehaviour
 	public Animator animFace;
 	public Animator animScreen;
 
-	public MatDetector matDetector;
+	//public MatDetector matDetector;
+	public UnityEventsHandler matDetector;
 	private float punchTime = 0f;
 
 	// Manager is unique variant
 	public bool manager = false;
+
+	[Header("Unity Events")]
+	public UnityEvent onPlayerPunch;
+	public UnityEvent onGetExploded;
+	public UnityEvent onGetAnnoyed;
 
 	void Start()
 	{
@@ -68,7 +75,7 @@ public class Robot : MonoBehaviour
 		}
 
 		// Tell animator when an assembly box exists
-		if (!manager && matDetector.boxExists)
+		if (!manager && matDetector.ObjectsInTrigger.Count > 0)
 		{
 			anim.SetBool("assemblyBox", true);
 			animFace.SetBool("assemblyBox", true);
@@ -143,10 +150,10 @@ public class Robot : MonoBehaviour
 
 		if (patience >= patienceLimit && !manager)
 		{
-			if (punchRobot)
-			{
-				punchRobot.Contribute();
-			}
+			//if (punchRobot)
+			//{
+			//	punchRobot.Contribute();
+			//}
 
 			foreach (GameObject robot in robots)
 			{
@@ -163,25 +170,22 @@ public class Robot : MonoBehaviour
 	public void GetPunched(Vector3 direction)
 	{
 		lookAtPlayer = true;
-
 		patience++;
-
 		lookTime = 3f;
 
 		if (canBePunched)
 		{
 			model.transform.position += direction * punchDistance;
-
 			canBePunched = false;
+
+			onPlayerPunch.Invoke();
 		}
 	}
 
 	public void GetBlownUp(GameObject explosion)
 	{
 		lookAtPlayer = true;
-
 		patience = patienceLimit;
-
 		lookTime = 3f;
 
 		// Prevents multiple explosive boxes from sending robots flying
@@ -191,6 +195,8 @@ public class Robot : MonoBehaviour
 			direction.Normalize();
 			model.transform.position += direction * expDistance;
 			canBePunched = false;
+
+			onGetExploded.Invoke();
 		}
 	}
 
@@ -199,5 +205,7 @@ public class Robot : MonoBehaviour
 		lookAtPlayer = true;
 		patience = patienceLimit;
 		lookTime = 3f;
+
+		onGetAnnoyed.Invoke();
 	}
 }
