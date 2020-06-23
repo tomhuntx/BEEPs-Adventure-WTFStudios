@@ -68,12 +68,12 @@ public class GraphicFader : MonoBehaviour
             graphicColor = targetGraphic.color;
 
         fadeType = sequence[currentIndex].sequenceType;
-        delayTimer = sequenceStartDelay + Time.time;
+        delayTimer = sequenceStartDelay + Time.unscaledTime;
     }
 
     private void Update()
     {
-        if (delayTimer < Time.time)
+        if (delayTimer < Time.unscaledTime)
         {
             //If reached end of sequence
             if (currentIndex >= sequence.Length)
@@ -82,7 +82,7 @@ public class GraphicFader : MonoBehaviour
                 if (loopSequence)
                 {
                     if (!ignoreDelayOnLoop)
-                        delayTimer = sequenceStartDelay + Time.time;
+                        delayTimer = sequenceStartDelay + Time.unscaledTime;
 
                     currentIndex = 0;
                     isSequenceFinished = false;
@@ -193,13 +193,13 @@ public class GraphicFader : MonoBehaviour
         {
             if (isFadingIn)
             {
-                currentTimer = duration + Time.time;
+                currentTimer = duration + Time.unscaledTime;
                 isFadingIn = false;
                 return false;
             }
             else
             {
-                if (currentTimer < Time.time)
+                if (currentTimer < Time.unscaledTime)
                 {
                     currentIndex++;
                     return true;
@@ -217,9 +217,9 @@ public class GraphicFader : MonoBehaviour
             }
             else
             {
-                graphicColor.a += fadeRate * Time.deltaTime;
+                graphicColor.a += fadeRate * Time.unscaledDeltaTime;
                 graphicColor.a = Mathf.Clamp(graphicColor.a, minOpacity, maxOpacity);
-                currentTimer = Time.time;
+                currentTimer = Time.unscaledTime;
             }
 
             return false;
@@ -233,13 +233,13 @@ public class GraphicFader : MonoBehaviour
         {
             if (isFadingOut)
             {
-                currentTimer = duration + Time.time;
+                currentTimer = duration + Time.unscaledTime;
                 isFadingOut = false;
                 return false;
             }
             else
             {
-                if (currentTimer < Time.time)
+                if (currentTimer < Time.unscaledTime)
                 {
                     currentIndex++;
                     return true;
@@ -256,9 +256,9 @@ public class GraphicFader : MonoBehaviour
             }
             else
             {
-                graphicColor.a -= fadeRate * Time.deltaTime;
+                graphicColor.a -= fadeRate * Time.unscaledDeltaTime;
                 graphicColor.a = Mathf.Clamp(graphicColor.a, minOpacity, maxOpacity);
-                currentTimer = Time.time;
+                currentTimer = Time.unscaledTime;
             }
 
             return false;
@@ -271,24 +271,24 @@ public class GraphicFader : MonoBehaviour
         if (!isFlashing)
         {
             isFlashing = true;
-            currentTimer = duration + Time.time;
+            currentTimer = duration + Time.unscaledTime;
             return false;
         }
         else
         {
             if (isFadingIn)
             {
-                graphicColor.a += fadeRate * Time.deltaTime;
+                graphicColor.a += fadeRate * Time.unscaledDeltaTime;
                 isFadingIn = graphicColor.a <= maxOpacity;
             }
             else
             {
-                graphicColor.a -= fadeRate * Time.deltaTime;
+                graphicColor.a -= fadeRate * Time.unscaledDeltaTime;
                 isFadingIn = graphicColor.a <= minOpacity;
             }
             graphicColor.a = Mathf.Clamp(graphicColor.a, minOpacity, maxOpacity);
 
-            if (currentTimer < Time.time)
+            if (currentTimer < Time.unscaledTime)
             {
                 isFlashing = false;
                 isFadingIn = false;

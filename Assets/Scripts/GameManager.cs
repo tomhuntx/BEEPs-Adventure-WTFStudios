@@ -4,19 +4,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager GManager;
 	public GameObject controls;
+	public GameObject feedback;
+	public GameObject popup;
 	private MenuManager mm;
 
-	// The level of the scene as a build ranking (tutorial = 1, level 1 = 2, etc)
+	// DATA
 	public int thisLevel;
-	
-    [SerializeField] private GameObject pauseMenu;
+	public int feedbackCount;
+	public long feedbackTimeBinary;
 
-    [Header("FPS Management")]
+	[SerializeField] private GameObject pauseMenu;
+
+	private bool feedbackAllowed = true;
+	private int feedbackDelayMins = 10;
+
+	[Header("FPS Management")]
     public int targetFPS = 60;
     public bool displayFPS = false;
     public bool capFPS = true;
@@ -31,6 +39,8 @@ public class GameManager : MonoBehaviour
     {
         GManager = this;
 		mm = FindObjectOfType<MenuManager>();
+
+		GetFeedback();
 
 		// Should only occur if game is started from the level scene
 		if (Cursor.lockState != CursorLockMode.Locked)
@@ -137,7 +147,13 @@ public class GameManager : MonoBehaviour
         {
             Application.targetFrameRate = 2147483647;
         }
-    }
+
+		// Limit feedback count
+		if (feedbackCount >= 3)
+		{
+			feedbackAllowed = false;
+		}
+	}
 
     private IEnumerator CalculateFPS()
     {
@@ -149,7 +165,82 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResumeGame()
+	// Feedback
+	public void Feedback()
+	{
+		// Show feedback popup
+		if (feedbackAllowed)
+		{
+			feedback.SetActive(true);
+		}
+		// Check if 10 mins has passed
+		else
+		{
+			Data data = DataSaver.LoadData();
+			DateTime oldTime = DateTime.FromBinary(data.GetFeedbackTime());
+			DateTime timeNow = System.DateTime.Now;
+
+			double difference = (timeNow - oldTime).TotalMinutes;
+			if (difference >= feedbackDelayMins)
+			{ // Waited long enough
+				feedbackAllowed = true;
+				ResetFeedback();
+			}
+			else
+			{ // Has not waited long enough
+				double num = Math.Round(feedbackDelayMins - difference, 1);
+				string errorText = "You must wait " + num + " minutes to provide more feedback.";
+
+				if (popup)
+				{
+					GameObject error = Instantiate(popup, popup.transform.position, popup.transform.rotation) as GameObject;
+					error.transform.SetParent(pauseMenu.transform, false);
+					error.GetComponentInChildren<TMP_Text>().SetText(errorText);
+				}
+				else
+				{
+					Debug.LogWarning("Please attach a popup to the GameManager!");
+				}
+			}
+		}
+	}
+
+	public void AddFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		data.AddFeedback();
+		feedbackCount = data.GetFeedback();
+
+		if (feedbackCount == 1)
+		{
+			DateTime time = System.DateTime.Now;
+			feedbackTimeBinary = time.ToBinary();
+
+			Debug.Log("Time of first feedback is " + time);
+		}
+
+		Save();
+	}
+
+	public void ResetFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		data.ResetFeedback();
+		feedbackCount = data.GetFeedback();
+		Save();
+
+		// Open feedback window again
+		Feedback();
+	}
+
+	public void GetFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		feedbackCount = data.GetFeedback();
+	}
+
+	// Pause Menu
+	public void ResumeGame()
     {
 		Time.timeScale = 1;
 		Cursor.visible = false;
@@ -157,7 +248,7 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    public void RestartScene()
+	public void RestartScene()
     {
 		LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
@@ -170,15 +261,10 @@ public class GameManager : MonoBehaviour
 		LoadScene(0);
 	}
 
-	// Save level data from the game manager
+	// Data management
 	public void Save()
 	{
 		DataSaver.SaveProgress(this);
-	}
-
-	public void Load()
-	{
-		Data data = DataSaver.LoadData();
 	}
 
 	public void LoadScene(int scene)

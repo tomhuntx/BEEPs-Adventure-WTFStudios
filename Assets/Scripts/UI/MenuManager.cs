@@ -49,19 +49,12 @@ public class MenuManager : MonoBehaviour
 
 		// Load tutorial level
 		LoadScene(1);
-
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
-		Debug.Log("Started new game!");
 	}
 
 	public void Play()
 	{
 		// Load level of current progress 
 		LoadScene(levelProgress);
-
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	public void Settings()
@@ -82,6 +75,8 @@ public class MenuManager : MonoBehaviour
 	IEnumerator LoadNewScene(int scene)
 	{
 		Instantiate(loadingScreen, FindObjectOfType<Canvas>().transform);
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
 
 		// Wait at least 2 seconds for loading (waits 2 seconds plus time to load the scene)
 		// Realtime to not be affected by timescale
