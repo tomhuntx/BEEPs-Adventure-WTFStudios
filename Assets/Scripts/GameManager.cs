@@ -21,8 +21,9 @@ public class GameManager : MonoBehaviour
 
 	[SerializeField] private GameObject pauseMenu;
 
-	private bool feedbackAllowed = true;
+	private bool feedbackAllowed;
 	private int feedbackDelayMins = 10;
+	private double difference;
 
 	[Header("FPS Management")]
     public int targetFPS = 60;
@@ -42,6 +43,15 @@ public class GameManager : MonoBehaviour
 
 		GetFeedback();
 
+		if (Waited())
+		{
+			feedbackAllowed = true;
+		}
+		else
+		{
+			feedbackAllowed = false;
+		}
+
 		// Should only occur if game is started from the level scene
 		if (Cursor.lockState != CursorLockMode.Locked)
 		{
@@ -51,12 +61,6 @@ public class GameManager : MonoBehaviour
 		// Save current level progress
 		Save();
 	}
-
-    // Start is called before the first frame update
-    void Start()
-    {
-		
-    }
 
     // Update is called once per frame
     void Update()
@@ -149,7 +153,7 @@ public class GameManager : MonoBehaviour
         }
 
 		// Limit feedback count
-		if (feedbackCount >= 3)
+		if (feedbackAllowed && feedbackCount >= 3)
 		{
 			feedbackAllowed = false;
 		}
@@ -176,18 +180,13 @@ public class GameManager : MonoBehaviour
 		// Check if 10 mins has passed
 		else
 		{
-			Data data = DataSaver.LoadData();
-			DateTime oldTime = DateTime.FromBinary(data.GetFeedbackTime());
-			DateTime timeNow = System.DateTime.Now;
-
-			double difference = (timeNow - oldTime).TotalMinutes;
-			if (difference >= feedbackDelayMins)
-			{ // Waited long enough
+			if (Waited())
+			{
 				feedbackAllowed = true;
 				ResetFeedback();
 			}
 			else
-			{ // Has not waited long enough
+			{
 				double num = Math.Round(feedbackDelayMins - difference, 1);
 				string errorText = "You must wait " + num + " minutes to provide more feedback.";
 
@@ -205,6 +204,23 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	private bool Waited()
+	{
+		Data data = DataSaver.LoadData();
+		DateTime oldTime = DateTime.FromBinary(data.GetFeedbackTime());
+		DateTime timeNow = System.DateTime.Now;
+
+		difference = (timeNow - oldTime).TotalMinutes;
+		if (difference >= feedbackDelayMins)
+		{ // Waited long enough
+			return true;
+		}
+		else
+		{ // Has not waited long enough
+			return false;
+		}
+	}
+
 	public void AddFeedback()
 	{
 		Data data = DataSaver.LoadData();
@@ -215,6 +231,7 @@ public class GameManager : MonoBehaviour
 		{
 			DateTime time = System.DateTime.Now;
 			feedbackTimeBinary = time.ToBinary();
+			data.SetFeedbackTime(feedbackTimeBinary);
 
 			Debug.Log("Time of first feedback is " + time);
 		}
@@ -237,6 +254,7 @@ public class GameManager : MonoBehaviour
 	{
 		Data data = DataSaver.LoadData();
 		feedbackCount = data.GetFeedback();
+		feedbackTimeBinary = data.GetFeedbackTime();
 	}
 
 	// Pause Menu

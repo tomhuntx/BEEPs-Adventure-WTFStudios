@@ -37,13 +37,12 @@ public class Feedback : MonoBehaviour
 		}
 		else
 		{
-			Success();
+			//Success();
+
+			gm.AddFeedback();
 
 			ThankYouPopup();
 			ExitFeedback();
-			Debug.Log("Success");
-
-			gm.AddFeedback();
 		}
 	}
 
@@ -73,8 +72,6 @@ public class Feedback : MonoBehaviour
 				OtherPopup("Not enough characters.");
 				break;
 		}
-
-		Debug.Log("Fail");
 	}
 
 	private void ThankYouPopup()
