@@ -37,7 +37,7 @@ public class Feedback : MonoBehaviour
 		}
 		else
 		{
-			//Success();
+			Success();
 
 			gm.AddFeedback();
 
