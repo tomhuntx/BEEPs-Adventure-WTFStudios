@@ -29,6 +29,7 @@ public struct Task : System.IEquatable<Task>
     public UnityEvent onTaskContribute;
     public UnityEvent onTaskDone;
     public UnityEvent onTaskCreate;
+    public UnityEvent onTaskReset;
 
     public static Task invalidTask = new Task(false);
     #endregion
@@ -75,6 +76,7 @@ public struct Task : System.IEquatable<Task>
         onTaskCreate = new UnityEvent();
         onTaskContribute = new UnityEvent();
         onTaskDone = new UnityEvent();
+        onTaskReset = new UnityEvent();
 
         onTaskCreate.Invoke();
     }
@@ -104,6 +106,7 @@ public struct Task : System.IEquatable<Task>
         onTaskCreate = new UnityEvent();
         onTaskContribute = new UnityEvent();
         onTaskDone = new UnityEvent();
+        onTaskReset = new UnityEvent();
 
         onTaskCreate.Invoke();
     }
@@ -135,6 +138,7 @@ public struct Task : System.IEquatable<Task>
         onTaskCreate = new UnityEvent();
         onTaskContribute = new UnityEvent();
         onTaskDone = new UnityEvent();
+        onTaskReset = new UnityEvent();
 
         onTaskCreate.Invoke();
     }
@@ -164,6 +168,7 @@ public struct Task : System.IEquatable<Task>
         onTaskCreate = new UnityEvent();
         onTaskContribute = new UnityEvent();
         onTaskDone = new UnityEvent();
+        onTaskReset = new UnityEvent();
 
         onTaskCreate.Invoke();
     }
@@ -183,6 +188,7 @@ public struct Task : System.IEquatable<Task>
         onTaskCreate = new UnityEvent();
         onTaskContribute = new UnityEvent();
         onTaskDone = new UnityEvent();
+        onTaskReset = new UnityEvent();
     }
     #endregion
 
@@ -224,6 +230,18 @@ public struct Task : System.IEquatable<Task>
     public void Contribute()
     {
         Contribute(1);
+    }
+
+    public void ResetProgress()
+    {
+        isTaskDone = false;
+        currentContributions = 0;
+    }
+
+    public void DecreaseContribution()
+    {
+        if (isTaskDone) isTaskDone = false;
+        currentContributions = Mathf.Clamp(currentContributions - 1, 0, float.MaxValue);
     }
     #endregion
 
@@ -437,15 +455,47 @@ public class TaskList : MonoBehaviour
     /// <returns>Returns a valid task if it exist, otherwise returns a task with invalid values.</returns>
     public Task FindTask(string taskName)
     {
-        if (taskNames.Contains(taskName))
+        if (TaskExist(taskName))
         {
             int taskIndex = taskNames.IndexOf(taskName);
             return tasks[taskIndex];
         }
         else
         {
-            Debug.LogWarning(string.Format("{0} No task found with the name of {1}...", scriptID, taskName));
             return Task.invalidTask;
+        }
+    }
+
+    public void ResetTaskProgress(string taskName)
+    {
+        if (TaskExist(taskName))
+        {
+            int taskIndex = taskNames.IndexOf(taskName);
+            Task targetTask = tasks[taskIndex];
+
+            if (targetTask.isTaskDone)
+            {
+                switch (targetTask.taskType)
+                {
+                    case Task.Type.Main:
+                        numMainTasksDone--;
+                        break;
+
+                    case Task.Type.Optional:
+                        numOptionalTasksDone--;
+                        break;
+                }
+            }
+            targetTask.ResetProgress();
+        }
+    }
+
+    public void DecreseContributionToTask(string taskName)
+    {
+        if (TaskExist(taskName))
+        {
+            int taskIndex = taskNames.IndexOf(taskName);
+            tasks[taskIndex].DecreaseContribution();
         }
     }
     #endregion
@@ -476,6 +526,17 @@ public class TaskList : MonoBehaviour
                 taskNames.Add(tasks[i].taskName);
             }
         }
+    }
+
+    private bool TaskExist(string taskName)
+    {
+        bool doExist = false;
+        doExist = taskNames.Contains(taskName);
+
+        if (!doExist)
+            Debug.LogWarning(string.Format("{0} No task found with the name of {1}...", scriptID, taskName));
+
+        return doExist;
     }
     #endregion
 }

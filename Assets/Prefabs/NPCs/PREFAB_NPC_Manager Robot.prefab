@@ -1125,6 +1125,7 @@ Transform:
   m_Children:
   - {fileID: 6047582473984866903}
   - {fileID: 968704412639793749}
+  - {fileID: 4862989519520852674}
   m_Father: {fileID: 7505778120558626580}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1275,12 +1276,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2215951986895129994}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.545, z: -0.195}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5770001, z: -0.0499997}
   m_LocalScale: {x: 0.49999982, y: 0.099999994, z: 0.49999982}
   m_Children: []
-  m_Father: {fileID: 3654560606418003026}
-  m_RootOrder: 1
+  m_Father: {fileID: 3266048301114550966}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &629898776901624725
 BoxCollider:
@@ -1307,8 +1308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02963779c9cf81f429afdf822a80a8bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotHat: {fileID: 0}
-  manager: 0
 --- !u!1 &2238465127155324851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,7 +1652,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4071855481982336068}
-  - {fileID: 4862989519520852674}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1703,43 +1701,19 @@ MonoBehaviour:
   forceMagnitudeThreshold: 1.5
   generalImpactThreshold: 0.55
   modelPresets: []
-  OnPlayerPunch:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2407708900354487301}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 75b6542b765c2474e86cd3d52086bee2,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2407708900354487301}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3334267170322057064, guid: 4ead4740808483c4896f03434b9b2a00,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnColliderEnter:
+  onPlayerPunch:
     m_PersistentCalls:
       m_Calls: []
-  OnImpactGeneral:
+  onColliderEnter:
     m_PersistentCalls:
       m_Calls: []
-  OnImpactDamage:
+  onImpactGeneral:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectDestroy:
+  onImpactDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectDestroy:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &2889841212770385107
@@ -1754,13 +1728,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb161fb489e6c9c4696f8cf5acf8fa30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  punchRobot: {fileID: 0}
   boxProcessor: {fileID: 0}
   anim: {fileID: 65795452466826733}
   animFace: {fileID: 7505778118992295708}
   animScreen: {fileID: 7505778120265949359}
   matDetector: {fileID: 0}
   manager: 1
+  onPlayerPunch:
+    m_PersistentCalls:
+      m_Calls: []
+  onGetExploded:
+    m_PersistentCalls:
+      m_Calls: []
+  onGetAnnoyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &9103494068728334369
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2331,42 +2313,19 @@ MonoBehaviour:
   forceMagnitudeThreshold: 1.5
   generalImpactThreshold: 0.55
   modelPresets: []
-  OnPlayerPunch:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8561924137567206180}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 75b6542b765c2474e86cd3d52086bee2,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2889841212770385107}
-        m_MethodName: GetAnnoyed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnColliderEnter:
+  onPlayerPunch:
     m_PersistentCalls:
       m_Calls: []
-  OnImpactGeneral:
+  onColliderEnter:
     m_PersistentCalls:
       m_Calls: []
-  OnImpactDamage:
+  onImpactGeneral:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectDestroy:
+  onImpactDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectDestroy:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5521368824891786531

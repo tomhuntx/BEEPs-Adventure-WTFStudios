@@ -5,8 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
-
+using System.Linq;
 
 [RequireComponent(typeof(PlayerCharacterController))]
 public class Player : MonoBehaviour
@@ -14,26 +13,15 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
 
- //   [Header("Prototype Tasks")]
-	//public Task stackBox;
-	//public Task knockHat;
-	//bool boxStacking = false;
-
-	//public GameObject controls;
-	//public GameObject controlsObject;
-	//public Material controlsHighlight;
-	//private GameObject highlight;
-
 	public GameObject hand;
 	private Animator handAnim;
+    private GameObject heavyBoxRef;
     	
 
     #region Exposed Variables
     [Space]
     public Graphic crosshair;
     [SerializeField] private UnityEventsHandler groundCheck;
-
-
 
     [Header("Box Handling Properties")]
     [SerializeField] private float punchDamage = 3.0f;
@@ -65,8 +53,6 @@ public class Player : MonoBehaviour
 
     [Tooltip("The area around the player where box placement should be ignored.")]
     [SerializeField] private float boxPlacementDeadzone = 1f;
-
-    [SerializeField] private Material materialHighlight;
     #endregion
 
     #region Hidden Variables
@@ -96,7 +82,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<PlayerCharacterController>();
-        //handAnim = hand.GetComponent<Animator>();
+        handAnim = hand.GetComponent<Animator>();
+        heavyBoxRef = new GameObject();
 	}
 
     private void Update()
@@ -165,11 +152,11 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Punch"))
                 {
                     PunchObject();
-                    //handAnim.SetBool("isPunching", true);
+                    handAnim.SetBool("isPunching", true);
                 }
                 else
                 {
-                    //handAnim.SetBool("isPunching", false);
+                    handAnim.SetBool("isPunching", false);
                 }
                 HighlightTargetObject();
                 DragHeavyBox();
@@ -182,38 +169,68 @@ public class Player : MonoBehaviour
         //if (isRaycastHit)
         //{
         //    Debug.DrawLine(raycastOrigin.position, hitInfo.point, Color.green);
-        //    print(hitInfo.transform);
+        //    //print(hitInfo.transform);
         //}
         //else
         //{
         //    Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * raycastDistance, Color.cyan);
         //}
-        
     }
 
     #region Compact
     private void HighlightTargetObject()
     {
+        InteractableObject previousInteractable = null;
+        if (previousRaycastTarget != null)
+        {
+            previousInteractable = previousRaycastTarget.GetComponentInChildren<InteractableObject>();
+        }
+
         if (isRaycastHit)
         {
             InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
 
-            if (interactable == null &&
-                previousRaycastTarget != null)
+            if (interactable == null)
             {
-                previousRaycastTarget.GetComponentInChildren<InteractableObject>().ShowHighlighter(false);
+                if (previousRaycastTarget != null &&
+                    previousInteractable != null)
+                {
+                    previousInteractable.ShowHighlighter(false);                    
+                }
             }
+            else
+            {
+                if (previousRaycastTarget != null)
+                {
+                    if (interactable.transform != hitInfo.transform)
+                    {
+                        interactable.ShowHighlighter(false);                        
+                    }
+                    else
+                    {
+                        interactable.ShowHighlighter(true);
+                    }
 
-            if (interactable != null)
-            {
-                interactable.ShowHighlighter(true);
-                previousRaycastTarget = hitInfo.transform;
+                    if (previousRaycastTarget != interactable.transform &&
+                        previousInteractable != null)
+                    {
+                        previousInteractable.ShowHighlighter(false);
+                    }
+                }
+                else
+                {
+                    interactable.ShowHighlighter(true);
+                }
             }
+            previousRaycastTarget = hitInfo.transform;
         }
         else if (!isRaycastHit &&
                  previousRaycastTarget != null)
         {
-            previousRaycastTarget.GetComponentInChildren<InteractableObject>().ShowHighlighter(false);
+            if (previousInteractable != null)
+                previousInteractable.ShowHighlighter(false);
+
+            previousRaycastTarget = null;
         }
     }
 
@@ -222,8 +239,7 @@ public class Player : MonoBehaviour
         if (isRaycastHit)
         {
             bool isBox = IsGameObjectBox(grabbedObject.gameObject);
-
-
+            
             if (isBox &&
                 IsGameObjectBox(hitInfo.transform.gameObject))
             {
@@ -234,8 +250,13 @@ public class Player : MonoBehaviour
             else if (!isBox ||
                      !IsGameObjectBox(hitInfo.transform.gameObject))
             {
+                Renderer highlighterRenderer = grabbedObject.RendererComponent;
+                Vector3 offset = new Vector3(hitInfo.normal.x * (highlighterRenderer.bounds.extents.x - InteractableObject.CONTACT_OFFSET),
+                                             hitInfo.normal.y * (highlighterRenderer.bounds.extents.y - InteractableObject.CONTACT_OFFSET),
+                                             hitInfo.normal.z * (highlighterRenderer.bounds.extents.z - InteractableObject.CONTACT_OFFSET));
+                Vector3 newPos = hitInfo.point + offset;
                 grabbedObject.ManagePlacementHighlighter(true,
-                                                         hitInfo.point + hitInfo.normal / 2,
+                                                         newPos,
                                                          this.transform.rotation);
             }
         }
@@ -265,18 +286,32 @@ public class Player : MonoBehaviour
                     target.onPlayerPunch.Invoke();
                 }
 
+                Transform parent = hitInfo.transform.parent;
+
+                if (parent == null)
+                {
+                    parent = hitInfo.transform;
+                }
+                else
+                {
+                    //Get the main parent then search down for components
+                    while (parent.transform.parent != null)
+                    {
+                        parent = parent.parent;
+                    }
+                }
+
                 switch (hitInfo.transform.tag)
                 {
                     case "Hardhat":
-                        hitInfo.transform.GetComponent<Rigidbody>().isKinematic = false;
-                        hitInfo.transform.GetComponent<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
+                        parent.GetComponentInChildren<Rigidbody>().isKinematic = false;
+                        parent.GetComponentInChildren<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
                         hitInfo.transform.parent = null;
-                        //knockHat.Contribute();
                         break;
 
                     case "Bot":
                     case "ManagerBot":
-                        hitInfo.transform.GetComponent<Robot>().GetPunched(this.PlayerMovementControls.CharacterCam.transform.forward);
+                        parent.GetComponentInChildren<Robot>().GetPunched(this.PlayerMovementControls.CharacterHead.transform.forward);
                         break;
                 }
             }
@@ -310,9 +345,8 @@ public class Player : MonoBehaviour
         if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
             !isRaycastHit)
         {
-            Direction throwDirection = new Direction(thrownObjectOffsetPos,
-                                                     thrownObjectOffsetPos + raycastOrigin.forward.normalized);
-            grabbedObject.ThrowObject(throwDirection.worldDirection * throwForce, ForceMode.Impulse);
+            grabbedObject.transform.localPosition = thrownObjectOffsetPos;
+            grabbedObject.ThrowObject(raycastOrigin.forward * throwForce, ForceMode.Impulse);
             grabbedObject = null;
         }
     }
@@ -354,7 +388,6 @@ public class Player : MonoBehaviour
                 AllowHeavyBox())
             {
                 heavyBox = hitInfo.transform.gameObject;
-                heavyBox.transform.parent = this.transform;
                 heavyBoxRB = heavyBox.GetComponent<Rigidbody>();
                 controller.JumpingEnabled = false;
             }
@@ -372,10 +405,54 @@ public class Player : MonoBehaviour
                 heavyBoxRB = null;
                 controller.RevertMoveSpeed();
                 controller.RevertLookSpeed();
+                controller.RevertCamAngleClamp();
                 controller.JumpingEnabled = true;
             }
             else
             {
+                //Manage heavy box reference position
+                Transform hbRef = heavyBoxRef.transform;
+                hbRef.position = raycastOrigin.transform.position + raycastOrigin.transform.forward * interactionDistance.z;
+
+                //Make the heavy box rotate its nearest face towards the player
+                Transform TRS = this.transform;
+                Vector3[] directions = new Vector3[] { TRS.right, TRS.up, TRS.forward,
+                                                       -TRS.right, -TRS.up, -TRS.forward };
+                Vector3 leastAngle = Vector3.positiveInfinity;
+                float previousAngle = float.MaxValue;
+                foreach (Vector3 dir in directions) 
+                { 
+                    float currentAngle = Vector3.Angle(heavyBox.transform.forward, dir);
+
+                    //Store info with the least angle
+                    if (currentAngle < previousAngle)
+                    {
+                        leastAngle = dir;
+                        previousAngle = currentAngle;
+                    }                    
+                }
+
+                //Apply offset rotation to the reference transform
+                Vector3 adjusted = new Vector3(heavyBox.transform.position.x + leastAngle.x,
+                                               hbRef.position.y,
+                                               heavyBox.transform.position.z + leastAngle.z);
+                heavyBoxRef.transform.LookAt(adjusted);
+
+                //Store into new variables to declutter later calculations...
+                Vector3 newPos = new Vector3(hbRef.position.x,
+                                             heavyBox.transform.position.y,
+                                             hbRef.position.z);
+                Quaternion newRot = Quaternion.Euler(heavyBox.transform.eulerAngles.x,
+                                                     hbRef.eulerAngles.y,
+                                                     heavyBox.transform.eulerAngles.z);
+
+                //Apply transform changes and smoothening
+                heavyBox.transform.position = Vector3.Lerp(heavyBox.transform.position, newPos, 15 * Time.deltaTime);
+                heavyBox.transform.rotation = Quaternion.Lerp(heavyBox.transform.rotation, newRot, 15 * Time.deltaTime);
+
+                //Clamp min camera angle
+                controller.UpdateCamAngleClamp(controller.originalMinCamAngleX, 70);
+
                 float newSpeed = 0;
                 if (Input.GetButtonDown("Sprint")) newSpeed = controller.SprintSpeed;
                 else newSpeed = controller.WalkSpeed;
@@ -393,9 +470,10 @@ public class Player : MonoBehaviour
     {
         if (isRaycastHit)
         {
-            if (hitInfo.transform.GetComponentInChildren<InteractableObject>() != null)
+            InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
+            if (interactable != null)
             {
-                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.transform.position);
+                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(interactable.transform.position);
             }
             else
             {
@@ -438,8 +516,6 @@ public class Player : MonoBehaviour
             crosshair.color = newColor;
             isTargetBehindSometing = false;
         }
-
-        //Debug.DrawLine(toCamera.relativePosition, toCamera.worldScaledDirection, Color.yellow);
     }
 
     /// <summary>

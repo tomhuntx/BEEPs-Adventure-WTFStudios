@@ -56,7 +56,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: 012844e34a5645a478be72d3869f230e, type: 3}
+        m_Texture: {fileID: 2800000, guid: eefe76f8704848243ab4b5c8fc16f058, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -68,7 +72,7 @@ Material:
     - _GlossMapScale: 0.264
     - _Glossiness: 0.05
     - _GlossyReflections: 1
-    - _HighlightStrength: 0.57
+    - _HighlightStrength: 1.45
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -81,5 +85,6 @@ Material:
     - _UnshadeFactor: 1
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

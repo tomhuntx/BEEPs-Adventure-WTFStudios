@@ -20,7 +20,7 @@ public struct ModelStates
     public Material material;
 }
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SpawnerRemote))]
 public class DestructibleObject : MonoBehaviour
 {
@@ -51,7 +51,7 @@ public class DestructibleObject : MonoBehaviour
     #region Hidden Variables
     private Rigidbody rb;
     private MeshFilter mesh;
-    private MeshRenderer mrenderer;
+    //private MeshRenderer mrenderer;
     private Collider[] colliders;
     private List<PersistentForceRigidbody> forceAppliers = new List<PersistentForceRigidbody>();
     #endregion;
@@ -68,8 +68,10 @@ public class DestructibleObject : MonoBehaviour
     public GameObject TargetGameObject { get { return targetGameObject; } }
     public Rigidbody RigidbodyComponent { get { return rb; } }
     public MeshFilter MeshFilterComponent { get { return mesh; } }
-    public MeshRenderer MeshRendererComponent { get { return mrenderer; } }
+    //public MeshRenderer MeshRendererComponent { get { return mrenderer; } }
     public Collider[] ColliderComponents { get { return colliders; } }
+    public Renderer RendererComponent { get; private set; }
+    //public Bounds BoundingBox { get; private set; }
 
 
     void Awake()
@@ -78,23 +80,29 @@ public class DestructibleObject : MonoBehaviour
 
         //Target game object is assigned, assigning references according to that.
         if (targetGameObject != null) referenceGameObject = targetGameObject;
-        else targetGameObject = referenceGameObject;
-
-        mesh = referenceGameObject.GetComponent<MeshFilter>();
-        mrenderer = referenceGameObject.GetComponent<MeshRenderer>();
-        rb = this.GetComponent<Rigidbody>();
+        else targetGameObject = referenceGameObject;        
         originalDurability = durability;
 
-        colliders = this.GetComponents<Collider>();
+        //Get and set colliders
+        colliders = this.GetComponentsInChildren<Collider>();
         if (colliders.Length <= 0)
-            Debug.LogError(this.gameObject +
+            Debug.LogError(targetGameObject.gameObject +
                 " Doesn't have a collider attached to it, please attach a collider before playing!");
+
+        rb = colliders[0].attachedRigidbody;
+
+        //Get colliders 
+
 
         //sort contents to descending based on their assigned values
         modelPresets.Sort(delegate (ModelStates a, ModelStates b)
         {
             return b.assignedValue.CompareTo(a.assignedValue);
         });
+
+        mesh = targetGameObject.GetComponent<MeshFilter>();
+        //mrenderer = targetGameObject.GetComponent<MeshRenderer>();
+        RendererComponent = targetGameObject.GetComponent<Renderer>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -134,7 +142,7 @@ public class DestructibleObject : MonoBehaviour
     {
         //can inject code for instanciating destruction transition prefab here
         mesh.mesh = preset.mesh;
-		mrenderer.material = preset.material;
+		RendererComponent.material = preset.material;
     }
     #endregion
 

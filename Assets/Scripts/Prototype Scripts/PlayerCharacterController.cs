@@ -30,6 +30,10 @@ public class PlayerCharacterController : MonoBehaviour
     /// Camera responsible for preventing clipping objects when in first person.
     /// </summary>
     private Camera fpAntiClipCam;
+    [Range(-90, 0)][SerializeField] private float minCamAngleX = -90;
+    public float originalMinCamAngleX { get; private set; }
+    [Range(0, 90)] [SerializeField] private float maxCamAngleX = 90;
+    public float originalMaxCamAngleX { get; private set; }
     [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)][SerializeField] private float thirdPersonFOV = 60.0f;
     [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)][SerializeField] private float firstPersonFOV = 90.0f;
     [SerializeField] private float lookSensitivity = 150.0f;
@@ -138,6 +142,9 @@ public class PlayerCharacterController : MonoBehaviour
             UpdateCamFOV(firstPersonFOV);
         else
             UpdateCamFOV(thirdPersonFOV);
+
+        originalMinCamAngleX = minCamAngleX;
+        originalMaxCamAngleX = maxCamAngleX;
     }
 
     // Update is called once per frame
@@ -287,7 +294,7 @@ public class PlayerCharacterController : MonoBehaviour
         mouseVector.y = Input.GetAxis("Mouse Y") * lookSensitivity * Time.deltaTime;
 
         headRotX -= mouseVector.y;
-        headRotX = Mathf.Clamp(headRotX, -90f, 90f);
+        headRotX = Mathf.Clamp(headRotX, minCamAngleX, maxCamAngleX);
 
         characterHead.transform.localRotation = Quaternion.Euler(headRotX, 0f, 0f);
         parentTransform.Rotate(Vector3.up * mouseVector.x);
@@ -452,6 +459,30 @@ public class PlayerCharacterController : MonoBehaviour
 
 
     #region Public Methods
+    /// <summary>
+    /// Updates the min/max clamp values for rotating the camera in the x-axis.
+    /// </summary>
+    /// <param name="min">This value is clamped between -90 and 0, both inclusive.</param>
+    /// <param name="max">This value is clamped between 0 and 90, both inclusive.</param>
+    public void UpdateCamAngleClamp(float min, float max)
+    {
+        minCamAngleX = Mathf.Clamp(min, -90, 0);
+        maxCamAngleX = Mathf.Clamp(max, 0, 90);
+    }
+
+    /// <summary>
+    /// Reverts to the original clamping angles for the camera's rotation in the x-axis.
+    /// </summary>
+    public void RevertCamAngleClamp()
+    {
+        minCamAngleX = originalMinCamAngleX;
+        maxCamAngleX = originalMaxCamAngleX;
+    }
+
+    /// <summary>
+    /// Updates the camera's FoV accordingly.
+    /// </summary>
+    /// <param name="FoV">The new field of view value.</param>
     public void UpdateCamFOV(float FoV = float.NaN)
     {
         Camera thirdPersonCam = characterCam;

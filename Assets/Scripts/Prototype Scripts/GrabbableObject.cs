@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(InteractableObject))]
 public class GrabbableObject : DestructibleObject
@@ -10,6 +9,7 @@ public class GrabbableObject : DestructibleObject
     #region Variables
     public InteractableObject interactionComponent { get; private set; }
     private GrabbableObjectPlacementChecker placementChecker;
+    private bool isOffsetApplied = false;
 
     [Header("Grabbed Object Events")]
     public UnityEvent onObjectGrab;
@@ -22,11 +22,21 @@ public class GrabbableObject : DestructibleObject
     private void Start()
     {
         interactionComponent = this.GetComponent<InteractableObject>();
-        interactionComponent.HighlighterBasis = TargetGameObject;
-        interactionComponent.SetupHighlighter();
-        placementChecker = interactionComponent.HighlighterInstance.AddComponent<GrabbableObjectPlacementChecker>();
-    }
+        interactionComponent.HighlighterBasis = TargetGameObject;        
 
+        if (TargetGameObject.transform.parent != null &&
+            TargetGameObject.transform.parent == this.transform)
+        {
+            //GameObject mainGO = this.transform.gameObject;
+            interactionComponent.SetupHighlighter(this.transform);
+            placementChecker = interactionComponent.HighlighterInstance.AddComponent<GrabbableObjectPlacementChecker>();
+        }
+        else
+        {
+            interactionComponent.SetupHighlighter();
+            placementChecker = interactionComponent.HighlighterInstance.AddComponent<GrabbableObjectPlacementChecker>();
+        }        
+    }
 
 
     #region Public Methods
@@ -89,24 +99,26 @@ public class GrabbableObject : DestructibleObject
     {
         interactionComponent.ShowHighlighter(doShow);
         GameObject highlighter = interactionComponent.HighlighterInstance;
-        
+
         if (doShow)
         {
-            highlighter.transform.parent = null;            
+            highlighter.transform.parent = null;
+            highlighter.transform.position = customPosition;
+            highlighter.transform.rotation = customRotation;
+            interactionComponent.SetHighlighterInvalid(!placementChecker.isPlacable);
         }
         else
         {
-            highlighter.transform.parent = interactionComponent.HighlighterBasis.transform;
+            highlighter.transform.parent = this.transform;
+            highlighter.SetActive(false);
         }
-        highlighter.transform.position = customPosition;
-        highlighter.transform.rotation = customRotation;
     }
 
     public void HidePlacementHighlighter()
     {
         interactionComponent.ShowHighlighter(false);
         GameObject highlighter = interactionComponent.HighlighterInstance;
-        highlighter.transform.parent = interactionComponent.HighlighterBasis.transform;
+        highlighter.transform.parent = this.transform;
         highlighter.transform.localPosition = Vector3.zero;
         highlighter.transform.localRotation = Quaternion.identity;
     }
