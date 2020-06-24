@@ -131,6 +131,9 @@ public class Player : MonoBehaviour
             }
 			else if (grabbedObject != null) {
 				if (Input.GetButtonDown("Throw Box")) ThrowBox();
+
+				// Also throw grabbed object on left-click 
+				if (Input.GetButtonDown("Place Box")) ThrowBox();
 			}
             else
             {
