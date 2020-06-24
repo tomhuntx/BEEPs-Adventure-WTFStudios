@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,11 +14,15 @@ using UnityEngine.Events;
 public struct Task : System.IEquatable<Task>
 {
     public enum Type { Main, Optional }
+    public enum ResetType { None, InProgressOnly, OnDoneOnly, Persistent }
 
     #region Exposed Variables
     [Header("Task Properties")]
     [Tooltip("The type of this task is.")]
     public Type taskType;
+
+    [Tooltip("Which type of reset can be done to this task.")]
+    [SerializeField] private ResetType resetType;
 
     [Tooltip("The name of this task.")]
     public string taskName;
@@ -57,7 +62,8 @@ public struct Task : System.IEquatable<Task>
     /// <param name="name">The name of this task.</param>
     /// <param name="required">The required amount of contributions for this task to be considered as done.</param>
     /// <param name="current">The initial amount of contributions for this task.</param>
-    public Task (Type thisTaskType, string name, float required, float current)
+    /// <param name="thisResetType">Which type of reset can be done to this task.</param>
+    public Task (Type thisTaskType, string name, float required, float current, ResetType thisResetType = ResetType.None)
     {
         //Error check
         if (name == "" ||
@@ -67,6 +73,7 @@ public struct Task : System.IEquatable<Task>
         }
 
         taskType = thisTaskType;
+        resetType = thisResetType;
         taskName = name;
         requiredContributions = required;
         currentContributions = current;
@@ -88,7 +95,8 @@ public struct Task : System.IEquatable<Task>
     /// <param name="thisTaskType">The type of this task.</param>
     /// <param name="name">The name of this task.</param>
     /// <param name="required">The required amount of contributions for this task to be considered as done.</param>
-    public Task (Type thisTaskType, string name, float required)
+    /// <param name="thisResetType">Which type of reset can be done to this task.</param>
+    public Task (Type thisTaskType, string name, float required, ResetType thisResetType = ResetType.None)
     {
         //Error check
         if (name == "" ||
@@ -98,6 +106,7 @@ public struct Task : System.IEquatable<Task>
         }
 
         taskType = thisTaskType;
+        resetType = thisResetType;
         taskName = name;
         requiredContributions = required;
         currentContributions = 0;
@@ -119,7 +128,8 @@ public struct Task : System.IEquatable<Task>
     /// <param name="name">The name of this task.</param>
     /// <param name="required">The required amount of contributions for this task to be considered as done.</param>
     /// <param name="current">The initial amount of contributions for this task.</param>
-    public Task(Type thisTaskType, string name, int required, int current)
+    /// <param name="thisResetType">Which type of reset can be done to this task.</param>
+    public Task(Type thisTaskType, string name, int required, int current, ResetType thisResetType = ResetType.None)
     {
         //Error check
         if (name == "" ||
@@ -129,6 +139,7 @@ public struct Task : System.IEquatable<Task>
         }
 
         taskType = thisTaskType;
+        resetType = thisResetType;
         taskName = name;
         requiredContributions = required;
         currentContributions = current;
@@ -150,7 +161,8 @@ public struct Task : System.IEquatable<Task>
     /// <param name="thisTaskType">The type of this task.</param>
     /// <param name="name">The name of this task.</param>
     /// <param name="required">The required amount of contributions for this task to be considered as done.</param>
-    public Task(Type thisTaskType, string name, int required)
+    /// <param name="thisResetType">Which type of reset can be done to this task.</param>
+    public Task(Type thisTaskType, string name, int required, ResetType thisResetType = ResetType.None)
     {
         //Error check
         if (name == "" ||
@@ -160,6 +172,7 @@ public struct Task : System.IEquatable<Task>
         }
 
         taskType = thisTaskType;
+        resetType = thisResetType;
         taskName = name;
         requiredContributions = required;
         currentContributions = 0;
@@ -180,6 +193,7 @@ public struct Task : System.IEquatable<Task>
     public Task(bool isDone)
     {
         taskType = Type.Optional;
+        resetType = ResetType.Persistent;
         taskName = string.Empty;
         requiredContributions = float.NaN;
         currentContributions = float.NaN;
@@ -205,13 +219,15 @@ public struct Task : System.IEquatable<Task>
             currentContributions += amount;
             currentContributions = Mathf.Clamp(currentContributions,
                                                0, requiredContributions);
-
+            onTaskContribute.Invoke();
+            
             if (CheckTaskStatus())
             {
                 isTaskDone = true;
                 onTaskDone.Invoke();
+
+                //Debug.Log(taskName + ": DONE");
             }
-            onTaskContribute.Invoke();
         }
     }
 
@@ -234,14 +250,45 @@ public struct Task : System.IEquatable<Task>
 
     public void ResetProgress()
     {
-        isTaskDone = false;
-        currentContributions = 0;
+        bool canBeReset = false;
+
+        switch(resetType)
+        {
+            case ResetType.InProgressOnly:
+                canBeReset = isTaskDone == false;
+                break;
+
+            case ResetType.OnDoneOnly:
+                canBeReset = isTaskDone == true;
+                break;
+
+            case ResetType.Persistent:
+                canBeReset = true;
+                break;
+
+            default:
+                canBeReset = false;
+                break;
+        }
+
+        if (canBeReset)
+        {
+            isTaskDone = false;
+            currentContributions = 0;
+            onTaskReset.Invoke();
+
+            //Debug.Log(taskName + ": RESET");
+        }
     }
 
     public void DecreaseContribution()
     {
-        if (isTaskDone) isTaskDone = false;
-        currentContributions = Mathf.Clamp(currentContributions - 1, 0, float.MaxValue);
+        currentContributions -= 1;
+        currentContributions = Mathf.Clamp(currentContributions, 
+                                           0, requiredContributions);
+        isTaskDone = CheckTaskStatus();
+
+        //Debug.Log(taskName + ": DECREASE");
     }
     #endregion
 
@@ -351,17 +398,16 @@ public class TaskList : MonoBehaviour
     /// <param name="contributionAmount">The number of contributions to be added to the task.</param>
     public void ContributeToTask(string taskName, float contributionAmount)
     {
-        //Copy over to array to enable editing
-        Task[] arrayTasks = tasks.ToArray();
-
         if (taskNames.Contains(taskName))
         {
             int taskIndex = taskNames.IndexOf(taskName);
-            arrayTasks[taskIndex].Contribute(contributionAmount);
+            Task targetTask = tasks[taskIndex];
+            targetTask.Contribute(contributionAmount);
+            onTaskContribute.Invoke();
 
-            if (arrayTasks[taskIndex].isTaskDone)
+            if (targetTask.isTaskDone)
             {
-                switch (arrayTasks[taskIndex].taskType)
+                switch (targetTask.taskType)
                 {
                     case Task.Type.Main:
                         numMainTasksDone++;
@@ -372,6 +418,9 @@ public class TaskList : MonoBehaviour
                         break;
                 }
             }
+
+            //Apply edits
+            tasks[taskIndex] = targetTask;
         }
         else
         {
@@ -394,10 +443,7 @@ public class TaskList : MonoBehaviour
             numOptionalTasksDone >= numOptionalTasks)
         {
             onAllTasksDone.Invoke();
-        }
-
-        //Apply edits
-        tasks = arrayTasks.ToList();
+        }        
     }
 
     /// <summary>
@@ -487,6 +533,7 @@ public class TaskList : MonoBehaviour
                 }
             }
             targetTask.ResetProgress();
+            tasks[taskIndex] = targetTask;
         }
     }
 
@@ -495,11 +542,42 @@ public class TaskList : MonoBehaviour
         if (TaskExist(taskName))
         {
             int taskIndex = taskNames.IndexOf(taskName);
-            tasks[taskIndex].DecreaseContribution();
+            Task targetTask = tasks[taskIndex];
+            targetTask.DecreaseContribution();
+
+            if (targetTask.isTaskDone)
+            {
+                switch (targetTask.taskType)
+                {
+                    case Task.Type.Main:
+                        numMainTasksDone--;
+                        break;
+
+                    case Task.Type.Optional:
+                        numOptionalTasksDone--;
+                        break;
+                }
+            }
+            tasks[taskIndex] = targetTask;
+        }
+    }
+
+    public void FinishTask(string taskName)
+    {
+        if (TaskExist(taskName))
+        {
+            int taskIndex = taskNames.IndexOf(taskName);
+            Task targetTask = tasks[taskIndex];
+            targetTask.Contribute(targetTask.requiredContributions);
+            tasks[taskIndex] = targetTask;
         }
     }
     #endregion
 
+    public void PrintText(string text)
+    {
+        print(text);
+    }
 
     #region Private Methods
     /// <summary>

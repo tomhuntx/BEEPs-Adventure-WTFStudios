@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     #region Exposed Variables
     [Space]
     public Graphic crosshair;
+    public Graphic crosshair2;
     [SerializeField] private UnityEventsHandler groundCheck;
 
     [Header("Box Handling Properties")]
@@ -479,12 +480,15 @@ public class Player : MonoBehaviour
             {
                 crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
             }
+
+            crosshair2.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
         }
         else
         {
             //crosshair.transform.position = controller.CharacterCam.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0.5f));
             Vector3 rayPoint = raycastOrigin.position + raycastOrigin.forward * raycastDistance;
             crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(rayPoint);
+            crosshair2.transform.position = crosshair.transform.position;
         }
 
         //manage crosshair opacity
