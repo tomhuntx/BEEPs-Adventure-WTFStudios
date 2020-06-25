@@ -14,7 +14,7 @@ public class InteractableObject : MonoBehaviour
     public static Material highlighterMaterial;
     public static Color normalHighlightColor;
     public static Color invalidHighlightColor;
-    public const float CONTACT_OFFSET = 0.2F;
+    public const float CONTACT_OFFSET = 0.2f;
 
     [SerializeField] private GameObject highlighterBasis;
     private GameObject highlighterInstance;

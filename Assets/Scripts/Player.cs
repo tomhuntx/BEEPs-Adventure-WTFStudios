@@ -252,14 +252,18 @@ public class Player : MonoBehaviour
                      !IsGameObjectBox(hitInfo.transform.gameObject))
             {
                 Renderer highlighterRenderer = grabbedObject.RendererComponent;
-                Vector3 offset = new Vector3(hitInfo.normal.x * (highlighterRenderer.bounds.extents.x - InteractableObject.CONTACT_OFFSET),
-                                             hitInfo.normal.y * (highlighterRenderer.bounds.extents.y - InteractableObject.CONTACT_OFFSET),
-                                             hitInfo.normal.z * (highlighterRenderer.bounds.extents.z - InteractableObject.CONTACT_OFFSET));
+                float contactOffset = 0;
+                if (controller.IsFirstPerson) contactOffset = InteractableObject.CONTACT_OFFSET;
+                Vector3 offset = new Vector3(hitInfo.normal.x * (highlighterRenderer.bounds.extents.x - contactOffset),
+                                             hitInfo.normal.y * (highlighterRenderer.bounds.extents.y - contactOffset),
+                                             hitInfo.normal.z * (highlighterRenderer.bounds.extents.z - contactOffset));
                 Vector3 newPos = hitInfo.point + offset;
                 grabbedObject.ManagePlacementHighlighter(true,
                                                          newPos,
                                                          this.transform.rotation);
             }
+            //print(hitInfo.transform);
+            //Debug.DrawLine(hitInfo.point, hitInfo.normal + hitInfo.point, Color.cyan);
         }
         else
         {
