@@ -53,11 +53,11 @@ Shader "PostProcessing/SobelOutline"
         float3 sceneColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.texcoord).rgb;
 
         float sobelDepth = SobelSampleDepth(_CameraDepthTexture, sampler_CameraDepthTexture, i.texcoord.xy);
-        sobelDepth = pow(saturate(sobelDepth) * _OutlineDepthMultiplier, _OutlineDepthBias);
+        sobelDepth = pow(saturate(sobelDepth) * abs(_OutlineDepthMultiplier), abs(_OutlineDepthBias));
 
         float3 sobelNormalVec = SobelSample(_CameraGBufferTexture2, sampler_CameraGBufferTexture2, offset, i.texcoord.xy).rgb;
         float sobelNormal = sobelNormalVec.x + sobelNormalVec.y + sobelNormalVec.z;
-        sobelNormal = pow(sobelNormal * _OutlineNormalMultiplier, _OutlineNormalBias);
+        sobelNormal = pow(sobelNormal * abs(_OutlineNormalMultiplier), abs(_OutlineNormalBias));
 
         float sobelOutline = saturate(max(sobelDepth, sobelNormal));
 
