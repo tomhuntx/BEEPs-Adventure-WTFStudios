@@ -19,7 +19,6 @@ public class PlayerCharacterController : MonoBehaviour
     GraphicFader graphicFader;
 
     [Header("Transform References")]
-    [SerializeField] Transform sample;
     [SerializeField] Transform parentTransform;
     [SerializeField] Transform characterHead;
     [SerializeField] Transform characterBody;
@@ -38,11 +37,11 @@ public class PlayerCharacterController : MonoBehaviour
     [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)][SerializeField] private float firstPersonFOV = 90.0f;
     [SerializeField] private float lookSensitivity = 150.0f;
     [SerializeField] private float camTransitionSpeed = 5.0f;
-    [Range(0.0001f, 0.5f)] [SerializeField] private float camFlipDistanceDeadzone = 0.3f;
+    [Range(0.1f, 5.0f)] [SerializeField] private float camFlipDistanceDeadzone = 1.5f;
     private float camFlipDistanceTreshold = 0.5f;
     [SerializeField] Vector3[] camOffsets;
     private int currentCamOffsetIndex = 0;
-    private bool doTransition = false;
+    private bool doTransition = true;
     private bool isAutoFlipDone = false;
     private bool isCamFlipped = false;
     private bool isFirstPerson;
@@ -150,7 +149,7 @@ public class PlayerCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ManageCamera();
+        //ManageCamera();
         LookRotation();
         Move();
         GetMotionDirection();
@@ -169,6 +168,11 @@ public class PlayerCharacterController : MonoBehaviour
             mass = 0.00000001f;
 
         //Debug.DrawLine(characterHead.position, characterHead.position + characterHead.forward * 5, Color.cyan);
+    }
+
+    private void LateUpdate()
+    {
+        ManageCamera();
     }
 
     /// <summary>
@@ -230,8 +234,10 @@ public class PlayerCharacterController : MonoBehaviour
             }
         }
 
+        //Third person camera management
         if (!isFirstPerson)
         {
+            //Switch camera sides manually
             if (Input.GetButtonDown("Flip Camera"))
             {
                 doTransition = true;
@@ -240,24 +246,38 @@ public class PlayerCharacterController : MonoBehaviour
                 currentCamPos.x *= -1;
             }
 
+            //Camera transition management
             if (doTransition)
             {
+                //Smoothen camera transitions in third person
                 if (Vector3.Distance(antiCamClip.cameraOffset, currentCamPos) > 0.001)
                 {
                     antiCamClip.cameraOffset = Vector3.Lerp(antiCamClip.cameraOffset, currentCamPos, camTransitionSpeed * Time.deltaTime);
                 }
+                //Jump camera directly to firstperson
                 else
                 {
                     doTransition = false;
                     antiCamClip.cameraOffset = currentCamPos;
                 }
             }
+            //Manage camera side switching
             else
             {
-                float camDistance = Vector3.Distance(characterHead.position, characterCam.transform.position);
+                //Check the right side of the player by default
+                int multiplier = 1;
+
+                //Check left side since that's where the side the camera is currently at
+                if (characterCam.transform.localPosition.x < 0) multiplier = -1; 
+                
+                //Flip camera if an obstacle is within the deadzone
+                Ray direction = new Ray(characterBody.position, characterBody.right * multiplier);
+                bool doFlip = Physics.Raycast(direction, camFlipDistanceDeadzone);
+                
+                //Only enable camera flip when the transition is done
                 if (isAutoFlipDone)
                 {
-                    if (camDistance <= camFlipDistanceTreshold)
+                    if (doFlip)
                     {
                         currentCamPos.x *= -1;
                         isCamFlipped = !isCamFlipped;
@@ -266,19 +286,23 @@ public class PlayerCharacterController : MonoBehaviour
                         isAutoFlipDone = false;
                     }
                 }
+                //Set auto flip to done if it's not currently switching sides
                 else
                 {
-                    if (camDistance > camFlipDistanceTreshold)
+                    if (!doFlip)
                         isAutoFlipDone = true;
                 }
             }
         }
+        //First person camera management
         else
         {
+            //Smoothen transition to first person
             if (Vector3.Distance(antiCamClip.cameraOffset, currentCamPos) > 1)
             {
                 antiCamClip.cameraOffset = Vector3.Lerp(antiCamClip.cameraOffset, currentCamPos, camTransitionSpeed * Time.deltaTime);
             }
+            //Jump to camera offset if within deadzone
             else
             {
                 antiCamClip.cameraOffset = currentCamPos;
