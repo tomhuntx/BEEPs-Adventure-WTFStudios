@@ -65,9 +65,9 @@ public class GrabbableObject : DestructibleObject
     {
         if (placementChecker.isPlacable)
         {
-            onObjectPlace.Invoke();
             this.transform.position = newPos;
             DetachFromParent();
+            onObjectPlace.Invoke();
 
             return true;
         }
@@ -81,11 +81,11 @@ public class GrabbableObject : DestructibleObject
     {
         if (placementChecker.isPlacable)
         {
-            onObjectPlace.Invoke();
             Transform highlighterTransform = interactionComponent.HighlighterInstance.transform;
             this.transform.position = highlighterTransform.position;
             this.transform.rotation = highlighterTransform.rotation;
             DetachFromParent();
+            onObjectPlace.Invoke();
 
             return true;
         }

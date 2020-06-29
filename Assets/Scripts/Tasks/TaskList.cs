@@ -395,6 +395,10 @@ public class TaskList : MonoBehaviour
     private int numMainTasks;
     private int numOptionalTasks;
     private List<string> taskNames = new List<string>(); //for name checks
+    private bool isMainTasksDone = false;
+    private bool isOptionalTasksDone = false;
+    private bool isAllTasksDone = false;
+
 
     [Header("Task List Events")]
     public UnityEvent onTaskContribute;
@@ -408,6 +412,9 @@ public class TaskList : MonoBehaviour
     public int NumOptionalTasksDone { get { return numOptionalTasksDone; } }
     public int NumMainTasks { get { return numMainTasks; } }
     public int NumOptionalTasks { get { return numOptionalTasks; } }
+    public bool IsMainTasksDone { get { return IsMainTasksDone; } }
+    public bool IsOptionalTasksDone { get { return isOptionalTasksDone; } }
+    public bool IsAllTasksDone { get { return isAllTasksDone; } }
     #endregion
 
 
@@ -489,20 +496,26 @@ public class TaskList : MonoBehaviour
 
 
 
-        if (numMainTasksDone >= numMainTasks)
+        if (!isMainTasksDone &&
+            numMainTasksDone >= numMainTasks)
         {
             onMainTasksDone.Invoke();
+            isOptionalTasksDone = true;
         }
 
-        if (numOptionalTasksDone >= numOptionalTasks)
+        if (!isOptionalTasksDone &&
+            numOptionalTasksDone >= numOptionalTasks)
         {
             onOptionalTasksDone.Invoke();
+            isOptionalTasksDone = true;
         }
 
-        if (numMainTasksDone >= numMainTasks &&
+        if (!isAllTasksDone &&
+            numMainTasksDone >= numMainTasks &&
             numOptionalTasksDone >= numOptionalTasks)
         {
             onAllTasksDone.Invoke();
+            isAllTasksDone = true;
         }        
     }
 
