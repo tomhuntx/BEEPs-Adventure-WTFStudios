@@ -71,7 +71,6 @@ public class DestructibleObject : MonoBehaviour
     //public MeshRenderer MeshRendererComponent { get { return mrenderer; } }
     public Collider[] ColliderComponents { get { return colliders; } }
     public Renderer RendererComponent { get; private set; }
-    //public Bounds BoundingBox { get; private set; }
 
 
     void Awake()
@@ -90,9 +89,6 @@ public class DestructibleObject : MonoBehaviour
                 " Doesn't have a collider attached to it, please attach a collider before playing!");
 
         rb = colliders[0].attachedRigidbody;
-
-        //Get colliders 
-
 
         //sort contents to descending based on their assigned values
         modelPresets.Sort(delegate (ModelStates a, ModelStates b)

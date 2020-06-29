@@ -4,6 +4,76 @@ using UnityEditor;
 using UnityEngine;
 using UnityStandardAssets.Cameras;
 
+
+[System.Serializable]
+public struct TransformPreset
+{
+    #region Variables
+    public Vector3 localPosition;
+    public Vector3 localEulerAngles;
+    public Vector3 localScale;
+    #endregion
+
+
+
+    #region Constructors
+    public TransformPreset(Vector3 thisPosition, 
+                           Vector3 thisEulerRotation, 
+                           Vector3 thisScale)
+    {
+        localPosition = thisPosition;
+        localEulerAngles = thisEulerRotation;
+        localScale = thisScale;
+    }
+
+    public TransformPreset(Vector3 thisPosition,
+                            Vector3 thisEulerRotation)
+    {
+        localPosition = thisPosition;
+        localEulerAngles = thisEulerRotation;
+        localScale = Vector3.one;
+    }
+
+    public TransformPreset(Vector3 thisPosition)
+    {
+        localPosition = thisPosition;
+        localEulerAngles = Vector3.zero;
+        localScale = Vector3.one;
+    }
+    #endregion
+
+
+
+    #region Public Methods
+    public void UpdateTransform(Transform targetTransform, 
+                                bool applyPosition = true, 
+                                bool applyRotation = true, 
+                                bool applyScaling = true)
+    {
+        if (applyPosition) targetTransform.localPosition = localPosition;
+        if (applyRotation) targetTransform.localEulerAngles = localEulerAngles;
+        if (applyScaling) targetTransform.localScale = localScale;
+    }
+
+    public void UpdateTransformPosition(Transform targetTransform)
+    {
+        UpdateTransform(targetTransform, true, false, false);
+    }
+
+    public void UpdateTransformRotation(Transform targetTransform)
+    {
+        UpdateTransform(targetTransform, false, true, false);
+    }
+
+    public void UpdateTransformScale(Transform targetTransform)
+    {
+        UpdateTransform(targetTransform, false, false, true);
+    }
+    #endregion
+}
+
+
+
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(ProtectCameraFromWallClip))]
@@ -39,7 +109,8 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float camTransitionSpeed = 5.0f;
     [Range(0.1f, 5.0f)] [SerializeField] private float camFlipDistanceDeadzone = 1.5f;
     private float camFlipDistanceTreshold = 0.5f;
-    [SerializeField] Vector3[] camOffsets;
+    //[SerializeField] private Vector3[] camOffsets;
+    [SerializeField] private TransformPreset[] camOffsets;
     private int currentCamOffsetIndex = 0;
     private bool doTransition = true;
     private bool isAutoFlipDone = false;
@@ -122,8 +193,10 @@ public class PlayerCharacterController : MonoBehaviour
         graphicFader = this.GetComponent<GraphicFader>();
         
         isFirstPerson = Vector3.Distance(characterHead.position, characterCam.transform.position) <= 1;
-        currentCamPos = camOffsets[currentCamOffsetIndex];
-        camFlipDistanceTreshold = camOffsets[currentCamOffsetIndex].magnitude * camFlipDistanceDeadzone;
+        TransformPreset currentPreset = camOffsets[currentCamOffsetIndex];
+        currentCamPos = currentPreset.localPosition;
+
+        camFlipDistanceTreshold = currentPreset.localPosition.magnitude * camFlipDistanceDeadzone;
         
         //First person anti clip camera setup
         fpAntiClipCam = characterCam.transform.GetChild(0).GetComponent<Camera>();
@@ -205,7 +278,7 @@ public class PlayerCharacterController : MonoBehaviour
             currentCamOffsetIndex++;
             if (currentCamOffsetIndex >= camOffsets.Length) currentCamOffsetIndex = 0;
 
-            Vector3 newCamPos = camOffsets[currentCamOffsetIndex];
+            Vector3 newCamPos = camOffsets[currentCamOffsetIndex].localPosition;
             if (isCamFlipped) newCamPos.x *= -1;
             currentCamPos = newCamPos;
             camFlipDistanceTreshold = newCamPos.magnitude * camFlipDistanceDeadzone;
@@ -233,6 +306,10 @@ public class PlayerCharacterController : MonoBehaviour
                 }                
             }
         }
+
+        characterCam.transform.localEulerAngles = Vector3.Lerp(characterCam.transform.localEulerAngles, 
+                                                               camOffsets[currentCamOffsetIndex].localEulerAngles, 
+                                                               camTransitionSpeed * Time.deltaTime);
 
         //Third person camera management
         if (!isFirstPerson)

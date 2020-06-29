@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 /// <summary>
 /// Responsible for handling UI effects for tasks.
@@ -18,7 +19,10 @@ public class TaskUGUI : MonoBehaviour
     [Tooltip("How fast the UI will ease in from its scaled up size.")]
     [SerializeField] private float scaleTransitionSpeed = 5.0f;
     
+    public UnityEvent onTransitionPlay;
+
     private bool isTransitionDone = false;
+    private bool isFinishedTriggered = false;
     #endregion
 
 
@@ -58,6 +62,7 @@ public class TaskUGUI : MonoBehaviour
         if (!isTransitionDone &&
             GetAssignedTask().isTaskDone)
         {
+            isFinishedTriggered = true;
             targetText.fontStyle = FontStyles.Strikethrough;
 
             //Do scaling stuff here;
@@ -70,7 +75,7 @@ public class TaskUGUI : MonoBehaviour
                 //Stops the scaling after transition
                 if (targetText.transform.localScale.x == 1)
                 {
-                    isTransitionDone = true;
+                    isTransitionDone = true;                    
                 }
             }
         }
@@ -81,7 +86,11 @@ public class TaskUGUI : MonoBehaviour
     #region Methods
     private void ScaleUpTransform()
     {
-        targetText.transform.localScale *= scaleSizeOnFinish;
+        if (!isFinishedTriggered)
+        {
+            targetText.transform.localScale *= scaleSizeOnFinish;
+            onTransitionPlay.Invoke();
+        }
     }
 
     private Task GetAssignedTask()

@@ -8,26 +8,33 @@ using UnityEngine.Rendering;
 
 public class InteractableObject : MonoBehaviour
 {
-    //CREATE FADER DEDICATED TO RENDERERS
-    //CREATE BASE CLASS FOR FADERS
-
+    #region Static Variables
     public static Material highlighterMaterial;
     public static Color normalHighlightColor;
     public static Color invalidHighlightColor;
     public const float CONTACT_OFFSET = 0.2f;
+    private readonly Vector3 HIGHLIGHTER_OFFSET_SIZE = new Vector3(0.0001f,
+                                                                   0.0001f,
+                                                                   0.0001f);
+    #endregion
 
+
+    #region Other Variables
+    [Tooltip("The game object that contains a renderer and will be make a highlighter out of.")]
     [SerializeField] private GameObject highlighterBasis;
     private GameObject highlighterInstance;
     private Renderer highlighterRenderer;
     private bool isParented;
-    private readonly Vector3 HIGHLIGHTER_OFFSET_SIZE = new Vector3(0.0001f,
-                                                                   0.0001f,
-                                                                   0.0001f);
+    #endregion
 
+
+    #region Accessors
     public GameObject HighlighterInstance { get { return highlighterInstance; } 
                                             set { highlighterInstance = value; } }
     public GameObject HighlighterBasis { get { return highlighterBasis; }
                                          set { highlighterBasis = value; } }
+    #endregion
+
 
 
     private void Start()
@@ -43,6 +50,12 @@ public class InteractableObject : MonoBehaviour
     }
 
 
+
+    #region Public Methods
+    /// <summary>
+    /// Changes the highlighter's color to invalid if set to true.
+    /// </summary>
+    /// <param name="isInvalid">If the highlighter's color will be set to invalid.</param>
     public void SetHighlighterInvalid(bool isInvalid)
     {
         if (isInvalid)
@@ -55,11 +68,18 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Hide/shows the highlighter game object.
+    /// </summary>
+    /// <param name="state">Set to true to show, otherwise, hides it.</param>
     public void ShowHighlighter(bool state)
     {
         highlighterInstance.SetActive(state);
     }
 
+    /// <summary>
+    /// Resets the highlighter's transform values and material color.
+    /// </summary>
     public void ResetHighlighter()
     {
         highlighterInstance.transform.parent = this.transform;
@@ -69,17 +89,19 @@ public class InteractableObject : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Highlighter setup if the interactable object's model 
+    /// is parented to this script's attached transform.
+    /// </summary>
+    /// <param name="parent">The parent transform of the highlighter's basis.</param>
     public void SetupHighlighter(Transform parent)
     {
         //Setup transform
         isParented = true;
         highlighterInstance = Instantiate(parent.gameObject);
         highlighterInstance.transform.parent = this.transform;
+        highlighterInstance.transform.localRotation = Quaternion.identity;
         highlighterInstance.transform.localPosition = Vector3.zero;
-        //GameObject highlighterModel = Instantiate(highlighterBasis);
-        
-        //highlighterModel.transform.parent = highlighterInstance.transform;
-        //highlighterModel.transform.localPosition = Vector3.zero;
         highlighterInstance.transform.localScale = Vector3.one;
         highlighterInstance.transform.localScale += HIGHLIGHTER_OFFSET_SIZE; //Prevent z-fighting 
 
@@ -97,41 +119,31 @@ public class InteractableObject : MonoBehaviour
         //Setup trigger check
         Collider[] colliders = highlighterInstance.GetComponents<Collider>();
 
-        //No colliders exist in the instance, copy colliders from this transform.
-        //if (colliders.Length <= 0)
-        //{
-        //    Collider[] mainColliders = this.transform.GetComponents<Collider>();
-        //    colliders = new Collider[mainColliders.Length];
-
-        //    for (int i = 0; i < colliders.Length; i++)
-        //    {
-        //         colliders[i] = CopyOver.CopyComponent(mainColliders[i], highlighterInstance.transform.gameObject);
-        //    }
-        //}
-
         if (colliders.Length > 0)
         {
             foreach (Collider collider in colliders)
             {
                 collider.isTrigger = true;
 
-                //Adjust collider size
+                //Decrease collider's size slightly to avoid errors for placing objects
                 var colliderType = collider.GetType();
                 if (colliderType.Equals(typeof(BoxCollider)))
                 {
                     collider.TryGetComponent(out BoxCollider col);
-                    col.size -= new Vector3(0.1f, 0.1f, 0.1f);
+                    col.size = new Vector3(Mathf.Abs(col.size.x - 0.1f),
+                                           Mathf.Abs(col.size.y - 0.1f),
+                                           Mathf.Abs(col.size.z - 0.1f));
                 }
                 else if (colliderType.Equals(typeof(SphereCollider)))
                 {
                     collider.TryGetComponent(out SphereCollider col);
-                    col.radius -= 0.1f;
+                    col.radius = Mathf.Abs(col.radius - 0.1f);
                 }
                 else if (colliderType.Equals(typeof(CapsuleCollider)))
                 {
                     collider.TryGetComponent(out CapsuleCollider col);
-                    col.radius -= 0.1f;
-                    col.height -= 0.1f;
+                    col.radius = Mathf.Abs(col.radius - 0.1f);
+                    col.height = Mathf.Abs(col.height - 0.1f);
                 }
                 else
                 {
@@ -143,7 +155,7 @@ public class InteractableObject : MonoBehaviour
 
             Rigidbody rb = colliders[0].attachedRigidbody;
             if (rb == null) rb = highlighterInstance.AddComponent<Rigidbody>();
-            rb.isKinematic = true;
+            //rb.isKinematic = true;
         }
         else
         {
@@ -162,11 +174,16 @@ public class InteractableObject : MonoBehaviour
         highlighterInstance.SetActive(false);
     }
 
+    /// <summary>
+    /// Highlighter setup if the highlighter's basis game object is 
+    /// within the same transform as this script that is attached to.
+    /// </summary>
     public void SetupHighlighter()
     {
         //Setup transform
         highlighterInstance = Instantiate(highlighterBasis);
         highlighterInstance.transform.parent = highlighterBasis.transform;
+        highlighterInstance.transform.localRotation = Quaternion.identity;
         highlighterInstance.transform.localPosition = Vector3.zero;
         highlighterInstance.transform.localScale += HIGHLIGHTER_OFFSET_SIZE; //Prevent z-fighting        
 
@@ -200,23 +217,25 @@ public class InteractableObject : MonoBehaviour
             {
                 collider.isTrigger = true;
 
-                //Adjust collider size
+                //Decrease collider's size slightly to avoid errors for placing objects
                 var colliderType = collider.GetType();
                 if (colliderType.Equals(typeof(BoxCollider)))
                 {
                     collider.TryGetComponent(out BoxCollider col);
-                    col.size -= new Vector3(0.1f, 0.1f, 0.1f);
+                    col.size = new Vector3(Mathf.Abs(col.size.x - 0.1f),
+                                           Mathf.Abs(col.size.y - 0.1f),
+                                           Mathf.Abs(col.size.z - 0.1f));
                 }
                 else if (colliderType.Equals(typeof(SphereCollider)))
                 {
                     collider.TryGetComponent(out SphereCollider col);
-                    col.radius -= 0.1f;
+                    col.radius = Mathf.Abs(col.radius - 0.1f);
                 }
                 else if (colliderType.Equals(typeof(CapsuleCollider)))
                 {
                     collider.TryGetComponent(out CapsuleCollider col);
-                    col.radius -= 0.1f;
-                    col.height -= 0.1f;
+                    col.radius = Mathf.Abs(col.radius - 0.1f);
+                    col.height = Mathf.Abs(col.height - 0.1f);
                 }
                 else
                 {
@@ -227,7 +246,7 @@ public class InteractableObject : MonoBehaviour
             }
 
             Rigidbody rb = colliders[0].attachedRigidbody;
-            rb.isKinematic = true;
+            //rb.isKinematic = true;
         }
         else
         {
@@ -242,7 +261,13 @@ public class InteractableObject : MonoBehaviour
         //Hide highlighter
         highlighterInstance.SetActive(false);
     }
+    #endregion
 
+
+    #region Private Methods
+    /// <summary>
+    /// Removes the highlighter's unnecessary components.
+    /// </summary>
     private void RemoveComponents()
     {
         List<Component> components = highlighterInstance.GetComponents<Component>().ToList();
@@ -287,4 +312,5 @@ public class InteractableObject : MonoBehaviour
             }
         }
     }
+    #endregion
 }

@@ -248,6 +248,9 @@ public struct Task : System.IEquatable<Task>
         Contribute(1);
     }
 
+    /// <summary>
+    /// Resets this task's current progress.
+    /// </summary>
     public void ResetProgress()
     {
         bool canBeReset = false;
@@ -281,14 +284,35 @@ public struct Task : System.IEquatable<Task>
         }
     }
 
-    public void DecreaseContribution()
+    /// <summary>
+    /// Decreases this task's current contribution according to the given number.
+    /// </summary>
+    /// <param name="amount">How much contribution will be decreased from this task.</param>
+    public void DecreaseContribution(float amount)
     {
-        currentContributions -= 1;
+        currentContributions -= amount;
         currentContributions = Mathf.Clamp(currentContributions, 
                                            0, requiredContributions);
         isTaskDone = CheckTaskStatus();
 
         //Debug.Log(taskName + ": DECREASE");
+    }
+
+    /// <summary>
+    /// Decreases this task's current contribution according to the given number.
+    /// </summary>
+    /// <param name="amount">How much contribution will be decreased from this task.</param>
+    public void DecreaseContribution(int amount)
+    {
+        DecreaseContribution((float)amount);
+    }
+
+    /// <summary>
+    /// Decreases this task's current contribution according by one.
+    /// </summary>
+    public void DecreaseContribution()
+    {
+        DecreaseContribution(1);
     }
     #endregion
 
@@ -360,10 +384,13 @@ public class TaskList : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        
+        //Initialize script error text format
         scriptID = string.Format("([Task List] {0} - Instance: {1})",
                                  this.transform.gameObject.name,
                                  this.transform.gameObject.GetInstanceID());
 
+        //Task is empty, throw an error
         if (tasks.Count <= 0)
             Debug.LogError(string.Format("{0} The task list is empty, " +
                                          "please put at least one (1) task for this script to work!", scriptID));
@@ -512,13 +539,20 @@ public class TaskList : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resets the given task's progress.
+    /// </summary>
+    /// <param name="taskName">The name of the task.</param>
     public void ResetTaskProgress(string taskName)
     {
+        //Do this only if the task do exist
         if (TaskExist(taskName))
         {
+            //Get task reference
             int taskIndex = taskNames.IndexOf(taskName);
             Task targetTask = tasks[taskIndex];
 
+            //Check for task list's progress
             if (targetTask.isTaskDone)
             {
                 switch (targetTask.taskType)
@@ -532,19 +566,30 @@ public class TaskList : MonoBehaviour
                         break;
                 }
             }
+
+            //Apply edits
             targetTask.ResetProgress();
             tasks[taskIndex] = targetTask;
         }
     }
 
+    /// <summary>
+    /// Decreases the given task's current contribution.
+    /// </summary>
+    /// <param name="taskName">The name of the task.</param>
     public void DecreseContributionToTask(string taskName)
     {
+        //Do this only if the task do exist
         if (TaskExist(taskName))
         {
+            //Get task reference
             int taskIndex = taskNames.IndexOf(taskName);
             Task targetTask = tasks[taskIndex];
+
+            //Modify task value
             targetTask.DecreaseContribution();
 
+            //Check for task list's progress
             if (targetTask.isTaskDone)
             {
                 switch (targetTask.taskType)
@@ -558,26 +603,39 @@ public class TaskList : MonoBehaviour
                         break;
                 }
             }
+
+            //Apply edits
             tasks[taskIndex] = targetTask;
         }
     }
 
+    /// <summary>
+    /// Sets a task's current contribution to its required contribution forcing it to set as done.
+    /// </summary>
+    /// <param name="taskName">The name of the task.</param>
     public void FinishTask(string taskName)
     {
+        //Do this only if the task do exist
         if (TaskExist(taskName))
         {
+            //Get task reference
             int taskIndex = taskNames.IndexOf(taskName);
             Task targetTask = tasks[taskIndex];
+
+            //Max out the current contribution
+            //This forces the task to be marked as finished
             targetTask.Contribute(targetTask.requiredContributions);
+
+            //Apply edits
             tasks[taskIndex] = targetTask;
         }
     }
     #endregion
 
-    public void PrintText(string text)
-    {
-        print(text);
-    }
+    //public void PrintText(string text)
+    //{
+    //    print(text);
+    //}
 
     #region Private Methods
     /// <summary>
@@ -585,20 +643,26 @@ public class TaskList : MonoBehaviour
     /// </summary>
     private void UpdateTaskNamesList()
     {
+        //Clear the names list
         taskNames.Clear();
+
+        //Check the name for each task
         for (int i = 0; i < tasks.Count; i++)
         {
+            //Case 1: There's no given task name or it's empty
             if (tasks[i].taskName == "" ||
-                    tasks[i].taskName == string.Empty)
+                tasks[i].taskName == string.Empty)
             {
                 Debug.LogError(string.Format("{0} The task on index {1} has no name, " +
                                              "please put a name before playing again!", scriptID, i));
             }
+            //Case 2: There's a duplicate name
             else if (taskNames.Contains(tasks[i].taskName))
             {
                 Debug.LogError(string.Format("{0} The task on index {1} has a duplicate name, " +
                                              "please replace the name before playing again!", scriptID, i));
             }
+            //Case 3: The task is unique and it will be added to the task names list
             else
             {
                 taskNames.Add(tasks[i].taskName);
@@ -606,6 +670,12 @@ public class TaskList : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Checks if the task do exist - displays a warning message if it doesn't.
+    /// </summary>
+    /// <param name="taskName">The name of the task.</param>
+    /// <returns>Returns true if the task exist, otherwise, returns false.</returns>
     private bool TaskExist(string taskName)
     {
         bool doExist = false;
