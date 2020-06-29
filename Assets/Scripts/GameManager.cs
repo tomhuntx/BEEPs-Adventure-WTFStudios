@@ -285,9 +285,12 @@ public class GameManager : MonoBehaviour
 		DataSaver.SaveProgress(this);
 	}
 
+	// Load given scene and mute volume while doing it
 	public void LoadScene(int scene)
 	{
+		AudioListener.volume = 0f;
 		Time.timeScale = 0;
 		mm.LoadScene(scene);
+		AudioListener.volume = 1f;
 	}
 }

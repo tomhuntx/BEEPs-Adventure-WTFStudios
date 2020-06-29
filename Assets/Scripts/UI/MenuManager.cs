@@ -7,7 +7,7 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-	private int levelProgress = 1;
+	private int levelProgress = 0;
 
 	// Loading Screen
 	[SerializeField] private GameObject loadingScreen;
@@ -53,8 +53,15 @@ public class MenuManager : MonoBehaviour
 
 	public void Play()
 	{
-		// Load level of current progress 
-		LoadScene(levelProgress);
+		if (levelProgress > 0)
+		{
+			// Load level of current progress 
+			LoadScene(levelProgress);
+		}
+		else
+		{
+			NewGame();
+		}
 	}
 
 	public void Settings()
