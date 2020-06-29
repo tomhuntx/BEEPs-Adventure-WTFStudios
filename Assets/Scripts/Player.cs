@@ -13,35 +13,47 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
 
-	public GameObject hand;
-	private Animator handAnim;
+    public GameObject hand;
+    private Animator handAnim;
     private GameObject heavyBoxRef;
-    	
+
 
     #region Exposed Variables
     [Space]
+    [Tooltip("The dynamic crosshair to be used for pointing out interactable/grabbable objects")]
     public Graphic crosshair;
+
+    [Tooltip("The crosshair used to visualize the current raycast hits.")]
     public Graphic crosshair2;
+
+    [Tooltip("Used to check if the player has landed or not.")]
     [SerializeField] private UnityEventsHandler groundCheck;
 
+
     [Header("Box Handling Properties")]
+    [Tooltip("How much damage will be applied to the destructible object.")]
     [SerializeField] private float punchDamage = 3.0f;
 
     [Tooltip("Strength of impulse force applied upon throwing.")]
     [SerializeField] private float throwForce = 20.0f;
 
-	[Tooltip("Strength of impulse force applied upon dropping a non-box object.")]
-	[SerializeField] private float dropForce = 10.0f;
+    [Tooltip("Strength of impulse force applied upon dropping a non-box object.")]
+    [SerializeField] private float dropForce = 10.0f;
 
+    [Tooltip("The transform where the grabbed objects will be placed in third person.")]
     [SerializeField] private Transform thirdPersonObjectOffset;
+
+    [Tooltip("The transform where the grabbed objects will be placed in first person.")]
     [SerializeField] private Transform firstPersonObjectOffset;
+
+    [Tooltip("The offset position where the grabbed object's initial position will be before throwing.")]
     [SerializeField] private Vector3 thrownObjectOffsetPos;
- 
-	[Tooltip("The position of the grabbed object in this transform's local space.")]
+
+    [Tooltip("The position of the grabbed object in this transform's local space.")]
     [SerializeField] private Vector3 objectOffset;
 
-	[Tooltip("A variant of the object offset for non-box items.")]
-	[SerializeField] private Vector3 otherObjectOffset;
+    [Tooltip("A variant of the object offset for non-box items.")]
+    [SerializeField] private Vector3 otherObjectOffset;
 
     [Tooltip("The transform where the raycast will originate.")]
     [SerializeField] private Transform raycastOrigin;
@@ -69,9 +81,9 @@ public class Player : MonoBehaviour
     /// Checker if the raycast target is behind an object.
     /// </summary>
     private bool isTargetBehindSometing = false;
-	#endregion
+    #endregion
 
-	public PlayerCharacterController PlayerMovementControls { get { return controller; } }
+    public PlayerCharacterController PlayerMovementControls { get { return controller; } }
 
 
     private void Awake()
@@ -85,16 +97,8 @@ public class Player : MonoBehaviour
         controller = this.GetComponent<PlayerCharacterController>();
         handAnim = hand.GetComponent<Animator>();
         heavyBoxRef = new GameObject();
-	}
-
-    private void Update()
-    {
-        //Place crosshair management to avoid jittering
-        //Only adjust crosshair position if deadzone exist
-        //if (crosshair != null) ManageCrosshair();
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         //Do check if there's a hit, else no hit
@@ -118,7 +122,7 @@ public class Player : MonoBehaviour
             isRaycastHit = false;
         }
 
-        
+
         if (Time.timeScale > 0)
         {
             ManageCrosshair();
@@ -170,6 +174,7 @@ public class Player : MonoBehaviour
         //if (isRaycastHit)
         //{
         //    Debug.DrawLine(raycastOrigin.position, hitInfo.point, Color.green);
+        //    Debug.DrawLine(hitInfo.point, hitInfo.point + hitInfo.normal, Color.magenta);
         //    //print(hitInfo.transform);
         //}
         //else
@@ -178,7 +183,10 @@ public class Player : MonoBehaviour
         //}
     }
 
-    #region Compact
+    #region Methods
+    /// <summary>
+    /// Shows the highlighter of an interactable object.
+    /// </summary>
     private void HighlightTargetObject()
     {
         InteractableObject previousInteractable = null;
@@ -196,7 +204,9 @@ public class Player : MonoBehaviour
                 if (previousRaycastTarget != null &&
                     previousInteractable != null)
                 {
-                    previousInteractable.ShowHighlighter(false);                    
+                    //Hide the previous raycasted target's highlighter
+                    //when looking at an object with no interactable object component
+                    previousInteractable.ShowHighlighter(false);
                 }
             }
             else
@@ -205,21 +215,28 @@ public class Player : MonoBehaviour
                 {
                     if (interactable.transform != hitInfo.transform)
                     {
-                        interactable.ShowHighlighter(false);                        
+                        //Hides the childed interactable object if the raycasted 
+                        //transform doesn't have an interactable object component
+                        interactable.ShowHighlighter(false);
                     }
                     else
                     {
+                        //The previous raycasted target is the same as the current one
                         interactable.ShowHighlighter(true);
                     }
 
                     if (previousRaycastTarget != interactable.transform &&
                         previousInteractable != null)
                     {
+                        //Hide the previous raycasted target's highlighter
+                        //when looking at a different object
                         previousInteractable.ShowHighlighter(false);
                     }
                 }
                 else
                 {
+                    //No previous raycast target
+                    //Show this interactable's highlighter
                     interactable.ShowHighlighter(true);
                 }
             }
@@ -228,19 +245,27 @@ public class Player : MonoBehaviour
         else if (!isRaycastHit &&
                  previousRaycastTarget != null)
         {
+            //No raycast hit and there's a previous raycasted target
+            //Hide the previous raycasted target's highlighter if there's any
             if (previousInteractable != null)
                 previousInteractable.ShowHighlighter(false);
 
+            //Put null reference since there's not raycast hit
             previousRaycastTarget = null;
         }
     }
 
+    /// <summary>
+    /// Visualize and manages the grabbed object's highlighter - used for object placement.
+    /// </summary>
     private void VisualizeHighlighter()
     {
         if (isRaycastHit)
         {
             bool isBox = IsGameObjectBox(grabbedObject.gameObject);
-            
+
+            //Both the raycast hit and the grabbed object are boxes
+            //Apply grid like locking to highlighter
             if (isBox &&
                 IsGameObjectBox(hitInfo.transform.gameObject))
             {
@@ -248,15 +273,20 @@ public class Player : MonoBehaviour
                                                          hitInfo.transform.position + hitInfo.normal,
                                                          hitInfo.transform.rotation);
             }
+            //One or both grabbed and raycasted target aren't boxes
+            //Visualize highlighter with free movement - no grid locking
             else if (!isBox ||
                      !IsGameObjectBox(hitInfo.transform.gameObject))
             {
                 Renderer highlighterRenderer = grabbedObject.RendererComponent;
-                float contactOffset = 0;
-                if (controller.IsFirstPerson) contactOffset = InteractableObject.CONTACT_OFFSET;
-                Vector3 offset = new Vector3(hitInfo.normal.x * (highlighterRenderer.bounds.extents.x - contactOffset),
-                                             hitInfo.normal.y * (highlighterRenderer.bounds.extents.y - contactOffset),
-                                             hitInfo.normal.z * (highlighterRenderer.bounds.extents.z - contactOffset));
+                Bounds bounds = highlighterRenderer.bounds;
+                Vector3 contactOffset = new Vector3(bounds.extents.x - 0.5f,
+                                                    bounds.extents.y - 0.5f,
+                                                    bounds.extents.z - 0.5f);
+
+                Vector3 offset = new Vector3(hitInfo.normal.x * (bounds.extents.x - contactOffset.x),
+                                             hitInfo.normal.y * (bounds.extents.y - contactOffset.y),
+                                             hitInfo.normal.z * (bounds.extents.z - contactOffset.z));
                 Vector3 newPos = hitInfo.point + offset;
                 grabbedObject.ManagePlacementHighlighter(true,
                                                          newPos,
@@ -267,10 +297,14 @@ public class Player : MonoBehaviour
         }
         else
         {
+            //No surfaces are hit, hide the grabbed object's highlighter
             grabbedObject.HidePlacementHighlighter();
         }
     }
 
+    /// <summary>
+    /// Applied impulse force and damage to the destructible object.
+    /// </summary>
     private void PunchObject()
     {
         if (isRaycastHit)
@@ -281,7 +315,7 @@ public class Player : MonoBehaviour
                 target.ApplyDamage(punchDamage);
                 target.onPlayerPunch.Invoke();
                 Rigidbody boxRB = hitInfo.transform.GetComponent<Rigidbody>();
-                boxRB.AddForce(controller.CharacterCam.transform.forward * throwForce / boxRB.mass, ForceMode.Impulse);                
+                boxRB.AddForce(controller.CharacterCam.transform.forward * throwForce / boxRB.mass, ForceMode.Impulse);
             }
             else
             {
@@ -291,38 +325,27 @@ public class Player : MonoBehaviour
                     target.onPlayerPunch.Invoke();
                 }
 
-                Transform parent = hitInfo.transform.parent;
-
-                if (parent == null)
-                {
-                    parent = hitInfo.transform;
-                }
-                else
-                {
-                    //Get the main parent then search down for components
-                    while (parent.transform.parent != null)
-                    {
-                        parent = parent.parent;
-                    }
-                }
-
                 switch (hitInfo.transform.tag)
                 {
                     case "Hardhat":
-                        parent.GetComponentInChildren<Rigidbody>().isKinematic = false;
-                        parent.GetComponentInChildren<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
+                        hitInfo.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                        hitInfo.transform.gameObject.GetComponent<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
                         hitInfo.transform.parent = null;
                         break;
 
                     case "Bot":
                     case "ManagerBot":
-                        parent.GetComponentInChildren<Robot>().GetPunched(this.PlayerMovementControls.CharacterHead.transform.forward);
+                        Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
+                        parent.GetComponentInChildren<Robot>().GetPunched(raycastOrigin.forward);
                         break;
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Set the grabbable object's parent to the object offset.
+    /// </summary>
     private void GrabObject()
     {
         if (isRaycastHit &&
@@ -335,6 +358,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Places object only when placement is valid.
+    /// </summary>
     private void PlaceGrabbedObject()
     {
         if (isRaycastHit &&
@@ -345,6 +371,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Throws the grabbed object by applying impulse force to its rigidbody.
+    /// </summary>
     private void ThrowGrabbedObject()
     {
         if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
@@ -356,6 +385,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Currently unused and probably still has some bugs...
+    /// </summary>
     private void DropGrabbedObject()
     {
         Direction checkerDirection = new Direction(this.transform.position + thrownObjectOffsetPos,
@@ -368,21 +400,30 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the target game object is a 
+    /// box or not by checking the game object tag.
+    /// </summary>
+    /// <param name="target">The target game object to be checked if it's a box or not.</param>
+    /// <returns>Returns true if it's a box, otherwise, returns false.</returns>
     private bool IsGameObjectBox(GameObject target)
     {
         switch (target.tag)
         {
             case "Box":
                 return true;
-            
+
             case "Heavy Box":
                 return true;
-            
+
             default:
                 return false;
         }
     }
 
+    /// <summary>
+    /// Heavy box dragging mechanic.
+    /// </summary>
     private void DragHeavyBox()
     {
         if (heavyBox == null)
@@ -393,6 +434,7 @@ public class Player : MonoBehaviour
                 AllowHeavyBox())
             {
                 heavyBox = hitInfo.transform.gameObject;
+                //heavyBox.transform.parent = heavyBoxRef.transform;
                 heavyBoxRB = heavyBox.GetComponent<Rigidbody>();
                 controller.JumpingEnabled = false;
             }
@@ -415,33 +457,71 @@ public class Player : MonoBehaviour
             }
             else
             {
+                
                 //Manage heavy box reference position
                 Transform hbRef = heavyBoxRef.transform;
                 hbRef.position = raycastOrigin.transform.position + raycastOrigin.transform.forward * interactionDistance.z;
 
-                //Make the heavy box rotate its nearest face towards the player
+                //Make the heavy box rotate its nearest face towards the player - NEEDS FURTHER IMPROVEMENTS!
                 Transform TRS = this.transform;
-                Vector3[] directions = new Vector3[] { TRS.right, TRS.up, TRS.forward,
-                                                       -TRS.right, -TRS.up, -TRS.forward };
-                Vector3 leastAngle = Vector3.positiveInfinity;
-                float previousAngle = float.MaxValue;
-                foreach (Vector3 dir in directions) 
-                { 
-                    float currentAngle = Vector3.Angle(heavyBox.transform.forward, dir);
+                Vector3[] thisDirections = new Vector3[]
+                {
+                    TRS.right,
+                    TRS.up,
+                    TRS.forward,
+                    -TRS.right,
+                    -TRS.up,
+                    -TRS.forward
+                };
 
-                    //Store info with the least angle
+                Transform boxTRS = heavyBox.transform;
+                Vector3[] boxDirections = new Vector3[]
+                {
+                    boxTRS.right,
+                    boxTRS.up,
+                    boxTRS.forward,
+                    -boxTRS.right,
+                    -boxTRS.up,
+                    -boxTRS.forward
+                };
+
+
+                Vector3 upDir = Vector3.up;
+                if (Physics.Raycast(boxTRS.position, Vector3.down, out RaycastHit downCast))
+                    upDir = downCast.normal;
+
+                float previousAngle = float.MaxValue;
+                float toUpAngle = float.MaxValue;
+                int forwardIndex = -1;
+                int upIndex = -1;
+                for (int i = 0; i < boxDirections.Length; i++)
+                {
+                    Vector3 dir = boxDirections[i];
+
+                    //Get direction facing cam
+                    float currentAngle = Vector3.Angle(dir, -TRS.forward);
                     if (currentAngle < previousAngle)
                     {
-                        leastAngle = dir;
                         previousAngle = currentAngle;
-                    }                    
-                }
+                        forwardIndex = i;
+                    }
 
-                //Apply offset rotation to the reference transform
-                Vector3 adjusted = new Vector3(heavyBox.transform.position.x + leastAngle.x,
-                                               hbRef.position.y,
-                                               heavyBox.transform.position.z + leastAngle.z);
-                heavyBoxRef.transform.LookAt(adjusted);
+                    //Get direction facing up
+                    float toUp = Vector3.Angle(dir, upDir);
+                    if (toUp < toUpAngle)
+                    {
+                        toUpAngle = toUp;
+                        upIndex = i;
+                    }
+                }
+                Vector3 pos = TRS.position;
+                pos.y = boxTRS.position.y;
+                Vector3 chosenDir = this.transform.forward;
+                if (Input.GetMouseButtonDown(0)) chosenDir = thisDirections[forwardIndex];
+
+                hbRef.LookAt(pos + chosenDir, boxDirections[upIndex]);
+                //hbRef.LookAt(this.transform);
+
 
                 //Store into new variables to declutter later calculations...
                 Vector3 newPos = new Vector3(hbRef.position.x,
@@ -454,6 +534,16 @@ public class Player : MonoBehaviour
                 //Apply transform changes and smoothening
                 heavyBox.transform.position = Vector3.Lerp(heavyBox.transform.position, newPos, 15 * Time.deltaTime);
                 heavyBox.transform.rotation = Quaternion.Lerp(heavyBox.transform.rotation, newRot, 15 * Time.deltaTime);
+                
+                //DestructibleObject box = heavyBox.GetComponent<DestructibleObject>();
+                //Renderer renderer = box.RendererComponent;
+                //float contactOffset = 0;
+                //if (controller.IsFirstPerson) contactOffset = InteractableObject.CONTACT_OFFSET;
+                //Vector3 offset = new Vector3(hitInfo.normal.x * (renderer.bounds.extents.x - contactOffset),
+                //                             hitInfo.normal.y * (renderer.bounds.extents.y - contactOffset),
+                //                             hitInfo.normal.z * (renderer.bounds.extents.z - contactOffset));
+                //Vector3 newPos = hitInfo.point + offset;
+                //heavyBoxRef.transform.position = newPos;
 
                 //Clamp min camera angle
                 controller.UpdateCamAngleClamp(controller.originalMinCamAngleX, 70);
@@ -475,13 +565,15 @@ public class Player : MonoBehaviour
     {
         if (isRaycastHit)
         {
-            InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
+            InteractableObject interactable = hitInfo.transform.GetComponent<InteractableObject>();
             if (interactable != null)
             {
+                //Snap the dynamic crosshair to the interactable object's transform
                 crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(interactable.transform.position);
             }
             else
             {
+                //Move the dynamic crosshair to the raycast point
                 crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
             }
 
@@ -489,13 +581,12 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //crosshair.transform.position = controller.CharacterCam.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0.5f));
             Vector3 rayPoint = raycastOrigin.position + raycastOrigin.forward * raycastDistance;
             crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(rayPoint);
             crosshair2.transform.position = crosshair.transform.position;
         }
 
-        //manage crosshair opacity
+        //Manage dynamic crosshair opacity
         Direction toCamera = new Direction(raycastOrigin.position + raycastOrigin.forward * raycastDistance,
                                            controller.CharacterCam.transform.position);
 
@@ -511,6 +602,8 @@ public class Player : MonoBehaviour
 
         if (isPlayerRayHit || isObjectRayHit)
         {
+            //Make the crosshair semi-transparent if the raycast point
+            //is behind an obstacle based on the current camera view
             Color newColor = crosshair.color;
             newColor.a = 0.5f;
             crosshair.color = newColor;
@@ -518,7 +611,7 @@ public class Player : MonoBehaviour
         }
         else if (!isPlayerRayHit && !isObjectRayHit)
         {
-            //make crosshair opaque
+            //Make crosshair opaque
             Color newColor = crosshair.color;
             newColor.a = 1;
             crosshair.color = newColor;
@@ -533,9 +626,14 @@ public class Player : MonoBehaviour
     /// <returns>Returns true if the raycast hits a collider.</returns>
     private bool DoRaycast(out RaycastHit hitInfo)
     {
-        return Physics.Raycast(raycastOrigin.transform.position, raycastOrigin.transform.forward, out hitInfo, raycastDistance);
+        return Physics.Raycast(raycastOrigin.position, raycastOrigin.forward, out hitInfo, raycastDistance);
     }
 
+    /// <summary>
+    /// Returns true if the player is grounded,
+    /// not stepping on the current targeted heavy box,
+    /// and the current targeted game object is a heavy box.
+    /// </summary>
     private bool AllowHeavyBox()
     {
         if (isRaycastHit &&

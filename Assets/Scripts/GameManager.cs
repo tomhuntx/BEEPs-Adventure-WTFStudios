@@ -7,7 +7,7 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager GManager;
+    public static GameManager Instance;
 	public GameObject controls;
 
     public const float MIN_CAM_FOV = 30.0f;
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
 	private void Awake()
     {
-        GManager = this;
+        Instance = this;
 
         //Highlighter setup
         InteractableObject.highlighterMaterial = highlighterMaterial;

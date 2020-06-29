@@ -138,7 +138,10 @@ public class GrabbableObject : DestructibleObject
         this.transform.parent = null;
         RenderToLayer("Default");
 
-        foreach(Collider collider in ColliderComponents)
+        BoxDragSFX sfx = this.transform.GetComponentInChildren<BoxDragSFX>();
+        if (sfx != null) sfx.enabled = true;
+
+        foreach (Collider collider in ColliderComponents)
         {
             collider.enabled = true;
         }
@@ -154,6 +157,9 @@ public class GrabbableObject : DestructibleObject
         this.transform.localRotation = parentTransform.rotation;
         this.transform.localPosition = parentTransform.position;
 
+        BoxDragSFX sfx = this.transform.GetComponentInChildren<BoxDragSFX>();
+        if (sfx != null) sfx.enabled = false;
+
         foreach (Collider collider in ColliderComponents)
         {
             collider.enabled = false;
@@ -161,6 +167,7 @@ public class GrabbableObject : DestructibleObject
         RigidbodyComponent.isKinematic = true;
 
         interactionComponent.ShowHighlighter(false);
+        DetachForceAppliers();
     }
     #endregion
 }

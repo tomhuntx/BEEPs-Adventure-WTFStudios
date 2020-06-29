@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 2229526011650007078}
   - component: {fileID: 2229526011650007079}
   - component: {fileID: 308457322}
-  - component: {fileID: 2229526011650007080}
   - component: {fileID: 308457323}
   - component: {fileID: 2229526011650007081}
   - component: {fileID: 308457324}
+  - component: {fileID: 1637289786}
+  - component: {fileID: 1637289787}
   m_Layer: 0
   m_Name: PREFAB_Box_Cardboard
   m_TagString: Box
@@ -82,108 +83,6 @@ MonoBehaviour:
   moveDeadzone: 0.1
   boxPlaceSFXPrefab: {fileID: 3550898150191051073, guid: 7724d282dd97d5d41864ca81f0decf0e,
     type: 3}
---- !u!114 &2229526011650007080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2229526011650007082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f87038210d4c974aa7f1e58a53f0953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetGameObject: {fileID: 8630929845933746024}
-  durability: 50
-  isInvincible: 0
-  forceMagnitudeThreshold: 8
-  generalImpactThreshold: 0.55
-  modelPresets:
-  - assignedValue: 75
-    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
-    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
-  - assignedValue: 50
-    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
-    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
-  - assignedValue: 10
-    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
-    material: {fileID: 2100000, guid: 3334bb6f0010d4741bc4a2099cc404ad, type: 2}
-  OnPlayerPunch:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 75b6542b765c2474e86cd3d52086bee2,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnColliderEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnImpactGeneral:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 7724d282dd97d5d41864ca81f0decf0e,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnImpactDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: dcfc15c9856f69847ae827519f4795bc,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnObjectDestroy:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 4500cb3482aec864ea899b58aabfd9ab,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2229526011650007081}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 5133357178356861969, guid: ff3dd16c73697a4468adaa156f4ed3fa,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &308457323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +225,73 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1637289786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229526011650007082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab66cb2809f0fed48aa678d98089f250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetGameObject: {fileID: 8630929845933746024}
+  durability: 50
+  isInvincible: 0
+  forceMagnitudeThreshold: 8
+  generalImpactThreshold: 0.55
+  modelPresets:
+  - assignedValue: 75
+    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
+    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
+  - assignedValue: 50
+    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
+    material: {fileID: 2100000, guid: 6412f780ef3f8ea41a0c37f9867f6b4f, type: 2}
+  - assignedValue: 10
+    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
+    material: {fileID: 2100000, guid: 3334bb6f0010d4741bc4a2099cc404ad, type: 2}
+  onPlayerPunch:
+    m_PersistentCalls:
+      m_Calls: []
+  onColliderEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onImpactGeneral:
+    m_PersistentCalls:
+      m_Calls: []
+  onImpactDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectDestroy:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectThrow:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectPlace:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1637289787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229526011650007082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a1b0704ae2c8c4e9d56b0bc2c5bb6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlighterBasis: {fileID: 0}
 --- !u!1001 &353204783982444129
 PrefabInstance:
   m_ObjectHideFlags: 0

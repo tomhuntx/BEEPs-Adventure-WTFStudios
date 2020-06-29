@@ -83,10 +83,10 @@ public class PlayerCharacterController : MonoBehaviour
 {
     public enum ForceType { Force, Impulse }
 
-    CharacterController controller;
-    Rigidbody rb;
-    ProtectCameraFromWallClip antiCamClip;
-    GraphicFader graphicFader;
+    private CharacterController controller;
+    private Rigidbody rb;
+    private ProtectCameraFromWallClip antiCamClip;
+    private GraphicFader graphicFader;
 
     [Header("Transform References")]
     [SerializeField] Transform parentTransform;
@@ -109,7 +109,6 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float camTransitionSpeed = 5.0f;
     [Range(0.1f, 5.0f)] [SerializeField] private float camFlipDistanceDeadzone = 1.5f;
     private float camFlipDistanceTreshold = 0.5f;
-    //[SerializeField] private Vector3[] camOffsets;
     [SerializeField] private TransformPreset[] camOffsets;
     private int currentCamOffsetIndex = 0;
     private bool doTransition = true;

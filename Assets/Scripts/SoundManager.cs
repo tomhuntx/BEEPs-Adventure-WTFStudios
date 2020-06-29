@@ -94,13 +94,13 @@ public class SoundManager : MonoBehaviour
 
     private void ManageMainGameMusic()
     {
-        //int index = TaskList.Instance.NumTasksDone;
-        //if (index < clips.Length &&
-        //    audioSource.clip != clips[index])
-        //{
-        //    audioSource.clip = clips[index];
-        //}
-        //if (!audioSource.isPlaying) audioSource.Play();
+        int index = TaskList.Instance.NumMainTasksDone;
+        if (index < clips.Length &&
+            audioSource.clip != clips[index])
+        {
+            audioSource.clip = clips[index];
+        }
+        if (!audioSource.isPlaying) audioSource.Play();
     }
 
     private void ManageGameAudio()

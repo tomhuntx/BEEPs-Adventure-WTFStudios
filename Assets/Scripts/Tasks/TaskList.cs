@@ -13,7 +13,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public struct Task : System.IEquatable<Task>
 {
-    public enum Type { Main, Optional }
+    public enum Type { Main, Optional, Ignore }
     public enum ResetType { None, InProgressOnly, OnDoneOnly, Persistent }
 
     #region Exposed Variables
@@ -290,10 +290,14 @@ public struct Task : System.IEquatable<Task>
     /// <param name="amount">How much contribution will be decreased from this task.</param>
     public void DecreaseContribution(float amount)
     {
-        currentContributions -= amount;
-        currentContributions = Mathf.Clamp(currentContributions, 
-                                           0, requiredContributions);
-        isTaskDone = CheckTaskStatus();
+        if (IsEditAllowed())
+        {
+            currentContributions -= amount;
+            currentContributions = Mathf.Clamp(currentContributions,
+                                               0, requiredContributions);
+
+            isTaskDone = CheckTaskStatus();
+        }
 
         //Debug.Log(taskName + ": DECREASE");
     }
@@ -313,6 +317,26 @@ public struct Task : System.IEquatable<Task>
     public void DecreaseContribution()
     {
         DecreaseContribution(1);
+    }
+
+    public bool IsEditAllowed()
+    {
+        bool doUpdate = false;
+        switch (resetType)
+        {
+            case ResetType.InProgressOnly:
+                doUpdate = !isTaskDone;
+                break;
+
+            case ResetType.OnDoneOnly:
+                doUpdate = isTaskDone;
+                break;
+
+            case ResetType.Persistent:
+                doUpdate = true;
+                break;
+        }
+        return doUpdate;
     }
     #endregion
 
@@ -365,7 +389,7 @@ public class TaskList : MonoBehaviour
     private string scriptID = "";
 
     #region Variables
-    [SerializeField] public List<Task> tasks = new List<Task>();
+    [SerializeField] private List<Task> tasks = new List<Task>();
     private int numMainTasksDone;
     private int numOptionalTasksDone;
     private int numMainTasks;
@@ -379,9 +403,16 @@ public class TaskList : MonoBehaviour
     public UnityEvent onAllTasksDone;
     #endregion
 
+    #region Accessors
+    public int NumMainTasksDone { get { return numMainTasksDone; } }
+    public int NumOptionalTasksDone { get { return numOptionalTasksDone; } }
+    public int NumMainTasks { get { return numMainTasks; } }
+    public int NumOptionalTasks { get { return numOptionalTasks; } }
+    #endregion
 
 
-    private void Awake()
+
+    private void Start()
     {
         Instance = this;
         
@@ -429,10 +460,12 @@ public class TaskList : MonoBehaviour
         {
             int taskIndex = taskNames.IndexOf(taskName);
             Task targetTask = tasks[taskIndex];
+            bool isPreviouslyDone = targetTask.isTaskDone;
             targetTask.Contribute(contributionAmount);
             onTaskContribute.Invoke();
 
-            if (targetTask.isTaskDone)
+            if (targetTask.isTaskDone &&
+                !isPreviouslyDone)
             {
                 switch (targetTask.taskType)
                 {
@@ -585,6 +618,9 @@ public class TaskList : MonoBehaviour
             //Get task reference
             int taskIndex = taskNames.IndexOf(taskName);
             Task targetTask = tasks[taskIndex];
+
+            //Skip this if not editable
+            if (!targetTask.IsEditAllowed()) return;
 
             //Modify task value
             targetTask.DecreaseContribution();

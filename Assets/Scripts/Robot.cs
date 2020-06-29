@@ -9,6 +9,7 @@ public class Robot : MonoBehaviour
 	private float lookSpeed = 2.5f;
 	private float lookRange = 12f;
 	private float lookTime = 3f;
+	private float lookTimer;
 	private bool lookAtPlayer = false;
 
 	// Punch Variables
@@ -27,7 +28,7 @@ public class Robot : MonoBehaviour
 	public GameObject boxProcessor;
 
 	// Model for maintaining position
-	private GameObject model;
+	//private GameObject model;
 
 	// The Bot's Animator (Different based on type)
 	// If anyone can find a different method, that would be great
@@ -52,64 +53,47 @@ public class Robot : MonoBehaviour
 		//thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 		robots = GameObject.FindGameObjectsWithTag("Bot");
 
-		model = transform.GetChild(0).gameObject;
-		originalDirection = model.transform.forward;
-		originalPosition = model.transform.position;
+		//model = transform.GetChild(0).gameObject;
+		//originalDirection = model.transform.forward;
+		//originalPosition = model.transform.position;
+
+		originalDirection = this.transform.forward;
+		originalPosition = this.transform.position;
 	}
 
 	void FixedUpdate()
     {
-		if (patience >= patienceLimit)
+		if (patience >= patienceLimit &&
+			!IsTimerDone())
 		{
-			//anim.SetBool("isAngry", true);
-			//animFace.SetBool("isAngry", true);
-			//animScreen.SetBool("isAngry", true);
-
-			SetAnimationState("isAngry", true);
+			SetAnimationState("doAngry", true);
 		}
 		else
 		{
-			//anim.SetBool("isAngry", false);
-			//animFace.SetBool("isAngry", false);
-			//animScreen.SetBool("isAngry", false);
-
-			SetAnimationState("isAngry", false);
+			SetAnimationState("doAngry", false);
 		}
 
-		// Tell animator when an assembly box exists
-		if (!isManagerBot && 
-			matDetector.ObjectsInTrigger.Count > 0)
+		if (!isManagerBot)
 		{
-			//anim.SetBool("assemblyBox", true);
-			//animFace.SetBool("assemblyBox", true);
-			//animScreen.SetBool("assemblyBox", true);
-
-			SetAnimationState("assemblyBox", true);
-		}
-		else if (!isManagerBot)
-		{
-			//anim.SetBool("assemblyBox", false);
-			//animFace.SetBool("assemblyBox", false);
-			//animScreen.SetBool("assemblyBox", false);
-
-			SetAnimationState("assemblyBox", false);
+			// Tell animator when an assembly box exists
+			if (matDetector != null &&
+				matDetector.ObjectsInTrigger.Count > 0)
+			{
+				SetAnimationState("doAssembly", true);
+			}
+			else
+			{
+				SetAnimationState("doAssembly", false);
+			}
 		}
 
 		if (lookAtPlayer)
 		{
-			//anim.SetBool("isDisturbed", true);
-			//animFace.SetBool("isDisturbed", true);
-			//animScreen.SetBool("isDisturbed", true);
-
-			SetAnimationState("isDisturbed", true);
+			SetAnimationState("doDisturbed", true);
 		}
 		else
 		{
-			//anim.SetBool("isDisturbed", false);
-			//animFace.SetBool("isDisturbed", false);
-			//animScreen.SetBool("isDisturbed", false);
-
-			SetAnimationState("isDisturbed", false);
+			SetAnimationState("doDisturbed", false);
 		}
 
 		// Look at the player
@@ -119,24 +103,19 @@ public class Robot : MonoBehaviour
 			Quaternion rotateTo = Quaternion.LookRotation(relativePos);
 			rotateTo.x = 0;
 			rotateTo.z = 0;
-			model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
+			//model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
+			this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
 
-			if (Vector3.Distance(transform.position, Player.Instance.transform.position) > lookRange || lookTime < 0)
+			if (Vector3.Distance(transform.position, Player.Instance.transform.position) > lookRange && 
+				IsTimerDone())
 			{
 				lookAtPlayer = false;
-				lookTime = 3f;
+				//lookTime = 3f;
+				ResetLookTimer(lookTime);
 				patience = 3;
 
-				//anim.SetBool("isAngry", false);
-				//animFace.SetBool("isAngry", false);
-				//animScreen.SetBool("isAngry", false);
-
-				//anim.SetBool("isDisturbed", false);
-				//animFace.SetBool("isDisturbed", false);
-				//animScreen.SetBool("isDisturbed", false);
-
-				SetAnimationState("isAngry", false);
-				SetAnimationState("isDisturbed", false);
+				SetAnimationState("doAngry", false);
+				SetAnimationState("doDisturbed", false);
 
 				if (boxProcessor != null && 
 					!isManagerBot)
@@ -144,19 +123,19 @@ public class Robot : MonoBehaviour
 					boxProcessor.SetActive(true);
 				}
 			}
-			lookTime -= Time.deltaTime;
+			//lookTime -= Time.deltaTime;
 		}
 		// Or return to looking at original position
 		else if (Player.Instance != null)
 		{
 			Quaternion rotateTo = Quaternion.LookRotation(originalDirection);
-			model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
+			this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
 		}
 
 		// Move back to start position if it leaves
-		if (Vector3.Distance(model.transform.position, originalPosition) > 0.1f)
+		if (Vector3.Distance(this.transform.position, originalPosition) > 0.1f)
 		{
-			model.transform.position = Vector3.MoveTowards(model.transform.position, originalPosition, 2f * Time.deltaTime);
+			this.transform.position = Vector3.MoveTowards(this.transform.position, originalPosition, 2f * Time.deltaTime);
 		}
 		else
 		{
@@ -194,37 +173,62 @@ public class Robot : MonoBehaviour
 		animFace.SetBool(booleanName, state);
 		animScreen.SetBool(booleanName, state);
 	}
-    #endregion
+
+	private void ResetLookTimer(float time, UnityEvent invokable = null)
+	{
+		lookTimer = time + Time.time;
+		if (invokable != null) invokable.Invoke();
+	}
+
+	private void StopLookTimer(UnityEvent invokable = null)
+	{
+		lookTimer = Time.time;
+		if (invokable != null) invokable.Invoke();
+	}
+
+	private bool IsTimerDone()
+	{
+		return lookTimer < Time.time;
+	}
+	#endregion
 
 
-    #region Public Methods
-    public void GetPunched(Vector3 direction)
+	#region Public Methods
+	public void GetPunched(Vector3 direction)
 	{
 		lookAtPlayer = true;
 		patience++;
-		lookTime = 3f;
+		//lookTime = 3f;
+		ResetLookTimer(lookTime);
+
+		if (patience >= patienceLimit)
+        {
+			GetAnnoyed();
+        }
 
 		if (canBePunched)
 		{
-			model.transform.position += direction * punchDistance;
+			this.transform.position += direction * punchDistance;
 			canBePunched = false;
 
 			onPlayerPunch.Invoke();
 		}
 	}
 
-	public void GetBlownUp(GameObject explosion)
+	public void GetBlownUp(Vector3 explosionPosition)
 	{
-		lookAtPlayer = true;
-		patience = patienceLimit;
-		lookTime = 3f;
+		//lookAtPlayer = true;
+		//patience = patienceLimit;
+		//lookTime = 3f;
+
+		GetAnnoyed();
 
 		// Prevents multiple explosive boxes from sending robots flying
 		if (canBePunched)
 		{
-			Vector3 direction = transform.position - explosion.transform.position;
+			Vector3 direction = transform.position - explosionPosition;
 			direction.Normalize();
-			model.transform.position += direction * expDistance;
+			this.transform.position += direction * expDistance;
 			canBePunched = false;
 
 			onGetExploded.Invoke();
@@ -235,7 +239,8 @@ public class Robot : MonoBehaviour
 	{
 		lookAtPlayer = true;
 		patience = patienceLimit;
-		lookTime = 3f;
+		//lookTime = 3f;
+		ResetLookTimer(lookTime);
 
 		onGetAnnoyed.Invoke();
 	}

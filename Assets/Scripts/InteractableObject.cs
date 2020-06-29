@@ -12,7 +12,6 @@ public class InteractableObject : MonoBehaviour
     public static Material highlighterMaterial;
     public static Color normalHighlightColor;
     public static Color invalidHighlightColor;
-    public const float CONTACT_OFFSET = 0.2f;
     private readonly Vector3 HIGHLIGHTER_OFFSET_SIZE = new Vector3(0.0001f,
                                                                    0.0001f,
                                                                    0.0001f);
