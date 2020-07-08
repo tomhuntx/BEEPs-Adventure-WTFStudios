@@ -28,6 +28,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Color normalHighlightColor;
     [SerializeField] private Color invalidHighlightColor;
 
+	[Header("Feedback Components")]
+	public GameObject feedback;
+	public GameObject popup;
+	private MenuManager mm;
+	private bool feedbackAllowed;
+	private int feedbackDelayMins = 10;
+	private double difference;
+
+	[Header("Save Data")]
+	public int thisLevel;
+	public int feedbackCount;
+	public long feedbackTimeBinary;
+
 	//
 	bool moveControls = false;
 	RectTransform rect;
@@ -36,9 +49,10 @@ public class GameManager : MonoBehaviour
 	private void Awake()
     {
         Instance = this;
+		mm = FindObjectOfType<MenuManager>();
 
-        //Highlighter setup
-        InteractableObject.highlighterMaterial = highlighterMaterial;
+		//Highlighter setup
+		InteractableObject.highlighterMaterial = highlighterMaterial;
         InteractableObject.normalHighlightColor = normalHighlightColor;
         InteractableObject.invalidHighlightColor = invalidHighlightColor;
     }
@@ -154,22 +168,128 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void ResumeGame()
-    {
-        Time.timeScale = 1;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        pauseMenu.SetActive(false);
-    }
+	// Feedback
+	public void Feedback()
+	{
+		// Show feedback popup
+		if (feedbackAllowed)
+		{
+			feedback.SetActive(true);
+		}
+		// Check if 10 mins has passed
+		else
+		{
+			if (Waited())
+			{
+				feedbackAllowed = true;
+				ResetFeedback();
+			}
+			else
+			{
+				double num = Math.Round(feedbackDelayMins - difference, 1);
+				string errorText = "You must wait " + num + " minutes to provide more feedback.";
 
-    public void RestartScene()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+				if (popup)
+				{
+					GameObject error = Instantiate(popup, popup.transform.position, popup.transform.rotation) as GameObject;
+					error.transform.SetParent(pauseMenu.transform, false);
+					error.GetComponentInChildren<TMP_Text>().SetText(errorText);
+				}
+				else
+				{
+					Debug.LogWarning("Please attach a popup to the GameManager!");
+				}
+			}
+		}
+	}
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
+	private bool Waited()
+	{
+		Data data = DataSaver.LoadData();
+		DateTime oldTime = DateTime.FromBinary(data.GetFeedbackTime());
+		DateTime timeNow = System.DateTime.Now;
+
+		difference = (timeNow - oldTime).TotalMinutes;
+		if (difference >= feedbackDelayMins)
+		{ // Waited long enough
+			return true;
+		}
+		else
+		{ // Has not waited long enough
+			return false;
+		}
+	}
+
+	public void AddFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		data.AddFeedback();
+		feedbackCount = data.GetFeedback();
+
+		if (feedbackCount == 1)
+		{
+			DateTime time = System.DateTime.Now;
+			feedbackTimeBinary = time.ToBinary();
+			data.SetFeedbackTime(feedbackTimeBinary);
+
+			Debug.Log("Time of first feedback is " + time);
+		}
+
+		Save();
+	}
+
+	public void ResetFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		data.ResetFeedback();
+		feedbackCount = data.GetFeedback();
+		Save();
+
+		// Open feedback window again
+		Feedback();
+	}
+
+	public void GetFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		feedbackCount = data.GetFeedback();
+		feedbackTimeBinary = data.GetFeedbackTime();
+	}
+
+	// Pause Menu
+	public void ResumeGame()
+	{
+		Time.timeScale = 1;
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+		pauseMenu.SetActive(false);
+	}
+
+	public void RestartScene()
+	{
+		LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
+	public void QuitGame()
+	{
+		pauseMenu.SetActive(false);
+		Save();
+		//Application.Quit();
+		LoadScene(0);
+	}
+
+	// Data management
+	public void Save()
+	{
+		DataSaver.SaveProgress(this);
+	}
+
+	// Load given scene and mute volume while doing it
+	public void LoadScene(int scene)
+	{
+		AudioListener.volume = 0f;
+		Time.timeScale = 0;
+		mm.LoadScene(scene);
+		AudioListener.volume = 1f;
+	}
 }
