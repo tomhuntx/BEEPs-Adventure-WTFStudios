@@ -2934,7 +2934,18 @@ MonoBehaviour:
   forceDestroy: 1
   onObjectDestroy:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 657956140}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 853780435}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &321524730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4582,9 +4593,9 @@ MonoBehaviour:
   displayFPS: 1
   capFPS: 1
   FPSDisplay: {fileID: 597787296}
-  highlighterMaterial: {fileID: 0}
-  normalHighlightColor: {r: 0, g: 0, b: 0, a: 0}
-  invalidHighlightColor: {r: 0, g: 0, b: 0, a: 0}
+  highlighterMaterial: {fileID: 2100000, guid: d11678e5824856f4584192fc53a31da6, type: 2}
+  normalHighlightColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+  invalidHighlightColor: {r: 0.9245283, g: 0.19624424, b: 0.26259315, a: 0.5019608}
   feedback: {fileID: 295037297}
   popup: {fileID: 1735227448974719991, guid: a1a3f149e8b715a46aa03ad99e54e8e7, type: 3}
   thisLevel: 2
@@ -4643,7 +4654,147 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0ffb69e3bd82e4fb94646745698dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tasks: []
+  tasks:
+  - taskType: 0
+    resetType: 1
+    taskName: "\u2022 Stack a box"
+    requiredContributions: 2
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls: []
+  - taskType: 0
+    resetType: 0
+    taskName: "\u2022 Disrupt the assembly line"
+    requiredContributions: 0
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls: []
+  - taskType: 0
+    resetType: 0
+    taskName: "\u2022 Put the Manager's safety last"
+    requiredContributions: 1
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls: []
+  - taskType: 1
+    resetType: 0
+    taskName: "\u2022 Give a robot a new hat"
+    requiredContributions: 1
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls: []
+  - taskType: 2
+    resetType: 3
+    taskName: Box Place
+    requiredContributions: 1
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 567811579}
+          m_MethodName: ContributeToTask
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: "\u2022 Stack a box"
+            m_BoolArgument: 0
+          m_CallState: 2
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 567811579}
+          m_MethodName: DecreseContributionToTask
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: "\u2022 Stack a box"
+            m_BoolArgument: 0
+          m_CallState: 2
+  - taskType: 2
+    resetType: 3
+    taskName: Box Collide
+    requiredContributions: 1
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 567811579}
+          m_MethodName: ContributeToTask
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: "\u2022 Stack a box"
+            m_BoolArgument: 0
+          m_CallState: 2
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 567811579}
+          m_MethodName: DecreseContributionToTask
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: "\u2022 Stack a box"
+            m_BoolArgument: 0
+          m_CallState: 2
   onTaskContribute:
     m_PersistentCalls:
       m_Calls: []
@@ -4655,7 +4806,30 @@ MonoBehaviour:
       m_Calls: []
   onAllTasksDone:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 567811581}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8369074721216352910, guid: 5d2a6407abef0064e95f608993752c9d,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 567811578}
+        m_MethodName: FadeMusic
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!82 &567811580
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5222,6 +5396,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597787294}
   m_CullTransparentMesh: 0
+--- !u!1 &615092478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5928733335975963228, guid: 138e791638c97d34d84dffecfe3d7ca5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4823521943655614773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &620280218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6403,7 +6583,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 2
   doTranslateMovement: 1
@@ -16882,7 +17065,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 2
   doTranslateMovement: 1
@@ -17534,7 +17720,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 2
   doTranslateMovement: 1
@@ -18062,7 +18251,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 1
   doTranslateMovement: 1
@@ -20170,7 +20362,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 2
   doTranslateMovement: 1
@@ -20476,7 +20671,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 5.3
   doTranslateMovement: 1
@@ -22362,7 +22560,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 1
   doTranslateMovement: 1
@@ -22475,7 +22676,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 1
   doTranslateMovement: 1
@@ -22588,7 +22792,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 0.5
   doTranslateMovement: 1
@@ -22701,7 +22908,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 1
   doTranslateMovement: 1
@@ -22814,7 +23024,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 1
   doTranslateMovement: 1
@@ -22927,7 +23140,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 2
   doTranslateMovement: 1
@@ -23040,7 +23256,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 1
   doTranslateMovement: 1
@@ -23153,7 +23372,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableIgnore: 1
-  ignoreTags: []
+  ignoreTags:
+  - Bot
+  - ManagerBot
+  - Outline
   forceDirection: 0
   force: 2
   doTranslateMovement: 1
@@ -23795,6 +24017,11 @@ PrefabInstance:
       propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 615092478}
     - target: {fileID: 8552953871701447321, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
       propertyPath: robotHat
@@ -24024,7 +24251,19 @@ MonoBehaviour:
   scaleTransitionSpeed: 5
   onTransitionPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9052248969421693768}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3478222338120085789, guid: a614c8306924b3d409679255a2e05379,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &9052248969421693784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24580,7 +24819,19 @@ MonoBehaviour:
   scaleTransitionSpeed: 5
   onTransitionPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9052248970021820277}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3478222338120085789, guid: 704d1223706a373488ba1072fa1406e8,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &9052248970722624096
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24769,7 +25020,19 @@ MonoBehaviour:
   scaleTransitionSpeed: 5
   onTransitionPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9052248970722624100}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3478222338120085789, guid: 704d1223706a373488ba1072fa1406e8,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9052248971070153670
 GameObject:
   m_ObjectHideFlags: 0
@@ -24819,7 +25082,19 @@ MonoBehaviour:
   scaleTransitionSpeed: 5
   onTransitionPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9052248971070153671}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3478222338120085789, guid: 704d1223706a373488ba1072fa1406e8,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &9052248971070153688
 MonoBehaviour:
   m_ObjectHideFlags: 0
