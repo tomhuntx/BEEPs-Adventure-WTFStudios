@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerSFX : MonoBehaviour
 {
     private AudioSource source;
-    private FPSController controller;
+    private PlayerCharacterController controller;
     private float originalPitch;
     private float sprintPitch;
     private bool isLanded = true;
@@ -29,7 +29,7 @@ public class PlayerSFX : MonoBehaviour
     void Start()
     {
         source = this.GetComponent<AudioSource>();
-        controller = this.GetComponent<FPSController>();
+        controller = this.GetComponent<PlayerCharacterController>();
         originalPitch = source.pitch;
     }
 

@@ -18,7 +18,7 @@ public class BoxDragSFX : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         source = this.GetComponent<AudioSource>();
         colliderEvents = this.GetComponent<UnityEventsHandler>();
@@ -31,8 +31,9 @@ public class BoxDragSFX : MonoBehaviour
         if (isGrabbed)
         {
             isGrabbed = false;
-            Instantiate(boxPlaceSFXPrefab, this.transform.position, this.transform.rotation);
             previousPos = this.transform.position;
+            if (boxPlaceSFXPrefab != null) 
+                Instantiate(boxPlaceSFXPrefab, this.transform.position, this.transform.rotation);
         }
         else
         {

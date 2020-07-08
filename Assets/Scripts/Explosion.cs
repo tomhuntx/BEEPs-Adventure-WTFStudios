@@ -15,10 +15,10 @@ public class Explosion : MonoBehaviour
 
 	void Start()
 	{
+		Explode();
+
 		// Destroy this object after the set time
 		Destroy(gameObject, destroyTime);
-
-		Explode();
 	}
 
 	void Explode()
@@ -48,12 +48,17 @@ public class Explosion : MonoBehaviour
 
 				// Push player
 				//hit.GetComponent<FPSController>().PushFromPoint(transform.position, pow);
-				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow, 
-																   FPSController.ConvertFromForceMode(forceType));
+				//Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow, 
+				//												   FPSController.ConvertFromForceMode(forceType));
+
+				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow,
+																	   PlayerCharacterController.ConvertFromForceMode(forceType));
 			}
 			if (hit.tag == "Bot")
 			{
-				hit.transform.GetComponent<Robot>().GetBlownUp(this.gameObject);
+				//Search component from main parent downwards to children
+				//print(SearchForParent.GetParentTransform(hit.gameObject));
+				SearchForParent.GetParentTransform(hit.gameObject).GetComponentInChildren<Robot>().GetBlownUp(this.transform.position);
 			}
 		}
 	}

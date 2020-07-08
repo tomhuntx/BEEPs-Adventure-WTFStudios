@@ -20,7 +20,7 @@ public struct ModelStates
     public Material material;
 }
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SpawnerRemote))]
 public class DestructibleObject : MonoBehaviour
 {
@@ -51,54 +51,63 @@ public class DestructibleObject : MonoBehaviour
     #region Hidden Variables
     private Rigidbody rb;
     private MeshFilter mesh;
-    private MeshRenderer mrenderer;
+    //private MeshRenderer mrenderer;
+    private Collider[] colliders;
     private List<PersistentForceRigidbody> forceAppliers = new List<PersistentForceRigidbody>();
     #endregion;
 
     #region Events
-    [Header("Events")]
-    public UnityEvent OnPlayerPunch;
-    public UnityEvent OnColliderEnter;
-    public UnityEvent OnImpactGeneral;
-    public UnityEvent OnImpactDamage;    
-    public UnityEvent OnObjectDestroy;
+    [Header("Destructible Object Events")]
+    public UnityEvent onPlayerPunch;
+    public UnityEvent onColliderEnter;
+    public UnityEvent onImpactGeneral;
+    public UnityEvent onImpactDamage;    
+    public UnityEvent onObjectDestroy;
     #endregion
 
     public GameObject TargetGameObject { get { return targetGameObject; } }
+    public Rigidbody RigidbodyComponent { get { return rb; } }
+    public MeshFilter MeshFilterComponent { get { return mesh; } }
+    //public MeshRenderer MeshRendererComponent { get { return mrenderer; } }
+    public Collider[] ColliderComponents { get { return colliders; } }
+    public Renderer RendererComponent { get; private set; }
 
 
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GameObject referenceGameObject = this.gameObject;
 
         //Target game object is assigned, assigning references according to that.
         if (targetGameObject != null) referenceGameObject = targetGameObject;
-
-        mesh = referenceGameObject.GetComponent<MeshFilter>();
-        mrenderer = referenceGameObject.GetComponent<MeshRenderer>();
-        rb = this.GetComponent<Rigidbody>();
+        else targetGameObject = referenceGameObject;        
         originalDurability = durability;
 
-        if (this.GetComponent<Collider>() == null)
-            Debug.LogError(this.gameObject +
+        //Get and set colliders
+        colliders = this.GetComponentsInChildren<Collider>();
+        if (colliders.Length <= 0)
+            Debug.LogError(targetGameObject.gameObject +
                 " Doesn't have a collider attached to it, please attach a collider before playing!");
+
+        rb = colliders[0].attachedRigidbody;
 
         //sort contents to descending based on their assigned values
         modelPresets.Sort(delegate (ModelStates a, ModelStates b)
         {
             return b.assignedValue.CompareTo(a.assignedValue);
         });
+
+        mesh = targetGameObject.GetComponent<MeshFilter>();
+        //mrenderer = targetGameObject.GetComponent<MeshRenderer>();
+        RendererComponent = targetGameObject.GetComponent<Renderer>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        OnColliderEnter.Invoke();
+        onColliderEnter.Invoke();
 
         float impactMagnitude = Vector3.Magnitude(rb.velocity);
         if (impactMagnitude > generalImpactThreshold)
-            OnImpactGeneral.Invoke();
+            onImpactGeneral.Invoke();
 
         if (!isInvincible)
             CheckDurability(impactMagnitude);
@@ -129,7 +138,7 @@ public class DestructibleObject : MonoBehaviour
     {
         //can inject code for instanciating destruction transition prefab here
         mesh.mesh = preset.mesh;
-		mrenderer.material = preset.material;
+		RendererComponent.material = preset.material;
     }
     #endregion
 
@@ -149,7 +158,7 @@ public class DestructibleObject : MonoBehaviour
                 {
                     if (preset.assignedValue <= (durability / originalDurability) * 100)
                     {
-                        OnImpactDamage.Invoke();
+                        onImpactDamage.Invoke();
                         ChangeModelState(preset);
                         break;
                     }
@@ -157,7 +166,7 @@ public class DestructibleObject : MonoBehaviour
             }
             else
             {
-                OnObjectDestroy.Invoke();
+                onObjectDestroy.Invoke();
                 Destroy(this.transform.gameObject);
             }
         }
@@ -177,12 +186,15 @@ public class DestructibleObject : MonoBehaviour
     /// </summary>
     public void DetachForceAppliers()
     {
-        foreach(PersistentForceRigidbody source in forceAppliers)
+        if (forceAppliers.Count > 0)
         {
-            source.RemoveReference(rb);
-        }
+            foreach (PersistentForceRigidbody source in forceAppliers)
+            {
+                source.RemoveReference(rb);
+            }
 
-        forceAppliers.Clear();
+            forceAppliers.Clear();
+        }
     }
     #endregion
 }
