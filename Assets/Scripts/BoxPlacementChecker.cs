@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GrabbableObjectPlacementChecker : MonoBehaviour
+public class BoxPlacementChecker : MonoBehaviour
 {
     public bool isPlacable = true;
     private float checkerTimer;

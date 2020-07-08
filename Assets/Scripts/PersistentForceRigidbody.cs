@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PersistentForceRigidbody : TagFilterer
+public class PersistentForceRigidbody : MonoBehaviour
 {
     private enum Direction { Forward, Right, Up, Omnidirectional }
 
@@ -38,7 +38,7 @@ public class PersistentForceRigidbody : TagFilterer
     void Update()
     {
         //prevent from stacking forces
-        if (Time.timeScale > 0)
+        if (Time.timeScale == 1)
         {
             if (rbs.Count > 0)
             {
@@ -56,8 +56,7 @@ public class PersistentForceRigidbody : TagFilterer
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!DoIgnore(other.tag) &&
-            other.transform.GetComponent<Rigidbody>())
+        if (other.transform.GetComponent<Rigidbody>())
         {
             Rigidbody reference = other.transform.GetComponent<Rigidbody>();
             if (!rbs.Contains(reference)) rbs.Add(reference);
@@ -133,8 +132,7 @@ public class PersistentForceRigidbody : TagFilterer
 
     private void ApplyForceToPlayer()
     {
-        //FPSController.ForceType convertedType = FPSController.ConvertFromForceMode(forceType);
-        PlayerCharacterController.ForceType convertedType = PlayerCharacterController.ConvertFromForceMode(forceType);
+        FPSController.ForceType convertedType = FPSController.ConvertFromForceMode(forceType);
 
         switch (forceDirection)
         {

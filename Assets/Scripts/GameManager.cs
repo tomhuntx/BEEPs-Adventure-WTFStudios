@@ -4,29 +4,32 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager GManager;
 	public GameObject controls;
+	public GameObject feedback;
+	public GameObject popup;
+	private MenuManager mm;
 
-    public const float MIN_CAM_FOV = 30.0f;
-    public const float MAX_CAM_FOV = 120;
+	// DATA
+	public int thisLevel;
+	public int feedbackCount;
+	public long feedbackTimeBinary;
 
+	[SerializeField] private GameObject pauseMenu;
 
-    [SerializeField] private GameObject pauseMenu;
+	private bool feedbackAllowed;
+	private int feedbackDelayMins = 10;
+	private double difference;
 
-    [Header("FPS Management")]
+	[Header("FPS Management")]
     public int targetFPS = 60;
     public bool displayFPS = false;
     public bool capFPS = true;
     [SerializeField] private TextMeshProUGUI FPSDisplay;
-	private bool locked = false;
-
-    [Header("Object Interaction Settings")]
-    [SerializeField] private Material highlighterMaterial;
-    [SerializeField] private Color normalHighlightColor;
-    [SerializeField] private Color invalidHighlightColor;
 
 	//
 	bool moveControls = false;
@@ -35,13 +38,29 @@ public class GameManager : MonoBehaviour
 
 	private void Awake()
     {
-        Instance = this;
+        GManager = this;
+		mm = FindObjectOfType<MenuManager>();
 
-        //Highlighter setup
-        InteractableObject.highlighterMaterial = highlighterMaterial;
-        InteractableObject.normalHighlightColor = normalHighlightColor;
-        InteractableObject.invalidHighlightColor = invalidHighlightColor;
-    }
+		GetFeedback();
+
+		if (Waited())
+		{
+			feedbackAllowed = true;
+		}
+		else
+		{
+			feedbackAllowed = false;
+		}
+
+		// Should only occur if game is started from the level scene
+		if (Cursor.lockState != CursorLockMode.Locked)
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+		}
+
+		// Save current level progress
+		Save();
+	}
 
     // Update is called once per frame
     void Update()
@@ -62,16 +81,7 @@ public class GameManager : MonoBehaviour
                 FPSDisplay.gameObject.SetActive(displayFPS);
         }
 
-		// WEBGL Fix - Only lock cursor clicked when it's visible & not paused
-		//if (Input.GetMouseButtonDown(0) && Cursor.visible && !pauseMenu.activeSelf)
-		//{
-		//	Cursor.visible = false;
-		//	Cursor.lockState = CursorLockMode.Locked;
-		//	locked = true;
-		//}
-
-		/////// Would move to GUI MANAGER
-		//Store controls
+		//// TEMP Controls Icon & movement
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
 			rect = controls.GetComponent<RectTransform>();
@@ -89,7 +99,7 @@ public class GameManager : MonoBehaviour
 				controls.SetActive(false);
 			}
 		}
-		///////
+		////
 
         //Simple pause
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -141,7 +151,13 @@ public class GameManager : MonoBehaviour
         {
             Application.targetFrameRate = 2147483647;
         }
-    }
+
+		// Limit feedback count
+		if (feedbackAllowed && feedbackCount >= 3)
+		{
+			feedbackAllowed = false;
+		}
+	}
 
     private IEnumerator CalculateFPS()
     {
@@ -153,23 +169,128 @@ public class GameManager : MonoBehaviour
         }
     }
 
+	// Feedback
+	public void Feedback()
+	{
+		// Show feedback popup
+		if (feedbackAllowed)
+		{
+			feedback.SetActive(true);
+		}
+		// Check if 10 mins has passed
+		else
+		{
+			if (Waited())
+			{
+				feedbackAllowed = true;
+				ResetFeedback();
+			}
+			else
+			{
+				double num = Math.Round(feedbackDelayMins - difference, 1);
+				string errorText = "You must wait " + num + " minutes to provide more feedback.";
 
-    public void ResumeGame()
+				if (popup)
+				{
+					GameObject error = Instantiate(popup, popup.transform.position, popup.transform.rotation) as GameObject;
+					error.transform.SetParent(pauseMenu.transform, false);
+					error.GetComponentInChildren<TMP_Text>().SetText(errorText);
+				}
+				else
+				{
+					Debug.LogWarning("Please attach a popup to the GameManager!");
+				}
+			}
+		}
+	}
+
+	private bool Waited()
+	{
+		Data data = DataSaver.LoadData();
+		DateTime oldTime = DateTime.FromBinary(data.GetFeedbackTime());
+		DateTime timeNow = System.DateTime.Now;
+
+		difference = (timeNow - oldTime).TotalMinutes;
+		if (difference >= feedbackDelayMins)
+		{ // Waited long enough
+			return true;
+		}
+		else
+		{ // Has not waited long enough
+			return false;
+		}
+	}
+
+	public void AddFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		data.AddFeedback();
+		feedbackCount = data.GetFeedback();
+
+		if (feedbackCount == 1)
+		{
+			DateTime time = System.DateTime.Now;
+			feedbackTimeBinary = time.ToBinary();
+			data.SetFeedbackTime(feedbackTimeBinary);
+
+			Debug.Log("Time of first feedback is " + time);
+		}
+
+		Save();
+	}
+
+	public void ResetFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		data.ResetFeedback();
+		feedbackCount = data.GetFeedback();
+		Save();
+
+		// Open feedback window again
+		Feedback();
+	}
+
+	public void GetFeedback()
+	{
+		Data data = DataSaver.LoadData();
+		feedbackCount = data.GetFeedback();
+		feedbackTimeBinary = data.GetFeedbackTime();
+	}
+
+	// Pause Menu
+	public void ResumeGame()
     {
-        Time.timeScale = 1;
-        Cursor.visible = false;
+		Time.timeScale = 1;
+		Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
     }
 
-    public void RestartScene()
+	public void RestartScene()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+		LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
 
-    public void QuitGame()
+	public void QuitGame()
     {
-        Application.Quit();
-    }
+		pauseMenu.SetActive(false);
+		Save();
+		//Application.Quit();
+		LoadScene(0);
+	}
+
+	// Data management
+	public void Save()
+	{
+		DataSaver.SaveProgress(this);
+	}
+
+	// Load given scene and mute volume while doing it
+	public void LoadScene(int scene)
+	{
+		AudioListener.volume = 0f;
+		Time.timeScale = 0;
+		mm.LoadScene(scene);
+		AudioListener.volume = 1f;
+	}
 }

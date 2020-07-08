@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 
 public class DestroyField : TagFilterer
@@ -12,7 +11,6 @@ public class DestroyField : TagFilterer
     [Header("Destroy Field Options")]
     [Tooltip("If an object has the DestructibleObject script attached to it, it will be forced to destroy without invoking the OnObjectDestroy event.")]
     [SerializeField] private bool forceDestroy = false;
-    public UnityEvent onObjectDestroy;
 
     void Start()
     {
@@ -29,10 +27,9 @@ public class DestroyField : TagFilterer
             if (!forceDestroy && 
                 other.transform.GetComponent<DestructibleObject>() != null)
             {
-                other.transform.GetComponent<DestructibleObject>().onObjectDestroy.Invoke();
+                other.transform.GetComponent<DestructibleObject>().OnObjectDestroy.Invoke();
             }
             Destroy(other.gameObject);
-            onObjectDestroy.Invoke();
         }
     }
 
@@ -43,10 +40,9 @@ public class DestroyField : TagFilterer
             if (!forceDestroy && 
                 collision.transform.GetComponent<DestructibleObject>() != null)
             {
-                collision.transform.GetComponent<DestructibleObject>().onObjectDestroy.Invoke();
+                collision.transform.GetComponent<DestructibleObject>().OnObjectDestroy.Invoke();
             }
-            Destroy(collision.gameObject);
-            onObjectDestroy.Invoke();
+            Destroy(collision.gameObject); 
         }
     }
 }
