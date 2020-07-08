@@ -462,8 +462,11 @@ public class Player : MonoBehaviour
                 Transform hbRef = heavyBoxRef.transform;
                 hbRef.position = raycastOrigin.transform.position + raycastOrigin.transform.forward * interactionDistance.z;
 
-                //Make the heavy box rotate its nearest face towards the player - NEEDS FURTHER IMPROVEMENTS!
+                //Get transform references
+                Transform boxTRS = heavyBox.transform;
                 Transform TRS = this.transform;
+
+                //Get all directions from the player's transform
                 Vector3[] thisDirections = new Vector3[]
                 {
                     TRS.right,
@@ -472,56 +475,23 @@ public class Player : MonoBehaviour
                     -TRS.right,
                     -TRS.up,
                     -TRS.forward
-                };
+                };                
 
-                Transform boxTRS = heavyBox.transform;
-                Vector3[] boxDirections = new Vector3[]
-                {
-                    boxTRS.right,
-                    boxTRS.up,
-                    boxTRS.forward,
-                    -boxTRS.right,
-                    -boxTRS.up,
-                    -boxTRS.forward
-                };
-
-
-                Vector3 upDir = Vector3.up;
-                if (Physics.Raycast(boxTRS.position, Vector3.down, out RaycastHit downCast))
-                    upDir = downCast.normal;
-
+                //Make the nearest box face towards the player
                 float previousAngle = float.MaxValue;
-                float toUpAngle = float.MaxValue;
                 int forwardIndex = -1;
-                int upIndex = -1;
-                for (int i = 0; i < boxDirections.Length; i++)
+                for (int i = 0; i < thisDirections.Length; i++)
                 {
-                    Vector3 dir = boxDirections[i];
+                    Vector3 dir = thisDirections[i];
+                    float currentAngle = Vector3.Angle(boxTRS.forward, dir);
 
-                    //Get direction facing cam
-                    float currentAngle = Vector3.Angle(dir, -TRS.forward);
                     if (currentAngle < previousAngle)
                     {
                         previousAngle = currentAngle;
                         forwardIndex = i;
                     }
-
-                    //Get direction facing up
-                    float toUp = Vector3.Angle(dir, upDir);
-                    if (toUp < toUpAngle)
-                    {
-                        toUpAngle = toUp;
-                        upIndex = i;
-                    }
                 }
-                Vector3 pos = TRS.position;
-                pos.y = boxTRS.position.y;
-                Vector3 chosenDir = this.transform.forward;
-                if (Input.GetMouseButtonDown(0)) chosenDir = thisDirections[forwardIndex];
-
-                hbRef.LookAt(pos + chosenDir, boxDirections[upIndex]);
-                //hbRef.LookAt(this.transform);
-
+                hbRef.LookAt(boxTRS.position + thisDirections[forwardIndex]);
 
                 //Store into new variables to declutter later calculations...
                 Vector3 newPos = new Vector3(hbRef.position.x,
@@ -534,16 +504,7 @@ public class Player : MonoBehaviour
                 //Apply transform changes and smoothening
                 heavyBox.transform.position = Vector3.Lerp(heavyBox.transform.position, newPos, 15 * Time.deltaTime);
                 heavyBox.transform.rotation = Quaternion.Lerp(heavyBox.transform.rotation, newRot, 15 * Time.deltaTime);
-                
-                //DestructibleObject box = heavyBox.GetComponent<DestructibleObject>();
-                //Renderer renderer = box.RendererComponent;
-                //float contactOffset = 0;
-                //if (controller.IsFirstPerson) contactOffset = InteractableObject.CONTACT_OFFSET;
-                //Vector3 offset = new Vector3(hitInfo.normal.x * (renderer.bounds.extents.x - contactOffset),
-                //                             hitInfo.normal.y * (renderer.bounds.extents.y - contactOffset),
-                //                             hitInfo.normal.z * (renderer.bounds.extents.z - contactOffset));
-                //Vector3 newPos = hitInfo.point + offset;
-                //heavyBoxRef.transform.position = newPos;
+
 
                 //Clamp min camera angle
                 controller.UpdateCamAngleClamp(controller.originalMinCamAngleX, 70);
