@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public const float MIN_CAM_FOV = 30.0f;
     public const float MAX_CAM_FOV = 120;
 
-
     [SerializeField] private GameObject pauseMenu;
 
     [Header("FPS Management")]

@@ -7,10 +7,13 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-	private int levelProgress = 0;
+	public int levelProgress = 0;
 
 	// Loading Screen
 	[SerializeField] private GameObject loadingScreen;
+
+	// Level Select Menu (Main Menu ONLY)
+	[SerializeField] private GameObject levelSelect;
 
 	void Awake()
     {
@@ -55,8 +58,8 @@ public class MenuManager : MonoBehaviour
 	{
 		if (levelProgress > 0)
 		{
-			// Load level of current progress 
-			LoadScene(levelProgress);
+			// Open level select screen
+			levelSelect.SetActive(true);
 		}
 		else
 		{
