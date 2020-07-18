@@ -17,7 +17,6 @@ public class InteractableObject : MonoBehaviour
                                                                    0.0001f);
     #endregion
 
-
     #region Other Variables
     [Tooltip("The game object that contains a renderer and will be make a highlighter out of.")]
     [SerializeField] private GameObject highlighterBasis;
@@ -25,13 +24,20 @@ public class InteractableObject : MonoBehaviour
     private Renderer highlighterRenderer;
     private bool isParented;
 
-	[Header("Text Hover Tooltips")]
-	[Tooltip("Whether to display the tooltip or not.")]
+	[Header("Object-Hover Tooltips")]
+	[Tooltip("Whether to display the base hover tooltip or not.")]
 	public bool displayTooltip = false;
+	[Tooltip("Display the tooltip repeatedly (false) or once (true).")]
+	public bool displayOnce = false;
 	[Tooltip("Text to display on the tooltip (Leave blank if display tooltip not selected).")]
 	public string tooltipMessage = "";
+	[Tooltip("Whether to display more tooltips when the first is triggered (for place/throw boxes).")]
+	public bool displayTooltip2 = false;
+	[Tooltip("Text to display after the first tooltip is activiated")]
+	public string secondTooltipMessage = "";
+	[Tooltip("Is the text finished displaying - leave false in the editor.")]
+	public bool tooltipFinished = false;
 	#endregion
-
 
 	#region Accessors
 	public GameObject HighlighterInstance { get { return highlighterInstance; } 
@@ -39,8 +45,6 @@ public class InteractableObject : MonoBehaviour
     public GameObject HighlighterBasis { get { return highlighterBasis; }
                                          set { highlighterBasis = value; } }
     #endregion
-
-
 
     private void Start()
     {
@@ -80,10 +84,19 @@ public class InteractableObject : MonoBehaviour
         highlighterInstance.SetActive(state);
     }
 
-    /// <summary>
-    /// Resets the highlighter's transform values and material color.
-    /// </summary>
-    public void ResetHighlighter()
+	/// <summary>
+	/// Gets highligher state 
+	/// </summary>
+	/// <returns>If the highlighter is on/off (true/false)</returns>
+	public bool GetHighlighter()
+	{
+		return highlighterInstance.activeSelf;
+	}
+
+	/// <summary>
+	/// Resets the highlighter's transform values and material color.
+	/// </summary>
+	public void ResetHighlighter()
     {
         highlighterInstance.transform.parent = this.transform;
         highlighterInstance.transform.localPosition = Vector3.zero;

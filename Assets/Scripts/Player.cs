@@ -78,7 +78,9 @@ public class Player : MonoBehaviour
     private Rigidbody heavyBoxRB;
     private GrabbableObject grabbedObject;
     private Transform previousRaycastTarget;
+	// Tooltips
 	private TMP_Text tooltipText;
+	private bool holdingBox = false;
 
 	/// <summary>
 	/// Checker if the raycast target is behind an object.
@@ -105,6 +107,8 @@ public class Player : MonoBehaviour
 		if (tooltip)
 		{
 			tooltipText = tooltip.GetComponent<TMP_Text>();
+			tooltipText.text = "";
+			tooltip.SetActive(true);
 		}
 	}
 
@@ -217,10 +221,16 @@ public class Player : MonoBehaviour
                     //when looking at an object with no interactable object component
                     previousInteractable.ShowHighlighter(false);
                 }
-            }
+
+				// Tooltip (Off)
+				if (tooltip)
+				{
+					tooltipText.text = "";
+				}
+			}
             else
             {
-                if (previousRaycastTarget != null)
+				if (previousRaycastTarget != null)
                 {
                     if (interactable.transform != hitInfo.transform)
                     {
@@ -232,32 +242,50 @@ public class Player : MonoBehaviour
                     {
                         //The previous raycasted target is the same as the current one
                         interactable.ShowHighlighter(true);
-                    }
+					}
 
-                    if (previousRaycastTarget != interactable.transform &&
+					if (previousRaycastTarget != interactable.transform &&
                         previousInteractable != null)
                     {
                         //Hide the previous raycasted target's highlighter
                         //when looking at a different object
                         previousInteractable.ShowHighlighter(false);
                     }
-                }
+				}
                 else
                 {
                     //No previous raycast target
                     //Show this interactable's highlighter
                     interactable.ShowHighlighter(true);
+				}
 
-					// Tooltip (On)
-					if (tooltip && interactable.displayTooltip && !tooltip.activeSelf)
+				// Manage Tooltip
+				if (tooltip && interactable.GetHighlighter() && !interactable.tooltipFinished)
+				{ // Tooltip On
+					if (!holdingBox)
 					{
-						tooltip.SetActive(true);
-						tooltipText.text = interactable.tooltipMessage;
+						// Tooltip first message
+						if (interactable.displayTooltip)
+						{
+							tooltipText.text = interactable.tooltipMessage;
+						}
+						// Tooltip Second Message ONLY
+						else if (interactable.displayTooltip2)
+						{
+							tooltipText.text = "";
+						}
 					}
 				}
-            }
+				else
+				{ // Tooltip Off
+					if (tooltip)
+					{
+						tooltipText.text = "";
+					}
+				}
+			}
             previousRaycastTarget = hitInfo.transform;
-        }
+		}
         else if (!isRaycastHit &&
                  previousRaycastTarget != null)
         {
@@ -268,15 +296,16 @@ public class Player : MonoBehaviour
 
             //Put null reference since there's not raycast hit
             previousRaycastTarget = null;
-
+		}
+		else
+		{
 			// Tooltip (Off)
-			if (tooltip && tooltip.activeSelf)
+			if (tooltip)
 			{
-				tooltip.SetActive(false);
-				Debug.Log("Turned off");
+				tooltipText.text = "";
 			}
 		}
-    }
+	}
 
     /// <summary>
     /// Visualize and manages the grabbed object's highlighter - used for object placement.
@@ -379,10 +408,37 @@ public class Player : MonoBehaviour
             if (controller.IsFirstPerson) objectParent = firstPersonObjectOffset;
             grabbedObject.GrabObject(objectParent);
 
-			// Tooltip (Off)
-			if (tooltip && tooltip.activeSelf)
+			// Tooltips on interactable objects
+			if (hitInfo.transform.GetComponent<InteractableObject>() != null)
 			{
-				tooltip.SetActive(false);
+				InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
+
+				// Tooltip (Off or change to second message)
+				if (tooltip && !interactable.tooltipFinished)
+				{
+					if (!interactable.displayTooltip2)
+					{
+						tooltipText.text = "";
+
+						// If display once has been selected - stops displaying tooltip
+						if (interactable.displayOnce)
+						{
+							interactable.tooltipFinished = true;
+						}
+					}
+					else if (interactable.displayTooltip2)
+					{
+						// Set text to second message
+						tooltipText.text = interactable.secondTooltipMessage;
+
+						// If display once has been selected - stops displaying tooltip
+						if (interactable.displayOnce)
+						{
+							interactable.tooltipFinished = true;
+						}
+					}
+				}
+				holdingBox = true;
 			}
 		}
 	}
@@ -397,7 +453,14 @@ public class Player : MonoBehaviour
             grabbedObject.PlaceObject())
         {
             grabbedObject = null;
-        }
+
+			// Tooltip (Off)
+			if (tooltip)
+			{
+				tooltipText.text = "";
+				holdingBox = false;
+			}
+		}
     }
 
     /// <summary>
@@ -411,7 +474,14 @@ public class Player : MonoBehaviour
             grabbedObject.transform.localPosition = thrownObjectOffsetPos;
             grabbedObject.ThrowObject(raycastOrigin.forward * throwForce, ForceMode.Impulse);
             grabbedObject = null;
-        }
+
+			// Tooltip (Off)
+			if (tooltip)
+			{
+				tooltipText.text = "";
+				holdingBox = false;
+			}
+		}
     }
 
     /// <summary>
