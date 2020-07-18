@@ -24,11 +24,17 @@ public class InteractableObject : MonoBehaviour
     private GameObject highlighterInstance;
     private Renderer highlighterRenderer;
     private bool isParented;
-    #endregion
+
+	[Header("Text Hover Tooltips")]
+	[Tooltip("Whether to display the tooltip or not.")]
+	public bool displayTooltip = false;
+	[Tooltip("Text to display on the tooltip (Leave blank if display tooltip not selected).")]
+	public string tooltipMessage = "";
+	#endregion
 
 
-    #region Accessors
-    public GameObject HighlighterInstance { get { return highlighterInstance; } 
+	#region Accessors
+	public GameObject HighlighterInstance { get { return highlighterInstance; } 
                                             set { highlighterInstance = value; } }
     public GameObject HighlighterBasis { get { return highlighterBasis; }
                                          set { highlighterBasis = value; } }
@@ -47,8 +53,6 @@ public class InteractableObject : MonoBehaviour
         if (highlighterInstance == null)
             SetupHighlighter();
     }
-
-
 
     #region Public Methods
     /// <summary>

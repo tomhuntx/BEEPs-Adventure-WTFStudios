@@ -13,7 +13,6 @@ public class SoundManager : MonoBehaviour
     [Range(-80, 20)] [SerializeField] private float musicVol;
     [Range(-80, 20)] [SerializeField] private float soundEffectsVol;
 
-
     [SerializeField] private SliderInitializer master;
     private Slider masterSlider;
 
@@ -23,7 +22,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private SliderInitializer soundEffects;
     private Slider soundEffectsSlider;
 
-    private float originalMasterLevels;
+	// Whether or not level has tasks (testing or tutorial)
+	[SerializeField] private bool hasTasks = true;
+
+	private float originalMasterLevels;
     private float originalMusicLevels;
     private float originalSFXLevels;
     private float compressorDiffThreshold;
@@ -71,7 +73,10 @@ public class SoundManager : MonoBehaviour
     void Update()
     {
         ManageGameAudio();
-        ManageMainGameMusic();
+		if (hasTasks)
+		{
+			ManageMainGameMusic();
+		}
 
         if (fadeOutMusic)
         {

@@ -6,17 +6,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Linq;
+using TMPro;
 
 [RequireComponent(typeof(PlayerCharacterController))]
 public class Player : MonoBehaviour
 {
     public static Player Instance;
 
-
     public GameObject hand;
     private Animator handAnim;
     private GameObject heavyBoxRef;
-
 
     #region Exposed Variables
     [Space]
@@ -28,7 +27,6 @@ public class Player : MonoBehaviour
 
     [Tooltip("Used to check if the player has landed or not.")]
     [SerializeField] private UnityEventsHandler groundCheck;
-
 
     [Header("Box Handling Properties")]
     [Tooltip("How much damage will be applied to the destructible object.")]
@@ -66,21 +64,26 @@ public class Player : MonoBehaviour
 
     [Tooltip("The area around the player where box placement should be ignored.")]
     [SerializeField] private float boxPlacementDeadzone = 1f;
-    #endregion
 
-    #region Hidden Variables
-    private PlayerCharacterController controller;
+	[Header("Tooltip Text Object")]
+	[Tooltip("The tooltip TMP(Text) GameObject (Leave blank if no tooltips are wanted).")]
+	[SerializeField] private GameObject tooltip;
+	#endregion
+
+	#region Hidden Variables
+	private PlayerCharacterController controller;
     private RaycastHit hitInfo;
     private bool isRaycastHit = false;
     private GameObject heavyBox;
     private Rigidbody heavyBoxRB;
     private GrabbableObject grabbedObject;
     private Transform previousRaycastTarget;
+	private TMP_Text tooltipText;
 
-    /// <summary>
-    /// Checker if the raycast target is behind an object.
-    /// </summary>
-    private bool isTargetBehindSometing = false;
+	/// <summary>
+	/// Checker if the raycast target is behind an object.
+	/// </summary>
+	private bool isTargetBehindSometing = false;
     #endregion
 
     public PlayerCharacterController PlayerMovementControls { get { return controller; } }
@@ -97,7 +100,13 @@ public class Player : MonoBehaviour
         controller = this.GetComponent<PlayerCharacterController>();
         handAnim = hand.GetComponent<Animator>();
         heavyBoxRef = new GameObject();
-    }
+
+		// Set tooltip text
+		if (tooltip)
+		{
+			tooltipText = tooltip.GetComponent<TMP_Text>();
+		}
+	}
 
     void LateUpdate()
     {
@@ -238,7 +247,14 @@ public class Player : MonoBehaviour
                     //No previous raycast target
                     //Show this interactable's highlighter
                     interactable.ShowHighlighter(true);
-                }
+
+					// Tooltip (On)
+					if (tooltip && interactable.displayTooltip && !tooltip.activeSelf)
+					{
+						tooltip.SetActive(true);
+						tooltipText.text = interactable.tooltipMessage;
+					}
+				}
             }
             previousRaycastTarget = hitInfo.transform;
         }
@@ -252,7 +268,14 @@ public class Player : MonoBehaviour
 
             //Put null reference since there's not raycast hit
             previousRaycastTarget = null;
-        }
+
+			// Tooltip (Off)
+			if (tooltip && tooltip.activeSelf)
+			{
+				tooltip.SetActive(false);
+				Debug.Log("Turned off");
+			}
+		}
     }
 
     /// <summary>
@@ -355,8 +378,14 @@ public class Player : MonoBehaviour
             Transform objectParent = thirdPersonObjectOffset;
             if (controller.IsFirstPerson) objectParent = firstPersonObjectOffset;
             grabbedObject.GrabObject(objectParent);
-        }
-    }
+
+			// Tooltip (Off)
+			if (tooltip && tooltip.activeSelf)
+			{
+				tooltip.SetActive(false);
+			}
+		}
+	}
 
     /// <summary>
     /// Places object only when placement is valid.
