@@ -468,8 +468,8 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ThrowGrabbedObject()
     {
-        if (isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
-            !isRaycastHit)
+        if ((isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
+            !isRaycastHit) && grabbedObject)
         {
             grabbedObject.transform.localPosition = thrownObjectOffsetPos;
             grabbedObject.ThrowObject(raycastOrigin.forward * throwForce, ForceMode.Impulse);

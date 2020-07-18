@@ -85,7 +85,7 @@ public class InteractableObject : MonoBehaviour
     }
 
 	/// <summary>
-	/// Gets highligher state 
+	/// Gets highligher state. Used with tutorial tooltips.
 	/// </summary>
 	/// <returns>If the highlighter is on/off (true/false)</returns>
 	public bool GetHighlighter()
