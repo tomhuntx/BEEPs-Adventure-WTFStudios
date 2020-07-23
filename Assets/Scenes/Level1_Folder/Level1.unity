@@ -9258,6 +9258,7 @@ GameObject:
   - component: {fileID: 1040706915}
   - component: {fileID: 1040706914}
   - component: {fileID: 1040706913}
+  - component: {fileID: 1040706917}
   m_Layer: 0
   m_Name: Box Corp Poster
   m_TagString: Untagged
@@ -9340,6 +9341,40 @@ Transform:
   m_Father: {fileID: 805996423}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+--- !u!328 &1040706917
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040706912}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: d5342f1a2431dfb4388749dfb1fe3109, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _MainTex
+  m_RenderMode: 3
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
 --- !u!1 &1044407557 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 7daca51a2dd4a5446bfa8ca872c69d26,
@@ -18619,6 +18654,46 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1825206821}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1825279226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1651381711308278609, guid: 20917fb1e07483d41ade4ffb8546e786,
+    type: 3}
+  m_PrefabInstance: {fileID: 1651381711340405438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!328 &1825279230
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825279226}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: 7d89521a47a01c1438f9d9bdacdd0c94, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _MainTex
+  m_RenderMode: 3
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
 --- !u!114 &1842746026 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2889841212770385107, guid: 138e791638c97d34d84dffecfe3d7ca5,
