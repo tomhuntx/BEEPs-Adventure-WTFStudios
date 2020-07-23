@@ -105,14 +105,17 @@ public class DestructibleObject : MonoBehaviour
     {
         onColliderEnter.Invoke();
 
-        float impactMagnitude = Vector3.Magnitude(rb.velocity);
-        if (impactMagnitude > generalImpactThreshold)
-            onImpactGeneral.Invoke();
+		if (rb != null)
+		{
+			float impactMagnitude = Vector3.Magnitude(rb.velocity);
+			if (impactMagnitude > generalImpactThreshold)
+				onImpactGeneral.Invoke();
 
-        if (!isInvincible)
-            CheckDurability(impactMagnitude);
+			if (!isInvincible)
+				CheckDurability(impactMagnitude);
 
-        //print(Time.time + "-" +this.transform + ":" + impactMagnitude);
+			//print(Time.time + "-" +this.transform + ":" + impactMagnitude);
+		}
 	}
 
 

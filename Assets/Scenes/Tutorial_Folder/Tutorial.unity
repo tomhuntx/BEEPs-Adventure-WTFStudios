@@ -8553,6 +8553,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820098591}
   m_CullTransparentMesh: 0
+--- !u!1 &1824190470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9145112948634771058, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1883928030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1824190471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824190470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0ffb69e3bd82e4fb94646745698dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tasks:
+  - taskType: 0
+    resetType: 0
+    taskName: "\u2022 Stack a box"
+    requiredContributions: 1
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls: []
+  - taskType: 0
+    resetType: 0
+    taskName: "\u2022 Punch a box"
+    requiredContributions: 1
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls: []
+  - taskType: 0
+    resetType: 0
+    taskName: "\u2022 Escape"
+    requiredContributions: 1
+    onTaskContribute:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskDone:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onTaskReset:
+      m_PersistentCalls:
+        m_Calls: []
+  onTaskContribute:
+    m_PersistentCalls:
+      m_Calls: []
+  onMainTasksDone:
+    m_PersistentCalls:
+      m_Calls: []
+  onOptionalTasksDone:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllTasksDone:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1851670394
 GameObject:
   m_ObjectHideFlags: 0
@@ -8610,7 +8689,7 @@ PrefabInstance:
     - target: {fileID: 236997240333766645, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 236997240775678619, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8650,7 +8729,7 @@ PrefabInstance:
     - target: {fileID: 236997241227541855, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 236997241240803824, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8665,7 +8744,7 @@ PrefabInstance:
     - target: {fileID: 236997241240803824, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 236997241554486553, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8690,7 +8769,12 @@ PrefabInstance:
     - target: {fileID: 9145112948228240266, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -9.299997
+      value: -21.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112948228240266, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.20002
       objectReference: {fileID: 0}
     - target: {fileID: 9145112948228240267, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8725,7 +8809,17 @@ PrefabInstance:
     - target: {fileID: 9145112948228240267, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_text
-      value: "\u2022 Place a box"
+      value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112948228240267, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112948228240267, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9145112948634771058, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8735,7 +8829,7 @@ PrefabInstance:
     - target: {fileID: 9145112948634771058, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9145112948634771059, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8910,7 +9004,7 @@ PrefabInstance:
     - target: {fileID: 9145112948693616570, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9145112948693616571, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8920,22 +9014,27 @@ PrefabInstance:
     - target: {fileID: 9145112949243496228, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 11.4000025
+      value: 6.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112949243496228, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.2
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949243496229, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 15
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949243496229, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949243496229, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949243496229, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8955,7 +9054,17 @@ PrefabInstance:
     - target: {fileID: 9145112949243496229, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_text
-      value: "\u2022 Pick up a box"
+      value: "\u2022 Stack a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112949243496229, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112949243496229, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949243496245, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -8970,22 +9079,27 @@ PrefabInstance:
     - target: {fileID: 9145112949992629917, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -28.499996
+      value: -51.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112949992629917, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.20002
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 13
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
@@ -9005,7 +9119,17 @@ PrefabInstance:
     - target: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
         type: 3}
       propertyPath: m_text
-      value: "\u2022 Throw a box"
+      value: "\u2022 Escape"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fa7fca5a730de644a4ed061de6dd9e7, type: 3}
