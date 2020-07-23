@@ -23,59 +23,41 @@ public class TaskUGUI : MonoBehaviour
 
     private bool isTransitionDone = false;
     private bool isFinishedTriggered = false;
+    private bool isSetupDone = false;
     #endregion
 
 
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-		//Assume the transform attached to this has
-		//the required component.
-		if (targetText == null)
-            targetText = this.GetComponent<TextMeshProUGUI>();
-
-		//Check for the 2nd time
-		//if the component do exist
-		if (targetText == null)
-        {
-            Debug.LogError("There is no Text Mesh Pro Text assigned to this script, " +
-                           "please make sure the transform attached to this has one or " +
-                           "the target text variable is asssigned manually before playing!");
-        }
-        //Component do exist, proceed to intialization
-        else
-        {
-            //Throw error if not task with the given name is found
-            if (GetAssignedTask() == Task.invalidTask)
-                Debug.LogError(string.Format("No task found from the task list that has the name of {0}", targetText.text));
-
-            //Add the scale up event when the task if fulfilled
-            TaskList.Instance.FindTask(targetText.text).onTaskDone.AddListener(ScaleUpTransform);
-        }
-	}
-
     // Update is called once per frame
     void Update()
     {
-        //Transition works
-        if (!isTransitionDone &&
-            GetAssignedTask().isTaskDone)
+        //Make the transition only work 
+        //only when the initialization is successful
+        if (!isSetupDone)
         {
-            isFinishedTriggered = true;
-            targetText.fontStyle = FontStyles.Strikethrough;
-
-            //Do scaling stuff here;
-            if (targetText.transform.localScale.x >= 1)
+            isSetupDone = DoSetup();
+        }
+        else
+        {
+            //Transition works
+            if (!isTransitionDone &&
+                GetAssignedTask().isTaskDone)
             {
-                targetText.transform.localScale = Vector3.Slerp(targetText.transform.localScale,
-                                                               Vector3.one,
-                                                               scaleTransitionSpeed * Time.deltaTime);
+                isFinishedTriggered = true;
+                targetText.fontStyle = FontStyles.Strikethrough;
 
-                //Stops the scaling after transition
-                if (targetText.transform.localScale.x == 1)
+                //Do scaling stuff here;
+                if (targetText.transform.localScale.x >= 1)
                 {
-                    isTransitionDone = true;                    
+                    targetText.transform.localScale = Vector3.Slerp(targetText.transform.localScale,
+                                                                   Vector3.one,
+                                                                   scaleTransitionSpeed * Time.deltaTime);
+
+                    //Stops the scaling after transition
+                    if (targetText.transform.localScale.x == 1)
+                    {
+                        isTransitionDone = true;
+                    }
                 }
             }
         }
@@ -96,6 +78,43 @@ public class TaskUGUI : MonoBehaviour
     private Task GetAssignedTask()
     {
 		return TaskList.Instance.FindTask(targetText.text);
+    }
+
+    /// <summary>
+    /// Initializes this task UI.
+    /// </summary>
+    /// <returns>Returns true if the initialization is successful, otherwise, false when an error is detected.</returns>
+    private bool DoSetup()
+    {
+        //Assume the transform attached to this has
+        //the required component.
+        if (targetText == null)
+            targetText = this.GetComponent<TextMeshProUGUI>();
+
+        //Check for the 2nd time
+        //if the component do exist
+        if (targetText == null)
+        {
+            Debug.LogError("There is no Text Mesh Pro Text assigned to this script, " +
+                           "please make sure the transform attached to this has one or " +
+                           "the target text variable is asssigned manually before playing!");
+
+            //Setup failed
+            return false;
+        }
+        //Component do exist, proceed to intialization
+        else
+        {
+            //Throw error if not task with the given name is found
+            if (GetAssignedTask() == Task.invalidTask)
+                Debug.LogError(string.Format("No task found from the task list that has the name of {0}", targetText.text));
+
+            //Add the scale up event when the task if fulfilled
+            TaskList.Instance.FindTask(targetText.text).onTaskDone.AddListener(ScaleUpTransform);
+
+            //Setup is done
+            return true;
+        }
     }
     #endregion
 }
