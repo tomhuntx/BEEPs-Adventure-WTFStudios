@@ -28,16 +28,16 @@ public class TaskUGUI : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //Assume the transform attached to this has
-        //the required component.
-        if (targetText == null)
+		//Assume the transform attached to this has
+		//the required component.
+		if (targetText == null)
             targetText = this.GetComponent<TextMeshProUGUI>();
 
-        //Check for the 2nd time
-        //if the component do exist
-        if (targetText == null)
+		//Check for the 2nd time
+		//if the component do exist
+		if (targetText == null)
         {
             Debug.LogError("There is no Text Mesh Pro Text assigned to this script, " +
                            "please make sure the transform attached to this has one or " +
@@ -53,7 +53,7 @@ public class TaskUGUI : MonoBehaviour
             //Add the scale up event when the task if fulfilled
             TaskList.Instance.FindTask(targetText.text).onTaskDone.AddListener(ScaleUpTransform);
         }
-    }
+	}
 
     // Update is called once per frame
     void Update()
@@ -95,7 +95,7 @@ public class TaskUGUI : MonoBehaviour
 
     private Task GetAssignedTask()
     {
-        return TaskList.Instance.FindTask(targetText.text);
+		return TaskList.Instance.FindTask(targetText.text);
     }
     #endregion
 }

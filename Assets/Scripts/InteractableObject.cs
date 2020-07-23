@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Events;
 
 public class InteractableObject : MonoBehaviour
 {
@@ -24,7 +25,13 @@ public class InteractableObject : MonoBehaviour
     private Renderer highlighterRenderer;
     private bool isParented;
 
-	[Header("Object-Hover Tooltips")]
+	[Header("Hover Event")]
+	public UnityEvent onObjectHover;
+	public UnityEvent onObjectNotHover;
+
+	/*
+	[Header("Tooltips - Tutorial Only")]
+	public GameObject TutorialManager;
 	[Tooltip("Whether to display the base hover tooltip or not.")]
 	public bool displayTooltip = false;
 	[Tooltip("Display the tooltip repeatedly (false) or once (true).")]
@@ -37,6 +44,7 @@ public class InteractableObject : MonoBehaviour
 	public string secondTooltipMessage = "";
 	[Tooltip("Is the text finished displaying - leave false in the editor.")]
 	public bool tooltipFinished = false;
+	*/
 	#endregion
 
 	#region Accessors
@@ -58,12 +66,13 @@ public class InteractableObject : MonoBehaviour
             SetupHighlighter();
     }
 
-    #region Public Methods
-    /// <summary>
-    /// Changes the highlighter's color to invalid if set to true.
-    /// </summary>
-    /// <param name="isInvalid">If the highlighter's color will be set to invalid.</param>
-    public void SetHighlighterInvalid(bool isInvalid)
+	#region Public Methods
+
+	/// <summary>
+	/// Changes the highlighter's color to invalid if set to true.
+	/// </summary>
+	/// <param name="isInvalid">If the highlighter's color will be set to invalid.</param>
+	public void SetHighlighterInvalid(bool isInvalid)
     {
         if (isInvalid)
         {
@@ -75,14 +84,24 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Hide/shows the highlighter game object.
-    /// </summary>
-    /// <param name="state">Set to true to show, otherwise, hides it.</param>
-    public void ShowHighlighter(bool state)
+	/// <summary>
+	/// Hide/shows the highlighter game object.
+	/// </summary>
+	/// <param name="state">Set to true to show, otherwise, hides it.</param>
+	public void ShowHighlighter(bool state)
     {
-        highlighterInstance.SetActive(state);
-    }
+		highlighterInstance.SetActive(state);
+
+		// Hover Events - used with tutorial boxes
+		if (state)
+		{
+			onObjectHover.Invoke();
+		}
+		else
+		{
+			onObjectNotHover.Invoke();
+		}
+	}
 
 	/// <summary>
 	/// Gets highligher state. Used with tutorial tooltips.
@@ -102,8 +121,7 @@ public class InteractableObject : MonoBehaviour
         highlighterInstance.transform.localPosition = Vector3.zero;
         highlighterInstance.transform.localRotation = Quaternion.identity;
         highlighterRenderer.material.color = normalHighlightColor;
-
-    }
+	}
 
     /// <summary>
     /// Highlighter setup if the interactable object's model 
@@ -188,7 +206,8 @@ public class InteractableObject : MonoBehaviour
 
         //Hide highlighter
         highlighterInstance.SetActive(false);
-    }
+
+	}
 
     /// <summary>
     /// Highlighter setup if the highlighter's basis game object is 
@@ -276,7 +295,7 @@ public class InteractableObject : MonoBehaviour
 
         //Hide highlighter
         highlighterInstance.SetActive(false);
-    }
+	}
     #endregion
 
 

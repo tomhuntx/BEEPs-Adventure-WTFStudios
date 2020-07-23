@@ -65,9 +65,9 @@ public class Player : MonoBehaviour
     [Tooltip("The area around the player where box placement should be ignored.")]
     [SerializeField] private float boxPlacementDeadzone = 1f;
 
-	[Header("Tooltip Text Object")]
-	[Tooltip("The tooltip TMP(Text) GameObject (Leave blank if no tooltips are wanted).")]
-	[SerializeField] private GameObject tooltip;
+	[Header("Tutorial - Limit Controls")]
+	[Tooltip("If it is the tutorial - limits doesnt allow punch or throw if not placed boxes.")]
+	[SerializeField] private bool Tutorial = false;
 	#endregion
 
 	#region Hidden Variables
@@ -78,9 +78,9 @@ public class Player : MonoBehaviour
     private Rigidbody heavyBoxRB;
     private GrabbableObject grabbedObject;
     private Transform previousRaycastTarget;
-	// Tooltips
-	private TMP_Text tooltipText;
-	private bool holdingBox = false;
+	// Tutorial control limiting
+	private bool allowThrow = true;
+	private bool allowPunch = true;
 
 	/// <summary>
 	/// Checker if the raycast target is behind an object.
@@ -89,7 +89,6 @@ public class Player : MonoBehaviour
     #endregion
 
     public PlayerCharacterController PlayerMovementControls { get { return controller; } }
-
 
     private void Awake()
     {
@@ -103,12 +102,10 @@ public class Player : MonoBehaviour
         handAnim = hand.GetComponent<Animator>();
         heavyBoxRef = new GameObject();
 
-		// Set tooltip text
-		if (tooltip)
+		if (Tutorial)
 		{
-			tooltipText = tooltip.GetComponent<TMP_Text>();
-			tooltipText.text = "";
-			tooltip.SetActive(true);
+			allowThrow = false;
+			allowPunch = false;
 		}
 	}
 
@@ -161,13 +158,13 @@ public class Player : MonoBehaviour
                 }
 
                 if (Input.GetButtonDown("Place Object")) PlaceGrabbedObject();
-                if (Input.GetButtonDown("Throw Object")) ThrowGrabbedObject();
+                if (Input.GetButtonDown("Throw Object") && allowThrow) ThrowGrabbedObject();
                 //if (Input.GetButtonDown("Drop Object")) DropGrabbedObject();
             }
             else
             {
                 if (Input.GetButtonDown("Grab Object")) GrabObject();
-                if (Input.GetButtonDown("Punch"))
+                if (Input.GetButtonDown("Punch") && allowPunch)
                 {
                     PunchObject();
                     handAnim.SetBool("isPunching", true);
@@ -221,12 +218,6 @@ public class Player : MonoBehaviour
                     //when looking at an object with no interactable object component
                     previousInteractable.ShowHighlighter(false);
                 }
-
-				// Tooltip (Off)
-				if (tooltip)
-				{
-					tooltipText.text = "";
-				}
 			}
             else
             {
@@ -259,30 +250,6 @@ public class Player : MonoBehaviour
                     interactable.ShowHighlighter(true);
 				}
 
-				// Manage Tooltip
-				if (tooltip && interactable.GetHighlighter() && !interactable.tooltipFinished)
-				{ // Tooltip On
-					if (!holdingBox)
-					{
-						// Tooltip first message
-						if (interactable.displayTooltip)
-						{
-							tooltipText.text = interactable.tooltipMessage;
-						}
-						// Tooltip Second Message ONLY
-						else if (interactable.displayTooltip2)
-						{
-							tooltipText.text = "";
-						}
-					}
-				}
-				else
-				{ // Tooltip Off
-					if (tooltip)
-					{
-						tooltipText.text = "";
-					}
-				}
 			}
             previousRaycastTarget = hitInfo.transform;
 		}
@@ -296,14 +263,6 @@ public class Player : MonoBehaviour
 
             //Put null reference since there's not raycast hit
             previousRaycastTarget = null;
-		}
-		else
-		{
-			// Tooltip (Off)
-			if (tooltip)
-			{
-				tooltipText.text = "";
-			}
 		}
 	}
 
@@ -413,32 +372,6 @@ public class Player : MonoBehaviour
 			{
 				InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
 
-				// Tooltip (Off or change to second message)
-				if (tooltip && !interactable.tooltipFinished)
-				{
-					if (!interactable.displayTooltip2)
-					{
-						tooltipText.text = "";
-
-						// If display once has been selected - stops displaying tooltip
-						if (interactable.displayOnce)
-						{
-							interactable.tooltipFinished = true;
-						}
-					}
-					else if (interactable.displayTooltip2)
-					{
-						// Set text to second message
-						tooltipText.text = interactable.secondTooltipMessage;
-
-						// If display once has been selected - stops displaying tooltip
-						if (interactable.displayOnce)
-						{
-							interactable.tooltipFinished = true;
-						}
-					}
-				}
-				holdingBox = true;
 			}
 		}
 	}
@@ -454,12 +387,8 @@ public class Player : MonoBehaviour
         {
             grabbedObject = null;
 
-			// Tooltip (Off)
-			if (tooltip)
-			{
-				tooltipText.text = "";
-				holdingBox = false;
-			}
+			// Allow throwing
+			allowThrow = true;
 		}
     }
 
@@ -475,14 +404,10 @@ public class Player : MonoBehaviour
             grabbedObject.ThrowObject(raycastOrigin.forward * throwForce, ForceMode.Impulse);
             grabbedObject = null;
 
-			// Tooltip (Off)
-			if (tooltip)
-			{
-				tooltipText.text = "";
-				holdingBox = false;
-			}
+			// Allow punching
+			allowPunch = true;
 		}
-    }
+	}
 
     /// <summary>
     /// Currently unused and probably still has some bugs...

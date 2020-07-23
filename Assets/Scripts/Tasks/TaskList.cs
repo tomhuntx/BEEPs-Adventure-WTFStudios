@@ -37,14 +37,14 @@ public struct Task : System.IEquatable<Task>
     public UnityEvent onTaskReset;
 
     public static Task invalidTask = new Task(false);
-    #endregion
+	#endregion
 
 
-    #region Accessors
-    /// <summary>
-    /// The current number of contributions this task had accumulated.
-    /// </summary>
-    public float currentContributions { get; private set; }
+	#region Accessors
+	/// <summary>
+	/// The current number of contributions this task had accumulated.
+	/// </summary>
+	public float currentContributions { get; private set; }
 
     /// <summary>
     /// If this task is done or not.
@@ -388,8 +388,8 @@ public class TaskList : MonoBehaviour
     public static TaskList Instance;
     private string scriptID = "";
 
-    #region Variables
-    [SerializeField] private List<Task> tasks = new List<Task>();
+	#region Variables
+	[SerializeField] private List<Task> tasks = new List<Task>();
     private int numMainTasksDone;
     private int numOptionalTasksDone;
     private int numMainTasks;
@@ -398,9 +398,9 @@ public class TaskList : MonoBehaviour
     private bool isMainTasksDone = false;
     private bool isOptionalTasksDone = false;
     private bool isAllTasksDone = false;
+	private bool contribute = false;
 
-
-    [Header("Task List Events")]
+	[Header("Task List Events")]
     public UnityEvent onTaskContribute;
     public UnityEvent onMainTasksDone;
     public UnityEvent onOptionalTasksDone;
@@ -518,7 +518,7 @@ public class TaskList : MonoBehaviour
             isAllTasksDone = true;
         }        
     }
-
+	
     /// <summary>
     /// Add one contribution to the given task name.
     /// </summary>
@@ -528,11 +528,22 @@ public class TaskList : MonoBehaviour
         ContributeToTask(taskName, 1);
     }
 
-    /// <summary>
-    /// Add a new task into the task list.
-    /// </summary>
-    /// <param name="newTask">The task that's going to be added.</param>
-    public void AddTask(Task newTask)
+	/// <summary>
+	/// Activate a task after given seconds
+	/// </summary>
+	public IEnumerator ActivateAfter(string taskName, int seconds)
+	{
+		yield return new WaitForSeconds(seconds);
+
+		ContributeToTask(taskName, 1);
+	}
+
+
+	/// <summary>
+	/// Add a new task into the task list.
+	/// </summary>
+	/// <param name="newTask">The task that's going to be added.</param>
+	public void AddTask(Task newTask)
     {
         tasks.Add(newTask);
         UpdateTaskNamesList();
@@ -719,13 +730,12 @@ public class TaskList : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// Checks if the task do exist - displays a warning message if it doesn't.
-    /// </summary>
-    /// <param name="taskName">The name of the task.</param>
-    /// <returns>Returns true if the task exist, otherwise, returns false.</returns>
-    private bool TaskExist(string taskName)
+	/// <summary>
+	/// Checks if the task do exist - displays a warning message if it doesn't.
+	/// </summary>
+	/// <param name="taskName">The name of the task.</param>
+	/// <returns>Returns true if the task exist, otherwise, returns false.</returns>
+	private bool TaskExist(string taskName)
     {
         bool doExist = false;
         doExist = taskNames.Contains(taskName);

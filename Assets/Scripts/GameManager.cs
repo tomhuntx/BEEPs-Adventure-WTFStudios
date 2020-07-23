@@ -54,7 +54,11 @@ public class GameManager : MonoBehaviour
 		InteractableObject.highlighterMaterial = highlighterMaterial;
         InteractableObject.normalHighlightColor = normalHighlightColor;
         InteractableObject.invalidHighlightColor = invalidHighlightColor;
-    }
+
+		// Temp cursor lock
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+	}
 
     // Update is called once per frame
     void Update()
@@ -83,7 +87,6 @@ public class GameManager : MonoBehaviour
 		//	locked = true;
 		//}
 
-		/////// Would move to GUI MANAGER
 		//Store controls
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
@@ -102,7 +105,6 @@ public class GameManager : MonoBehaviour
 				controls.SetActive(false);
 			}
 		}
-		///////
 
         //Simple pause
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -291,4 +293,6 @@ public class GameManager : MonoBehaviour
 		mm.LoadScene(scene);
 		AudioListener.volume = 1f;
 	}
+
+
 }

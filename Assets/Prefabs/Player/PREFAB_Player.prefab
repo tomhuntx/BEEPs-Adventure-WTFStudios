@@ -124,7 +124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7808786021498455819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.491, z: 0.004}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 7808786023054035221}
@@ -252,8 +252,8 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 1.7
+  m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -307,12 +307,12 @@ MonoBehaviour:
   minCamAngleX: -90
   maxCamAngleX: 90
   thirdPersonFOV: 90
-  firstPersonFOV: 120
+  firstPersonFOV: 90
   lookSensitivity: 150
   camTransitionSpeed: 10
   camFlipDistanceDeadzone: 0.85
   camOffsets:
-  - localPosition: {x: -2.5, y: 1, z: -4}
+  - localPosition: {x: 0, y: 1, z: -4}
     localEulerAngles: {x: 15, y: 0, z: 0}
     localScale: {x: 1, y: 1, z: 1}
   - localPosition: {x: -4, y: 7, z: -7}
@@ -526,8 +526,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.4
+  m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &7808786021733205604
@@ -942,8 +942,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7808786022589867784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.5, z: 0.7}
+  m_LocalPosition: {x: 0, y: -0.129, z: -0.058}
+  m_LocalScale: {x: 0.45, y: 0.36, z: 0.45}
   m_Children: []
   m_Father: {fileID: 7808786021717997398}
   m_RootOrder: 0
@@ -1023,7 +1023,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7808786023054035216}
   m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: -2.5, y: 1, z: -4}
+  m_LocalPosition: {x: 0, y: 2, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7808786022298291873}

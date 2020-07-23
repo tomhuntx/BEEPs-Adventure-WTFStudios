@@ -35,8 +35,6 @@ public class UnityEventsHandler : TagFilterer
         StartCoroutine("UpdateLists");
     }
 
-
-
     #region Collider
     private void OnCollisionEnter(Collision collision)
     {
