@@ -114,7 +114,7 @@ public class GrabbableObject : DestructibleObject
         }
     }
 
-    public void HidePlacementHighlighter()
+	public void HidePlacementHighlighter()
     {
         interactionComponent.ShowHighlighter(false);
         GameObject highlighter = interactionComponent.HighlighterInstance;
@@ -169,5 +169,13 @@ public class GrabbableObject : DestructibleObject
         interactionComponent.ShowHighlighter(false);
         DetachForceAppliers();
     }
-    #endregion
+
+	/// <summary>
+	/// Used with explosive box throw to always destroy it on its next hit. 
+	/// </summary>
+	public void DestroyOnImpact()
+	{
+		GetComponent<DestructibleObject>().forceMagnitudeThreshold = 0.1f;
+	}
+	#endregion
 }

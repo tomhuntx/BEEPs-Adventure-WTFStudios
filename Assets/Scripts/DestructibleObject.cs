@@ -37,7 +37,7 @@ public class DestructibleObject : MonoBehaviour
     [SerializeField] private bool isInvincible = false;
 
     [Tooltip("How much force it can take before registering damage.")]
-    [SerializeField] private float forceMagnitudeThreshold = 1.5f;
+    public float forceMagnitudeThreshold = 1.5f;
 
     
     [Header("Other Properties")]
@@ -203,5 +203,5 @@ public class DestructibleObject : MonoBehaviour
             forceAppliers.Clear();
         }
     }
-    #endregion
+	#endregion
 }

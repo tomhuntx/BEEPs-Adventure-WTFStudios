@@ -7599,6 +7599,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1125127128519154204, guid: d453ba693677f1b449d11ddc190fdd02,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d453ba693677f1b449d11ddc190fdd02, type: 3}
 --- !u!114 &854566839 stripped
@@ -23722,12 +23727,12 @@ PrefabInstance:
     - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
       propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
@@ -23904,6 +23909,66 @@ PrefabInstance:
       propertyPath: targetGameObject
       value: 
       objectReference: {fileID: 615092478}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1842746026}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: GetAnnoyed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onObjectGrab.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 1842746026}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: GetAnnoyed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067308675716588377, guid: 138e791638c97d34d84dffecfe3d7ca5,
+        type: 3}
+      propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8552953871701447321, guid: 138e791638c97d34d84dffecfe3d7ca5,
         type: 3}
       propertyPath: robotHat
