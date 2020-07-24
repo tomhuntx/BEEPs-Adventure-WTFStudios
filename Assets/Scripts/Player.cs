@@ -107,6 +107,10 @@ public class Player : MonoBehaviour
 			allowThrow = false;
 			allowPunch = false;
 		}
+
+		// Temp cursor lock
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 
     void LateUpdate()
@@ -179,8 +183,9 @@ public class Player : MonoBehaviour
         }
 
 
-        //Debug raycast
-        if (Input.GetKeyDown(KeyCode.P)) EditorApplication.isPaused = true;
+        //Debug raycast - can't build with this!
+        //if (Input.GetKeyDown(KeyCode.P)) EditorApplication.isPaused = true;
+		
         //if (isRaycastHit)
         //{
         //    Debug.DrawLine(raycastOrigin.position, hitInfo.point, Color.green);
@@ -349,7 +354,10 @@ public class Player : MonoBehaviour
                         Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
                         parent.GetComponentInChildren<Robot>().GetPunched(raycastOrigin.forward);
                         break;
-                }
+					case "Generic Destructable":
+						target.ApplyDamage(punchDamage);
+						break;
+				}
             }
         }
     }

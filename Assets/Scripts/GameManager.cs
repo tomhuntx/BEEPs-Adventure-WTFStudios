@@ -54,10 +54,6 @@ public class GameManager : MonoBehaviour
 		InteractableObject.highlighterMaterial = highlighterMaterial;
         InteractableObject.normalHighlightColor = normalHighlightColor;
         InteractableObject.invalidHighlightColor = invalidHighlightColor;
-
-		// Temp cursor lock
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
 	}
 
     // Update is called once per frame

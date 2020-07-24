@@ -166,13 +166,17 @@ public class DestructibleObject : MonoBehaviour
                         break;
                     }
                 }
-            }
+			}
             else
             {
                 onObjectDestroy.Invoke();
                 Destroy(this.transform.gameObject);
             }
         }
+		else
+		{
+			Debug.Log("C");
+		}
     }
 
     /// <summary>
