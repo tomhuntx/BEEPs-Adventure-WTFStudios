@@ -47,7 +47,6 @@ public class ClawMachine : MonoBehaviour
                 {
                     if (grabbedObject.rigidbodyComponent.SweepTest(-clawHeadTRS.up, out RaycastHit sweepHit))
                     {
-                        print(sweepHit.distance);
                         if (sweepHit.distance <= 0.3f)
                         {
                             DropObject();
