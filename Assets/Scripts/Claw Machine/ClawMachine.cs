@@ -9,18 +9,20 @@ public class ClawMachine : MonoBehaviour
     [Header("Claw Rails")]
     [SerializeField] private Transform horizontalRail;
     [SerializeField] private Transform verticalRail;
-    
+
     [Header("Properties")]
     [SerializeField] private float moveSpeed = 2.5f;
 
     [Header("References")]
     [SerializeField] private Transform lightTRS;
     [SerializeField] private Transform clawHeadTRS;
+    [SerializeField] private Transform animatableTRS;
     [SerializeField] private UnityEventsHandler objectDetector;
-    [SerializeField] private Animator anim;
     private ClawGrabbable grabbedObject;
     private ClawGrabbable highlightedObject;
     private bool controlsEnabled = true;
+    private bool doGrab = false;
+    private bool doPlace = false;
 
     [Header("Events")]
     public UnityEvent onObjectGrab;
@@ -29,60 +31,99 @@ public class ClawMachine : MonoBehaviour
     #endregion
 
 
-
     private void FixedUpdate()
     {
-        if (controlsEnabled) MoveClaw();
-        UpdateClawRails();
+        if (controlsEnabled)
+        {
+            MoveClaw();
+            UpdateClawRails();
+        }
 
         if (grabbedObject != null)
         {
-            if (controlsEnabled && Input.GetButtonDown("Place Object"))
-                SetAnimation("moveDown");    
-
-            //Drop the object at the moment that it's near the floor
-            if (anim.GetBool("moveDown"))
+            if (controlsEnabled)
             {
-                if (Physics.Raycast(grabbedObject.transform.position, -clawHeadTRS.up, out RaycastHit hitInfo))
+                if (!doPlace &&
+                    Input.GetButtonDown("Place Object"))
                 {
-                    if (grabbedObject.rigidbodyComponent.SweepTest(-clawHeadTRS.up, out RaycastHit sweepHit))
-                    {
-                        if (sweepHit.distance <= 0.3f)
-                        {
-                            DropObject();
-                            SetAnimation("moveUp");
-                            objectDetector.gameObject.SetActive(true);
-                            onObjectPlace.Invoke();
-                        }
-                    }
+                    doPlace = true;
+                    controlsEnabled = false;
                 }
-            }
 
-            if (controlsEnabled && Input.GetButtonDown("Drop Object"))
-            {
-                grabbedObject.DetachFromParent();
-                grabbedObject = null;
-                SetAnimationsState(false);
-                objectDetector.gameObject.SetActive(true);
-                onObjectDrop.Invoke();
+                if (Input.GetButtonDown("Drop Object"))
+                {
+                    grabbedObject.DetachFromParent();
+                    grabbedObject = null;
+                    objectDetector.gameObject.SetActive(true);
+                }
             }
         }
         else
         {
-            ManageHighlighter();
+            if (!doGrab) ManageHighlighter();
+
             if (highlightedObject != null)
             {
-                if (controlsEnabled && Input.GetButtonDown("Grab Object"))
-                    SetAnimation("moveDown");
-
-                if (anim.GetBool("moveDown") && DetectObject())
+                if (!doGrab &&
+                    controlsEnabled &&
+                    Input.GetButtonDown("Grab Object") &&
+                    Physics.Raycast(animatableTRS.position, -animatableTRS.up, out RaycastHit rayHit))
                 {
-                    SetAnimation("moveUp");
-                    objectDetector.gameObject.SetActive(false);
-                    onObjectGrab.Invoke();
+                    controlsEnabled = false;
+                    doGrab = true;
                 }
-            }            
+            }
         }
+
+        
+        if (doGrab)
+        {
+            //Downwards motion
+            if (grabbedObject == null)
+            {
+                animatableTRS.position -= animatableTRS.up * moveSpeed * Time.deltaTime;
+                DetectObject();
+            }
+            //Upwards motion
+            else
+            {
+                animatableTRS.position += animatableTRS.up * moveSpeed * Time.deltaTime;
+
+                if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
+                {
+                    controlsEnabled = true;
+                    doGrab = false;
+                    animatableTRS.localPosition = Vector3.zero;
+                }
+            }
+        }
+        else if (doPlace)
+        {
+            //Downwards motion
+            if (grabbedObject != null)
+            {
+                animatableTRS.position -= animatableTRS.up * moveSpeed * Time.deltaTime;
+
+                if (grabbedObject.rigidbodyComponent.SweepTest(-clawHeadTRS.up, out RaycastHit sweepHit) &&
+                    sweepHit.distance <= 0.3f)
+                {
+                    DropObject();
+                }
+            }
+            //Upwards motion
+            else
+            {
+                animatableTRS.position += animatableTRS.up * moveSpeed * Time.deltaTime;
+
+                if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
+                {
+                    controlsEnabled = true;
+                    doPlace = false;
+                    animatableTRS.localPosition = Vector3.zero;
+                }
+            }
+        }
+
     }
 
 
@@ -90,7 +131,7 @@ public class ClawMachine : MonoBehaviour
     #region Private Methods
     private void MoveClaw()
     {
-        Vector3 movementVector = this.transform.right * Input.GetAxis("Horizontal") + 
+        Vector3 movementVector = this.transform.right * Input.GetAxis("Horizontal") +
                                  this.transform.forward * Input.GetAxis("Vertical");
         this.transform.Translate(movementVector * moveSpeed * Time.deltaTime);
     }
@@ -108,7 +149,10 @@ public class ClawMachine : MonoBehaviour
 
     private bool DetectObject()
     {
-        foreach(GameObject target in objectDetector.ObjectsInTrigger)
+        //Exit immediately if no objects in trigger
+        if (objectDetector.ObjectsInTrigger.Count < 1) return false;
+
+        foreach (GameObject target in objectDetector.ObjectsInTrigger)
         {
             if (target.GetComponentInChildren<ClawGrabbable>() != null)
             {
@@ -121,21 +165,27 @@ public class ClawMachine : MonoBehaviour
 
     private void GrabObject()
     {
+        //Clear out references when an object is grabbed
+        objectDetector.ObjectsInTrigger.Clear();
+
         highlightedObject.AttachToParent(clawHeadTRS);
         grabbedObject = highlightedObject;
         highlightedObject = null;
         lightTRS.gameObject.SetActive(false);
+        objectDetector.gameObject.SetActive(false);
     }
 
     private void DropObject()
     {
         grabbedObject.DetachFromParent();
         grabbedObject = null;
+        objectDetector.gameObject.SetActive(true);
     }
 
     private void ManageHighlighter()
     {
-        if (Physics.Raycast(clawHeadTRS.position, -clawHeadTRS.up, out RaycastHit hitInfo))
+        if (Physics.Raycast(clawHeadTRS.position, -clawHeadTRS.up, out RaycastHit hitInfo) &&
+            Physics.OverlapSphere(hitInfo.point, 0.5f).Length < 2)
         {
             highlightedObject = hitInfo.transform.GetComponent<ClawGrabbable>();
             lightTRS.gameObject.SetActive(highlightedObject != null);
@@ -144,59 +194,10 @@ public class ClawMachine : MonoBehaviour
                 lightTRS.position = hitInfo.transform.position + hitInfo.normal * 1.5f;
             }
         }
-    }
-
-    private void SetAnimationsState(bool state)
-    {
-        foreach (AnimatorControllerParameter parameter in anim.parameters)
+        else
         {
-            if (parameter.type == AnimatorControllerParameterType.Bool)
-                anim.SetBool(parameter.name, state);
+            highlightedObject = null;
         }
-    }
-    #endregion
-
-
-
-    #region Public Methods
-    public void SetAnimation(string boolName, bool state)
-    {
-        //set all to false first
-        SetAnimationsState(false);
-
-        //set true to target animation
-        anim.SetBool(boolName, state);
-    }
-
-    public void SetAnimation(string boolName)
-    {
-        SetAnimation(boolName, true);
-    }
-    #endregion
-
-    
-
-
-    //Do not call these methods and is solely used by animations only!
-    #region Animation Trigger Events
-    public void OnClawDownMotionEnter()
-    {
-        controlsEnabled = false;
-    }
-
-    public void OnClawDownMotionExit()
-    {
-
-    }
-
-    public void OnClawUpMotionEnter()
-    {
-
-    }
-
-    public void OnClawUpMotionExit()
-    {
-        controlsEnabled = true;        
     }
     #endregion
 }
