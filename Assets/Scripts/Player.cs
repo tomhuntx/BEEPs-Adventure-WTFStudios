@@ -375,14 +375,14 @@ public class Player : MonoBehaviour
             if (controller.IsFirstPerson) objectParent = firstPersonObjectOffset;
             grabbedObject.GrabObject(objectParent);
 
-			// Tooltips on interactable objects
-			if (hitInfo.transform.GetComponent<InteractableObject>() != null)
-			{
-				InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
-
-			}
-		}
-	}
+            // Tooltips on interactable objects            
+            //if (hitInfo.transform.GetComponent<InteractableObject>() != null)
+            //{
+            //    InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
+            //}
+            //use grabbedObject.interactionComponent instead...
+        }
+    }
 
     /// <summary>
     /// Places object only when placement is valid.

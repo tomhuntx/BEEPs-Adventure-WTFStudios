@@ -6,6 +6,12 @@ using UnityEngine.Events;
 public class UnityEventsHandler : TagFilterer
 {
     #region Exposed Variables
+    [Header("Unity Events Handler Options")]
+    [Tooltip("Tick this to accept all objects that comes in " +
+        "contact with the collider attached along with this component." +
+        " [IGNORES TAG FILTERING]")]
+    [SerializeField] private bool acceptAll = false;
+    
     [Header("Events")]
     public UnityEvent onCollisionEnter;
     public UnityEvent onCollisionStay;
@@ -38,7 +44,7 @@ public class UnityEventsHandler : TagFilterer
     #region Collider
     private void OnCollisionEnter(Collision collision)
     {
-        if (!DoIgnore(collision.transform.tag))
+        if (!DoIgnore(collision.transform.tag) || acceptAll)
         {
             onCollisionEnter.Invoke();
 
@@ -49,12 +55,14 @@ public class UnityEventsHandler : TagFilterer
 
     private void OnCollisionStay(Collision collision)
     {
-        if (!DoIgnore(collision.transform.tag)) onCollisionStay.Invoke();
+        if (!DoIgnore(collision.transform.tag) || acceptAll) 
+            onCollisionStay.Invoke();
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (!DoIgnore(collision.transform.tag)) onCollisionExit.Invoke();
+        if (!DoIgnore(collision.transform.tag) || acceptAll) 
+            onCollisionExit.Invoke();
 
         if (objectsOnCollider.Contains(collision.gameObject)) 
             objectsOnCollider.Remove(collision.gameObject);
@@ -66,7 +74,7 @@ public class UnityEventsHandler : TagFilterer
     #region Trigger
     private void OnTriggerEnter(Collider other)
     {
-        if (!DoIgnore(other.tag))
+        if (!DoIgnore(other.tag) || acceptAll)
         {
             onTriggerEnter.Invoke();
 
@@ -77,12 +85,14 @@ public class UnityEventsHandler : TagFilterer
 
     private void OnTriggerStay(Collider other)
     {
-        if (!DoIgnore(other.tag)) onTriggerStay.Invoke();
+        if (!DoIgnore(other.tag) || acceptAll) 
+            onTriggerStay.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!DoIgnore(other.tag)) onTriggerExit.Invoke();
+        if (!DoIgnore(other.tag) || acceptAll) 
+            onTriggerExit.Invoke();
 
         if (objectsInTrigger.Contains(other.gameObject))
             objectsInTrigger.Remove(other.gameObject);

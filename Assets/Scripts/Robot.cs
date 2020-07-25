@@ -162,18 +162,6 @@ public class Robot : MonoBehaviour
 
 
     #region Private Methods
-	/// <summary>
-	/// Sets the body, face, and screen animator's boolean name to the given value.
-	/// </summary>
-	/// <param name="booleanName">The name of the boolean variable in the animator.</param>
-	/// <param name="state">The state of the animation.</param>
-	private void SetAnimationState(string booleanName, bool state)
-    {
-		anim.SetBool(booleanName, state);
-		animFace.SetBool(booleanName, state);
-		animScreen.SetBool(booleanName, state);
-	}
-
 	private void ResetLookTimer(float time, UnityEvent invokable = null)
 	{
 		lookTimer = time + Time.time;
@@ -244,5 +232,17 @@ public class Robot : MonoBehaviour
 
 		onGetAnnoyed.Invoke();
 	}
-    #endregion
+
+	/// <summary>
+	/// Sets the body, face, and screen animator's boolean name to the given value.
+	/// </summary>
+	/// <param name="booleanName">The name of the boolean variable in the animator.</param>
+	/// <param name="state">The state of the animation.</param>
+	public void SetAnimationState(string booleanName, bool state)
+	{
+		anim.SetBool(booleanName, state);
+		animFace.SetBool(booleanName, state);
+		animScreen.SetBool(booleanName, state);
+	}
+	#endregion
 }
