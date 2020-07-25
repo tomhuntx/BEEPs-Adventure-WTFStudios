@@ -61,6 +61,7 @@ public class ClawMachine2 : MonoBehaviour
                 {
                     grabbedObject.DetachFromParent();
                     grabbedObject = null;
+                    objectDetector.gameObject.SetActive(true);
                 }
             }
         }
@@ -159,6 +160,9 @@ public class ClawMachine2 : MonoBehaviour
 
     private bool DetectObject()
     {
+        //Exit immediately if no objects in trigger
+        if (objectDetector.ObjectsInTrigger.Count < 1) return false;
+
         foreach (GameObject target in objectDetector.ObjectsInTrigger)
         {
             if (target.GetComponentInChildren<ClawGrabbable>() != null)
@@ -172,6 +176,9 @@ public class ClawMachine2 : MonoBehaviour
 
     private void GrabObject()
     {
+        //Clear out references when an object is grabbed
+        objectDetector.ObjectsInTrigger.Clear();
+
         highlightedObject.AttachToParent(clawHeadTRS);
         grabbedObject = highlightedObject;
         highlightedObject = null;
