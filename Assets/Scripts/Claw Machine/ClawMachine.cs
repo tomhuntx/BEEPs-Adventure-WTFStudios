@@ -13,6 +13,11 @@ public class ClawMachine : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private float moveSpeed = 2.5f;
 
+    [Tooltip("The size of the detection area from the grabbable object's center. " +
+             "Only accounts for x and z axes.")]
+    [SerializeField] private float targetDetectionThreshold = 0.3f;
+
+
     [Header("References")]
     [SerializeField] private Transform lightTRS;
     [SerializeField] private Transform clawHeadTRS;
@@ -168,9 +173,16 @@ public class ClawMachine : MonoBehaviour
         //Clear out references when an object is grabbed
         objectDetector.ObjectsInTrigger.Clear();
 
+        //Attach to this transform and adjust references
         highlightedObject.AttachToParent(clawHeadTRS);
         grabbedObject = highlightedObject;
         highlightedObject = null;
+
+        //Snap grabbed object to the claw head's center
+        grabbedObject.transform.localPosition = 
+            new Vector3(0, grabbedObject.transform.localPosition.y, 0);
+
+        //Hide detector and highlighter
         lightTRS.gameObject.SetActive(false);
         objectDetector.gameObject.SetActive(false);
     }
@@ -187,6 +199,18 @@ public class ClawMachine : MonoBehaviour
         if (Physics.Raycast(clawHeadTRS.position, -clawHeadTRS.up, out RaycastHit hitInfo) &&
             Physics.OverlapSphere(hitInfo.point, 0.5f).Length < 2)
         {
+            Vector3 targetPos2D = hitInfo.transform.position;
+            targetPos2D.y = 0;
+
+            Vector3 thisPos2D = this.transform.position;
+            thisPos2D.y = 0;
+
+            if (Vector3.Distance(targetPos2D, thisPos2D) > targetDetectionThreshold)
+            {
+                lightTRS.gameObject.SetActive(false);
+                return;
+            }
+
             highlightedObject = hitInfo.transform.GetComponent<ClawGrabbable>();
             lightTRS.gameObject.SetActive(highlightedObject != null);
             if (lightTRS.gameObject.activeSelf)
