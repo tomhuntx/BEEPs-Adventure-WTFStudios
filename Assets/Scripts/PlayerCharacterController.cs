@@ -272,7 +272,8 @@ public class PlayerCharacterController : MonoBehaviour
     #region Private Methods
     private void ManageCamera()
     {
-        if (Input.GetButtonDown("Cycle Camera"))
+        if (camOffsets.Length > 1 && 
+            Input.GetButtonDown("Cycle Camera"))
         {
             currentCamOffsetIndex++;
             if (currentCamOffsetIndex >= camOffsets.Length) currentCamOffsetIndex = 0;
@@ -314,7 +315,8 @@ public class PlayerCharacterController : MonoBehaviour
         if (!isFirstPerson)
         {
             //Switch camera sides manually
-            if (Input.GetButtonDown("Flip Camera"))
+            if (camOffsets[currentCamOffsetIndex].localPosition.x != 0 && 
+                Input.GetButtonDown("Flip Camera"))
             {
                 doTransition = true;
                 isAutoFlipDone = !isAutoFlipDone;
