@@ -21,7 +21,7 @@ public struct ModelStates
 }
 
 //[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(SpawnerRemote))]
+//[RequireComponent(typeof(SpawnerRemote))]
 public class DestructibleObject : MonoBehaviour
 {
     #region Exposed Variables
