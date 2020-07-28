@@ -15,7 +15,7 @@ public class TutorialManager : MonoBehaviour
 	public GameObject placeBoxTooltip;
 	public GameObject throwBoxTooltip;
 	public GameObject punchTooltip;
-	public GameObject currentTooltip;
+	private GameObject currentTooltip;
 
 	// Start is called before the first frame update
 	void Start()
@@ -23,6 +23,7 @@ public class TutorialManager : MonoBehaviour
 		currentTooltip = grabBoxTooltip;
 	}
 
+	/*
     // Update is called once per frame
     void Update()
     {
@@ -31,7 +32,7 @@ public class TutorialManager : MonoBehaviour
 			// ready to leave level
 
 		}
-    }
+    }*/
 
 	private void ShowTooltip()
 	{
