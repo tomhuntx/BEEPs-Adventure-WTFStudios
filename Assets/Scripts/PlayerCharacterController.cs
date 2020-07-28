@@ -182,7 +182,6 @@ public class PlayerCharacterController : MonoBehaviour
     #endregion
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -195,7 +194,7 @@ public class PlayerCharacterController : MonoBehaviour
         TransformPreset currentPreset = camOffsets[currentCamOffsetIndex];
         currentCamPos = currentPreset.localPosition;
 
-        camFlipDistanceTreshold = currentPreset.localPosition.magnitude * camFlipDistanceDeadzone;
+		camFlipDistanceTreshold = currentPreset.localPosition.magnitude * camFlipDistanceDeadzone;
         
         //First person anti clip camera setup
         fpAntiClipCam = characterCam.transform.GetChild(0).GetComponent<Camera>();
@@ -207,7 +206,7 @@ public class PlayerCharacterController : MonoBehaviour
             newCam.transform.parent = characterCam.transform;
             newCam.transform.localPosition = Vector3.zero;
             fpAntiClipCam = newCam.AddComponent<Camera>();
-        }
+		}
 
         if (isFirstPerson) 
             UpdateCamFOV(firstPersonFOV);
@@ -216,18 +215,18 @@ public class PlayerCharacterController : MonoBehaviour
 
         originalMinCamAngleX = minCamAngleX;
         originalMaxCamAngleX = maxCamAngleX;
-    }
+	}
 
     // Update is called once per frame
     void Update()
     {
-        //ManageCamera();
-        LookRotation();
+		//ManageCamera();
+		LookRotation();
         Move();
         GetMotionDirection();
-        ApplyPhysics();
+		ApplyPhysics();
 
-        if (controller.isGrounded)
+		if (controller.isGrounded)
         {
             if (!doMoveSpeedOverride)
             {
@@ -245,7 +244,7 @@ public class PlayerCharacterController : MonoBehaviour
     private void LateUpdate()
     {
         ManageCamera();
-    }
+	}
 
     /// <summary>
 	/// Push the rigidbodies of all boxes that the player touches
@@ -330,13 +329,16 @@ public class PlayerCharacterController : MonoBehaviour
                 //Smoothen camera transitions in third person
                 if (Vector3.Distance(antiCamClip.cameraOffset, currentCamPos) > 0.001)
                 {
-                    antiCamClip.cameraOffset = Vector3.Lerp(antiCamClip.cameraOffset, currentCamPos, camTransitionSpeed * Time.deltaTime);
+					Debug.Log(antiCamClip.cameraOffset);
+					Debug.Log(currentCamPos);
+
+					antiCamClip.cameraOffset = Vector3.Lerp(antiCamClip.cameraOffset, currentCamPos, camTransitionSpeed * Time.deltaTime);
                 }
                 //Jump camera directly to firstperson
                 else
                 {
                     doTransition = false;
-                    antiCamClip.cameraOffset = currentCamPos;
+					antiCamClip.cameraOffset = currentCamPos;
                 }
             }
             //Manage camera side switching

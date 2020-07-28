@@ -308,18 +308,12 @@ MonoBehaviour:
   maxCamAngleX: 90
   thirdPersonFOV: 90
   firstPersonFOV: 90
-  lookSensitivity: 150
-  camTransitionSpeed: 10
-  camFlipDistanceDeadzone: 0.85
+  lookSensitivity: 120
+  camTransitionSpeed: 12
+  camFlipDistanceDeadzone: 5
   camOffsets:
   - localPosition: {x: 0, y: 1, z: -4}
     localEulerAngles: {x: 15, y: 0, z: 0}
-    localScale: {x: 1, y: 1, z: 1}
-  - localPosition: {x: -4, y: 7, z: -7}
-    localEulerAngles: {x: 30, y: 0, z: 0}
-    localScale: {x: 1, y: 1, z: 1}
-  - localPosition: {x: 0, y: 0.3, z: 0.5}
-    localEulerAngles: {x: 0, y: 0, z: 0}
     localScale: {x: 1, y: 1, z: 1}
   firstPersonGameObjects:
   - {fileID: 2269687311125216939}
@@ -330,7 +324,7 @@ MonoBehaviour:
   mass: 1
   walkSpeed: 5
   sprintSpeed: 7
-  maxAirSpeed: 10
+  maxAirSpeed: 6
   airSpeedMagnitude: 1
   bumpForce: 2
   maxExpForce: 40
@@ -350,9 +344,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipMoveTime: 0.05
   returnTime: 0.4
-  sphereCastRadius: 0.1
+  sphereCastRadius: 0.2
   visualiseInEditor: 0
-  closestDistance: 0.5
+  closestDistance: 1
   dontClipTag: Player
 --- !u!114 &7808786021717997403
 MonoBehaviour:
@@ -642,6 +636,7 @@ MonoBehaviour:
   - Box
   - Heavy Box
   - Outline
+  acceptAll: 0
   onCollisionEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -1055,7 +1050,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1274,6 +1269,7 @@ MonoBehaviour:
   - Task
   - HardHat
   - Outline
+  acceptAll: 0
   onCollisionEnter:
     m_PersistentCalls:
       m_Calls: []
