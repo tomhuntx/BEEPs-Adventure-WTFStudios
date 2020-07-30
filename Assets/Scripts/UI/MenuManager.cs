@@ -28,8 +28,6 @@ public class MenuManager : MonoBehaviour
 			Debug.Log("Creating new file...");
 			Data data = DataSaver.NewData();
 		}
-
-		Debug.Log("Player is currently up to level " + (levelProgress - 1));
 	}
 
 	public void Load()

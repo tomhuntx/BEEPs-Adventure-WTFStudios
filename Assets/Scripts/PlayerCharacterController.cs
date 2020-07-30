@@ -329,9 +329,6 @@ public class PlayerCharacterController : MonoBehaviour
                 //Smoothen camera transitions in third person
                 if (Vector3.Distance(antiCamClip.cameraOffset, currentCamPos) > 0.001)
                 {
-					Debug.Log(antiCamClip.cameraOffset);
-					Debug.Log(currentCamPos);
-
 					antiCamClip.cameraOffset = Vector3.Lerp(antiCamClip.cameraOffset, currentCamPos, camTransitionSpeed * Time.deltaTime);
                 }
                 //Jump camera directly to firstperson

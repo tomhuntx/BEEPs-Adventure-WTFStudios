@@ -215,7 +215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -404,6 +404,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -520,58 +544,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
---- !u!1 &10492272 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1120484314}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &10492273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1120484314}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &10492274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 10492272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &33980342 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 905098362}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &33980343 stripped
 Transform:
@@ -579,41 +556,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 905098362}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &33980344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 33980342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &50495608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -707,7 +649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -896,6 +838,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -1156,53 +1122,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1969476169269212006, guid: 485511ec47b8aa04a945e9a40eeca143, type: 3}
---- !u!1 &53591609 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1450487478}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &53591610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1450487478}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &53591611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53591609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &55998540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,7 +1387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -1651,6 +1576,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -1860,7 +1809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -2049,6 +1998,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -3440,7 +3413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -3629,6 +3602,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -4223,53 +4220,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1773344537}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &327887273 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 70916041}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &327887274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 70916041}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &327887275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 327887273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &355031342
 GameObject:
   m_ObjectHideFlags: 0
@@ -5358,7 +5314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -5547,6 +5503,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -5977,53 +5957,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1758204947}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &546253258 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1517550333}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &546253259 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1517550333}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &546253260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 546253258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &579254101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6117,7 +6056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -6306,6 +6245,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -6705,53 +6668,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &626441150 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 398212}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &626441151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 398212}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &626441152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626441150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &630361831
 GameObject:
   m_ObjectHideFlags: 0
@@ -6900,53 +6822,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653041357}
   m_CullTransparentMesh: 0
---- !u!1 &657808325 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 85631757}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &657808326 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 85631757}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &657808327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657808325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &663021082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7040,7 +6921,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -7229,6 +7110,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -7545,7 +7450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -7734,6 +7639,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -7944,53 +7873,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 465f9f2c04b44284785d0424681b1f92, type: 3}
---- !u!1 &729351289 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1964771215}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &729351290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1964771215}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &729351291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729351289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &745500549 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9145112949992629918, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
@@ -8409,7 +8297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -8598,6 +8486,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -9279,53 +9191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfce45d3b234f534eb971613aec0b5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &896989638 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 663021082}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &896989639 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 663021082}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &896989640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896989638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &905098362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9419,7 +9290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -9608,6 +9479,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -10152,7 +10047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -10342,6 +10237,30 @@ PrefabInstance:
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
       objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
+      objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -10457,53 +10376,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
---- !u!1 &1008943460 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1780956574}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1008943461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1780956574}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1008943462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008943460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &1028259420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10752,7 +10630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -10941,6 +10819,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -11057,53 +10959,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
---- !u!1 &1065592185 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1557850268}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1065592186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1557850268}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1065592187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1065592185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1097479688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7894794172968599609, guid: 7743c348cd4d2a342946aab46ba253b9,
@@ -11209,7 +11070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -11398,6 +11259,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -11607,7 +11492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -11796,6 +11681,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -12324,53 +12233,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136920719}
   m_CullTransparentMesh: 0
---- !u!1 &1163935938 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1042015461}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1163935939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1042015461}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1163935940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163935938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1206316252
 GameObject:
   m_ObjectHideFlags: 0
@@ -12569,58 +12437,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc0601f19b6366a48a2ac82ddbb8eaf6, type: 3}
---- !u!1 &1218114869 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1657228930}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1218114870 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1657228930}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1218114871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1218114869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &1252301040 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1114434253}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1252301041 stripped
 Transform:
@@ -12628,41 +12449,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1114434253}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1252301042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1252301040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &1265833244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12756,7 +12542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -12945,6 +12731,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -13137,58 +12947,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275688101}
   m_CullTransparentMesh: 0
---- !u!1 &1280598767 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 50495608}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1280598768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 50495608}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1280598769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1280598767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &1293880952 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 762002048}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1293880953 stripped
 Transform:
@@ -13196,41 +12959,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 762002048}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1293880954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1293880952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1309511806
 GameObject:
   m_ObjectHideFlags: 0
@@ -13625,58 +13353,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361000057}
   m_CullTransparentMesh: 0
---- !u!1 &1391348717 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1567231089}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1391348718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1567231089}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1391348719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391348717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &1413794904 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 703866162}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1413794905 stripped
 Transform:
@@ -13684,88 +13365,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 703866162}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1413794906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1413794904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &1436323625 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1265833244}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1436323626 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1265833244}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1436323627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436323625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &1450487478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13859,7 +13464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -14049,6 +13654,30 @@ PrefabInstance:
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
       objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
+      objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -14164,53 +13793,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
---- !u!1 &1466465013 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1633856736}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1466465014 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1633856736}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1466465015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466465013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1495124108
 GameObject:
   m_ObjectHideFlags: 0
@@ -14586,7 +14174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -14775,6 +14363,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -15152,7 +14764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -15341,6 +14953,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -15550,7 +15186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -15739,6 +15375,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -16188,7 +15848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -16377,6 +16037,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -16679,7 +16363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -16868,6 +16552,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -16984,53 +16692,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
---- !u!1 &1653109258 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 988820527}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1653109259 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 988820527}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1653109260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1653109258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &1657228930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17124,7 +16791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -17314,6 +16981,30 @@ PrefabInstance:
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
       objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
+      objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -17429,53 +17120,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
---- !u!1 &1657641580 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 242700467}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1657641581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 242700467}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1657641582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657641580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1665868732
 GameObject:
   m_ObjectHideFlags: 0
@@ -17808,53 +17458,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1675741059}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1689337791 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 531718673}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1689337792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 531718673}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1689337793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689337791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1715296944 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4354720809523929118, guid: 9a70e50a312647048b60c68477ad246b,
@@ -18178,7 +17787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -18367,6 +17976,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -18985,53 +18618,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1867756137 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 579254101}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1867756138 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 579254101}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1867756139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867756137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &1883928030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20181,7 +19773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectDestroy.m_PersistentCalls.m_Calls.Array.size
@@ -20370,6 +19962,30 @@ PrefabInstance:
     - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: "\u2022 Punch a box"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1824190471}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTaskProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637289786, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Box Collide
       objectReference: {fileID: 0}
     - target: {fileID: 1637289787, guid: 79fa45ace439c374ba2ba37c5135c1d1, type: 3}
       propertyPath: onObjectHover.m_PersistentCalls.m_Calls.Array.size
@@ -21169,53 +20785,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!1 &2067000319 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2229526011650007082, guid: 79fa45ace439c374ba2ba37c5135c1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1649854497}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2067000320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1649854497}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2067000321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067000319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3035fd48851239a448584075fac9b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableIgnore: 0
-  ignoreTags:
-  - Box
-  - Heavy Box
-  acceptAll: 0
-  onCollisionEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2069299812
 GameObject:
   m_ObjectHideFlags: 0

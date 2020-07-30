@@ -77,7 +77,7 @@ public class DataSaver : MonoBehaviour
 			BinaryFormatter format = new BinaryFormatter();
 			FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
 
-			Data data = format.Deserialize(stream) as Data;
+			Data data = new Data();
 			data.SetLevel(0);
 			//...
 
