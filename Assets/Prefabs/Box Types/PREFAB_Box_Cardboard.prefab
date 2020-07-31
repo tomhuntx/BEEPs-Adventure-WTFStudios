@@ -69,6 +69,7 @@ MonoBehaviour:
   enableIgnore: 1
   ignoreTags:
   - Conveyor Belt
+  acceptAll: 0
   onCollisionEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -100,6 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlighterBasis: {fileID: 0}
+  onObjectHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectNotHover:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &2229526011650007078
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -107,7 +114,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2229526011650007082}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: dc550a3ab7a969342b38de53129723b6, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

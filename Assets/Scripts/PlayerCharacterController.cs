@@ -262,7 +262,10 @@ public class PlayerCharacterController : MonoBehaviour
             otherRB.tag == "Heavy Box")
         {
             // Bump
-            otherRB.velocity = transform.forward * bumpForce;
+            //otherRB.velocity = transform.forward * bumpForce;
+            Vector3 moveVelocity = velocity;
+            moveVelocity.y = 0;
+            otherRB.velocity = moveVelocity * bumpForce;
         }
     }
 
