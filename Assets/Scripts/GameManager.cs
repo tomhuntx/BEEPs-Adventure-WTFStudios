@@ -45,9 +45,19 @@ public class GameManager : MonoBehaviour
 	RectTransform rect;
 	//
 
+	[Header("Settings")]
+	[SerializeField] private SettingsMenu settingsMenuComponent;
+	[SerializeField] private WindowManager windowManagerComponent;
+	public SettingsMenu SettingsMenuComponent { get { return settingsMenuComponent; } }
+	public WindowManager WindowManagerComponent { get { return windowManagerComponent; } }
+
+
+
 	private void Awake()
     {
-        Instance = this;
+		settingsMenuComponent.LoadPrefsData();
+
+		Instance = this;
 		mm = FindObjectOfType<MenuManager>();
 
 		//Highlighter setup
@@ -113,6 +123,7 @@ public class GameManager : MonoBehaviour
                     Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
                     pauseMenu.SetActive(false);
+					settingsMenuComponent.ToggleMute(false);
                 }
                 else
                 {
@@ -120,6 +131,7 @@ public class GameManager : MonoBehaviour
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                     pauseMenu.SetActive(true);
+					settingsMenuComponent.ToggleMute(true);
                 }
             }
             else

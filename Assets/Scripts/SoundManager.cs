@@ -7,6 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
+    /*
     [Header("Audio Settings")]
     [SerializeField] private AudioMixer masterMixer;
     [Range(-80, 20)] [SerializeField] private float masterVol;
@@ -21,14 +22,16 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private SliderInitializer soundEffects;
     private Slider soundEffectsSlider;
-
-	// Whether or not level has tasks (testing or tutorial)
-	[SerializeField] private bool hasTasks = true;
+    
 
 	private float originalMasterLevels;
     private float originalMusicLevels;
     private float originalSFXLevels;
     private float compressorDiffThreshold;
+    */
+
+    // Whether or not level has tasks (testing or tutorial)
+    [SerializeField] private bool hasTasks = true;
 
     [Header("Main Game Song Loop")]
     [Tooltip("Please arrange according to intensity where 0 is to least intense.")]
@@ -43,6 +46,7 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         //Setup levels
         masterMixer.GetFloat("Master_Levels", out originalMasterLevels);
         masterMixer.GetFloat("Music_Levels", out originalMusicLevels);
@@ -63,6 +67,7 @@ public class SoundManager : MonoBehaviour
 
         soundEffects.Initialize(-80, 20, soundEffectsVol, "Sound Effects");
         soundEffectsSlider = soundEffects.AssignedSlider;
+        */
 
         //Look for tasklist instance
         audioSource = this.GetComponent<AudioSource>();
@@ -72,7 +77,7 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ManageGameAudio();
+        //ManageGameAudio();
 		if (hasTasks)
 		{
 			ManageMainGameMusic();
@@ -108,6 +113,7 @@ public class SoundManager : MonoBehaviour
         if (!audioSource.isPlaying) audioSource.Play();
     }
 
+    /*
     private void ManageGameAudio()
     {
         //only adjust volume when paused;
@@ -139,6 +145,7 @@ public class SoundManager : MonoBehaviour
         musicVol = originalMusicLevels;
         soundEffectsVol = originalSFXLevels;
     }
+    */
 
     public void FadeMusic(float time)
     {

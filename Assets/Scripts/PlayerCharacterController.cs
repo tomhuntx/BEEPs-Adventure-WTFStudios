@@ -99,12 +99,12 @@ public class PlayerCharacterController : MonoBehaviour
     /// Camera responsible for preventing clipping objects when in first person.
     /// </summary>
     private Camera fpAntiClipCam;
-    [Range(-90, 0)][SerializeField] private float minCamAngleX = -90;
+    [Range(-90, 0)] [SerializeField] private float minCamAngleX = -90;
     public float originalMinCamAngleX { get; private set; }
     [Range(0, 90)] [SerializeField] private float maxCamAngleX = 90;
     public float originalMaxCamAngleX { get; private set; }
-    [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)][SerializeField] private float thirdPersonFOV = 60.0f;
-    [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)][SerializeField] private float firstPersonFOV = 90.0f;
+    [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)] [SerializeField] private float thirdPersonFOV = 60.0f;
+    [Range(GameManager.MIN_CAM_FOV, GameManager.MAX_CAM_FOV)] [SerializeField] private float firstPersonFOV = 90.0f;
     [SerializeField] private float lookSensitivity = 150.0f;
     [SerializeField] private float camTransitionSpeed = 5.0f;
     [Range(0.1f, 5.0f)] [SerializeField] private float camFlipDistanceDeadzone = 1.5f;
@@ -164,6 +164,7 @@ public class PlayerCharacterController : MonoBehaviour
     private bool doLookSpeedOverride = false;
     private bool jumpingEnabled = true;
     private float currentLookSpeed;
+    public float lookSensitivityMultiplier { private get; set; }
     #endregion
 
 
@@ -215,6 +216,8 @@ public class PlayerCharacterController : MonoBehaviour
 
         originalMinCamAngleX = minCamAngleX;
         originalMaxCamAngleX = maxCamAngleX;
+
+        lookSensitivityMultiplier = GameManager.Instance.SettingsMenuComponent.CurrentMouseSensitivity;
 	}
 
     // Update is called once per frame
@@ -394,8 +397,8 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void LookRotation()
     {
-        mouseVector.x = Input.GetAxis("Mouse X") * lookSensitivity * Time.deltaTime;
-        mouseVector.y = Input.GetAxis("Mouse Y") * lookSensitivity * Time.deltaTime;
+        mouseVector.x = Input.GetAxis("Mouse X") * lookSensitivity * Time.deltaTime * lookSensitivityMultiplier;
+        mouseVector.y = Input.GetAxis("Mouse Y") * lookSensitivity * Time.deltaTime * lookSensitivityMultiplier;
 
         headRotX -= mouseVector.y;
         headRotX = Mathf.Clamp(headRotX, minCamAngleX, maxCamAngleX);
