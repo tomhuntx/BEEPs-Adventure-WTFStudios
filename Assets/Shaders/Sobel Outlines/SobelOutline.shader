@@ -65,6 +65,7 @@ Shader "PostProcessing/SobelOutline"
         float3 color = lerp(sceneColor, outlineColor, sobelOutline);
 
         return float4(color, 1.0);
+        
     }
     ENDHLSL
 

@@ -302,8 +302,8 @@ public class PlayerCharacterController : MonoBehaviour
                 if (isFirstPerson)
                 {
                     if (graphicFader.IsSequenceFinished)
-                            graphicFader.PlaySequence();
-                    
+                        graphicFader.PlaySequence();
+
                     antiCamClip.enabled = true;
                     isFirstPerson = false;
                     UpdateCamFOV(thirdPersonFOV);
