@@ -76,11 +76,13 @@ public class InteractableObject : MonoBehaviour
     {
         if (isInvalid)
         {
-            highlighterRenderer.material.color = invalidHighlightColor;
+            //highlighterRenderer.material.color = invalidHighlightColor;
+            highlighterRenderer.material.SetColor("_highlighter_color", invalidHighlightColor);
         }
         else
         {
-            highlighterRenderer.material.color = normalHighlightColor;
+            //highlighterRenderer.material.color = normalHighlightColor;
+            highlighterRenderer.material.SetColor("_highlighter_color", normalHighlightColor);
         }
     }
 
@@ -120,8 +122,10 @@ public class InteractableObject : MonoBehaviour
         highlighterInstance.transform.parent = this.transform;
         highlighterInstance.transform.localPosition = Vector3.zero;
         highlighterInstance.transform.localRotation = Quaternion.identity;
-        highlighterRenderer.material.color = normalHighlightColor;
-	}
+        highlighterInstance.transform.localScale = Vector3.one;
+        //highlighterRenderer.material.color = normalHighlightColor;
+        highlighterRenderer.material.SetColor("_highlighter_color", normalHighlightColor);
+    }
 
     /// <summary>
     /// Highlighter setup if the interactable object's model 
@@ -137,7 +141,7 @@ public class InteractableObject : MonoBehaviour
         highlighterInstance.transform.localRotation = Quaternion.identity;
         highlighterInstance.transform.localPosition = Vector3.zero;
         highlighterInstance.transform.localScale = Vector3.one;
-        highlighterInstance.transform.localScale += HIGHLIGHTER_OFFSET_SIZE; //Prevent z-fighting 
+        //highlighterInstance.transform.localScale += HIGHLIGHTER_OFFSET_SIZE; //Prevent z-fighting 
 
 
         //Setup rendering
@@ -220,7 +224,7 @@ public class InteractableObject : MonoBehaviour
         highlighterInstance.transform.parent = highlighterBasis.transform;
         highlighterInstance.transform.localRotation = Quaternion.identity;
         highlighterInstance.transform.localPosition = Vector3.zero;
-        highlighterInstance.transform.localScale += HIGHLIGHTER_OFFSET_SIZE; //Prevent z-fighting        
+        //highlighterInstance.transform.localScale += HIGHLIGHTER_OFFSET_SIZE; //Prevent z-fighting        
 
         //Setup rendering
         highlighterRenderer = highlighterInstance.GetComponent<Renderer>();
