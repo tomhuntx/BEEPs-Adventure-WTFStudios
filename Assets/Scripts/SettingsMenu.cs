@@ -86,13 +86,13 @@ public class SettingsMenu : MonoBehaviour
 
     public void LoadPrefsData()
     {
-        LoadMouseSensitivity();
-        LoadAudioLevels(masterMixer);        
-
         masterVol = DEFAULT_MASTER_LEVEL;
         musicVol = DEFAULT_MUSIC_LEVEL;
         soundEffectsVol = DEFAULT_SFX_LEVEL;
         compressorDiffThreshold = DEFAULT_SFX_COMP_LEVEL;
+
+        LoadMouseSensitivity();
+        LoadAudioLevels(masterMixer);
     }
 
     public static void LoadAudioLevels(AudioMixer mixer)

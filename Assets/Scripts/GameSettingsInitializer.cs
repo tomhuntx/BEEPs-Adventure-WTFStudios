@@ -26,10 +26,17 @@ public class GameSettingsInitializer : MonoBehaviour
     [RuntimeInitializeOnLoadMethod]
     static void OnRuntimeMethodLoad()
     {
-        //Debug.Log("RuntimeMethodLoad: After first Scene loaded");
-        AudioMixer masterMixer = Resources.Load<AudioMixer>("Mixer Groups/Master");
-        SettingsMenu.LoadAudioLevels(masterMixer);
+        //Debug.Log("RuntimeMethodLoad: After first Scene loaded");        
         SettingsMenu.LoadMouseSensitivity();
         WindowManager.InitializeGameWindow();
+
+        new GameObject().AddComponent<GameSettingsInitializer>();
+    }
+
+    private void Start()
+    {
+        AudioMixer masterMixer = Resources.Load<AudioMixer>("Mixer Groups/Master");
+        SettingsMenu.LoadAudioLevels(masterMixer);
+        Destroy(this.gameObject);
     }
 }
