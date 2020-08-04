@@ -45,9 +45,8 @@ public class GameManager : MonoBehaviour
 	RectTransform rect;
 	//
 
-	[Header("Settings")]
-	[SerializeField] private SettingsMenu settingsMenuComponent;
-	[SerializeField] private WindowManager windowManagerComponent;
+	private SettingsMenu settingsMenuComponent;
+	private WindowManager windowManagerComponent;
 	public SettingsMenu SettingsMenuComponent { get { return settingsMenuComponent; } }
 	public WindowManager WindowManagerComponent { get { return windowManagerComponent; } }
 
@@ -55,6 +54,9 @@ public class GameManager : MonoBehaviour
 
 	private void Awake()
     {
+		settingsMenuComponent = Resources.FindObjectsOfTypeAll<SettingsMenu>()[0];
+		windowManagerComponent = Resources.FindObjectsOfTypeAll<WindowManager>()[0];
+
 		settingsMenuComponent.LoadPrefsData();
 
 		Instance = this;

@@ -24,25 +24,25 @@ public class SettingsMenu : MonoBehaviour
     //private float originalMasterLevels;
     //private float originalMusicLevels;
     //private float originalSFXLevels;
-    private const float DEFAULT_MASTER_LEVEL = -25.0f;
-    private const float DEFAULT_MUSIC_LEVEL = 0.0f;
-    private const float DEFAULT_SFX_LEVEL = 0.0f;
-    private const float DEFAULT_SFX_COMP_LEVEL = -15.0f;
+    public const float DEFAULT_MASTER_LEVEL = -25.0f;
+    public const float DEFAULT_MUSIC_LEVEL = 0.0f;
+    public const float DEFAULT_SFX_LEVEL = 0.0f;
+    public const float DEFAULT_SFX_COMP_LEVEL = -15.0f;
     private float compressorDiffThreshold;
 
 
     [Header("Mouse Sensitivity")]    
     [SerializeField] private SliderInitializer mouseSensitivity;
     private Slider mouseSlider;
-    private float currentMouseSensitivity = 1;
-    public float CurrentMouseSensitivity { get { return currentMouseSensitivity; } }
+    public static float currentMouseSensitivity = 1;
+    //public float CurrentMouseSensitivity { get { return currentMouseSensitivity; } }
 
     #region Prefs Keys
-    private const string MOUSE_SENSITIVITY_PREFS_KEY = "_Mouse Sensitivity";
-    private const string MASTER_VOL_PREFS_KEY = "_Master Volume";
-    private const string MUSIC_VOL_PREFS_KEY = "_Music Volume";
-    private const string SFX_VOL_PREFS_KEY = "_SFX Volume";
-    private const string SFX_COMP_PREFS_KEY = "_SFX Compressor Level";
+    public const string MOUSE_SENSITIVITY_PREFS_KEY = "_Mouse Sensitivity";
+    public const string MASTER_VOL_PREFS_KEY = "_Master Volume";
+    public const string MUSIC_VOL_PREFS_KEY = "_Music Volume";
+    public const string SFX_VOL_PREFS_KEY = "_SFX Volume";
+    public const string SFX_COMP_PREFS_KEY = "_SFX Compressor Level";
     #endregion
 
 
@@ -86,17 +86,28 @@ public class SettingsMenu : MonoBehaviour
 
     public void LoadPrefsData()
     {
-        currentMouseSensitivity = PlayerPrefs.GetFloat(MOUSE_SENSITIVITY_PREFS_KEY, 1);
-        masterMixer.SetFloat("Master_Levels", PlayerPrefs.GetFloat(MASTER_VOL_PREFS_KEY, DEFAULT_MASTER_LEVEL));
-        masterMixer.SetFloat("Music_Levels", PlayerPrefs.GetFloat(MUSIC_VOL_PREFS_KEY, DEFAULT_MUSIC_LEVEL));
-        masterMixer.SetFloat("SFX_Levels", PlayerPrefs.GetFloat(SFX_VOL_PREFS_KEY, DEFAULT_SFX_LEVEL));
-        masterMixer.SetFloat("SFX_CompressorThreshold", PlayerPrefs.GetFloat(SFX_COMP_PREFS_KEY, DEFAULT_SFX_COMP_LEVEL));
+        LoadMouseSensitivity();
+        LoadAudioLevels(masterMixer);        
 
         masterVol = DEFAULT_MASTER_LEVEL;
         musicVol = DEFAULT_MUSIC_LEVEL;
         soundEffectsVol = DEFAULT_SFX_LEVEL;
         compressorDiffThreshold = DEFAULT_SFX_COMP_LEVEL;
     }
+
+    public static void LoadAudioLevels(AudioMixer mixer)
+    {
+        mixer.SetFloat("Master_Levels", PlayerPrefs.GetFloat(MASTER_VOL_PREFS_KEY, DEFAULT_MASTER_LEVEL));
+        mixer.SetFloat("Music_Levels", PlayerPrefs.GetFloat(MUSIC_VOL_PREFS_KEY, DEFAULT_MUSIC_LEVEL));
+        mixer.SetFloat("SFX_Levels", PlayerPrefs.GetFloat(SFX_VOL_PREFS_KEY, DEFAULT_SFX_LEVEL));
+        mixer.SetFloat("SFX_CompressorThreshold", PlayerPrefs.GetFloat(SFX_COMP_PREFS_KEY, DEFAULT_SFX_COMP_LEVEL));
+    }
+
+    public static void LoadMouseSensitivity()
+    {
+        currentMouseSensitivity = PlayerPrefs.GetFloat(MOUSE_SENSITIVITY_PREFS_KEY, 1);
+    }
+
 
     private void ManageSensitivity()
     {
@@ -121,6 +132,11 @@ public class SettingsMenu : MonoBehaviour
             soundEffectsVol = soundEffectsSlider.value;
         }
 
+        UpdateAudioLevels();
+    }
+
+    private void UpdateAudioLevels()
+    {
         masterMixer.SetFloat("Master_Levels", masterVol);
         masterMixer.SetFloat("Music_Levels", musicVol);
         masterMixer.SetFloat("SFX_Levels", soundEffectsVol);
@@ -149,10 +165,7 @@ public class SettingsMenu : MonoBehaviour
         musicVol = DEFAULT_MUSIC_LEVEL;
         soundEffectsVol = DEFAULT_SFX_LEVEL;
 
-        masterMixer.SetFloat("Master_Levels", masterVol);
-        masterMixer.SetFloat("Music_Levels", musicVol);
-        masterMixer.SetFloat("SFX_Levels", soundEffectsVol);
-        masterMixer.SetFloat("SFX_CompressorThreshold", soundEffectsVol - compressorDiffThreshold);
+        UpdateAudioLevels();
 
         masterSlider.value = masterVol;
         musicSlider.value = musicVol;

@@ -23,7 +23,7 @@ public class WindowManager : MonoBehaviour
     #region Screen Mode
     [SerializeField] private TMP_Dropdown currentWindowMode;
     private int currentScreenModeIndex = 0;
-    private FullScreenMode[] screenModes =
+    private static FullScreenMode[] screenModes =
     {
         FullScreenMode.ExclusiveFullScreen,
         FullScreenMode.FullScreenWindow,
@@ -87,6 +87,15 @@ public class WindowManager : MonoBehaviour
         }
     }
 
+
+    public static void InitializeGameWindow()
+    {
+        Resolution[] res = Screen.resolutions;
+        Resolution currentRes = res[PlayerPrefs.GetInt(RESOLUTION_PREF_KEY, res.Length - 1)];
+
+        Screen.SetResolution(currentRes.width, currentRes.height,
+                             screenModes[PlayerPrefs.GetInt(SCREENMODE_PREF_KEY, 0)]);
+    }
 
     public void StartCountdown()
     {

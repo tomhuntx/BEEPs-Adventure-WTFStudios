@@ -217,7 +217,7 @@ public class PlayerCharacterController : MonoBehaviour
         originalMinCamAngleX = minCamAngleX;
         originalMaxCamAngleX = maxCamAngleX;
 
-        lookSensitivityMultiplier = GameManager.Instance.SettingsMenuComponent.CurrentMouseSensitivity;
+        lookSensitivityMultiplier = SettingsMenu.currentMouseSensitivity;
 	}
 
     // Update is called once per frame
