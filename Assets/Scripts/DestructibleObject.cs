@@ -167,16 +167,14 @@ public class DestructibleObject : MonoBehaviour
                     }
                 }
 			}
+			// Bug HotFix: Triggered twice
             else
             {
                 onObjectDestroy.Invoke();
-                Destroy(this.transform.gameObject);
+				Destroy(this.transform.gameObject);
+				isInvincible = true;
             }
         }
-		else
-		{
-			Debug.Log("C");
-		}
     }
 
     /// <summary>

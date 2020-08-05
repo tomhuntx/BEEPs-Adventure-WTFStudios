@@ -38,7 +38,7 @@ public class Explosion : MonoBehaviour
 				if (hit.tag == "Box")
 				{
 					// Deals damage to boxes based on distance
-					hit.GetComponent<DestructibleObject>().ApplyDamage(5 * power / Vector3.Distance(transform.position, hit.transform.position));
+					hit.GetComponent<DestructibleObject>().ApplyDamage(10 * power / Vector3.Distance(transform.position, hit.transform.position));
 				}
 			}
 			if (hit.tag == "Player")
