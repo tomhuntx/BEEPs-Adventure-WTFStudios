@@ -6,7 +6,9 @@ public class Scanner : MonoBehaviour
 {
 	[SerializeField] private Light scanLight;
 	[SerializeField] private GameObject scanObj;
+	[SerializeField] private GameObject scanObj2;
 	private Material scanMat;
+	private Material scanMat2;
 
 	public enum lightColour
 	{
@@ -19,6 +21,7 @@ public class Scanner : MonoBehaviour
 	private void Start()
 	{
 		scanMat = scanObj.GetComponent<Renderer>().material;
+		scanMat2 = scanObj2.GetComponent<Renderer>().materials[1];
 
 		scanLight.color = Color.cyan;
 		scanMat.SetColor("_EmissionColor", Color.cyan);
@@ -31,11 +34,13 @@ public class Scanner : MonoBehaviour
 			case lightColour.aqua:
 				scanLight.color = Color.cyan;
 				scanMat.SetColor("_EmissionColor", Color.cyan);
+				scanMat2.SetColor("_EmissionColor", Color.cyan);
 
 				break;
 			case lightColour.green:
 				scanLight.color = Color.green;
 				scanMat.SetColor("_EmissionColor", Color.green);
+				scanMat2.SetColor("_EmissionColor", Color.green);
 
 				// PLAY SOUND HERE
 
@@ -44,6 +49,7 @@ public class Scanner : MonoBehaviour
 			case lightColour.yellow:
 				scanLight.color = Color.yellow;
 				scanMat.SetColor("_EmissionColor", Color.yellow);
+				scanMat2.SetColor("_EmissionColor", Color.yellow);
 
 				// PLAY SOUND HERE
 
@@ -52,6 +58,7 @@ public class Scanner : MonoBehaviour
 			case lightColour.red:
 				scanLight.color = Color.red;
 				scanMat.SetColor("_EmissionColor", Color.red);
+				scanMat2.SetColor("_EmissionColor", Color.red);
 
 				// PLAY SOUND & TRIGGER ERROR HERE
 
