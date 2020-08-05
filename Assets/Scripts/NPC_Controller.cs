@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class NPC_Controller : MonoBehaviour
 {
-	[Tooltip("Assigned object health based on percentage.")]
+	[Tooltip("Points to patrol between (in order from first to last, then back to first, and so on).")]
 	public GameObject[] patrolPoints;
 
 	private NavMeshAgent agent;
