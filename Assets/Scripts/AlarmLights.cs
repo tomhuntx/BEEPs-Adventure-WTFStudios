@@ -7,15 +7,18 @@ public class AlarmLights : MonoBehaviour
 	[Tooltip("Whether the lights flash (true) or do not flash (false).")]
 	[SerializeField] private bool alarmsFlashing = false;
 	private GameObject lights;
+	private Renderer[] renderers;
 
-    void Start()
+	void Start()
     {
 		// Get light animator object even if it is inactive (default)
 		lights = this.GetComponentInChildren<Animator>(true).gameObject;
 
 		// Set light active/inactive based on set boolean
 		lights.SetActive(alarmsFlashing);
-    }
+
+		renderers = GetComponentsInChildren<Renderer>();
+	}
 
 	/// <summary>
 	/// Activate or deactivate alarm lights
@@ -25,5 +28,11 @@ public class AlarmLights : MonoBehaviour
 	{
 		lights.SetActive(state);
 		alarmsFlashing = state;
+
+		foreach (Renderer rend in renderers)
+		{
+			rend.material.SetColor("_EmissionColor", Color.red);
+			rend.UpdateGIMaterials();
+		}
 	}
 }
