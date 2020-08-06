@@ -121,7 +121,6 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private GameObject[] firstPersonGameObjects;
     [SerializeField] private GameObject[] thirdPersonGameObjects;
 
-
     [Header("Physics")]
     [SerializeField] private float gravity = -20.0f;
     [SerializeField] private float mass = 1.0f;

@@ -79,6 +79,7 @@ public class Player : MonoBehaviour
     private GrabbableObject grabbedObject;
     private Transform previousRaycastTarget;
 	// Tutorial control limiting
+	private bool allowBox = true;
 	private bool allowThrow = true;
 	private bool allowPunch = true;
 
@@ -104,6 +105,7 @@ public class Player : MonoBehaviour
 
 		if (Tutorial)
 		{
+			allowBox = false;
 			allowThrow = false;
 			allowPunch = false;
 		}
@@ -136,8 +138,13 @@ public class Player : MonoBehaviour
             isRaycastHit = false;
         }
 
+		// Allow grabbing boxes in tutorial after jump
+		if (Input.GetButtonDown("Jump"))
+		{
+			allowBox = true;
+		}
 
-        if (Time.timeScale > 0)
+		if (Time.timeScale > 0)
         {
             ManageCrosshair();
 
@@ -167,7 +174,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (Input.GetButtonDown("Grab Object")) GrabObject();
+                if (Input.GetButtonDown("Grab Object") && allowBox) GrabObject();
                 if (Input.GetButtonDown("Punch") && allowPunch)
                 {
                     PunchObject();

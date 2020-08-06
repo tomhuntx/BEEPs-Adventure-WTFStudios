@@ -5,12 +5,14 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
 	// bools to track progress
+	private bool jumped = false;
 	private bool grabbedBox = false;
 	private bool placedBox = false;
 	private bool thrownBox = false;
 	private bool punchedBox = false;
 
 	// tooltips - separate objects for icons
+	public GameObject wasdTooltip;
 	public GameObject grabBoxTooltip;
 	public GameObject placeBoxTooltip;
 	public GameObject throwBoxTooltip;
@@ -23,16 +25,14 @@ public class TutorialManager : MonoBehaviour
 		currentTooltip = grabBoxTooltip;
 	}
 
-	/*
-    // Update is called once per frame
-    void Update()
-    {
-		if (grabbedBox && placedBox && thrownBox && punchedBox)
+	void Update()
+	{
+		if (Input.GetButtonDown("Jump"))
 		{
-			// ready to leave level
-
+			wasdTooltip.SetActive(false);
+			jumped = true;
 		}
-    }*/
+	}
 
 	private void ShowTooltip()
 	{
@@ -58,7 +58,7 @@ public class TutorialManager : MonoBehaviour
 	// Register if a box is hovered over
 	public void Hover()
 	{
-		if (!grabbedBox)
+		if (!grabbedBox && jumped)
 		{
 			ShowTooltip();
 		}
