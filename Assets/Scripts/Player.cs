@@ -65,6 +65,9 @@ public class Player : MonoBehaviour
     [Tooltip("The area around the player where box placement should be ignored.")]
     [SerializeField] private float boxPlacementDeadzone = 1f;
 
+	[Tooltip("Whether or not we want a second moving crosshair.")]
+	[SerializeField] private bool SecondCrosshair = false;
+
 	[Header("Tutorial - Limit Controls")]
 	[Tooltip("If it is the tutorial - limits doesnt allow punch or throw if not placed boxes.")]
 	[SerializeField] private bool Tutorial = false;
@@ -146,7 +149,7 @@ public class Player : MonoBehaviour
 
 		if (Time.timeScale > 0)
         {
-            ManageCrosshair();
+			ManageCrosshair();
 
             if (grabbedObject != null)
             {
@@ -563,7 +566,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ManageCrosshair()
     {
-        if (isRaycastHit)
+        if (isRaycastHit && SecondCrosshair)
         {
             InteractableObject interactable = hitInfo.transform.GetComponent<InteractableObject>();
             if (interactable != null)
@@ -600,7 +603,7 @@ public class Player : MonoBehaviour
         bool isObjectRayHit = Physics.Raycast(rayOrigin, toCamera.localDirection,
                                               toCamera.localScaledDirection.magnitude);
 
-        if (isPlayerRayHit || isObjectRayHit)
+        if ((isPlayerRayHit || isObjectRayHit) && SecondCrosshair)
         {
             //Make the crosshair semi-transparent if the raycast point
             //is behind an obstacle based on the current camera view
