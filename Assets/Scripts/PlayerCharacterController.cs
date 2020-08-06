@@ -262,13 +262,14 @@ public class PlayerCharacterController : MonoBehaviour
 
         // Only bump boxes
         if (otherRB.tag == "Box" ||
-            otherRB.tag == "Heavy Box")
-        {
+            otherRB.tag == "Heavy Box" ||
+			otherRB.tag == "Bumpable")
+		{
             // Bump
             //otherRB.velocity = transform.forward * bumpForce;
             Vector3 moveVelocity = velocity;
             moveVelocity.y = 0;
-            otherRB.velocity = moveVelocity * bumpForce;
+            otherRB.velocity = (moveVelocity * bumpForce) / otherRB.mass;
         }
     }
 
