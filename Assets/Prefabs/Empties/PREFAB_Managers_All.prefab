@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5866209772549576441}
   - component: {fileID: 5866209772549576437}
   - component: {fileID: 5866209772549576436}
-  - component: {fileID: 5866209772549576442}
   - component: {fileID: 5866209772549576443}
   - component: {fileID: 7705603868868560079}
   m_Layer: 0
@@ -49,16 +48,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controls: {fileID: 0}
-  feedback: {fileID: 0}
-  popup: {fileID: 4619174738833132027, guid: d39f11ccb689f0a40938e93370d7bf3f, type: 3}
-  thisLevel: 1
-  feedbackCount: 0
-  feedbackTimeBinary: 0
   pauseMenu: {fileID: 0}
   targetFPS: 60
   displayFPS: 1
   capFPS: 1
   FPSDisplay: {fileID: 0}
+  highlighterMaterial: {fileID: 0}
+  normalHighlightColor: {r: 1, g: 1, b: 1, a: 0.29803923}
+  invalidHighlightColor: {r: 1, g: 0, b: 0, a: 0.29803923}
+  feedback: {fileID: 0}
+  popup: {fileID: 4619174738833132027, guid: d39f11ccb689f0a40938e93370d7bf3f, type: 3}
+  thisLevel: 1
+  feedbackCount: 0
+  feedbackTimeBinary: 0
 --- !u!114 &5866209772549576436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,13 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e059e455b5ae241a190a1530e16b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterMixer: {fileID: 24100000, guid: 7a0787fffa79329419d584a9b440bd62, type: 2}
-  masterVol: 0
-  musicVol: 0
-  soundEffectsVol: 0
-  master: {fileID: 0}
-  music: {fileID: 0}
-  soundEffects: {fileID: 0}
+  hasTasks: 1
   clips:
   - {fileID: 8300000, guid: 69d42174933f7e948837b8cab3024ea3, type: 3}
   - {fileID: 8300000, guid: 50e5f726fcc98354babc6f249d1536e8, type: 3}
@@ -85,18 +81,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b61fc5cdd68c27146aaa2d68e186f8f3, type: 3}
   fadeOutRate: 0.5
   fadeInRate: 0.3
---- !u!114 &5866209772549576442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5866209772549576438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ab04b0083af144299452d722576d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &5866209772549576443
 AudioSource:
   m_ObjectHideFlags: 0
@@ -206,8 +190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c7e048e182cc845a126867275097e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelProgress: 0
   loadingScreen: {fileID: 9045128808992734253, guid: 12c1399d2ea6ff34fb81dc4b3fc9d1f1,
     type: 3}
+  levelSelect: {fileID: 0}
 --- !u!1 &5866209773751731533
 GameObject:
   m_ObjectHideFlags: 0

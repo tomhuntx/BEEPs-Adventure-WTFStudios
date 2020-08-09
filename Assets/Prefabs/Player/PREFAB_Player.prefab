@@ -287,6 +287,7 @@ MonoBehaviour:
   raycastDistance: 4
   interactionDistance: {x: 4, y: 10, z: 4}
   boxPlacementDeadzone: 0
+  SecondCrosshair: 0
   Tutorial: 0
 --- !u!114 &7808786021717997396
 MonoBehaviour:
@@ -407,8 +408,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df5c9a95150f1845b1fc405ddf91df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pitchMult: 0.1
-  landSFXThreshold: 0.2
+  pitchMult: 0.3
+  landSFXThreshold: 2.5
   jumpSFXPrefab: {fileID: 3550898150191051073, guid: 242697acc43e6f44191902605d38f563,
     type: 3}
   landSFXPrefab: {fileID: 3550898150191051073, guid: 15c6ccf6aa3d046498fec0138886e75d,
