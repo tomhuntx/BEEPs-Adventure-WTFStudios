@@ -267,7 +267,6 @@ public class Robot : MonoBehaviour
 		SetAnimationState("doDisturbed", false);
 		superAnnoyed = true;
 		onGetAnnoyed.Invoke();
-		Debug.Log(Time.time);
 	}
 
 	/// <summary>
