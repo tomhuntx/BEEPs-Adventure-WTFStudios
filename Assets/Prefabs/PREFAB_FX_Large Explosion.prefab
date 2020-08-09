@@ -284,8 +284,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.2
+      scalar: 0.5
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -975,7 +975,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 15
+        scalar: 25
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1652,7 +1652,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 35
+      scalar: 45
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4823,7 +4823,7 @@ GameObject:
   - component: {fileID: 5133357178356861968}
   - component: {fileID: 5572503445899059905}
   m_Layer: 0
-  m_Name: Prefab_Box_Explosive - Explosion Effect
+  m_Name: PREFAB_FX_Large Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4857,9 +4857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111421999a91ca545977e42488668618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
-  radius: 6
-  upforce: 1.5
+  power: 30
+  radius: 8
+  upforce: 2
   forceType: 1
   destroyTime: 5
 --- !u!1 &5133357178401192726
@@ -4902,7 +4902,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5133357178401192726}
   serializedVersion: 6
-  lengthInSec: 2
+  lengthInSec: 3.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -4912,7 +4912,7 @@ ParticleSystem:
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
-  autoRandomSeed: 1
+  autoRandomSeed: 0
   useRigidbodyForVelocity: 1
   startDelay:
     serializedVersion: 2
@@ -4970,14 +4970,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 0
+  randomSeed: -828487752
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 3.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5030,7 +5030,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 21
+      scalar: 45
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5146,8 +5146,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 4
-      minScalar: 3
+      scalar: 7
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5462,7 +5462,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 300
+    maxNumParticles: 500
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -5837,7 +5837,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 5
+        scalar: 12
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6514,7 +6514,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 14
+      scalar: 17
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -7491,7 +7491,7 @@ ParticleSystem:
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -8692,7 +8692,7 @@ ParticleSystem:
     rangeCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 6
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -8745,7 +8745,7 @@ ParticleSystem:
     intensityCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.7
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9629,8 +9629,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b28443ac209e11b4ab8192317d5d68b8, type: 2}
-  - {fileID: 2100000, guid: b28443ac209e11b4ab8192317d5d68b8, type: 2}
+  - {fileID: 2100000, guid: 75e0c4659565b9845909c37aee18100d, type: 2}
+  - {fileID: 2100000, guid: 75e0c4659565b9845909c37aee18100d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

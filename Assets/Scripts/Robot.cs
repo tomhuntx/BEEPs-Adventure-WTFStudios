@@ -18,6 +18,8 @@ public class Robot : MonoBehaviour
 	private int patienceLimit = 5;
 	private int patience = 0;
 	private float expDistance = 2f;
+	private bool superAnnoyed = false;
+	private bool keepLooking = false;
 
 	// Saving Positions
 	private Vector3 originalDirection;
@@ -63,8 +65,8 @@ public class Robot : MonoBehaviour
 
 	void FixedUpdate()
     {
-		if (patience >= patienceLimit &&
-			!IsTimerDone())
+		if ((patience >= patienceLimit &&
+			!IsTimerDone()) || superAnnoyed)
 		{
 			SetAnimationState("doAngry", true);
 		}
@@ -87,7 +89,7 @@ public class Robot : MonoBehaviour
 			}
 		}
 
-		if (lookAtPlayer)
+		if (lookAtPlayer && !superAnnoyed)
 		{
 			SetAnimationState("doDisturbed", true);
 		}
@@ -107,7 +109,7 @@ public class Robot : MonoBehaviour
 			this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rotateTo, lookSpeed * Time.deltaTime);
 
 			if (Vector3.Distance(transform.position, Player.Instance.transform.position) > lookRange && 
-				IsTimerDone())
+				IsTimerDone() && !keepLooking)
 			{
 				lookAtPlayer = false;
 				//lookTime = 3f;
@@ -142,7 +144,7 @@ public class Robot : MonoBehaviour
 			canBePunched = true;
 		}
 
-		if (patience >= patienceLimit && !isManagerBot)
+		if (patience >= patienceLimit && !isManagerBot && !superAnnoyed)
 		{
 			if (robots.Length > 0)
 			{
@@ -156,7 +158,15 @@ public class Robot : MonoBehaviour
 			if (boxProcessor != null)
 			{
 				boxProcessor.SetActive(false);
+				lookAtPlayer = true;
 			}
+		}
+
+
+		if (superAnnoyed)
+		{
+			SetAnimationState("doAngry", true);
+			patience = patienceLimit;
 		}
 	}
 
@@ -223,6 +233,7 @@ public class Robot : MonoBehaviour
 		}
 	}
 
+	// Get angry, then shaking head (completes task)
 	public void GetAnnoyed()
 	{
 		lookAtPlayer = true;
@@ -231,6 +242,32 @@ public class Robot : MonoBehaviour
 		ResetLookTimer(lookTime);
 
 		onGetAnnoyed.Invoke();
+	}
+
+	// Get angry non-stop
+	public void GetSuperAnnoyed(float time)
+	{
+		lookAtPlayer = true;
+		keepLooking = true;
+		ResetLookTimer(lookTime);
+		StartCoroutine(WaitThenAnnoy(time));
+
+		if (boxProcessor)
+		{
+			boxProcessor.SetActive(false);
+		}
+	}
+
+	IEnumerator WaitThenAnnoy(float secs)
+	{
+		// wait for x seconds
+		yield return new WaitForSeconds(secs);
+
+		SetAnimationState("doAngry", false);
+		SetAnimationState("doDisturbed", false);
+		superAnnoyed = true;
+		onGetAnnoyed.Invoke();
+		Debug.Log(Time.time);
 	}
 
 	/// <summary>

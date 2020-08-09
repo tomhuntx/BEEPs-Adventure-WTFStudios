@@ -298,11 +298,16 @@ public class GameManager : MonoBehaviour
 	// Load given scene and mute volume while doing it
 	public void LoadScene(int scene)
 	{
+		// Attempt to mute all audio sources
+		AudioSource[] sources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+		for (int index = 0; index < sources.Length; ++index)
+		{
+			sources[index].mute = true;
+		}
+
 		AudioListener.volume = 0f;
 		Time.timeScale = 0;
 		mm.LoadScene(scene);
 		AudioListener.volume = 1f;
 	}
-
-
 }

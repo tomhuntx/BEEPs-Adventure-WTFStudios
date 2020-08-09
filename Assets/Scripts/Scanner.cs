@@ -9,6 +9,8 @@ public class Scanner : MonoBehaviour
 	[SerializeField] private GameObject scanObj2;
 	private Material scanMat;
 	private Material scanMat2;
+	private bool alarm = false;
+
 
 	public enum lightColour
 	{
@@ -30,43 +32,48 @@ public class Scanner : MonoBehaviour
 	// Change light based on given colour
 	public void ChangeLight(lightColour col)
 	{
-		switch (col) {
-			case lightColour.aqua:
-				scanLight.color = Color.cyan;
-				scanMat.SetColor("_EmissionColor", Color.cyan);
-				scanMat2.SetColor("_EmissionColor", Color.cyan);
+		if (!alarm)
+		{
+			switch (col)
+			{
+				case lightColour.aqua:
+					scanLight.color = Color.cyan;
+					scanMat.SetColor("_EmissionColor", Color.cyan);
+					scanMat2.SetColor("_EmissionColor", Color.cyan);
 
-				break;
-			case lightColour.green:
-				scanLight.color = Color.green;
-				scanMat.SetColor("_EmissionColor", Color.green);
-				scanMat2.SetColor("_EmissionColor", Color.green);
+					break;
+				case lightColour.green:
+					scanLight.color = Color.green;
+					scanMat.SetColor("_EmissionColor", Color.green);
+					scanMat2.SetColor("_EmissionColor", Color.green);
 
-				// PLAY SOUND HERE
+					// PLAY SOUND HERE
 
-				StartCoroutine(LightTimer(1));
-				break;
-			case lightColour.yellow:
-				scanLight.color = Color.yellow;
-				scanMat.SetColor("_EmissionColor", Color.yellow);
-				scanMat2.SetColor("_EmissionColor", Color.yellow);
+					StartCoroutine(LightTimer(1));
+					break;
+				case lightColour.yellow:
+					scanLight.color = Color.yellow;
+					scanMat.SetColor("_EmissionColor", Color.yellow);
+					scanMat2.SetColor("_EmissionColor", Color.yellow);
 
-				// PLAY SOUND HERE
+					// PLAY SOUND HERE
 
-				StartCoroutine(LightTimer(1.5f));
-				break;
-			case lightColour.red:
-				scanLight.color = Color.red;
-				scanMat.SetColor("_EmissionColor", Color.red);
-				scanMat2.SetColor("_EmissionColor", Color.red);
+					StartCoroutine(LightTimer(1.5f));
+					break;
+				case lightColour.red:
+					scanLight.color = Color.red;
+					scanMat.SetColor("_EmissionColor", Color.red);
+					scanMat2.SetColor("_EmissionColor", Color.red);
 
-				// PLAY SOUND & TRIGGER ERROR HERE
+					// PLAY SOUND & TRIGGER ERROR HERE
 
-				// High priority - stop other scanning
-				StopAllCoroutines();
-				StartCoroutine(LightTimer(5));
-				break;
+					// High priority - stop other scanning
+					StopAllCoroutines();
+					alarm = true;
+					break;
+			}
 		}
+		
 	}
 
 	// Change light back to aqua after x seconds
