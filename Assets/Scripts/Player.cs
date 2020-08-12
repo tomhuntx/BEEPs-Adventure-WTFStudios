@@ -86,6 +86,12 @@ public class Player : MonoBehaviour
 	private bool allowThrow = true;
 	private bool allowPunch = true;
 
+	[Header("Animation")]
+	[Tooltip("BEEP's body's Animator.")]
+	[SerializeField] private Animator bodyAnim;
+	[Tooltip("BEEP's head's Animator.")]
+	[SerializeField] private Animator headAnim;
+
 	/// <summary>
 	/// Checker if the raycast target is behind an object.
 	/// </summary>
@@ -97,7 +103,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
+	}
 
     // Start is called before the first frame update
     void Start()
@@ -145,6 +151,10 @@ public class Player : MonoBehaviour
 		if (Input.GetButtonDown("Jump"))
 		{
 			allowBox = true;
+
+			// Jump animation
+			bodyAnim.SetTrigger("Jump");
+			headAnim.SetTrigger("Jump");
 		}
 
 		if (Time.timeScale > 0)
@@ -182,7 +192,11 @@ public class Player : MonoBehaviour
                 {
                     PunchObject();
                     handAnim.SetBool("isPunching", true);
-                }
+
+					// Punch animation
+					bodyAnim.SetTrigger("Punch");
+					headAnim.SetTrigger("Punch");
+				}
                 else
                 {
                     handAnim.SetBool("isPunching", false);
@@ -385,13 +399,19 @@ public class Player : MonoBehaviour
             if (controller.IsFirstPerson) objectParent = firstPersonObjectOffset;
             grabbedObject.GrabObject(objectParent);
 
-            // Tooltips on interactable objects            
-            //if (hitInfo.transform.GetComponent<InteractableObject>() != null)
-            //{
-            //    InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
-            //}
-            //use grabbedObject.interactionComponent instead...
-        }
+			// Tooltips on interactable objects            
+			//if (hitInfo.transform.GetComponent<InteractableObject>() != null)
+			//{
+			//    InteractableObject interactable = hitInfo.transform.GetComponentInChildren<InteractableObject>();
+			//}
+			//use grabbedObject.interactionComponent instead...
+
+			// Grab animation
+			bodyAnim.SetTrigger("PickupBox");
+			headAnim.SetTrigger("PickupBox");
+			bodyAnim.SetBool("isHoldingBox", true);
+			headAnim.SetBool("isHoldingBox", true);
+		}
     }
 
     /// <summary>
@@ -407,6 +427,12 @@ public class Player : MonoBehaviour
 
 			// Allow throwing
 			allowThrow = true;
+
+			// Place animation
+			bodyAnim.SetTrigger("Place");
+			headAnim.SetTrigger("Place");
+			bodyAnim.SetBool("isHoldingBox", false);
+			headAnim.SetBool("isHoldingBox", false);
 		}
     }
 
@@ -424,6 +450,12 @@ public class Player : MonoBehaviour
 
 			// Allow punching
 			allowPunch = true;
+
+			// Throw animation
+			bodyAnim.SetTrigger("Throw");
+			headAnim.SetTrigger("Throw");
+			bodyAnim.SetBool("isHoldingBox", false);
+			headAnim.SetBool("isHoldingBox", false);
 		}
 	}
 
@@ -439,7 +471,11 @@ public class Player : MonoBehaviour
         {
             grabbedObject.DropObject(this.transform.position + thrownObjectOffsetPos);
             grabbedObject = null;
-        }
+
+			// Drop recognition
+			bodyAnim.SetBool("isHoldingBox", false);
+			headAnim.SetBool("isHoldingBox", false);
+		}
     }
 
     /// <summary>
@@ -463,10 +499,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Heavy box dragging mechanic.
-    /// </summary>
-    private void DragHeavyBox()
+	/// <summary>
+	/// Resets all animation triggers and triggers one at a time
+	/// </summary>
+	private void SetTrigger(string trigger)
+	{
+		
+
+	}
+
+	/// <summary>
+	/// Heavy box dragging mechanic.
+	/// </summary>
+	private void DragHeavyBox()
     {
         if (heavyBox == null)
         {

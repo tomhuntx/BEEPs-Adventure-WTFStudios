@@ -145,8 +145,8 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float jumpForce = 10.0f;
 
 
-    #region Hidden Variables
-    private Vector3 direction;
+	#region Hidden Variables
+	private Vector3 direction;
     private Vector3 velocity;
     private Vector3 motionDirection;
     private Vector3 groundedMotion;
@@ -423,8 +423,8 @@ public class PlayerCharacterController : MonoBehaviour
 
             if (jumpingEnabled && Input.GetButtonDown("Jump"))
             {
-                velocity.y += jumpForce;
-            }
+				velocity.y += jumpForce;
+			}
 
             if (IsMoving())
                 wasMoving = true;
