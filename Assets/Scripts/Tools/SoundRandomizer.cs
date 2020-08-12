@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundRandomizer : MonoBehaviour
@@ -11,6 +12,9 @@ public class SoundRandomizer : MonoBehaviour
 
     [Tooltip("Keep doing this task and disable destroy on end.")]
     [SerializeField] private bool repeatOnEnd = false;
+
+    [Tooltip("This will only be invoked by the end of the clip and is not set to repeat.")]
+    public UnityEvent onPlaybackEnd;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,7 @@ public class SoundRandomizer : MonoBehaviour
             }
             else
             {
+                onPlaybackEnd.Invoke();
                 Destroy(this.gameObject);
             }
         }

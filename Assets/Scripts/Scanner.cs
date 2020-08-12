@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class Scanner : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class Scanner : MonoBehaviour
 	private Material scanMat;
 	private Material scanMat2;
 	private bool alarm = false;
+
+	[Header("Events")]
+	public UnityEvent onScanApprove;
+	public UnityEvent onScanWarning;
+	public UnityEvent onScanError;
 
 
 	public enum lightColour
@@ -48,6 +55,7 @@ public class Scanner : MonoBehaviour
 					scanMat2.SetColor("_EmissionColor", Color.green);
 
 					// PLAY SOUND HERE
+					onScanApprove.Invoke();
 
 					StartCoroutine(LightTimer(1));
 					break;
@@ -57,6 +65,7 @@ public class Scanner : MonoBehaviour
 					scanMat2.SetColor("_EmissionColor", Color.yellow);
 
 					// PLAY SOUND HERE
+					onScanWarning.Invoke();
 
 					StartCoroutine(LightTimer(1.5f));
 					break;
@@ -66,6 +75,7 @@ public class Scanner : MonoBehaviour
 					scanMat2.SetColor("_EmissionColor", Color.red);
 
 					// PLAY SOUND & TRIGGER ERROR HERE
+					onScanError.Invoke();
 
 					// High priority - stop other scanning
 					StopAllCoroutines();

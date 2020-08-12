@@ -580,6 +580,7 @@ AudioMixerGroupController:
   - {fileID: 1958851086241770616}
   - {fileID: 6982051439174992405}
   - {fileID: -2788666165950924980}
+  - {fileID: 3083923781430156184}
   m_Volume: 8924dd26dccd6674cbf24d7729deb852
   m_Pitch: 6e86185512c3bb5488a1f2106ee8cffb
   m_Send: 00000000000000000000000000000000
@@ -599,6 +600,20 @@ AudioMixerEffectController:
   m_EffectID: cfdc264d4fef6b140b66176923b2934e
   m_EffectName: Attenuation
   m_MixLevel: 084972ad8a7e644409927a8223cc4ce0
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &-239906724819061584
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 44e4d99c2d71d664589462e3dd878aa3
+  m_EffectName: Attenuation
+  m_MixLevel: 2f937a5eedf4476488e3aa5ca4fd2a1c
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
@@ -675,6 +690,7 @@ AudioMixerController:
     - 2b47670e9777a18498db684bf3e59f87
     - 36cf81973586d004b8c1f8e4123e9711
     - e3280384162d30d43bed44fcdb6b801e
+    - 8864e51e13fde66438832f2784f70790
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -744,7 +760,7 @@ AudioMixerSnapshotController:
     27dec314ae2a2c044b73027f0af21fe9: 10
     0c6722249ad57e94d88afb6cad561604: -25
     9733d43448ec805478462d91c8947ea5: 0.86
-    65525264075887c4aa99f8e8e4980bbd: -5
+    65525264075887c4aa99f8e8e4980bbd: -10
     45a5eda459ccf224e91c27c0d3f9405b: 0.079
     3a71a1c452bb8b34da721a660fcccd71: 4.5
     c41bd125928f37e4991daa6ae3c84789: 2000
@@ -773,6 +789,7 @@ AudioMixerSnapshotController:
     9df4fce8c8c51ca4f8e3bdb8ef159eaa: -0
     ef315c69fbbfa3e42b052202a2f5f854: -2174
     fc918ad98e54b6f4cbff58a7cf0835df: 30
+    97cfdfcabfd67514698a5a77d060c3c3: -5
     a85fc0ea573886845a6030335f10469a: 100
     86a60bfa06717174dbf0c1a54319fa06: 0.5
     e98b3dfaece7e7547a86ca0fa4952a19: 5
@@ -982,6 +999,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &3083923781430156184
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Scanner
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 8864e51e13fde66438832f2784f70790
+  m_Children: []
+  m_Volume: 97cfdfcabfd67514698a5a77d060c3c3
+  m_Pitch: a84b74b754104c044b6c135b284c263c
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -239906724819061584}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &3268660646475938767
 AudioMixerEffectController:
   m_ObjectHideFlags: 3

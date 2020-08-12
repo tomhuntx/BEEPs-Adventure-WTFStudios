@@ -53,6 +53,7 @@ public class ClawMachineAI : MonoBehaviour
         animator = this.GetComponent<Animator>();
         pandaBehaviour = this.GetComponent<PandaBehaviour>();
         Instance = this;
+        SetAnimation("Idle");
     }
 
     private void Update()
@@ -69,12 +70,13 @@ public class ClawMachineAI : MonoBehaviour
             if (distance < 0.1f)
             {
                 hasArrived = true;
-                this.transform.position = newLocation;
+                //this.transform.position = newLocation;
                 newLocation = Vector3.negativeInfinity;
             }
         }
 
         isRaycastHit = DoRaycast();
+        UpdateClawRails();
     }
 
     private void OnEnable()
@@ -88,6 +90,17 @@ public class ClawMachineAI : MonoBehaviour
     }
 
 
+
+    private void UpdateClawRails()
+    {
+        horizontalRail.position = new Vector3(this.transform.position.x,
+                                              horizontalRail.position.y,
+                                              horizontalRail.position.z);
+
+        verticalRail.position = new Vector3(horizontalRail.position.x,
+                                            horizontalRail.position.y,
+                                            this.transform.position.z);
+    }
 
     private void GoToLocation(Vector3 location)
     {
@@ -125,7 +138,8 @@ public class ClawMachineAI : MonoBehaviour
     }
 
     #region PandaBT Methods
-    bool BoxInTrigger()
+    [Panda.Task]
+    private bool BoxInTrigger()
     {
         foreach (GameObject gameObject in colliderEvents.ObjectsInTrigger)
         {
@@ -139,46 +153,58 @@ public class ClawMachineAI : MonoBehaviour
         return false;
     }
 
-    bool HasBox()
+    [Panda.Task]
+    private bool HasBox()
     {
         return grabbedBox != null;
     }
 
-    bool HasArrived()
+    [Panda.Task]
+    private bool HasArrived()
     {
         return hasArrived;
     }
 
-    bool TargetBoxMismatch()
+    [Panda.Task]
+    private bool TargetBoxMismatch()
     {
         return targetBox.transform != raycastHit.transform &&
                raycastHit.transform.GetComponentInChildren<Box>() == null;
     }
 
-    void GoToBoxSource()
+    [Panda.Task]
+    private void GoToBoxSource()
     {
         SetLocation(boxSource.position);
+        Panda.Task.current.Succeed();
     }
 
-    void GoToCardboardChute()
+    [Panda.Task]
+    private void GoToCardboardChute()
     {
         SetLocation(cardboardChute.position);
     }
 
-    void GoToExplosiveChute()
+    [Panda.Task]
+    private void GoToExplosiveChute()
     {
         SetLocation(explosiveChute.position);
     }
 
-    void GoToHeavyChute()
+    [Panda.Task]
+    private void GoToHeavyChute()
     {
         SetLocation(heavyChute.position);
     }
 
-    void SetLocation(Vector3 position)
+    [Panda.Task]
+    private void SetLocation(Vector3 position)
     {
+        position = VectorFlat3D.FlattenVector(position, VectorFlat3D.Axis.y);
+        position.y = this.transform.position.y;
         newLocation = position;
         animator.enabled = false;
+        hasArrived = false;
     }
     #endregion
 }
