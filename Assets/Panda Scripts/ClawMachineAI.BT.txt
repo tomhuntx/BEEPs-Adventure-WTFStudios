@@ -1,0 +1,14 @@
+tree("Root")
+	repeat
+		mute
+			fallback
+				tree "GrabBox"
+
+tree("GrabBox")
+	while
+		sequence
+			not HasBox
+			HasArrived
+		sequence
+			GoToBoxSource
+		
