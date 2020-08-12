@@ -62,8 +62,6 @@ public class PunchButton : MonoBehaviour
 
 			StartCoroutine(PauseThenSpawn());
 			StartCoroutine(Cooldown());
-
-			Debug.Log("I have been punched!");
 		}
 	}
 }
