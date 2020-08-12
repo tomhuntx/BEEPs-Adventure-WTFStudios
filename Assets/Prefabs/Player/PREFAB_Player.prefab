@@ -349,6 +349,7 @@ MonoBehaviour:
   visualiseInEditor: 0
   closestDistance: 1
   dontClipTag: Player
+  cameraOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &7808786021717997403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +638,7 @@ MonoBehaviour:
   - Box
   - Heavy Box
   - Outline
+  - Area Trigger
   acceptAll: 0
   onCollisionEnter:
     m_PersistentCalls:

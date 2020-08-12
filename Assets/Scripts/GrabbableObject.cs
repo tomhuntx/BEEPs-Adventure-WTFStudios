@@ -40,10 +40,10 @@ public class GrabbableObject : DestructibleObject
 
 
     #region Public Methods
-    public void GrabObject(Transform parentTransform)
+    public void GrabObject(Transform parentTransform, bool colliderState = false)
     {
         onObjectGrab.Invoke();
-        AttachToParent(parentTransform);
+        AttachToParent(parentTransform, colliderState);
     }
 
     public void DropObject(Vector3 dropPosition)
@@ -151,7 +151,7 @@ public class GrabbableObject : DestructibleObject
         interactionComponent.ResetHighlighter();
     }
 
-    public void AttachToParent(Transform parentTransform)
+    public void AttachToParent(Transform parentTransform, bool colliderState = false)
     {
         this.transform.parent = parentTransform;
         this.transform.localRotation = parentTransform.rotation;
@@ -162,7 +162,7 @@ public class GrabbableObject : DestructibleObject
 
         foreach (Collider collider in ColliderComponents)
         {
-            collider.enabled = false;
+            collider.enabled = colliderState;
         }
         RigidbodyComponent.isKinematic = true;
 
@@ -177,5 +177,71 @@ public class GrabbableObject : DestructibleObject
 	{
 		GetComponent<DestructibleObject>().forceMagnitudeThreshold = 0.1f;
 	}
-	#endregion
+    #endregion
+
+    #region Static Methods
+    public static void AttachToParent(Transform target, Transform parent, 
+                                      bool colliderState = false, bool disableRaycast = false)
+    {
+        if (disableRaycast) 
+            target.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+        target.transform.parent = parent;
+        target.transform.localRotation = parent.rotation;
+        target.transform.localPosition = parent.position;
+
+        BoxDragSFX sfx = target.transform.GetComponentInChildren<BoxDragSFX>();
+        if (sfx != null) sfx.enabled = false;
+
+        Collider[] colliders = target.GetComponentsInChildren<Collider>();
+        if (colliders.Length > 0)
+        {
+            foreach (Collider collider in colliders)
+            {
+                collider.enabled = colliderState;
+            }
+
+            Rigidbody rb = colliders[0].attachedRigidbody;
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                PersistentForceRigidbody[] forceAppliers = FindObjectsOfType<PersistentForceRigidbody>();
+                if (forceAppliers.Length > 0)
+                {
+                    foreach (PersistentForceRigidbody force in forceAppliers)
+                    {
+                        force.RemoveReference(rb);
+                    }
+                }
+            }
+        }        
+    }
+
+    public static void DetachFromParent(Transform target, 
+                                        bool colliderState = true, bool enableRaycast = true)
+    {
+        if (enableRaycast) 
+            target.gameObject.layer = LayerMask.NameToLayer("Default");
+
+        target.transform.parent = null;
+
+        BoxDragSFX sfx = target.transform.GetComponentInChildren<BoxDragSFX>();
+        if (sfx != null) sfx.enabled = false;
+
+        Collider[] colliders = target.GetComponentsInChildren<Collider>();
+        if (colliders.Length > 0)
+        {
+            foreach (Collider collider in colliders)
+            {
+                collider.enabled = colliderState;
+            }
+
+            Rigidbody rb = colliders[0].attachedRigidbody;
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+            }
+        }
+    }
+    #endregion
 }

@@ -75,7 +75,7 @@ namespace UnityStandardAssets.Cameras
         /// </summary>
         public bool protecting { get; private set; }
 
-        public Vector3 cameraOffset { get; set; }
+        public Vector3 cameraOffset;
 
 
         private void Start()

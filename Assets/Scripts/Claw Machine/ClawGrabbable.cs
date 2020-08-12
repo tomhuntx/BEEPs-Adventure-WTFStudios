@@ -27,13 +27,20 @@ public class ClawGrabbable : MonoBehaviour
 
     public void AttachToParent(Transform parentTransform)
     {
+        //Disable any rigidbody component
+        if (rigidbodyComponent != null)
+        {
+            rigidbodyComponent.isKinematic = true;
+            rigidbodyComponent.useGravity = false;
+        }
+
         onGrab.Invoke();
 
         //Grabbable object case
         GrabbableObject grabbable = this.GetComponent<GrabbableObject>();
         if (grabbable != null)
         {
-            grabbable.GrabObject(parentTransform);
+            grabbable.GrabObject(parentTransform, true);
             return;
         }
 
@@ -47,19 +54,18 @@ public class ClawGrabbable : MonoBehaviour
         }
 
         //Default case
-        this.transform.parent = parentTransform;
-
-
-        //Disable any rigidbody component
-        if (rigidbodyComponent != null)
-        {
-            rigidbodyComponent.isKinematic = true;
-            rigidbodyComponent.useGravity = false;
-        }
+        this.transform.parent = parentTransform;        
     }
 
     public void DetachFromParent()
     {
+        //Enable any rigidbody component
+        if (rigidbodyComponent != null)
+        {
+            rigidbodyComponent.isKinematic = false;
+            rigidbodyComponent.useGravity = true;
+        }
+
         //Grabbable object case
         GrabbableObject grabbable = this.GetComponent<GrabbableObject>();
         if (grabbable != null)
@@ -78,13 +84,6 @@ public class ClawGrabbable : MonoBehaviour
         }
 
         //Default case
-        this.transform.parent = null;
-
-        //Enable any rigidbody component
-        if (rigidbodyComponent != null)
-        {
-            rigidbodyComponent.isKinematic = false;
-            rigidbodyComponent.useGravity = true;
-        }
+        this.transform.parent = null;        
     }
 }

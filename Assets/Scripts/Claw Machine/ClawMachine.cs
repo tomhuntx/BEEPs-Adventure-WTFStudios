@@ -2,21 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityStandardAssets.Cameras;
 
 public class ClawMachine : MonoBehaviour
 {
     #region Variables
+    public ProtectCameraFromWallClip antiClipCam;
+    public Vector3 offset;
     [Header("Claw Rails")]
     [SerializeField] private Transform horizontalRail;
     [SerializeField] private Transform verticalRail;
 
     [Header("Properties")]
+    [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 2.5f;
+    [SerializeField] private float grabDelay = 0.5f;
+    private float grabDelayTimer;
 
     [Tooltip("The size of the detection area from the grabbable object's center. " +
              "Only accounts for x and z axes.")]
     [SerializeField] private float targetDetectionThreshold = 0.3f;
 
+    [Header("Camera Settings")]
+    [SerializeField] private Camera clawCam;
+    private Transform lookTRS;
+
+    [Header("Broken Line Settings")]
+    [SerializeField] private BrokenLines lines;
+    [Tooltip("The offset from the claw head's position.")]
+    [SerializeField] private Vector3 lineStartOffset = Vector3.zero;
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color interactableColor;
+    [SerializeField] private Color placementColor;
 
     [Header("References")]
     [SerializeField] private Transform lightTRS;
@@ -28,6 +45,13 @@ public class ClawMachine : MonoBehaviour
     private bool controlsEnabled = true;
     private bool doGrab = false;
     private bool doPlace = false;
+    private RaycastHit raycastHit;
+
+    [Header("Movement Limiters")]
+    [Tooltip("0 = min, 1 = max")]
+    [SerializeField] private Transform[] horizontalLimiters = new Transform[2];
+    [Tooltip("0 = min, 1 = max")]
+    [SerializeField] private Transform[] verticalLimiters = new Transform[2];
 
     [Header("Events")]
     public UnityEvent onObjectGrab;
@@ -35,6 +59,21 @@ public class ClawMachine : MonoBehaviour
     public UnityEvent onObjectPlace;
     #endregion
 
+
+
+    private void Start()
+    {
+        onObjectGrab.AddListener(ClawClamp);
+        onObjectPlace.AddListener(ClawRelease);
+        onObjectDrop.AddListener(ClawRelease);
+
+        lookTRS = new GameObject("ClawCamTRS").transform;
+        lookTRS.parent = this.transform;
+        lookTRS.position = clawCam.transform.position;
+        lookTRS.rotation = clawCam.transform.rotation;
+
+        antiClipCam.cameraOffset = offset;
+    }
 
     private void FixedUpdate()
     {
@@ -57,9 +96,11 @@ public class ClawMachine : MonoBehaviour
 
                 if (Input.GetButtonDown("Drop Object"))
                 {
+                    grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
                     grabbedObject.DetachFromParent();
                     grabbedObject = null;
                     objectDetector.gameObject.SetActive(true);
+                    onObjectDrop.Invoke();
                 }
             }
         }
@@ -69,10 +110,15 @@ public class ClawMachine : MonoBehaviour
 
             if (highlightedObject != null)
             {
+                if (DoRaycast(clawHeadTRS))
+                {
+                    Debug.DrawLine(clawHeadTRS.position, raycastHit.point, Color.cyan);
+                }
+
                 if (!doGrab &&
                     controlsEnabled &&
                     Input.GetButtonDown("Grab Object") &&
-                    Physics.Raycast(animatableTRS.position, -animatableTRS.up, out RaycastHit rayHit))
+                    Physics.Raycast(clawHeadTRS.position, -clawHeadTRS.up))
                 {
                     controlsEnabled = false;
                     doGrab = true;
@@ -86,13 +132,26 @@ public class ClawMachine : MonoBehaviour
             //Downwards motion
             if (grabbedObject == null)
             {
-                animatableTRS.position -= animatableTRS.up * moveSpeed * Time.deltaTime;
-                DetectObject();
+                if (!DetectObject())
+                {
+                    animatableTRS.position -= animatableTRS.up * moveSpeed * Time.deltaTime;
+
+                    if (highlightedObject != null &&
+                        DoRaycast(objectDetector.transform) &&
+                        raycastHit.transform != highlightedObject.transform)
+                    {
+                        doGrab = false;
+                        doPlace = true;
+                        highlightedObject = null;
+                        lightTRS.gameObject.SetActive(false);
+                    }
+                }
             }
             //Upwards motion
             else
             {
-                animatableTRS.position += animatableTRS.up * moveSpeed * Time.deltaTime;
+                if (grabDelayTimer < Time.time)
+                    animatableTRS.position += animatableTRS.up * moveSpeed * Time.deltaTime;
 
                 if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
                 {
@@ -112,7 +171,7 @@ public class ClawMachine : MonoBehaviour
                 if (grabbedObject.rigidbodyComponent.SweepTest(-clawHeadTRS.up, out RaycastHit sweepHit) &&
                     sweepHit.distance <= 0.3f)
                 {
-                    DropObject();
+                    PlaceObject();
                 }
             }
             //Upwards motion
@@ -128,7 +187,41 @@ public class ClawMachine : MonoBehaviour
                 }
             }
         }
+    }
 
+    private void Update()
+    {
+        if (DoRaycast(clawHeadTRS))
+        {
+            //Debug.DrawLine(clawHeadTRS.position, rh.point, Color.green);
+            lines.gameObject.SetActive(true);
+            LineRenderer lr = lines.LineRendererComponent;
+            lr.SetPosition(0, clawHeadTRS.position + lineStartOffset);
+            lr.SetPosition(1, raycastHit.point);
+            lookTRS.position = clawCam.transform.position;
+            lookTRS.LookAt(raycastHit.point);
+            clawCam.transform.rotation = Quaternion.Slerp(clawCam.transform.rotation, lookTRS.rotation, Time.deltaTime);
+
+            if (lightTRS.gameObject.activeSelf)
+            {
+                lines.LineColor = interactableColor;
+            }
+            else
+            {
+                if (grabbedObject != null)
+                {
+                    lines.LineColor = placementColor;
+                }
+                else
+                {
+                    lines.LineColor = normalColor;
+                }
+            }
+        }
+        else
+        {
+            lines.gameObject.SetActive(false);
+        }
     }
 
 
@@ -136,9 +229,18 @@ public class ClawMachine : MonoBehaviour
     #region Private Methods
     private void MoveClaw()
     {
-        Vector3 movementVector = this.transform.right * Input.GetAxis("Horizontal") +
-                                 this.transform.forward * Input.GetAxis("Vertical");
+        Vector3 camForward = clawCam.transform.forward;
+        camForward.y = 0;
+
+        Vector3 camRight = clawCam.transform.right;
+        camRight.y = 0;
+
+        Vector3 movementVector = camRight * Input.GetAxis("Horizontal") +
+                                 camForward * Input.GetAxis("Vertical");
         this.transform.Translate(movementVector * moveSpeed * Time.deltaTime);
+        float xPos = Mathf.Clamp(this.transform.position.x, horizontalLimiters[0].position.x, horizontalLimiters[1].position.x);
+        float zPos = Mathf.Clamp(this.transform.position.z, verticalLimiters[0].position.z, verticalLimiters[1].position.z);
+        this.transform.position = new Vector3(xPos, this.transform.position.y, zPos);
     }
 
     private void UpdateClawRails()
@@ -162,6 +264,8 @@ public class ClawMachine : MonoBehaviour
             if (target.GetComponentInChildren<ClawGrabbable>() != null)
             {
                 GrabObject();
+                grabDelayTimer = grabDelay + Time.time;
+                onObjectGrab.Invoke();
                 return true;
             }
         }
@@ -175,7 +279,9 @@ public class ClawMachine : MonoBehaviour
 
         //Attach to this transform and adjust references
         highlightedObject.AttachToParent(clawHeadTRS);
+        highlightedObject.transform.localPosition = Vector3.zero;
         grabbedObject = highlightedObject;
+        grabbedObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         highlightedObject = null;
 
         //Snap grabbed object to the claw head's center
@@ -187,19 +293,21 @@ public class ClawMachine : MonoBehaviour
         objectDetector.gameObject.SetActive(false);
     }
 
-    private void DropObject()
+    private void PlaceObject()
     {
+        grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
         grabbedObject.DetachFromParent();
         grabbedObject = null;
         objectDetector.gameObject.SetActive(true);
+        onObjectPlace.Invoke();
     }
 
     private void ManageHighlighter()
     {
-        if (Physics.Raycast(clawHeadTRS.position, -clawHeadTRS.up, out RaycastHit hitInfo) &&
-            Physics.OverlapSphere(hitInfo.point, 0.5f).Length < 2)
+        if (DoRaycast(clawHeadTRS) &&
+            Physics.OverlapSphere(raycastHit.point, 0.5f).Length < 2)
         {
-            Vector3 targetPos2D = hitInfo.transform.position;
+            Vector3 targetPos2D = raycastHit.transform.position;
             targetPos2D.y = 0;
 
             Vector3 thisPos2D = this.transform.position;
@@ -211,17 +319,37 @@ public class ClawMachine : MonoBehaviour
                 return;
             }
 
-            highlightedObject = hitInfo.transform.GetComponent<ClawGrabbable>();
+            highlightedObject = raycastHit.transform.GetComponent<ClawGrabbable>();
             lightTRS.gameObject.SetActive(highlightedObject != null);
             if (lightTRS.gameObject.activeSelf)
             {
-                lightTRS.position = hitInfo.transform.position + hitInfo.normal * 1.5f;
+                lightTRS.position = raycastHit.transform.position + raycastHit.normal * 1.5f;
             }
         }
         else
         {
             highlightedObject = null;
         }
+    }
+
+    private void DoClampAnimation(bool state)
+    {
+        animator.SetBool("DoClamp", state);
+    }
+
+    private void ClawClamp()
+    {
+        DoClampAnimation(true);
+    }
+
+    private void ClawRelease()
+    {
+        DoClampAnimation(false);
+    }
+
+    private bool DoRaycast(Transform raycastPoint)
+    {
+        return Physics.Raycast(raycastPoint.position, -raycastPoint.up, out raycastHit);
     }
     #endregion
 }
