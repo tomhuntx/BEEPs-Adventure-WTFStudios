@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4370aca281574354fb6c2e90e26bd5aa, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 041221a3a123c4941bc7b9d3f68d7198, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -902,10 +902,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2057086092408982756, guid: 15677fd7b14388b46ae1b781441e091a,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057086092408982757, guid: 15677fd7b14388b46ae1b781441e091a,
+        type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
     - target: {fileID: 2057086092552368721, guid: 15677fd7b14388b46ae1b781441e091a,
         type: 3}
       propertyPath: m_Name
       value: PREFAB_CAMERA_Main Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057086092552368721, guid: 15677fd7b14388b46ae1b781441e091a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2057086092552368726, guid: 15677fd7b14388b46ae1b781441e091a,
         type: 3}
