@@ -75,7 +75,7 @@ namespace UnityStandardAssets.Cameras
         /// </summary>
         public bool protecting { get; private set; }
 
-        public Vector3 cameraOffset;
+        public Vector3 cameraOffset { get; set; }
 
 
         private void Start()
@@ -88,6 +88,8 @@ namespace UnityStandardAssets.Cameras
 
             // create a new RayHitComparer
             m_RayHitComparer = new RayHitComparer();
+
+            cameraOffset = m_Cam.transform.localPosition;
         }
 
 
