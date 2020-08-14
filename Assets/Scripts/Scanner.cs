@@ -101,7 +101,7 @@ public class Scanner : MonoBehaviour
 		{
 			ChangeLight(lightColour.green);
 		}
-		else if (other.transform.tag == "Hardhat")
+		else if (other.transform.tag == "Hardhat" || other.transform.tag == "Banana")
 		{
 			ChangeLight(lightColour.red);
 		}

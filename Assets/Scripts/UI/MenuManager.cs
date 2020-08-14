@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
 		{
 			Load();
 		}
-		catch (Exception ex)
+		catch (Exception)
 		{
 			Debug.Log("Creating new file...");
 			Data data = DataSaver.NewData();
@@ -86,9 +86,9 @@ public class MenuManager : MonoBehaviour
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.None;
 
-		// Wait at least 2 seconds for loading (waits 2 seconds plus time to load the scene)
+		// Wait at least 2 seconds for loading (waits 1 second plus time to load the scene)
 		// Realtime to not be affected by timescale
-		yield return new WaitForSecondsRealtime(2);
+		yield return new WaitForSecondsRealtime(1);
 
 		// Load the passed scene
 		AsyncOperation async = SceneManager.LoadSceneAsync(scene);

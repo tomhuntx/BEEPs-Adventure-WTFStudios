@@ -325,7 +325,7 @@ MonoBehaviour:
   otherObjectOffset: {x: 0, y: 0, z: 0}
   raycastOrigin: {fileID: 7808786021498455818}
   raycastDistance: 4
-  interactionDistance: {x: 4, y: 10, z: 4}
+  interactionDistance: {x: 3, y: 10, z: 3}
   boxPlacementDeadzone: 0
   SecondCrosshair: 0
   Tutorial: 0
@@ -391,7 +391,7 @@ MonoBehaviour:
   visualiseInEditor: 0
   closestDistance: 1
   dontClipTag: Player
-  cameraOffset: {x: 0, y: 0, z: 0}
+  cameraOffset: {x: 0, y: 1.2, z: -4}
 --- !u!114 &7808786021717997403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,7 +819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7808786022298291873
 Transform:
   m_ObjectHideFlags: 0
@@ -857,9 +857,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.1
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: 1
@@ -1093,7 +1093,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 90
   orthographic: 0

@@ -397,7 +397,8 @@ public class Player : MonoBehaviour
             grabbedObject = hitInfo.transform.GetComponent<GrabbableObject>();
             Transform objectParent = thirdPersonObjectOffset;
             if (controller.IsFirstPerson) objectParent = firstPersonObjectOffset;
-            grabbedObject.GrabObject(objectParent);
+
+			grabbedObject.GrabObject(objectParent);
 
 			// Tooltips on interactable objects            
 			//if (hitInfo.transform.GetComponent<InteractableObject>() != null)

@@ -14,7 +14,7 @@ public class LoadingScreen : MonoBehaviour
 
 	IEnumerator LoadingText()
 	{
-		yield return new WaitForSecondsRealtime(0.2f);
+		yield return new WaitForSecondsRealtime(0.15f);
 		if (loadingText.text.Length >= 10)
 		{
 			loadingText.text = "Loading";
