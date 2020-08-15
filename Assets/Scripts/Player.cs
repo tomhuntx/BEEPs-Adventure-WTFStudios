@@ -612,60 +612,65 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ManageCrosshair()
     {
-        if (isRaycastHit && SecondCrosshair)
+        if (isRaycastHit)
         {
-            InteractableObject interactable = hitInfo.transform.GetComponent<InteractableObject>();
-            if (interactable != null)
+            if (SecondCrosshair)
             {
-                //Snap the dynamic crosshair to the interactable object's transform
-                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(interactable.transform.position);
-            }
-            else
-            {
-                //Move the dynamic crosshair to the raycast point
-                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+                InteractableObject interactable = hitInfo.transform.GetComponent<InteractableObject>();
+                if (interactable != null)
+                {
+                    //Snap the dynamic crosshair to the interactable object's transform
+                    crosshair2.transform.position = controller.CharacterCam.WorldToScreenPoint(interactable.transform.position);
+                }
+                else
+                {
+                    //Move the dynamic crosshair to the raycast point
+                    crosshair2.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+                }
+
+                //Manage dynamic crosshair opacity
+                Direction toCamera = new Direction(raycastOrigin.position + raycastOrigin.forward * raycastDistance,
+                                                   controller.CharacterCam.transform.position);
+
+                bool isPlayerRayHit = Physics.Raycast(toCamera.relativePosition, toCamera.localDirection,
+                                                      out RaycastHit rayHit, toCamera.localScaledDirection.magnitude,
+                                                      Physics.IgnoreRaycastLayer, QueryTriggerInteraction.Collide) &&
+                                      rayHit.transform.tag == "Player";
+
+                Vector3 rayOrigin = toCamera.relativePosition;
+                if (DoRaycast(out RaycastHit toObjectHit)) rayOrigin = toObjectHit.point;
+                bool isObjectRayHit = Physics.Raycast(rayOrigin, toCamera.localDirection,
+                                                      toCamera.localScaledDirection.magnitude);
+
+                if (isPlayerRayHit || isObjectRayHit)
+                {
+                    //Make the crosshair semi-transparent if the raycast point
+                    //is behind an obstacle based on the current camera view
+                    Color newColor = crosshair2.color;
+                    newColor.a = 0.5f;
+                    crosshair2.color = newColor;
+                    isTargetBehindSometing = true;
+                }
+                else if (!isPlayerRayHit && !isObjectRayHit)
+                {
+                    //Make crosshair opaque
+                    Color newColor = crosshair2.color;
+                    newColor.a = 1;
+                    crosshair2.color = newColor;
+                    isTargetBehindSometing = false;
+                }
             }
 
-            crosshair2.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+            crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
         }
         else
         {
             Vector3 rayPoint = raycastOrigin.position + raycastOrigin.forward * raycastDistance;
             crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(rayPoint);
-            crosshair2.transform.position = crosshair.transform.position;
-        }
-
-        //Manage dynamic crosshair opacity
-        Direction toCamera = new Direction(raycastOrigin.position + raycastOrigin.forward * raycastDistance,
-                                           controller.CharacterCam.transform.position);
-
-        bool isPlayerRayHit = Physics.Raycast(toCamera.relativePosition, toCamera.localDirection,
-                                              out RaycastHit rayHit, toCamera.localScaledDirection.magnitude,
-                                              Physics.IgnoreRaycastLayer, QueryTriggerInteraction.Collide) &&
-                              rayHit.transform.tag == "Player";
-
-        Vector3 rayOrigin = toCamera.relativePosition;
-        if (DoRaycast(out RaycastHit toObjectHit)) rayOrigin = toObjectHit.point;
-        bool isObjectRayHit = Physics.Raycast(rayOrigin, toCamera.localDirection,
-                                              toCamera.localScaledDirection.magnitude);
-
-        if ((isPlayerRayHit || isObjectRayHit) && SecondCrosshair)
-        {
-            //Make the crosshair semi-transparent if the raycast point
-            //is behind an obstacle based on the current camera view
-            Color newColor = crosshair.color;
-            newColor.a = 0.5f;
-            crosshair.color = newColor;
-            isTargetBehindSometing = true;
-        }
-        else if (!isPlayerRayHit && !isObjectRayHit)
-        {
-            //Make crosshair opaque
-            Color newColor = crosshair.color;
-            newColor.a = 1;
-            crosshair.color = newColor;
-            isTargetBehindSometing = false;
-        }
+            
+            if (SecondCrosshair)
+                crosshair2.transform.position = crosshair.transform.position;
+        }        
     }
 
     /// <summary>
