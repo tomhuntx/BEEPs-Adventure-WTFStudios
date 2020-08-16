@@ -2,13 +2,101 @@ tree("Root")
 	repeat
 		mute
 			fallback
-				tree "GrabBox"
+				tree "To Box Grab"
+				tree "Grab Box"
+				tree "Drop Box"
+				tree "Navigation"				
 
-tree("GrabBox")
+
+
+tree("To Box Grab")
+	while
+		sequence
+			AtBoxSource
+			//not IsSorting
+			not HasBox
+			//HasBoxTarget
+			not HasArrived
+			not BoxInTrigger
+		sequence
+			EnableDetector
+			MoveDownAnimation
+
+tree ("Grab Box")
+	while
+		sequence
+			AtBoxSource
+			//not IsSorting
+			//HasBoxTarget
+			//not TargetBoxMismatch
+			not HasBox
+			HasArrived
+		fallback
+			while not BoxInTrigger
+				sequence
+					DoReleaseAnimation
+					MoveDownAnimation
+			while BoxInTrigger
+				sequence
+					DoGrabAnimation			
+					Wait(0.3)
+					GrabBox
+					MoveUpAnimation
+					DisableDetector
+			
+
+tree ("Drop Box")
+	while
+		sequence
+			not AtBoxSource
+			//IsSorting
+			//not HasBoxTarget
+			HasBox
+			HasArrived
+		sequence
+			DoReleaseAnimation
+			DropBox
+
+		
+
+
+
+tree("Navigation")
+	fallback
+		tree "To Box Source"
+		tree "To Cardboard Chute"
+		tree "To Explosive Chute"
+		tree "To Heavy Chute"
+
+
+tree("To Box Source")
 	while
 		sequence
 			not HasBox
-			HasArrived
+			NoNewLocation
+		GoToBoxSource
+
+tree ("To Cardboard Chute")
+	while
 		sequence
-			GoToBoxSource
-		
+			HasBox
+			HasCardboardBox
+			NoNewLocation
+		GoToCardboardChute
+
+tree ("To Explosive Chute")
+	while
+		sequence
+			HasBox
+			HasExplosiveBox
+			NoNewLocation
+		GoToExplosiveChute
+
+
+tree ("To Heavy Chute")
+	while
+		sequence
+			HasBox
+			HasHeavyBox
+			NoNewLocation
+		GoToHeavyChute

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityStandardAssets.Cameras
@@ -23,7 +24,7 @@ namespace UnityStandardAssets.Cameras
         [SerializeField] private float closestDistance = 0.5f;
 
         [Tooltip("Don't clip against objects with this tag (useful for not clipping against the targeted object).")]
-        [SerializeField] private string dontClipTag = "Player";
+        [SerializeField] private List<string> dontClipTags = new List<string>() { "Player" };
         #endregion
 
 
@@ -114,8 +115,9 @@ namespace UnityStandardAssets.Cameras
             // loop through all the collisions to check if something we care about
             for (int i = 0; i < cols.Length; i++)
             {
+                //cols[i].attachedRigidbody.CompareTag(dontClipTag)
                 if ((!cols[i].isTrigger) &&
-                    !(cols[i].attachedRigidbody != null && cols[i].attachedRigidbody.CompareTag(dontClipTag)))
+                    !(cols[i].attachedRigidbody != null && dontClipTags.Contains(cols[i].gameObject.tag)))
                 {
                     initialIntersect = true;
                     break;
@@ -148,7 +150,8 @@ namespace UnityStandardAssets.Cameras
                 // only deal with the collision if it was closer than the previous one, not a trigger, and not attached to a rigidbody tagged with the dontClipTag
                 if (m_Hits[i].distance < nearest && (!m_Hits[i].collider.isTrigger) &&
                     !(m_Hits[i].collider.attachedRigidbody != null &&
-                      m_Hits[i].collider.attachedRigidbody.CompareTag(dontClipTag)))
+                      //m_Hits[i].collider.attachedRigidbody.CompareTag(dontClipTag)
+                      dontClipTags.Contains(m_Hits[i].collider.tag)))
                 {
                     // change the nearest collision to latest
                     nearest = m_Hits[i].distance;

@@ -7,8 +7,6 @@ using UnityStandardAssets.Cameras;
 public class ClawMachine : MonoBehaviour
 {
     #region Variables
-    public ProtectCameraFromWallClip antiClipCam;
-    public Vector3 offset;
     [Header("Claw Rails")]
     [SerializeField] private Transform horizontalRail;
     [SerializeField] private Transform verticalRail;
@@ -36,6 +34,7 @@ public class ClawMachine : MonoBehaviour
     [SerializeField] private Color placementColor;
 
     [Header("References")]
+    [SerializeField] private Transform grabbedObjectOffset;
     [SerializeField] private Transform lightTRS;
     [SerializeField] private Transform clawHeadTRS;
     [SerializeField] private Transform animatableTRS;
@@ -71,8 +70,6 @@ public class ClawMachine : MonoBehaviour
         lookTRS.parent = this.transform;
         lookTRS.position = clawCam.transform.position;
         lookTRS.rotation = clawCam.transform.rotation;
-
-        antiClipCam.cameraOffset = offset;
     }
 
     private void FixedUpdate()
@@ -110,10 +107,10 @@ public class ClawMachine : MonoBehaviour
 
             if (highlightedObject != null)
             {
-                if (DoRaycast(clawHeadTRS))
-                {
-                    Debug.DrawLine(clawHeadTRS.position, raycastHit.point, Color.cyan);
-                }
+                //if (DoRaycast(clawHeadTRS))
+                //{
+                //    Debug.DrawLine(clawHeadTRS.position, raycastHit.point, Color.cyan);
+                //}
 
                 if (!doGrab &&
                     controlsEnabled &&
@@ -230,9 +227,13 @@ public class ClawMachine : MonoBehaviour
     private void MoveClaw()
     {
         Vector3 camForward = clawCam.transform.forward;
+        camForward.x = Mathf.Clamp(camForward.x * 10, -1, 1);
+        camForward.z = Mathf.Clamp(camForward.z * 10, -1, 1);
         camForward.y = 0;
 
         Vector3 camRight = clawCam.transform.right;
+        camRight.x = Mathf.Clamp(camRight.x * 10, -1, 1);
+        camRight.z = Mathf.Clamp(camRight.z * 10, -1, 1);
         camRight.y = 0;
 
         Vector3 movementVector = camRight * Input.GetAxis("Horizontal") +
@@ -278,7 +279,7 @@ public class ClawMachine : MonoBehaviour
         objectDetector.ObjectsInTrigger.Clear();
 
         //Attach to this transform and adjust references
-        highlightedObject.AttachToParent(clawHeadTRS);
+        highlightedObject.AttachToParent(grabbedObjectOffset);
         highlightedObject.transform.localPosition = Vector3.zero;
         grabbedObject = highlightedObject;
         grabbedObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");

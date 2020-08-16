@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using Panda;
 
 
-[RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PandaBehaviour))]
 public class ClawMachineAI : MonoBehaviour
 {
@@ -13,6 +13,10 @@ public class ClawMachineAI : MonoBehaviour
 
     #region Exposed Variables
     [SerializeField] private float moveSpeed = 5.0f;
+
+    [Header("Animators")]
+    [SerializeField] private Animator shaftAnim;
+    [SerializeField] private Animator clawAnim;
 
     [Header("Claw Rails")]
     [SerializeField] private Transform horizontalRail;
@@ -36,59 +40,128 @@ public class ClawMachineAI : MonoBehaviour
 
 
     #region Private Variables
-    private Animator animator;
     private Box targetBox;
     private Box grabbedBox;
     private PandaBehaviour pandaBehaviour;
     private RaycastHit raycastHit;
     private bool isRaycastHit;
+    private string prevTrigAnim;
 
-    private bool hasArrived = true;
+    private bool hasArrived = false;
     private Vector3 newLocation = Vector3.negativeInfinity;
+    private bool isSorting = false;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        animator = this.GetComponent<Animator>();
         pandaBehaviour = this.GetComponent<PandaBehaviour>();
         Instance = this;
-        SetAnimation("Idle");
+        //SetAnimation("Idle");
+
+        //newLocation = boxSource.position;
+        //hasArrived = false;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         //Only move if there's a set valid location
         if (!hasArrived &&
-            newLocation != Vector3.negativeInfinity)
+            NoNewLocation())
         {
             //Move to location
-            this.transform.position = Vector3.Lerp(this.transform.position, newLocation, moveSpeed * Time.deltaTime);
+            //this.transform.position = Vector3.Lerp(this.transform.position, newLocation, (moveSpeed / 100) * Time.deltaTime);
 
             //Negate y value then get distance
-            float distance = VectorFlat3D.GetFlattenedDistance(this.transform.position, newLocation, VectorFlat3D.Axis.y);
+            Vector3 v1 = this.transform.position;
+            v1.y = 0;
+
+            Vector3 v2 = newLocation;   
+            v2.y = 0;
+
+            Vector3 dir = VectorFlat3D.FlattenVector(Vector3.Normalize(newLocation - this.transform.position), VectorFlat3D.Axis.y);
+            if (float.IsNaN(dir.x) ||
+                float.IsNaN(dir.y) ||
+                float.IsNaN(dir.z))
+            {
+                return;
+            }
+
+            this.transform.position += dir * moveSpeed * Time.deltaTime;
+
+            float distance = Vector3.Distance(v1, v2);
             if (distance < 0.1f)
             {
                 hasArrived = true;
-                //this.transform.position = newLocation;
+                Vector3 newPos = newLocation;
+                newPos.y = this.transform.position.y;
+                this.transform.position = newPos;
                 newLocation = Vector3.negativeInfinity;
             }
         }
 
         isRaycastHit = DoRaycast();
         UpdateClawRails();
+        
+        if (grabbedBox != null &&
+            !IsSorting())
+        {
+            Vector3 v1 = this.transform.position;
+            v1.y = 0;
+
+            Vector3 v2 = boxSource.position;
+            v2.y = 0;
+
+            float distance = Vector3.Distance(v1, v2);
+            if (distance < 0.1f)
+            {
+                Box newTarget = raycastHit.transform.GetComponent<Box>();
+                if (newTarget != null)
+                {
+                    targetBox = newTarget;
+                }
+                else
+                {
+                    targetBox = null;
+                }
+            }
+        }
+
+        if (grabbedBox != null &&
+            grabbedBoxOffset.childCount == 0)
+        {
+            grabbedBox.gameObject.layer = LayerMask.NameToLayer("Default");
+            grabbedBox = null;
+        }
     }
+
+    //private void FixedUpdate()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Alpha1))
+    //        SetAnimation("MoveDown");
+
+    //    if (Input.GetKeyDown(KeyCode.Alpha2))
+    //        SetAnimation("Grab");
+
+    //    if (Input.GetKeyDown(KeyCode.Alpha3))
+    //        SetAnimation("MoveUp");
+
+    //    if (Input.GetKeyDown(KeyCode.Alpha4))
+    //        SetAnimation("Release");
+
+    //    if (Input.GetKeyDown(KeyCode.Alpha0))
+    //        SetAnimation("Idle");
+    //}
 
     private void OnEnable()
-    {
-        onComponentDisable.Invoke();
-    }
-
-    private void OnDisable()
     {
         onComponentEnable.Invoke();
     }
 
+    private void OnDisable()
+    {
+        onComponentDisable.Invoke();
+    }
 
 
     private void UpdateClawRails()
@@ -97,8 +170,8 @@ public class ClawMachineAI : MonoBehaviour
                                               horizontalRail.position.y,
                                               horizontalRail.position.z);
 
-        verticalRail.position = new Vector3(horizontalRail.position.x,
-                                            horizontalRail.position.y,
+        verticalRail.position = new Vector3(verticalRail.position.x,
+                                            verticalRail.position.y,
                                             this.transform.position.z);
     }
 
@@ -108,39 +181,80 @@ public class ClawMachineAI : MonoBehaviour
         hasArrived = false;
     }
 
-    private void GrabBox()
-    {
-        GrabbableObject.AttachToParent(targetBox.transform, grabbedBoxOffset, false, true);
-    }
-
-    private void DropBox()
-    {
-        GrabbableObject.DetachFromParent(grabbedBox.transform);
-    }
+    
 
     private bool DoRaycast()
     {
         Ray ray = new Ray(raycastOrigin.position, -raycastOrigin.up);
+        Debug.DrawLine(ray.origin, ray.direction * float.PositiveInfinity, Color.cyan);
         return Physics.Raycast(ray, out raycastHit);
     }
 
     public void ToggleAI(bool state)
     {
         pandaBehaviour.enabled = state;
-        animator.enabled = state;
+        shaftAnim.enabled = state;
         this.enabled = state;
-        SetAnimation("Release");
+        SetClawAnimation(false);
+        if (grabbedBoxOffset.childCount > 0)
+        {
+            grabbedBox = grabbedBoxOffset.GetChild(0).gameObject.GetComponent<Box>();
+
+            if (grabbedBox != null)
+                DropBox();
+        }
+        //SetAnimation("Release");
     }
 
-    public void SetAnimation(string triggerName)
+    //public void SetAnimation(string triggerName)
+    //{
+    //    print(triggerName);
+    //    if (!animator.enabled) 
+    //        animator.enabled = true;
+
+    //    animator.ResetTrigger(prevTrigAnim);
+    //    animator.SetTrigger(triggerName);
+    //    prevTrigAnim = triggerName;
+
+    //    if (triggerName == "Idle")
+    //        animator.enabled = false;
+    //}
+
+    private void SetShaftAnimation(bool moveDown)
     {
-        animator.SetTrigger(triggerName);
+        shaftAnim.SetBool("MoveDown", moveDown);
     }
+
+    private void SetClawAnimation(bool doClamp)
+    {
+        clawAnim.SetBool("DoClamp", doClamp);
+    }
+
+
 
     #region PandaBT Methods
     [Panda.Task]
+    private void GrabBox()
+    {
+        targetBox.transform.parent = null;
+        GrabbableObject.AttachToParent(targetBox.transform, grabbedBoxOffset, false, true);
+        grabbedBox = targetBox;
+        targetBox = null;
+        Panda.Task.current.Succeed();
+    }
+
+    [Panda.Task]
+    private void DropBox()
+    {
+        GrabbableObject.DetachFromParent(grabbedBox.transform);
+        grabbedBox = null;
+        Panda.Task.current.Succeed();
+    }
+
+    [Panda.Task]
     private bool BoxInTrigger()
     {
+        Panda.Task.current.Succeed();
         foreach (GameObject gameObject in colliderEvents.ObjectsInTrigger)
         {
             Box box = gameObject.GetComponentInChildren<Box>();
@@ -160,6 +274,12 @@ public class ClawMachineAI : MonoBehaviour
     }
 
     [Panda.Task]
+    private bool HasBoxTarget()
+    {
+        return targetBox != null;
+    }
+
+    [Panda.Task]
     private bool HasArrived()
     {
         return hasArrived;
@@ -171,40 +291,141 @@ public class ClawMachineAI : MonoBehaviour
         return targetBox.transform != raycastHit.transform &&
                raycastHit.transform.GetComponentInChildren<Box>() == null;
     }
+    
+    [Panda.Task]
+    private bool NoNewLocation()
+    {
+        return newLocation != Vector3.negativeInfinity ||
+               newLocation != Vector3.positiveInfinity;
+    }
+
+    private void SetLocation(Vector3 position)
+    {
+        position = VectorFlat3D.FlattenVector(position, VectorFlat3D.Axis.y);
+        position.y = this.transform.position.y;
+        newLocation = position;
+        //animator.enabled = false;
+        hasArrived = false;
+        Panda.Task.current.Succeed();
+    }
 
     [Panda.Task]
     private void GoToBoxSource()
     {
         SetLocation(boxSource.position);
-        Panda.Task.current.Succeed();
+        //Panda.Task.current.Succeed();
+        isSorting = false;
     }
 
     [Panda.Task]
     private void GoToCardboardChute()
     {
         SetLocation(cardboardChute.position);
+        isSorting = true;
     }
 
     [Panda.Task]
     private void GoToExplosiveChute()
     {
         SetLocation(explosiveChute.position);
+        isSorting = true;
     }
 
     [Panda.Task]
     private void GoToHeavyChute()
     {
         SetLocation(heavyChute.position);
+        isSorting = true;
     }
 
     [Panda.Task]
-    private void SetLocation(Vector3 position)
+    private void EnableDetector()
     {
-        position = VectorFlat3D.FlattenVector(position, VectorFlat3D.Axis.y);
-        position.y = this.transform.position.y;
-        newLocation = position;
-        animator.enabled = false;
-        hasArrived = false;
+        colliderEvents.enabled = true;
+        Panda.Task.current.Succeed();
     }
+
+    [Panda.Task]
+    private void DisableDetector()
+    {
+        colliderEvents.ObjectsInTrigger.Clear();
+        colliderEvents.enabled = false;
+        Panda.Task.current.Succeed();
+    }
+
+    #region BoxCheckers
+    [Panda.Task]
+    private bool HasCardboardBox()
+    {
+        return grabbedBox.GetComponent<Box>().TypeOf == Box.Type.Cardboard;
+    }
+
+    [Panda.Task]
+    private bool HasExplosiveBox()
+    {
+        return grabbedBox.GetComponent<Box>().TypeOf == Box.Type.Explosive;
+    }
+
+    [Panda.Task]
+    private bool HasHeavyBox()
+    {
+        return grabbedBox.GetComponent<Box>().TypeOf == Box.Type.Heavy;
+    }
+
+    [Panda.Task]
+    private bool IsSorting()
+    {
+        return isSorting;
+    }
+    #endregion
+
+    #region Animation Hooks
+    [Panda.Task]
+    private void MoveDownAnimation()
+    {
+        //SetAnimation("MoveDown");
+        SetShaftAnimation(true);
+        Panda.Task.current.Succeed();
+    }
+
+    [Panda.Task]
+    private void MoveUpAnimation()
+    {
+        //SetAnimation("MoveUp");
+        SetShaftAnimation(false);
+        Panda.Task.current.Succeed();
+    }
+
+    [Panda.Task]
+    private void DoGrabAnimation()
+    {
+        //SetAnimation("Grab");
+        SetClawAnimation(true);
+        Panda.Task.current.Succeed();
+    }
+
+    [Panda.Task]
+    private void DoReleaseAnimation()
+    {
+        //SetAnimation("Release");
+        SetClawAnimation(false);
+        Panda.Task.current.Succeed();
+    }
+
+    [Panda.Task]
+    private void DisableAnimator()
+    {
+        //SetAnimation("Idle");
+        Panda.Task.current.Succeed();
+    }
+
+    [Panda.Task]
+    private bool AtBoxSource()
+    {
+        float distance = VectorFlat3D.GetFlattenedDistance(this.transform.position, boxSource.position, VectorFlat3D.Axis.y);
+        return distance < 0.1f;
+    }
+    #endregion
+
     #endregion
 }

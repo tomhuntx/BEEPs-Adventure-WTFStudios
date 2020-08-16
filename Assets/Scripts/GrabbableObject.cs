@@ -187,21 +187,18 @@ public class GrabbableObject : DestructibleObject
             target.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
         target.transform.parent = parent;
-        target.transform.localRotation = parent.rotation;
-        target.transform.localPosition = parent.position;
+        target.transform.localRotation = parent.localRotation;
+        target.transform.localPosition = Vector3.zero;
 
         BoxDragSFX sfx = target.transform.GetComponentInChildren<BoxDragSFX>();
         if (sfx != null) sfx.enabled = false;
 
-        Collider[] colliders = target.GetComponentsInChildren<Collider>();
-        if (colliders.Length > 0)
+        Collider collider = target.GetComponentInChildren<Collider>();
+        if (collider != null)
         {
-            foreach (Collider collider in colliders)
-            {
-                collider.enabled = colliderState;
-            }
-
-            Rigidbody rb = colliders[0].attachedRigidbody;
+            Rigidbody rb = collider.attachedRigidbody;
+            collider.enabled = colliderState;
+            
             if (rb != null)
             {
                 rb.isKinematic = true;
@@ -228,15 +225,11 @@ public class GrabbableObject : DestructibleObject
         BoxDragSFX sfx = target.transform.GetComponentInChildren<BoxDragSFX>();
         if (sfx != null) sfx.enabled = false;
 
-        Collider[] colliders = target.GetComponentsInChildren<Collider>();
-        if (colliders.Length > 0)
+        Collider collider = target.GetComponentInChildren<Collider>();
+        if (collider != null)
         {
-            foreach (Collider collider in colliders)
-            {
-                collider.enabled = colliderState;
-            }
-
-            Rigidbody rb = colliders[0].attachedRigidbody;
+            collider.enabled = colliderState;
+            Rigidbody rb = collider.attachedRigidbody;            
             if (rb != null)
             {
                 rb.isKinematic = false;

@@ -35,6 +35,6 @@ public class CameraController : MonoBehaviour
         else if (Input.mouseScrollDelta.y < 0) finalPos = farPos;
         
         
-        antiClip.cameraOffset = Vector3.Slerp(antiClip.cameraOffset, finalPos, mouseScroll * zoomSpeed * Time.deltaTime);
+        antiClip.cameraOffset = Vector3.Lerp(antiClip.cameraOffset, finalPos, mouseScroll * zoomSpeed * Time.deltaTime);
     }
 }
