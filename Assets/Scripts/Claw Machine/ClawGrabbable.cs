@@ -25,7 +25,7 @@ public class ClawGrabbable : MonoBehaviour
     }
 
 
-    public void AttachToParent(Transform parentTransform)
+    public void AttachToParent(Transform parentTransform, bool colliderState = true, bool ignoreRaycast = false)
     {
         //Disable any rigidbody component
         if (rigidbodyComponent != null)
@@ -40,7 +40,16 @@ public class ClawGrabbable : MonoBehaviour
         GrabbableObject grabbable = this.GetComponent<GrabbableObject>();
         if (grabbable != null)
         {
-            grabbable.GrabObject(parentTransform, true);
+            grabbable.GrabObject(parentTransform, colliderState);
+            return;
+        }
+
+        //Heavy box case
+        Box heavyBox = this.GetComponent<Box>();
+        if (heavyBox != null &&
+            heavyBox.TypeOf == Box.Type.Heavy)
+        {
+            GrabbableObject.AttachToParent(this.transform, parentTransform, colliderState, ignoreRaycast);
             return;
         }
 
@@ -49,6 +58,7 @@ public class ClawGrabbable : MonoBehaviour
         if (robot != null)
         {
             this.transform.parent = parentTransform;
+            if (ignoreRaycast) robot.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
             //robot.SetAnimationState("NAME", true); //set whatever future animations here
             return;
         }
@@ -71,6 +81,15 @@ public class ClawGrabbable : MonoBehaviour
         if (grabbable != null)
         {
             grabbable.DetachFromParent();
+            return;
+        }
+
+        //Heavy box case
+        Box heavyBox = this.GetComponent<Box>();
+        if (heavyBox != null &&
+            heavyBox.TypeOf == Box.Type.Heavy)
+        {
+            GrabbableObject.DetachFromParent(this.transform);
             return;
         }
 

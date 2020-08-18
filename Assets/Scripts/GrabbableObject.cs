@@ -155,7 +155,7 @@ public class GrabbableObject : DestructibleObject
     {
         this.transform.parent = parentTransform;
         this.transform.localRotation = parentTransform.rotation;
-        this.transform.localPosition = parentTransform.position;
+        this.transform.localPosition = Vector3.zero;
 
         BoxDragSFX sfx = this.transform.GetComponentInChildren<BoxDragSFX>();
         if (sfx != null) sfx.enabled = false;

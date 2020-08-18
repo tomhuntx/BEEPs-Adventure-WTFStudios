@@ -24,6 +24,7 @@ public class PlayerSFX : MonoBehaviour
     [SerializeField] private GameObject jumpSFXPrefab;
     [SerializeField] private GameObject landSFXPrefab;
 
+    public AudioSource SFXSource { get { return source; } set { source = value; } }
 
     // Start is called before the first frame update
     void Start()

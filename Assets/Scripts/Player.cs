@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
 
 	#region Hidden Variables
 	private PlayerCharacterController controller;
+    private PlayerSFX sfxController;
     private RaycastHit hitInfo;
     private bool isRaycastHit = false;
     private GameObject heavyBox;
@@ -109,6 +110,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<PlayerCharacterController>();
+        sfxController = this.GetComponent<PlayerSFX>();
         handAnim = hand.GetComponent<Animator>();
         heavyBoxRef = new GameObject();
 
@@ -222,7 +224,7 @@ public class Player : MonoBehaviour
         //}
     }
 
-    #region Methods
+    #region Private Methods
     /// <summary>
     /// Shows the highlighter of an interactable object.
     /// </summary>
@@ -699,6 +701,24 @@ public class Player : MonoBehaviour
                 return true;
         }
         return false;
+    }
+    #endregion
+
+    #region Public Methods
+    public void SetEnabled (bool isEnabled)
+    {
+        controller.Controller.enabled = isEnabled;
+        controller.RigidbodyComponent.isKinematic = !isEnabled;        
+        controller.CharacterCam.gameObject.SetActive(isEnabled);
+        controller.enabled = isEnabled;
+
+        if (!isEnabled) sfxController.SFXSource.pitch = 0;
+        sfxController.enabled = isEnabled;        
+        
+        crosshair.gameObject.SetActive(isEnabled);
+        if (SecondCrosshair) crosshair2.gameObject.SetActive(isEnabled);
+
+        this.enabled = isEnabled;
     }
     #endregion
 }

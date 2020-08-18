@@ -3,8 +3,8 @@ tree("Root")
 		mute
 			fallback
 				tree "To Box Grab"
-				tree "Grab Box"
-				tree "Drop Box"
+				tree "Grab Object"
+				tree "Drop Object"
 				tree "Navigation"				
 
 
@@ -13,49 +13,42 @@ tree("To Box Grab")
 	while
 		sequence
 			AtBoxSource
-			//not IsSorting
-			not HasBox
-			//HasBoxTarget
+			not HasObjectGrabbed
 			not HasArrived
-			not BoxInTrigger
+			not ObjectInTrigger
 		sequence
 			EnableDetector
 			MoveDownAnimation
 
-tree ("Grab Box")
+tree ("Grab Object")
 	while
 		sequence
 			AtBoxSource
-			//not IsSorting
-			//HasBoxTarget
-			//not TargetBoxMismatch
-			not HasBox
+			not HasObjectGrabbed
 			HasArrived
 		fallback
-			while not BoxInTrigger
+			while not ObjectInTrigger
 				sequence
 					DoReleaseAnimation
 					MoveDownAnimation
-			while BoxInTrigger
+			while ObjectInTrigger
 				sequence
 					DoGrabAnimation			
 					Wait(0.3)
-					GrabBox
+					GrabObject
 					MoveUpAnimation
 					DisableDetector
 			
 
-tree ("Drop Box")
+tree ("Drop Object")
 	while
 		sequence
 			not AtBoxSource
-			//IsSorting
-			//not HasBoxTarget
-			HasBox
+			HasObjectGrabbed
 			HasArrived
 		sequence
 			DoReleaseAnimation
-			DropBox
+			DropObject
 
 		
 
@@ -72,14 +65,14 @@ tree("Navigation")
 tree("To Box Source")
 	while
 		sequence
-			not HasBox
+			not HasObjectGrabbed
 			NoNewLocation
 		GoToBoxSource
 
 tree ("To Cardboard Chute")
 	while
 		sequence
-			HasBox
+			HasObjectGrabbed
 			HasCardboardBox
 			NoNewLocation
 		GoToCardboardChute
@@ -87,7 +80,7 @@ tree ("To Cardboard Chute")
 tree ("To Explosive Chute")
 	while
 		sequence
-			HasBox
+			HasObjectGrabbed
 			HasExplosiveBox
 			NoNewLocation
 		GoToExplosiveChute
@@ -96,7 +89,7 @@ tree ("To Explosive Chute")
 tree ("To Heavy Chute")
 	while
 		sequence
-			HasBox
+			HasObjectGrabbed
 			HasHeavyBox
 			NoNewLocation
 		GoToHeavyChute

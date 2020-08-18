@@ -25,7 +25,7 @@ public class ClawMachineAI : MonoBehaviour
     [Header("References")]
     [SerializeField] private UnityEventsHandler colliderEvents;
     [SerializeField] private Transform raycastOrigin;
-    [SerializeField] private Transform grabbedBoxOffset;
+    [SerializeField] private Transform grabbedObjectOffset;
 
     [Header("Positions")]
     [SerializeField] private Transform boxSource;
@@ -40,8 +40,8 @@ public class ClawMachineAI : MonoBehaviour
 
 
     #region Private Variables
-    private Box targetBox;
-    private Box grabbedBox;
+    private ClawGrabbable targetObject;
+    private ClawGrabbable grabbedObject;
     private PandaBehaviour pandaBehaviour;
     private RaycastHit raycastHit;
     private bool isRaycastHit;
@@ -103,7 +103,7 @@ public class ClawMachineAI : MonoBehaviour
         isRaycastHit = DoRaycast();
         UpdateClawRails();
         
-        if (grabbedBox != null &&
+        if (grabbedObject != null &&
             !IsSorting())
         {
             Vector3 v1 = this.transform.position;
@@ -115,23 +115,24 @@ public class ClawMachineAI : MonoBehaviour
             float distance = Vector3.Distance(v1, v2);
             if (distance < 0.1f)
             {
-                Box newTarget = raycastHit.transform.GetComponent<Box>();
-                if (newTarget != null)
+                ClawGrabbable newTarget = raycastHit.transform.GetComponent<ClawGrabbable>();
+                if (newTarget != null &&
+                    newTarget.GetComponent<Box>() != null)
                 {
-                    targetBox = newTarget;
+                    targetObject = newTarget;
                 }
                 else
                 {
-                    targetBox = null;
+                    targetObject = null;
                 }
             }
         }
 
-        if (grabbedBox != null &&
-            grabbedBoxOffset.childCount == 0)
+        if (grabbedObject != null &&
+            grabbedObjectOffset.childCount == 0)
         {
-            grabbedBox.gameObject.layer = LayerMask.NameToLayer("Default");
-            grabbedBox = null;
+            grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
+            grabbedObject = null;
         }
     }
 
@@ -156,6 +157,14 @@ public class ClawMachineAI : MonoBehaviour
     private void OnEnable()
     {
         onComponentEnable.Invoke();
+
+        //Drop anything if any
+        if (grabbedObjectOffset.childCount > 0)
+        {
+            SetClawAnimation(false);
+            ClawGrabbable grabbed = grabbedObjectOffset.GetChild(0).GetComponent<ClawGrabbable>();
+            grabbed.DetachFromParent();
+        }
     }
 
     private void OnDisable()
@@ -195,14 +204,21 @@ public class ClawMachineAI : MonoBehaviour
         pandaBehaviour.enabled = state;
         shaftAnim.enabled = state;
         this.enabled = state;
-        SetClawAnimation(false);
-        if (grabbedBoxOffset.childCount > 0)
-        {
-            grabbedBox = grabbedBoxOffset.GetChild(0).gameObject.GetComponent<Box>();
+        grabbedObject = null;
+        targetObject = null;
+        newLocation = Vector3.negativeInfinity;
 
-            if (grabbedBox != null)
-                DropBox();
-        }
+
+        //Drop any grabbed object
+        //SetClawAnimation(false);
+        //if (grabbedObjectOffset.childCount > 0)
+        //{
+        //    grabbedObject = grabbedObjectOffset.GetChild(0).gameObject.GetComponent<ClawGrabbable>();
+
+        //    if (grabbedObject != null)
+        //        DropObject();
+        //}
+
         //SetAnimation("Release");
     }
 
@@ -234,25 +250,27 @@ public class ClawMachineAI : MonoBehaviour
 
     #region PandaBT Methods
     [Panda.Task]
-    private void GrabBox()
+    private void GrabObject()
     {
-        targetBox.transform.parent = null;
-        GrabbableObject.AttachToParent(targetBox.transform, grabbedBoxOffset, false, true);
-        grabbedBox = targetBox;
-        targetBox = null;
+        targetObject.transform.parent = null;
+        //GrabbableObject.AttachToParent(targetObject.transform, grabbedObjectOffset, true, true);
+        targetObject.AttachToParent(grabbedObjectOffset, true, true);
+        grabbedObject = targetObject;
+        targetObject = null;
         Panda.Task.current.Succeed();
     }
 
     [Panda.Task]
-    private void DropBox()
+    private void DropObject()
     {
-        GrabbableObject.DetachFromParent(grabbedBox.transform);
-        grabbedBox = null;
+        //GrabbableObject.DetachFromParent(grabbedObject.transform);
+        grabbedObject.DetachFromParent();
+        grabbedObject = null;
         Panda.Task.current.Succeed();
     }
 
     [Panda.Task]
-    private bool BoxInTrigger()
+    private bool ObjectInTrigger()
     {
         Panda.Task.current.Succeed();
         foreach (GameObject gameObject in colliderEvents.ObjectsInTrigger)
@@ -260,7 +278,7 @@ public class ClawMachineAI : MonoBehaviour
             Box box = gameObject.GetComponentInChildren<Box>();
             if (box != null)
             {
-                targetBox = box;
+                targetObject = box.GetComponent<ClawGrabbable>();
                 return true;
             }
         }
@@ -268,15 +286,15 @@ public class ClawMachineAI : MonoBehaviour
     }
 
     [Panda.Task]
-    private bool HasBox()
+    private bool HasObjectGrabbed()
     {
-        return grabbedBox != null;
+        return grabbedObject != null;
     }
 
     [Panda.Task]
-    private bool HasBoxTarget()
+    private bool HasTargetObject()
     {
-        return targetBox != null;
+        return targetObject != null;
     }
 
     [Panda.Task]
@@ -286,9 +304,9 @@ public class ClawMachineAI : MonoBehaviour
     }
 
     [Panda.Task]
-    private bool TargetBoxMismatch()
+    private bool TargetObjectMismatch()
     {
-        return targetBox.transform != raycastHit.transform &&
+        return targetObject.transform != raycastHit.transform &&
                raycastHit.transform.GetComponentInChildren<Box>() == null;
     }
     
@@ -357,19 +375,19 @@ public class ClawMachineAI : MonoBehaviour
     [Panda.Task]
     private bool HasCardboardBox()
     {
-        return grabbedBox.GetComponent<Box>().TypeOf == Box.Type.Cardboard;
+        return grabbedObject.GetComponent<Box>().TypeOf == Box.Type.Cardboard;
     }
 
     [Panda.Task]
     private bool HasExplosiveBox()
     {
-        return grabbedBox.GetComponent<Box>().TypeOf == Box.Type.Explosive;
+        return grabbedObject.GetComponent<Box>().TypeOf == Box.Type.Explosive;
     }
 
     [Panda.Task]
     private bool HasHeavyBox()
     {
-        return grabbedBox.GetComponent<Box>().TypeOf == Box.Type.Heavy;
+        return grabbedObject.GetComponent<Box>().TypeOf == Box.Type.Heavy;
     }
 
     [Panda.Task]

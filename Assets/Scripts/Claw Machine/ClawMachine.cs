@@ -14,6 +14,7 @@ public class ClawMachine : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 2.5f;
+    [SerializeField] private float shaftMoveSpeed = 5.0f;
     [SerializeField] private float grabDelay = 0.5f;
     private float grabDelayTimer;
 
@@ -44,7 +45,9 @@ public class ClawMachine : MonoBehaviour
     private bool controlsEnabled = true;
     private bool doGrab = false;
     private bool doPlace = false;
+    private bool isResetting = false;
     private RaycastHit raycastHit;
+    private ClawMachineAI clawAI;
 
     [Header("Movement Limiters")]
     [Tooltip("0 = min, 1 = max")]
@@ -56,9 +59,26 @@ public class ClawMachine : MonoBehaviour
     public UnityEvent onObjectGrab;
     public UnityEvent onObjectDrop;
     public UnityEvent onObjectPlace;
+    [Space]
+    public UnityEvent onPlayerKick;
+    public UnityEvent onPlayerLeave;
     #endregion
 
 
+
+
+    private void OnEnable()
+    {
+        //Reset claw to idle state when doing something else
+        isResetting = animatableTRS.localPosition.y < 0;
+        if (isResetting)
+        {
+            controlsEnabled = false;
+            doGrab = false;
+            doPlace = true;
+            highlightedObject = null;
+        }        
+    }
 
     private void Start()
     {
@@ -70,10 +90,34 @@ public class ClawMachine : MonoBehaviour
         lookTRS.parent = this.transform;
         lookTRS.position = clawCam.transform.position;
         lookTRS.rotation = clawCam.transform.rotation;
+
+        clawAI = this.GetComponent<ClawMachineAI>();
     }
 
     private void FixedUpdate()
     {
+        //Enable claw controls when reset is done
+        if (isResetting &&
+            animatableTRS.localPosition.y >= 0)
+        {
+            isResetting = false;
+            controlsEnabled = true;
+
+            if (grabbedObjectOffset.childCount > 0)
+            {
+                grabbedObject = grabbedObjectOffset.GetComponentInChildren<ClawGrabbable>();
+            }
+        }
+        else if (!isResetting)
+        {
+            //Player leave function
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                PlayerLeave();
+                //KickPlayer();
+            }
+        }
+
         if (controlsEnabled)
         {
             MoveClaw();
@@ -131,7 +175,7 @@ public class ClawMachine : MonoBehaviour
             {
                 if (!DetectObject())
                 {
-                    animatableTRS.position -= animatableTRS.up * moveSpeed * Time.deltaTime;
+                    animatableTRS.position -= animatableTRS.up * shaftMoveSpeed * Time.deltaTime;
 
                     if (highlightedObject != null &&
                         DoRaycast(objectDetector.transform) &&
@@ -148,7 +192,7 @@ public class ClawMachine : MonoBehaviour
             else
             {
                 if (grabDelayTimer < Time.time)
-                    animatableTRS.position += animatableTRS.up * moveSpeed * Time.deltaTime;
+                    animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.deltaTime;
 
                 if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
                 {
@@ -163,7 +207,7 @@ public class ClawMachine : MonoBehaviour
             //Downwards motion
             if (grabbedObject != null)
             {
-                animatableTRS.position -= animatableTRS.up * moveSpeed * Time.deltaTime;
+                animatableTRS.position -= animatableTRS.up * shaftMoveSpeed * Time.deltaTime;
 
                 if (grabbedObject.rigidbodyComponent.SweepTest(-clawHeadTRS.up, out RaycastHit sweepHit) &&
                     sweepHit.distance <= 0.3f)
@@ -174,7 +218,7 @@ public class ClawMachine : MonoBehaviour
             //Upwards motion
             else
             {
-                animatableTRS.position += animatableTRS.up * moveSpeed * Time.deltaTime;
+                animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.deltaTime;
 
                 if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
                 {
@@ -222,6 +266,34 @@ public class ClawMachine : MonoBehaviour
     }
 
 
+    public void ToggleClawControls(bool state)
+    {
+        this.enabled = state;
+        clawCam.transform.parent.gameObject.SetActive(state);
+        lines.gameObject.SetActive(state);
+    }
+
+    public void KickPlayer()
+    {
+        if (this.enabled)
+        {
+            onPlayerKick.Invoke();
+            clawAI.ToggleAI(true);
+            LeaveControls();
+        }
+    }
+
+    private void PlayerLeave()
+    {
+        onPlayerLeave.Invoke();
+        LeaveControls();
+    }
+
+    private void LeaveControls()
+    {
+        Player.Instance.SetEnabled(true);
+        ToggleClawControls(false);
+    }
 
     #region Private Methods
     private void MoveClaw()
@@ -238,6 +310,7 @@ public class ClawMachine : MonoBehaviour
 
         Vector3 movementVector = camRight * Input.GetAxis("Horizontal") +
                                  camForward * Input.GetAxis("Vertical");
+        movementVector = Vector3.ClampMagnitude(movementVector, 1);
         this.transform.Translate(movementVector * moveSpeed * Time.deltaTime);
         float xPos = Mathf.Clamp(this.transform.position.x, horizontalLimiters[0].position.x, horizontalLimiters[1].position.x);
         float zPos = Mathf.Clamp(this.transform.position.z, verticalLimiters[0].position.z, verticalLimiters[1].position.z);
@@ -279,10 +352,10 @@ public class ClawMachine : MonoBehaviour
         objectDetector.ObjectsInTrigger.Clear();
 
         //Attach to this transform and adjust references
-        highlightedObject.AttachToParent(grabbedObjectOffset);
-        highlightedObject.transform.localPosition = Vector3.zero;
+        highlightedObject.AttachToParent(grabbedObjectOffset, true, true);
+        //highlightedObject.transform.localPosition = Vector3.zero;
         grabbedObject = highlightedObject;
-        grabbedObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        //grabbedObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         highlightedObject = null;
 
         //Snap grabbed object to the claw head's center

@@ -170,6 +170,7 @@ public class PlayerCharacterController : MonoBehaviour
     #region Accessors
     public Vector3 CurrentDirection { get { return motionDirection; } }
     public CharacterController Controller { get { return controller; } }
+    public Rigidbody RigidbodyComponent { get { return rb; } set { rb = value; } }
     public Camera CharacterCam { get { return characterCam; } set { characterCam = value; } }
     public Transform CharacterHead { get { return characterHead; } set { characterHead = value; } }
     public float Mass { get { return mass; } }
