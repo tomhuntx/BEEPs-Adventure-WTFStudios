@@ -59,7 +59,7 @@ public class ClawMachine : MonoBehaviour
     public UnityEvent onObjectGrab;
     public UnityEvent onObjectDrop;
     public UnityEvent onObjectPlace;
-    [Space]
+    [Space(20)]
     public UnityEvent onPlayerKick;
     public UnityEvent onPlayerLeave;
     #endregion
@@ -76,8 +76,14 @@ public class ClawMachine : MonoBehaviour
             controlsEnabled = false;
             doGrab = false;
             doPlace = true;
-            highlightedObject = null;
-        }        
+            highlightedObject = null;            
+        }
+
+        //Get grabbed object if any
+        if (grabbedObjectOffset.childCount > 0)
+        {
+            grabbedObject = grabbedObjectOffset.GetChild(0).GetComponentInChildren<ClawGrabbable>();
+        }
     }
 
     private void Start()
@@ -101,12 +107,7 @@ public class ClawMachine : MonoBehaviour
             animatableTRS.localPosition.y >= 0)
         {
             isResetting = false;
-            controlsEnabled = true;
-
-            if (grabbedObjectOffset.childCount > 0)
-            {
-                grabbedObject = grabbedObjectOffset.GetComponentInChildren<ClawGrabbable>();
-            }
+            controlsEnabled = true;            
         }
         else if (!isResetting)
         {
