@@ -659,9 +659,9 @@ public class Player : MonoBehaviour
                     crosshair2.color = newColor;
                     isTargetBehindSometing = false;
                 }
-            }
 
-            crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+				crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+			}
         }
         else
         {
