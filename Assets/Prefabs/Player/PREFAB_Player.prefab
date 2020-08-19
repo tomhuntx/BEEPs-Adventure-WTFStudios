@@ -390,8 +390,8 @@ MonoBehaviour:
   sphereCastRadius: 0.2
   visualiseInEditor: 0
   closestDistance: 1
-  dontClipTag: Player
-  cameraOffset: {x: 0, y: 1.2, z: -4}
+  dontClipTags:
+  - Player
 --- !u!114 &7808786021717997403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1499,11 +1499,21 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: -0.00010164268
       objectReference: {fileID: 0}
+    - target: {fileID: -2050006980461810219, guid: 8f3d5fc0b427f6d40988644ba619e31a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0f1e3cbacf689994da5b6c6319f0c622, type: 2}
     - target: {fileID: -927199367670048503, guid: 8f3d5fc0b427f6d40988644ba619e31a,
         type: 3}
       propertyPath: m_Name
       value: PLAYER_BEEP_Head
       objectReference: {fileID: 0}
+    - target: {fileID: 4026318512222651029, guid: 8f3d5fc0b427f6d40988644ba619e31a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 979424bb87ff29b40ad49d304da3915d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f3d5fc0b427f6d40988644ba619e31a, type: 3}
 --- !u!1 &6473175617732492826 stripped
@@ -1721,6 +1731,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PLAYER_BEEP_Body
       objectReference: {fileID: 0}
+    - target: {fileID: 1651062367082650294, guid: 304c295568bb32d43a25432c3b99feec,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bad751e7714ef3c44b5cda6d3f31a58b, type: 2}
+    - target: {fileID: 5500905635100029667, guid: 304c295568bb32d43a25432c3b99feec,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a5e3f92333f5d743ab01273edfbfbe3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 304c295568bb32d43a25432c3b99feec, type: 3}
 --- !u!4 &4174263429155894144 stripped
