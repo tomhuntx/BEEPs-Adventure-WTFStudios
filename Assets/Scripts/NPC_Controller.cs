@@ -11,9 +11,10 @@ public class NPC_Controller : MonoBehaviour
 	public GameObject moveParentL;
 	private List<GameObject> movePointsR;
 	private List<GameObject> movePointsL;
+	private List<GameObject> currentPoints;
 
 	private NavMeshAgent agent;
-	private int currentPoint = 0;
+	private int currentIndex = 0;
 	private int newPoint = 0;
 	bool moveLeft;
 
@@ -41,45 +42,44 @@ public class NPC_Controller : MonoBehaviour
 		}
 		agent = GetComponent<NavMeshAgent>();
 
-		
-
 		// Randomly start with left or right points
 		bool moveLeft = (Random.value > 0.5f);
-
-		// Get a random point to start with
-		if (moveLeft)
-			currentPoint = Random.Range(0, movePointsL.Count);
-		else
-			currentPoint = Random.Range(0, movePointsR.Count);
+		SwapSides();
 	}
 
 	void Update()
 	{
-		/* HAVE TO BRB - WILL FIX
 		// If not reached location, move to it
-		if (Vector3.Distance(transform.position, movePoints[currentPoint].transform.position) > 2.0f)
+		if (Vector3.Distance(transform.position, currentPoints[currentIndex].transform.position) > 2.0f)
 		{
-			agent.SetDestination(movePoints[currentPoint].transform.position);
+			agent.SetDestination(currentPoints[currentIndex].transform.position);
 		}
 		// Otherwise, wait then move to the next patrol point
 		else
 		{
 			StartCoroutine(Wait(2));
 
-			// Get a new random point
-			newPoint = Random.Range(0, movePoints.Count);
-
-			// Make it increadibly unlikely to get the same point twice
-			if (newPoint == currentPoint)
-			{
-				currentPoint = Random.Range(0, movePoints.Count);
-			}
-			else
-			{
-				currentPoint = newPoint;
-			}
+			SwapSides();
 		}
-		*/
+	}
+
+	/// <summary>
+	/// Swap side in which to randomly move to one of its points
+	/// </summary>
+	private void SwapSides()
+	{
+		if (moveLeft)
+		{
+			currentIndex = Random.Range(0, movePointsR.Count);
+			currentPoints = movePointsR;
+			moveLeft = false;
+		}
+		else
+		{
+			currentIndex = Random.Range(0, movePointsL.Count);
+			currentPoints = movePointsL;
+			moveLeft = true;
+		}
 	}
 
 	private IEnumerator Wait(float seconds)
