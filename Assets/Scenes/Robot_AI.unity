@@ -2560,6 +2560,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &147235629
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6955,6 +6958,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &332919693
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7984,6 +7990,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &370000136
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9910,6 +9919,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &416274591
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10719,6 +10731,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &441154704
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12380,6 +12395,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &509112722
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19941,6 +19959,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &773283444
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21113,6 +21134,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &796418304
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21387,6 +21411,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &796890788
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23019,6 +23046,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &865045456
 AudioSource:
   m_ObjectHideFlags: 0
@@ -29191,6 +29221,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &1086451414
 AudioSource:
   m_ObjectHideFlags: 0
@@ -31147,6 +31180,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &1177463552
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33150,6 +33186,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &1247506247
 AudioSource:
   m_ObjectHideFlags: 0
@@ -35278,13 +35317,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1326964176}
-  - component: {fileID: 1326964175}
+  - component: {fileID: 1326964177}
+  - component: {fileID: 1326964178}
   - component: {fileID: 1326964174}
   - component: {fileID: 1326964173}
   - component: {fileID: 1326964172}
   - component: {fileID: 1326964171}
-  - component: {fileID: 1326964178}
-  - component: {fileID: 1326964177}
   m_Layer: 10
   m_Name: PREFAB_NPC_Small Bot
   m_TagString: Bot
@@ -35309,6 +35347,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &1326964172
 AudioSource:
   m_ObjectHideFlags: 0
@@ -35451,45 +35492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1326964175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326964170}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb161fb489e6c9c4696f8cf5acf8fa30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxProcessor: {fileID: 0}
-  anim: {fileID: 953535159}
-  animFace: {fileID: 1591741844}
-  animScreen: {fileID: 994317043}
-  matDetector: {fileID: 0}
-  isManagerBot: 0
-  onPlayerPunch:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1326964174}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3334267170322057064, guid: 4ead4740808483c4896f03434b9b2a00,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onGetExploded:
-    m_PersistentCalls:
-      m_Calls: []
-  onGetAnnoyed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1326964176
 Transform:
   m_ObjectHideFlags: 0
@@ -47910,6 +47912,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &1756384445
 AudioSource:
   m_ObjectHideFlags: 0
@@ -54645,6 +54650,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &1963674564
 AudioSource:
   m_ObjectHideFlags: 0
@@ -57330,6 +57338,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &2030259249
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59482,6 +59493,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &2090664045
 AudioSource:
   m_ObjectHideFlags: 0
@@ -60610,6 +60624,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &2126688156
 AudioSource:
   m_ObjectHideFlags: 0
@@ -63154,6 +63171,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d23e0e63ba53ed41b9f5d9ce7e14bef, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 1
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5905776579493927211
 GameObject:
   m_ObjectHideFlags: 0
