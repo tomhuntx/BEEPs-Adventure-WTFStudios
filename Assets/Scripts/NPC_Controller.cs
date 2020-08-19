@@ -16,7 +16,7 @@ public class NPC_Controller : MonoBehaviour
 	private NavMeshAgent agent;
 	private int currentIndex = 0;
 	private int newPoint = 0;
-	bool moveLeft;
+	bool moveLeft = false;
 
 	private void Start()
 	{
@@ -42,8 +42,7 @@ public class NPC_Controller : MonoBehaviour
 		}
 		agent = GetComponent<NavMeshAgent>();
 
-		// Randomly start with left or right points
-		bool moveLeft = (Random.value > 0.5f);
+		moveLeft = (Random.value < 0.5);
 		SwapSides();
 	}
 
@@ -73,12 +72,14 @@ public class NPC_Controller : MonoBehaviour
 			currentIndex = Random.Range(0, movePointsR.Count);
 			currentPoints = movePointsR;
 			moveLeft = false;
+			Debug.Log("Moving left");
 		}
 		else
 		{
 			currentIndex = Random.Range(0, movePointsL.Count);
 			currentPoints = movePointsL;
 			moveLeft = true;
+			Debug.Log("Moving left");
 		}
 	}
 
@@ -91,5 +92,6 @@ public class NPC_Controller : MonoBehaviour
 
 		// Start agent after waiting
 		agent.isStopped = false;
+
 	}
 }

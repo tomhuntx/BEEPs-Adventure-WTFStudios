@@ -374,8 +374,8 @@ public class Player : MonoBehaviour
                         hitInfo.transform.gameObject.GetComponent<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
                         hitInfo.transform.parent = null;
                         break;
-
                     case "Bot":
+
                     case "ManagerBot":
                         Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
                         parent.GetComponentInChildren<Robot>().GetPunched(raycastOrigin.forward);
