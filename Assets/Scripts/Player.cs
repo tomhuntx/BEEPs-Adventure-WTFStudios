@@ -374,20 +374,27 @@ public class Player : MonoBehaviour
                         hitInfo.transform.gameObject.GetComponent<Rigidbody>().AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
                         hitInfo.transform.parent = null;
                         break;
-                    case "Bot":
 					case "MiniBot":
 						NPC_Controller mini = hitInfo.transform.GetComponent<NPC_Controller>();
-						if (mini != null && raycastOrigin != null)
+						if (mini != null)
 						{
 							mini.GetPunched(transform.forward);
 						}
 						break;
-                    case "ManagerBot":
-                        Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
+					case "Bot":
+						Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
 						Robot rob = parent.GetComponentInChildren<Robot>();
-						if (rob != null && raycastOrigin != null)
+						if (rob != null)
 						{
 							rob.GetPunched(raycastOrigin.forward);
+						}
+						break;
+                    case "ManagerBot":
+						Transform mparent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
+						Robot mrob = mparent.GetComponentInChildren<Robot>();
+						if (mrob != null)
+						{
+							mrob.GetPunched(raycastOrigin.forward);
 						}
 						break;
 					case "Generic Destructable":
