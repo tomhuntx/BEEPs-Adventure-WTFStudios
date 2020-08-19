@@ -375,14 +375,21 @@ public class Player : MonoBehaviour
                         hitInfo.transform.parent = null;
                         break;
                     case "Bot":
-
+					case "MiniBot":
+						Debug.Log("Punched!");
+						break;
                     case "ManagerBot":
                         Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
-                        parent.GetComponentInChildren<Robot>().GetPunched(raycastOrigin.forward);
-                        break;
+						Robot rob = parent.GetComponentInChildren<Robot>();
+						if (rob != null)
+						{
+							rob.GetPunched(raycastOrigin.forward);
+						}
+						break;
 					case "Generic Destructable":
 						target.ApplyDamage(punchDamage);
 						break;
+
 				}
             }
         }

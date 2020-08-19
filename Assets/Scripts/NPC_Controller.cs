@@ -13,6 +13,8 @@ public class NPC_Controller : MonoBehaviour
 	private List<GameObject> movePointsL;
 	private List<GameObject> currentPoints;
 
+	public GameObject currentPoint;
+
 	private NavMeshAgent agent;
 	private int currentIndex = 0;
 	private int newPoint = 0;
@@ -29,11 +31,15 @@ public class NPC_Controller : MonoBehaviour
 		{
 			movePointsR.Add(child.gameObject);
 		}
+		movePointsR.Remove(moveParentR);
+
 		Transform[] allChildrenL = moveParentL.GetComponentsInChildren<Transform>();
 		foreach (Transform child in allChildrenL)
 		{
 			movePointsL.Add(child.gameObject);
 		}
+		movePointsL.Remove(moveParentL);
+
 
 		// Check this worked
 		if (movePointsR.Count == 0 || movePointsL.Count == 0)
@@ -52,6 +58,7 @@ public class NPC_Controller : MonoBehaviour
 		if (Vector3.Distance(transform.position, currentPoints[currentIndex].transform.position) > 2.0f)
 		{
 			agent.SetDestination(currentPoints[currentIndex].transform.position);
+			currentPoint = currentPoints[currentIndex];
 		}
 		// Otherwise, wait then move to the next patrol point
 		else
@@ -72,14 +79,12 @@ public class NPC_Controller : MonoBehaviour
 			currentIndex = Random.Range(0, movePointsR.Count);
 			currentPoints = movePointsR;
 			moveLeft = false;
-			Debug.Log("Moving left");
 		}
 		else
 		{
 			currentIndex = Random.Range(0, movePointsL.Count);
 			currentPoints = movePointsL;
 			moveLeft = true;
-			Debug.Log("Moving left");
 		}
 	}
 
