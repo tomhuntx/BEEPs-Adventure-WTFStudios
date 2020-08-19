@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 26c9bdb86fd06f549840dce371d08828, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,6 +221,7 @@ MonoBehaviour:
   enableIgnore: 1
   ignoreTags:
   - Conveyor Belt
+  acceptAll: 0
   onCollisionEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -361,3 +362,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlighterBasis: {fileID: 1468879793}
+  onObjectHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectNotHover:
+    m_PersistentCalls:
+      m_Calls: []
