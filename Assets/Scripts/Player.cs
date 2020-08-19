@@ -376,12 +376,16 @@ public class Player : MonoBehaviour
                         break;
                     case "Bot":
 					case "MiniBot":
-						Debug.Log("Punched!");
+						NPC_Controller mini = hitInfo.transform.GetComponent<NPC_Controller>();
+						if (mini != null && raycastOrigin != null)
+						{
+							mini.GetPunched(transform.forward);
+						}
 						break;
                     case "ManagerBot":
                         Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
 						Robot rob = parent.GetComponentInChildren<Robot>();
-						if (rob != null)
+						if (rob != null && raycastOrigin != null)
 						{
 							rob.GetPunched(raycastOrigin.forward);
 						}

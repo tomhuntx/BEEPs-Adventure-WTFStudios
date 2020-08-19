@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class NPC_Controller : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class NPC_Controller : MonoBehaviour
 	public GameObject boxPrefab;
 	private GameObject box;
 
+	// Rigidbody of bot
+	private Rigidbody rb;
+
 	// DEBUG - Current point bot is moving to
 	public GameObject currentPoint;
 
@@ -25,6 +29,10 @@ public class NPC_Controller : MonoBehaviour
 	private int currentIndex = 0;
 	private int newPoint = 0;
 	bool moveLeft = false;
+	private float punchForce = 0.5f;
+
+	// Events
+	public UnityEvent onPlayerPunch;
 
 	private void Start()
 	{
@@ -46,12 +54,13 @@ public class NPC_Controller : MonoBehaviour
 		}
 		movePointsL.Remove(moveParentL);
 
-
 		// Check this worked
 		if (movePointsR.Count == 0 || movePointsL.Count == 0)
 		{
 			Debug.LogError("Please add at the point parents to this bot.");
 		}
+
+		rb = GetComponent<Rigidbody>();
 		agent = GetComponent<NavMeshAgent>();
 
 		moveLeft = (Random.value < 0.5);
@@ -92,6 +101,13 @@ public class NPC_Controller : MonoBehaviour
 			currentPoints = movePointsL;
 			moveLeft = true;
 		}
+	}
+
+	public void GetPunched(Vector3 direction)
+	{
+		this.transform.position += direction * punchForce;
+
+		onPlayerPunch.Invoke(); 
 	}
 
 	private IEnumerator Wait(float seconds)
