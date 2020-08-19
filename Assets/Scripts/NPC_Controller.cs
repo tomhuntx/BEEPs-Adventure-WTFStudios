@@ -13,6 +13,12 @@ public class NPC_Controller : MonoBehaviour
 	private List<GameObject> movePointsL;
 	private List<GameObject> currentPoints;
 
+	// Box child gameobject
+	public GameObject boxSpawnPoint;
+	public GameObject boxPrefab;
+	private GameObject box;
+
+	// DEBUG - Current point bot is moving to
 	public GameObject currentPoint;
 
 	private NavMeshAgent agent;
@@ -93,10 +99,27 @@ public class NPC_Controller : MonoBehaviour
 		// Stop agent before waiting
 		agent.isStopped = true;
 
+		if (box != null && box.transform.IsChildOf(this.transform))
+		{
+			box.SetActive(false);
+		}
+
+		// PLAY ANIMAITON!
+
 		yield return new WaitForSeconds(seconds);
 
 		// Start agent after waiting
 		agent.isStopped = false;
 
+		if (box != null && box.transform.IsChildOf(this.transform))
+		{
+			box.SetActive(true);
+		}
+		else
+		{
+			box = Instantiate(boxPrefab, boxSpawnPoint.transform);
+			box.transform.position = boxSpawnPoint.transform.position;
+			box.GetComponent<Rigidbody>().isKinematic = true;
+		}
 	}
 }
