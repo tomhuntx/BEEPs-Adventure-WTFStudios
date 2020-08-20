@@ -384,9 +384,9 @@ public class Player : MonoBehaviour
 					case "Bot":
 						Transform parent = SearchForParent.GetParentTransform(hitInfo.transform.gameObject, "Robot");
 						Robot rob = parent.GetComponentInChildren<Robot>();
-						if (rob != null)
+						if (rob != null && raycastOrigin != null)
 						{
-							rob.GetPunched(raycastOrigin.forward);
+							rob.GetPunched(transform.forward);
 						}
 						break;
                     case "ManagerBot":
