@@ -36,7 +36,7 @@ public class MBot_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (Vector3.Distance(transform.position, hardhat.transform.position) < 2.5f)
+		if (Vector3.Distance(transform.position, hardhat.transform.position) < 2.0f)
 		{
 			nearHat = true;
 
@@ -45,35 +45,44 @@ public class MBot_Controller : MonoBehaviour
 				TryGrabHat();
 				RotateTo(hardhat.transform.position);
 			}
-			else
-			{
-				RotateTo(Quaternion.identity);
-			}
 		}
 		else
 		{
 			nearHat = false;
 			agent.SetDestination(hardhat.transform.position);
+			RotateTo(Quaternion.identity);
 		}
 
-
-		if (!lookingForHat && Vector3.Distance(transform.position, startPosition) < 0.1f)
+		// Detect if at start position or not
+		if (!lookingForHat && Vector3.Distance(transform.position, startPosition) < 0.5f)
 		{
-			anim.SetTrigger("backHome");
-			animFace.SetTrigger("backHome");
-			animScreen.SetTrigger("backHome");
+			if (!anim.GetBool("isHome"))
+			{ // Nested if ensures bools are only set once (performance reasons)
+				anim.SetBool("isHome", true);
+				animFace.SetBool("isHome", true);
+				animScreen.SetBool("isHome", true);
+			}
+		}
+		else 
+		{
+			if (anim.GetBool("isHome"))
+			{
+				anim.SetBool("isHome", false);
+				animFace.SetBool("isHome", false);
+				animScreen.SetBool("isHome", false);
+			}
 		}
     }
 
 	public void HatMoved()
 	{
-		lookingForHat = true;
-		agent.SetDestination(hardhat.transform.position);
+		// Start angry pause
+		StartCoroutine(AngryPause());
+
+		// Angry animation
 		anim.SetTrigger("hatGrabbed");
 		animFace.SetTrigger("hatGrabbed");
 		animScreen.SetTrigger("hatGrabbed");
-
-		// Stop interact animation
 	}
 
 	private void RotateTo(Vector3 target)
@@ -95,7 +104,9 @@ public class MBot_Controller : MonoBehaviour
 		if (nearHat)
 		{
 			// Start interact animation
-
+			anim.SetBool("isPickingUp", true);
+			animFace.SetBool("isPickingUp", true);
+			animScreen.SetBool("isPickingUp", true);
 
 			// Stop agent before waiting
 			agent.isStopped = true;
@@ -116,6 +127,8 @@ public class MBot_Controller : MonoBehaviour
 		hardhat.transform.rotation = hatdhatStartLoc.transform.rotation;
 		Rigidbody rb = hardhat.GetComponent<Rigidbody>();
 		rb.isKinematic = true;
+
+		lookingForHat = false;
 	}
 
 	private IEnumerator GrabPause(float seconds)
@@ -124,10 +137,28 @@ public class MBot_Controller : MonoBehaviour
 
 		agent.isStopped = false;
 
+		// Start interact animation
+		anim.SetBool("isPickingUp", false);
+		animFace.SetBool("isPickingUp", false);
+		animScreen.SetBool("isPickingUp", false);
+
 		// If found hat, grab it
 		if (nearHat)
 		{
 			GrabHat();
 		}
+	}
+
+
+	// Pause and then start looking for hat - prevents instant attempts at grabbing
+	private IEnumerator AngryPause()
+	{
+		agent.isStopped = true;
+
+		yield return new WaitForSeconds(1.0f);
+
+		agent.isStopped = false;
+		lookingForHat = true;
+		agent.SetDestination(hardhat.transform.position);
 	}
 }
