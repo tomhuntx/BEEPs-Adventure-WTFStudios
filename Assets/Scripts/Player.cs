@@ -738,5 +738,9 @@ public class Player : MonoBehaviour
 
         this.enabled = isEnabled;
     }
+	public void RemoveGrabbedObject()
+	{
+		grabbedObject = null;
+	}
     #endregion
 }

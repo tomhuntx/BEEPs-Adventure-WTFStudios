@@ -22,6 +22,9 @@ public class MBot_Controller : MonoBehaviour
 	public Animator animFace;
 	public Animator animScreen;
 
+	// Player
+	public Player player;
+
 	private bool lookingForHat = false;
 	private bool nearHat = true;
 
@@ -115,20 +118,26 @@ public class MBot_Controller : MonoBehaviour
 		}
 	}
 
-	// Return to base with hat
+	// Bot successfully grabbed hat
 	private void GrabHat()
 	{
+		// Return to base with hat
 		agent.SetDestination(startPosition);
+		lookingForHat = false;
+
+		// Remove hat from hands
+		if (true) // INSERT PREVENTION OF REMOVING NON-HARDHAT OBJECTS
+		{
+			player.RemoveGrabbedObject();
+			hardhat.GetComponent<GrabbableObject>().DetachFromParent();
+		}
 
 		// Put hat back on head
-		hardhat.transform.parent = null;
 		hardhat.transform.SetParent(hatdhatStartLoc.transform);
 		hardhat.transform.position = hatdhatStartLoc.transform.position;
 		hardhat.transform.rotation = hatdhatStartLoc.transform.rotation;
 		Rigidbody rb = hardhat.GetComponent<Rigidbody>();
 		rb.isKinematic = true;
-
-		lookingForHat = false;
 	}
 
 	private IEnumerator GrabPause(float seconds)
