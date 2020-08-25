@@ -21,6 +21,8 @@ public class GrabbableObject : DestructibleObject
 
     private void Start()
     {
+        onImpactDamage.AddListener(UpdateHighlighterModel);
+
         interactionComponent = this.GetComponent<InteractableObject>();
         interactionComponent.HighlighterBasis = TargetGameObject;        
 
@@ -127,7 +129,7 @@ public class GrabbableObject : DestructibleObject
     public void RenderToLayer(string layerName)
     {
         TargetGameObject.layer = LayerMask.NameToLayer(layerName);
-    }
+    }    
     #endregion
 
 
@@ -177,7 +179,15 @@ public class GrabbableObject : DestructibleObject
 	{
 		GetComponent<DestructibleObject>().forceMagnitudeThreshold = 0.1f;
 	}
+
+    private void UpdateHighlighterModel()
+    {
+        MeshFilter mesh = interactionComponent.HighlighterInstance.GetComponentInChildren<MeshFilter>();
+        mesh.mesh = interactionComponent.HighlighterBasis.GetComponent<MeshFilter>().mesh;
+    }
     #endregion
+
+
 
     #region Static Methods
     public static void AttachToParent(Transform target, Transform parent, 

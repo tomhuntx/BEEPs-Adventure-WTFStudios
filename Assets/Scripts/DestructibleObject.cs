@@ -161,8 +161,8 @@ public class DestructibleObject : MonoBehaviour
                 {
                     if (preset.assignedValue <= (durability / originalDurability) * 100)
                     {
-                        onImpactDamage.Invoke();
                         ChangeModelState(preset);
+                        onImpactDamage.Invoke();
                         break;
                     }
                 }
