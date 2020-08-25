@@ -5,7 +5,7 @@ using UnityEngine;
 public class TagFilterer : MonoBehaviour
 {
     [Header("Tag Filterer Options")]
-    [Tooltip("Tick this box to make the following tags to be accepted instead of ignored.")]
+    [Tooltip("Tick this box to make the following tags to be ignored instead of accepted.")]
     [SerializeField] private bool enableIgnore = true;
 
     [Tooltip("Tags of gameobjects that will be ignored. Leave blank if everything will be detected.")]

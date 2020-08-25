@@ -15,7 +15,7 @@ tree("To Box Grab")
 			AtBoxSource
 			not HasObjectGrabbed
 			not HasArrived
-			not ObjectInTrigger
+//			not ObjectInTrigger
 		sequence
 			EnableDetector
 			MoveDownAnimation
@@ -27,17 +27,27 @@ tree ("Grab Object")
 			not HasObjectGrabbed
 			HasArrived
 		fallback
-			while not ObjectInTrigger
-				sequence
-					DoReleaseAnimation
-					MoveDownAnimation
-			while ObjectInTrigger
-				sequence
-					DoGrabAnimation			
-					Wait(0.3)
-					GrabObject
-					MoveUpAnimation
-					DisableDetector
+			sequence
+				Wait(0.5)
+				DoGrabAnimation			
+				Wait(0.3)
+				SpawnRandomBox
+				Wait(1)
+				GrabObject
+				MoveUpAnimation
+				DisableDetector
+
+//			while not ObjectInTrigger
+//				sequence
+//					DoReleaseAnimation
+//					MoveDownAnimation
+//			while ObjectInTrigger
+//				sequence
+//					DoGrabAnimation			
+//					Wait(0.3)
+//					GrabObject
+//					MoveUpAnimation
+//					DisableDetector
 			
 
 tree ("Drop Object")
@@ -65,6 +75,7 @@ tree("Navigation")
 tree("To Box Source")
 	while
 		sequence
+			IsShaftRetracted
 			not HasObjectGrabbed
 			NoNewLocation
 		GoToBoxSource
@@ -72,6 +83,7 @@ tree("To Box Source")
 tree ("To Cardboard Chute")
 	while
 		sequence
+			IsShaftRetracted
 			HasObjectGrabbed
 			HasCardboardBox
 			NoNewLocation
@@ -80,6 +92,7 @@ tree ("To Cardboard Chute")
 tree ("To Explosive Chute")
 	while
 		sequence
+			IsShaftRetracted
 			HasObjectGrabbed
 			HasExplosiveBox
 			NoNewLocation
@@ -89,6 +102,7 @@ tree ("To Explosive Chute")
 tree ("To Heavy Chute")
 	while
 		sequence
+			IsShaftRetracted
 			HasObjectGrabbed
 			HasHeavyBox
 			NoNewLocation

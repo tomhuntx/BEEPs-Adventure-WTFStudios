@@ -11,6 +11,8 @@ public class ClawMachineAI : MonoBehaviour
 {
     public static ClawMachineAI Instance;
 
+    public float distanceThreshold = 0.3f;
+
     #region Exposed Variables
     [SerializeField] private float moveSpeed = 5.0f;
 
@@ -32,6 +34,9 @@ public class ClawMachineAI : MonoBehaviour
     [SerializeField] private Transform cardboardChute;
     [SerializeField] private Transform explosiveChute;
     [SerializeField] private Transform heavyChute;
+
+    [Header("Box Prefabs")]
+    [SerializeField] private GameObject[] boxPrefabs;
 
     [Header("Events")]
     [SerializeField] public UnityEvent onComponentDisable;
@@ -79,30 +84,36 @@ public class ClawMachineAI : MonoBehaviour
             Vector3 v2 = newLocation;   
             v2.y = 0;
 
-            Vector3 dir = VectorFlat3D.FlattenVector(Vector3.Normalize(newLocation - this.transform.position), VectorFlat3D.Axis.y);
-            if (float.IsNaN(dir.x) ||
-                float.IsNaN(dir.y) ||
-                float.IsNaN(dir.z))
+            bool isValidPosition = true;
+            //Vector3 dir = VectorFlat3D.FlattenVector(Vector3.Normalize(newLocation - this.transform.position), VectorFlat3D.Axis.y);
+            Direction dir = new Direction(v1, v2);
+            if (float.IsNaN(dir.localDirection.x) ||
+                float.IsNaN(dir.localDirection.y) ||
+                float.IsNaN(dir.localDirection.z))
             {
-                return;
+                isValidPosition = false;
             }
 
-            this.transform.position += dir * moveSpeed * Time.deltaTime;
-
-            float distance = Vector3.Distance(v1, v2);
-            if (distance < 0.1f)
+            if (isValidPosition)
             {
-                hasArrived = true;
-                Vector3 newPos = newLocation;
-                newPos.y = this.transform.position.y;
-                this.transform.position = newPos;
-                newLocation = Vector3.negativeInfinity;
+                this.transform.position += dir.localDirection * moveSpeed * Time.deltaTime;
+
+                float distance = Vector3.Distance(v1, v2);
+                if (distance <= distanceThreshold)
+                {
+                    hasArrived = true;
+                    //Vector3 newPos = newLocation;
+                    //newPos.y = this.transform.position.y;
+                    //this.transform.position = newPos;
+                    newLocation = Vector3.negativeInfinity;
+                }
             }
         }
 
         isRaycastHit = DoRaycast();
         UpdateClawRails();
         
+        /*
         if (grabbedObject != null &&
             !IsSorting())
         {
@@ -127,6 +138,7 @@ public class ClawMachineAI : MonoBehaviour
                 }
             }
         }
+        */
 
         if (grabbedObject != null &&
             grabbedObjectOffset.childCount == 0)
@@ -250,6 +262,17 @@ public class ClawMachineAI : MonoBehaviour
 
     #region PandaBT Methods
     [Panda.Task]
+    private void SpawnRandomBox()
+    {
+        if (targetObject == null)
+        {
+            GameObject newInstance = Instantiate(boxPrefabs[Random.Range(0, boxPrefabs.Length)], new Vector3(9999, 9999, 9999), Quaternion.identity);
+            targetObject = newInstance.GetComponent<ClawGrabbable>();
+            Panda.Task.current.Succeed();
+        }
+    }
+
+    [Panda.Task]
     private void GrabObject()
     {
         targetObject.transform.parent = null;
@@ -286,6 +309,12 @@ public class ClawMachineAI : MonoBehaviour
     }
 
     [Panda.Task]
+    private bool IsShaftRetracted()
+    {
+        return shaftAnim.transform.localPosition.y >= 0;
+    }
+
+    [Panda.Task]
     private bool HasObjectGrabbed()
     {
         return grabbedObject != null;
@@ -309,7 +338,10 @@ public class ClawMachineAI : MonoBehaviour
         return targetObject.transform != raycastHit.transform &&
                raycastHit.transform.GetComponentInChildren<Box>() == null;
     }
-    
+
+
+
+    #region Navigation
     [Panda.Task]
     private bool NoNewLocation()
     {
@@ -355,6 +387,9 @@ public class ClawMachineAI : MonoBehaviour
         SetLocation(heavyChute.position);
         isSorting = true;
     }
+    #endregion
+
+
 
     [Panda.Task]
     private void EnableDetector()
@@ -370,6 +405,8 @@ public class ClawMachineAI : MonoBehaviour
         colliderEvents.enabled = false;
         Panda.Task.current.Succeed();
     }
+
+
 
     #region BoxCheckers
     [Panda.Task]
@@ -396,6 +433,8 @@ public class ClawMachineAI : MonoBehaviour
         return isSorting;
     }
     #endregion
+
+
 
     #region Animation Hooks
     [Panda.Task]
@@ -441,7 +480,7 @@ public class ClawMachineAI : MonoBehaviour
     private bool AtBoxSource()
     {
         float distance = VectorFlat3D.GetFlattenedDistance(this.transform.position, boxSource.position, VectorFlat3D.Axis.y);
-        return distance < 0.1f;
+        return distance <= distanceThreshold;
     }
     #endregion
 

@@ -336,7 +336,8 @@ public class ClawMachine : MonoBehaviour
 
         foreach (GameObject target in objectDetector.ObjectsInTrigger)
         {
-            if (target.GetComponentInChildren<ClawGrabbable>() != null)
+            if (target != null &&
+                target.GetComponentInChildren<ClawGrabbable>() != null)
             {
                 GrabObject();
                 grabDelayTimer = grabDelay + Time.time;
@@ -395,15 +396,16 @@ public class ClawMachine : MonoBehaviour
             }
 
             highlightedObject = raycastHit.transform.GetComponent<ClawGrabbable>();
-            lightTRS.gameObject.SetActive(highlightedObject != null);
-            if (lightTRS.gameObject.activeSelf)
-            {
-                lightTRS.position = raycastHit.transform.position + raycastHit.normal * 1.5f;
-            }
         }
         else
         {
             highlightedObject = null;
+        }
+
+        lightTRS.gameObject.SetActive(highlightedObject != null);
+        if (lightTRS.gameObject.activeSelf)
+        {
+            lightTRS.position = raycastHit.transform.position + raycastHit.normal * 1.5f;
         }
     }
 

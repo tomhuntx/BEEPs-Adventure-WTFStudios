@@ -139,7 +139,7 @@ public class GrabbableObject : DestructibleObject
         RenderToLayer("Default");
 
         BoxDragSFX sfx = this.transform.GetComponentInChildren<BoxDragSFX>();
-        if (sfx != null) sfx.enabled = true;
+        if (sfx != null) sfx.ToggleThis(true);
 
         foreach (Collider collider in ColliderComponents)
         {
@@ -158,7 +158,7 @@ public class GrabbableObject : DestructibleObject
         this.transform.localPosition = Vector3.zero;
 
         BoxDragSFX sfx = this.transform.GetComponentInChildren<BoxDragSFX>();
-        if (sfx != null) sfx.enabled = false;
+        if (sfx != null) sfx.ToggleThis(false);
 
         foreach (Collider collider in ColliderComponents)
         {
@@ -191,7 +191,7 @@ public class GrabbableObject : DestructibleObject
         target.transform.localPosition = Vector3.zero;
 
         BoxDragSFX sfx = target.transform.GetComponentInChildren<BoxDragSFX>();
-        if (sfx != null) sfx.enabled = false;
+        if (sfx != null) sfx.ToggleThis(false);
 
         Collider collider = target.GetComponentInChildren<Collider>();
         if (collider != null)
@@ -223,7 +223,7 @@ public class GrabbableObject : DestructibleObject
         target.transform.parent = null;
 
         BoxDragSFX sfx = target.transform.GetComponentInChildren<BoxDragSFX>();
-        if (sfx != null) sfx.enabled = false;
+        if (sfx != null) sfx.ToggleThis(false);
 
         Collider collider = target.GetComponentInChildren<Collider>();
         if (collider != null)

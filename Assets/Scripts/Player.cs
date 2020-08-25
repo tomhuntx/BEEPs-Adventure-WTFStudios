@@ -679,9 +679,8 @@ public class Player : MonoBehaviour
                     crosshair2.color = newColor;
                     isTargetBehindSometing = false;
                 }
-
-				crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
 			}
+            crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
         }
         else
         {
@@ -738,9 +737,12 @@ public class Player : MonoBehaviour
 
         this.enabled = isEnabled;
     }
+
 	public void RemoveGrabbedObject()
 	{
-		grabbedObject = null;
+        if (grabbedObject != null &&
+            grabbedObject.tag == "Hardhat")
+		    grabbedObject = null;
 	}
     #endregion
 }
