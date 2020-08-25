@@ -155,13 +155,13 @@ MonoBehaviour:
   generalImpactThreshold: 0.55
   modelPresets:
   - assignedValue: 75
-    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
-    material: {fileID: 2100000, guid: 14b6df650f7f1aa4abce94857d62aa38, type: 2}
+    mesh: {fileID: 9118265153525915223, guid: f6a4ee528ee32c84ea5d414c6624dd3f, type: 3}
+    material: {fileID: 2100000, guid: dce5a331edbaced41a8d689bfb822d39, type: 2}
   - assignedValue: 50
-    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
+    mesh: {fileID: 9118265153525915223, guid: f6a4ee528ee32c84ea5d414c6624dd3f, type: 3}
     material: {fileID: 2100000, guid: 6412f780ef3f8ea41a0c37f9867f6b4f, type: 2}
   - assignedValue: 10
-    mesh: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
+    mesh: {fileID: 9118265153525915223, guid: f6a4ee528ee32c84ea5d414c6624dd3f, type: 3}
     material: {fileID: 2100000, guid: 3334bb6f0010d4741bc4a2099cc404ad, type: 2}
   onPlayerPunch:
     m_PersistentCalls:
@@ -366,6 +366,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2229526011650007075}
     m_Modifications:
+    - target: {fileID: -5178661895559278292, guid: 0a451e1fdd0de8a4b89ef7704d539eea,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5642218814356861393, guid: 0a451e1fdd0de8a4b89ef7704d539eea,
+        type: 3}
     - target: {fileID: -4216859302048453862, guid: 0a451e1fdd0de8a4b89ef7704d539eea,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -435,6 +441,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Box
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 0a451e1fdd0de8a4b89ef7704d539eea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a451e1fdd0de8a4b89ef7704d539eea, type: 3}
