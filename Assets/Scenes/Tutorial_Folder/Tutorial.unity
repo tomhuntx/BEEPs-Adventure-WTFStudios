@@ -5060,7 +5060,7 @@ PrefabInstance:
     - target: {fileID: 1592090505937422189, guid: 4e3b09588e91fc94ebbc38bd7a7abdcc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1592090505937422189, guid: 4e3b09588e91fc94ebbc38bd7a7abdcc,
         type: 3}
@@ -6425,7 +6425,7 @@ Transform:
   m_LocalScale: {x: 0.26825413, y: 0.50613993, z: 0.15184198}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!4 &626441151 stripped
 Transform:
@@ -14485,8 +14485,28 @@ PrefabInstance:
     - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
       propertyPath: hasTasks
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: b304d30717c78f147820367f474a0e36, type: 3}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 92bcdf2798cabcc4f8488147c823876d, type: 3}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6d136e50b690cf54ca299a47cdc57513, type: 3}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: d2a5b7b16db5adf46ac7a0aff6cb5278, type: 3}
     - target: {fileID: 5866209772549576437, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
       propertyPath: pauseMenu
@@ -16587,7 +16607,7 @@ PrefabInstance:
     - target: {fileID: 7808786021717997398, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7808786021717997398, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
@@ -19130,7 +19150,7 @@ MonoBehaviour:
     onTaskReset:
       m_PersistentCalls:
         m_Calls: []
-  - taskType: 1
+  - taskType: 0
     resetType: 0
     taskName: "\u2022 Find a way out"
     requiredContributions: 1
@@ -19298,7 +19318,7 @@ Transform:
   - {fileID: 327887274}
   - {fileID: 2105471057}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1854041485
 GameObject:
