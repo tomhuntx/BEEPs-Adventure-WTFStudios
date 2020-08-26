@@ -45,6 +45,16 @@ public class Robot : MonoBehaviour
 	// Manager is unique variant
 	[SerializeField] private bool isManagerBot = false;
 
+	[Header("Face Changing")]
+	public Renderer faceRender;
+	public int faceMatIndex = 0;
+	public Texture normal;
+	public Texture disturbed;
+	public Texture angry;
+	public bool changeColour = false;
+	public Color normalCol;
+	public Color angryCol;
+
 	[Header("Unity Events")]
 	public UnityEvent onPlayerPunch;
 	public UnityEvent onGetExploded;
@@ -55,12 +65,10 @@ public class Robot : MonoBehaviour
 		//thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 		robots = GameObject.FindGameObjectsWithTag("Bot");
 
-		//model = transform.GetChild(0).gameObject;
-		//originalDirection = model.transform.forward;
-		//originalPosition = model.transform.position;
-
 		originalDirection = this.transform.forward;
 		originalPosition = this.transform.position;
+
+		faceRender.materials[faceMatIndex].EnableKeyword("_NORMALMAP");
 	}
 
 	void FixedUpdate()
@@ -69,10 +77,16 @@ public class Robot : MonoBehaviour
 			!IsTimerDone()) || superAnnoyed)
 		{
 			SetAnimationState("doAngry", true);
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
+			if (changeColour)
+				faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
 		}
 		else
 		{
 			SetAnimationState("doAngry", false);
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
+			if (changeColour)
+				faceRender.materials[faceMatIndex].SetColor("_Color", normalCol);
 		}
 
 		if (!isManagerBot)
@@ -82,6 +96,7 @@ public class Robot : MonoBehaviour
 				matDetector.ObjectsInTrigger.Count > 0)
 			{
 				SetAnimationState("doAssembly", true);
+				faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
 			}
 			else
 			{
@@ -92,10 +107,17 @@ public class Robot : MonoBehaviour
 		if (lookAtPlayer && !superAnnoyed)
 		{
 			SetAnimationState("doDisturbed", true);
+			if (faceRender.materials[faceMatIndex].GetTexture("_MainTex") != angry)
+			{
+				faceRender.materials[faceMatIndex].SetTexture("_MainTex", disturbed);
+			}
 		}
 		else
 		{
 			SetAnimationState("doDisturbed", false);
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
+			if (changeColour)
+				faceRender.materials[faceMatIndex].SetColor("_Color", normalCol);
 		}
 
 		// Look at the player
@@ -118,6 +140,9 @@ public class Robot : MonoBehaviour
 
 				SetAnimationState("doAngry", false);
 				SetAnimationState("doDisturbed", false);
+				faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
+				if (changeColour)
+					faceRender.materials[faceMatIndex].SetColor("_Color", normalCol);
 
 				if (boxProcessor != null && 
 					!isManagerBot)
@@ -166,6 +191,10 @@ public class Robot : MonoBehaviour
 		if (superAnnoyed)
 		{
 			SetAnimationState("doAngry", true);
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
+			if (changeColour)
+				faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
+
 			patience = patienceLimit;
 		}
 	}
@@ -241,6 +270,10 @@ public class Robot : MonoBehaviour
 		//lookTime = 3f;
 		ResetLookTimer(lookTime);
 
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
+		if (changeColour)
+			faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
+
 		onGetAnnoyed.Invoke();
 	}
 
@@ -267,6 +300,11 @@ public class Robot : MonoBehaviour
 		SetAnimationState("doDisturbed", false);
 		superAnnoyed = true;
 		onGetAnnoyed.Invoke();
+
+		// Face change
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
+		if (changeColour)
+			faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
 	}
 
 	/// <summary>

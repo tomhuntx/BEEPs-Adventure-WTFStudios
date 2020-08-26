@@ -6727,6 +6727,14 @@ MonoBehaviour:
   animScreen: {fileID: 3429358978136921496}
   matDetector: {fileID: 0}
   isManagerBot: 0
+  faceRender: {fileID: 5105519134025260940}
+  faceMatIndex: 0
+  normal: {fileID: 2800000, guid: 6785e435a07748c429664b329351f726, type: 3}
+  disturbed: {fileID: 2800000, guid: 29604e5602c648d41953c79850a3f82e, type: 3}
+  angry: {fileID: 2800000, guid: 75d1221444df5524abfc1da966603d35, type: 3}
+  changeColour: 0
+  normalCol: {r: 0, g: 0, b: 0, a: 0}
+  angryCol: {r: 0, g: 0, b: 0, a: 0}
   onPlayerPunch:
     m_PersistentCalls:
       m_Calls:
@@ -7464,6 +7472,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f2a4d750fe3142042980d75ee59ae1f6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5adb25226a581441a1832e9762ab690, type: 3}
+--- !u!137 &5105519134025260940 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8930721202458247839, guid: e5adb25226a581441a1832e9762ab690,
+    type: 3}
+  m_PrefabInstance: {fileID: 4407397891675249939}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8669585179070854665 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: e5adb25226a581441a1832e9762ab690,
