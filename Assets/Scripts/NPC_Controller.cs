@@ -110,6 +110,17 @@ public class NPC_Controller : MonoBehaviour
 		onPlayerPunch.Invoke(); 
 	}
 
+	public void GetBlownUp(Vector3 explosionPosition)
+	{
+		Vector3 direction = transform.position - explosionPosition;
+		direction.Normalize();
+
+		this.transform.position += direction * 2f;
+		Debug.Log(this.gameObject);
+
+		//onGetExploded.Invoke();
+	}
+
 	private IEnumerator Wait(float seconds)
 	{
 		// Stop agent before waiting

@@ -54,11 +54,14 @@ public class Explosion : MonoBehaviour
 				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow,
 																	   PlayerCharacterController.ConvertFromForceMode(forceType));
 			}
-			if (hit.tag == "Bot")
+			else if (hit.tag == "Bot")
 			{
 				//Search component from main parent downwards to children
-				//print(SearchForParent.GetParentTransform(hit.gameObject));
 				SearchForParent.GetParentTransform(hit.gameObject).GetComponentInChildren<Robot>().GetBlownUp(this.transform.position);
+			}
+			else if (hit.tag == "MiniBot")
+			{
+				hit.gameObject.GetComponent<NPC_Controller>().GetBlownUp(this.transform.position);
 			}
 		}
 	}
