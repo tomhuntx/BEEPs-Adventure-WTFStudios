@@ -17190,8 +17190,28 @@ PrefabInstance:
     - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
       propertyPath: hasTasks
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6fa44ee37aa06a74880b0971c62cf3fe, type: 3}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: f674fe880101fc84c8ea7f346fbba399, type: 3}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: fc4f237e3a08a3442bca9035e027f408, type: 3}
+    - target: {fileID: 5866209772549576436, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: clips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f6fc848e38584148be0c7035fc3706a, type: 3}
     - target: {fileID: 5866209772549576437, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
       propertyPath: pauseMenu
@@ -17333,6 +17353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866209772549576443, guid: 837afe9e00a619b4bbf041817c34256e,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 5866209773751731635, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
@@ -93565,44 +93590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6533e38c1d17546a26644363575207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 1985232042}
-  onPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1053662137}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8296172667862570712}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 727142498258469658, guid: 5cc682e9ebf53794798baca5ed32b315,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 288717147}
-        m_MethodName: ContributeToTask
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: "\u2022 Press Heavy Button"
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!65 &8296172667862570711
 BoxCollider:
   m_ObjectHideFlags: 0
