@@ -12,13 +12,7 @@ public class MetalButton : MonoBehaviour
 	public UnityEvent onPressed;
 
 	float pressTime = 0.0f;
-	float pressDuration = 2.0f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	float pressDuration = 1.5f;
 
     // Update is called once per frame
     void Update()
