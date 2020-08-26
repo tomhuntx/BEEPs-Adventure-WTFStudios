@@ -196,12 +196,12 @@ public class Player : MonoBehaviour
                     handAnim.SetBool("isPunching", true);
 
 					// Punch animation
-					bodyAnim.SetTrigger("Punch");
-					headAnim.SetTrigger("Punch");
+					//bodyAnim.SetTrigger("Punch");
+					//headAnim.SetTrigger("Punch");
 				}
                 else
                 {
-                    handAnim.SetBool("isPunching", false);
+                    //handAnim.SetBool("isPunching", false);
                 }
                 HighlightTargetObject();
                 DragHeavyBox();
