@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     public GameObject hand;
-    private Animator handAnim;
+    //private Animator handAnim;
     private GameObject heavyBoxRef;
 
     #region Exposed Variables
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
     {
         controller = this.GetComponent<PlayerCharacterController>();
         sfxController = this.GetComponent<PlayerSFX>();
-        handAnim = hand.GetComponent<Animator>();
+        //handAnim = hand.GetComponent<Animator>();
         heavyBoxRef = new GameObject();
 
 		if (Tutorial)
@@ -193,11 +193,11 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Punch") && allowPunch)
                 {
                     PunchObject();
-                    handAnim.SetBool("isPunching", true);
+                    //handAnim.SetBool("isPunching", true);
 
 					// Punch animation
-					//bodyAnim.SetTrigger("Punch");
-					//headAnim.SetTrigger("Punch");
+					bodyAnim.SetTrigger("Punch");
+					headAnim.SetTrigger("Punch");
 				}
                 else
                 {
