@@ -17286,13 +17286,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866209772549576437, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
-      propertyPath: thisLevel
-      value: 3
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866209772549576437, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: thisLevel
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5866209772549576438, guid: 837afe9e00a619b4bbf041817c34256e,
         type: 3}
@@ -21808,7 +21808,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1149027006}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &598015474
 PrefabInstance:
@@ -40078,7 +40078,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.28, z: 0}
   m_LocalScale: {x: 8.2754, y: 8.2754, z: 8.2754}
-  m_Children: []
+  m_Children:
+  - {fileID: 1195925916}
   m_Father: {fileID: 0}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44443,7 +44444,6 @@ Transform:
   - {fileID: 1243423280}
   - {fileID: 873608136}
   - {fileID: 1496522306}
-  - {fileID: 1195925916}
   - {fileID: 1934480658}
   - {fileID: 1523279448}
   - {fileID: 1563283892}
@@ -47831,7 +47831,7 @@ GameObject:
   - component: {fileID: 1195925916}
   - component: {fileID: 1195925915}
   m_Layer: 0
-  m_Name: Point Light (3)
+  m_Name: Forcefield Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47906,11 +47906,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195925914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.754221, y: 18.06733, z: 79.398476}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.21992785, z: 0}
+  m_LocalScale: {x: 0.120840065, y: 0.120840065, z: 0.12084008}
   m_Children: []
-  m_Father: {fileID: 1149027006}
-  m_RootOrder: 3
+  m_Father: {fileID: 1053662141}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1197023687
 GameObject:
@@ -63141,7 +63141,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1149027006}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1527018976
 PrefabInstance:
@@ -63857,7 +63857,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1149027006}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1563937436 stripped
 GameObject:
@@ -83509,7 +83509,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1149027006}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1943185590
 PrefabInstance:
@@ -90058,17 +90058,17 @@ PrefabInstance:
     - target: {fileID: 174886150102809351, guid: 593a613f2a27a024bbb4e1d8d59b4b39,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 45.64
+      value: 45.57
       objectReference: {fileID: 0}
     - target: {fileID: 174886150102809351, guid: 593a613f2a27a024bbb4e1d8d59b4b39,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.91
+      value: 17.869
       objectReference: {fileID: 0}
     - target: {fileID: 174886150102809351, guid: 593a613f2a27a024bbb4e1d8d59b4b39,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33.98
+      value: 33.84
       objectReference: {fileID: 0}
     - target: {fileID: 174886150102809351, guid: 593a613f2a27a024bbb4e1d8d59b4b39,
         type: 3}
@@ -93490,7 +93490,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &6974708084263546034
 MeshCollider:
@@ -93590,6 +93590,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6533e38c1d17546a26644363575207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 1985232042}
+  onPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1053662137}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 288717147}
+        m_MethodName: ContributeToTask
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u2022 Press Heavy Button"
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8296172667862570712}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 727142498258469658, guid: 5cc682e9ebf53794798baca5ed32b315,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &8296172667862570711
 BoxCollider:
   m_ObjectHideFlags: 0

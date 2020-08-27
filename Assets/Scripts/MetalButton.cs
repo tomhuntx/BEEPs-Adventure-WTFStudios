@@ -24,8 +24,6 @@ public class MetalButton : MonoBehaviour
 				pressTime += Time.deltaTime;
 				if (pressTime > pressDuration)
 				{
-					Debug.Log("Pressed");
-
 					anim.SetBool("isComplete", true);
 					complete = true;
 
