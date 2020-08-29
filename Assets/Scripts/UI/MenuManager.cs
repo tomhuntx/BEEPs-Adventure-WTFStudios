@@ -54,15 +54,8 @@ public class MenuManager : MonoBehaviour
 
 	public void Play()
 	{
-		if (levelProgress > 0)
-		{
-			// Open level select screen
-			levelSelect.SetActive(true);
-		}
-		else
-		{
-			NewGame();
-		}
+		// Open level select screen
+		levelSelect.SetActive(true);
 	}
 
 	public void Settings()

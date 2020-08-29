@@ -116,7 +116,6 @@ public class NPC_Controller : MonoBehaviour
 		direction.Normalize();
 
 		this.transform.position += direction * 2f;
-		Debug.Log(this.gameObject);
 
 		//onGetExploded.Invoke();
 	}

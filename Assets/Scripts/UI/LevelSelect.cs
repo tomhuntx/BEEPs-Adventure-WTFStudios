@@ -28,6 +28,10 @@ public class LevelSelect : MonoBehaviour
 		for (int i = 0; i < level; i++)
 		{
 			buttons[i].GetComponent<Button>().interactable = true;
+			Image img = buttons[i].GetComponent<Image>();
+			Color tempColor = img.color;
+			tempColor.a = 1f;
+			img.color = tempColor;
 		}
 	}
 }
