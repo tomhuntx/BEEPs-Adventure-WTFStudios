@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour
 	bool moveControls = false;
 	RectTransform rect;
 	//
+
+	private List<AudioSource> pausedAudioSources = new List<AudioSource>();
 
 	private SettingsMenu settingsMenuComponent;
 	private WindowManager windowManagerComponent;
@@ -119,22 +122,26 @@ public class GameManager : MonoBehaviour
         {
             if (pauseMenu != null)
             {
+				//Unpause
                 if (pauseMenu.activeSelf)
                 {
+					ResumeAllAudio();
                     Time.timeScale = 1;
                     Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
                     pauseMenu.SetActive(false);
-					settingsMenuComponent.ToggleMute(false);
+					//settingsMenuComponent.ToggleMute(false);
                 }
+				//Pause
                 else
                 {
                     Time.timeScale = 0;
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                     pauseMenu.SetActive(true);
-					settingsMenuComponent.ToggleMute(true);
-                }
+					//settingsMenuComponent.ToggleMute(true);
+					PauseAllAudio();
+				}
             }
             else
             {
@@ -164,9 +171,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Application.targetFrameRate = 2147483647;
+			Application.targetFrameRate = -1;
         }
     }
+
+
+
 
     private IEnumerator CalculateFPS()
     {
@@ -177,6 +187,40 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+	private void PauseAllAudio()
+    {
+		pausedAudioSources = FindObjectsOfType<AudioSource>().ToList();
+		//if (pausedAudioSources.Count == 0) return;
+
+		foreach (AudioSource source in pausedAudioSources)
+        {
+			if (source != null) source.mute = true;
+        }
+	}
+
+	private void ResumeAllAudio()
+    {
+		if (pausedAudioSources.Count == 0) return;
+
+		foreach (AudioSource source in pausedAudioSources)
+        {
+			if (source != null) source.mute = false;
+        }
+		pausedAudioSources.Clear();
+	}
+
+	private void StopAllAudio()
+    {
+		AudioSource[] sources = FindObjectsOfType<AudioSource>();
+
+		foreach (AudioSource source in pausedAudioSources)
+		{
+			source.Stop();
+		}
+	}
+
+
 
 
 	// Feedback
@@ -270,6 +314,7 @@ public class GameManager : MonoBehaviour
 	// Pause Menu
 	public void ResumeGame()
 	{
+		ResumeAllAudio();
 		Time.timeScale = 1;
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
@@ -299,14 +344,16 @@ public class GameManager : MonoBehaviour
 	public void LoadScene(int scene)
 	{
 		// Attempt to mute all audio sources
-		AudioSource[] sources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-		for (int index = 0; index < sources.Length; ++index)
-		{
-			sources[index].mute = true;
-		}
+		//AudioSource[] sources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+		//for (int index = 0; index < sources.Length; ++index)
+		//{
+		//	sources[index].mute = true;
+		//}
 
 		AudioListener.volume = 0f;
 		Time.timeScale = 0;
+		//StopAllAudio();
+		PauseAllAudio();
 		mm.LoadScene(scene);
 		AudioListener.volume = 1f;
 	}

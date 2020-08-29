@@ -13,6 +13,7 @@ public class PlayerSFX : MonoBehaviour
     private float sprintPitch;
     private bool isLanded = true;
     private float heightDisplacement;
+    private bool isGamePaused = false;
     
     [Tooltip("How much pitch will be increase from the current pitch when moving.")]
     [SerializeField] private float pitchMult = 0.5f;
@@ -37,6 +38,20 @@ public class PlayerSFX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale > 0)
+        {
+            if (isGamePaused)
+            {
+                source.Play();
+                isGamePaused = false;
+            }
+        }
+        else
+        {
+            source.Stop();
+            isGamePaused = true;
+        }
+
         //doesn't work if in controller is grounded for some reason
         //current workaround
         if (isLanded)

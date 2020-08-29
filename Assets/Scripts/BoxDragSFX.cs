@@ -11,6 +11,7 @@ public class BoxDragSFX : MonoBehaviour
     private Vector3 previousPos;    
     private bool isMoving = false;
     private bool isGrabbed = false;
+    private bool isGamePaused = false;
 
     [Tooltip("How much time before checking for position change.")]
     [SerializeField] private float moveDeadzone = 0.1f;
@@ -28,6 +29,20 @@ public class BoxDragSFX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale > 0)
+        {
+            if (isGamePaused)
+            {
+                isGamePaused = false;
+                source.Play();
+            }
+        }
+        else
+        {
+            isGamePaused = true;
+            source.Stop();
+        }
+
         if (isGrabbed)
         {
             isGrabbed = false;
