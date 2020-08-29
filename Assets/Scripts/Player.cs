@@ -13,21 +13,27 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
 
-    public GameObject hand;
+    //public GameObject hand;
     //private Animator handAnim;
     private GameObject heavyBoxRef;
 
     #region Exposed Variables
-    [Space]
+    [Tooltip("Used to check if the player has landed or not.")]
+    [SerializeField] private UnityEventsHandler groundCheck;
+
     [Tooltip("The dynamic crosshair to be used for pointing out interactable/grabbable objects")]
     public Graphic crosshair;
 
     [Tooltip("The crosshair used to visualize the current raycast hits.")]
     public Graphic crosshair2;
 
-    [Tooltip("Used to check if the player has landed or not.")]
-    [SerializeField] private UnityEventsHandler groundCheck;
+    [Tooltip("Whether or not we want a second moving crosshair.")]
+    [SerializeField] private bool SecondCrosshair = false;
 
+    [Tooltip("Tick this to make the crosshair dynamically move to the raycast hit.")]
+    [SerializeField] private bool enableMovingCrosshair = false;
+    
+    
     [Header("Box Handling Properties")]
     [Tooltip("How much damage will be applied to the destructible object.")]
     [SerializeField] private float punchDamage = 3.0f;
@@ -63,10 +69,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 interactionDistance = new Vector3(2, 10, 2);
 
     [Tooltip("The area around the player where box placement should be ignored.")]
-    [SerializeField] private float boxPlacementDeadzone = 1f;
-
-	[Tooltip("Whether or not we want a second moving crosshair.")]
-	[SerializeField] private bool SecondCrosshair = false;
+    [SerializeField] private float boxPlacementDeadzone = 1f;	
 
 	[Header("Tutorial - Limit Controls")]
 	[Tooltip("If it is the tutorial - limits doesnt allow punch or throw if not placed boxes.")]
@@ -680,7 +683,9 @@ public class Player : MonoBehaviour
                     isTargetBehindSometing = false;
                 }
 			}
-            crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
+            
+            if (enableMovingCrosshair)
+                crosshair.transform.position = controller.CharacterCam.WorldToScreenPoint(hitInfo.point);
         }
         else
         {

@@ -404,7 +404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a7bfe700657254ca813344977e8020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 2269687311125216939}
   crosshair: {fileID: 0}
   crosshair2: {fileID: 0}
   groundCheck: {fileID: 7808786023120129758}
@@ -416,12 +415,12 @@ MonoBehaviour:
   thrownObjectOffsetPos: {x: 0, y: 0, z: 2}
   objectOffset: {x: 0, y: 0, z: 0}
   otherObjectOffset: {x: 0, y: 0, z: 0}
-  raycastOrigin: {fileID: 7808786021498455818}
+  raycastOrigin: {fileID: 7808786023054035221}
   raycastDistance: 4
   interactionDistance: {x: 3, y: 10, z: 3}
   boxPlacementDeadzone: 0
   SecondCrosshair: 0
-  Tutorial: 0
+  Tutorial: 1
   bodyAnim: {fileID: 1431124425272433729}
   headAnim: {fileID: 5634563327157023313}
 --- !u!114 &7808786021717997396
@@ -448,7 +447,7 @@ MonoBehaviour:
   camTransitionSpeed: 12
   camFlipDistanceDeadzone: 5
   camOffsets:
-  - localPosition: {x: 0, y: 1.2, z: -4}
+  - localPosition: {x: 0, y: 2, z: -4}
     localEulerAngles: {x: 15, y: 0, z: 0}
     localScale: {x: 1, y: 1, z: 1}
   firstPersonGameObjects:
