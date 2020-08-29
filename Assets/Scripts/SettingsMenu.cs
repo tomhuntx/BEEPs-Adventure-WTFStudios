@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
+    [Header("Main Menu")]
+    [SerializeField] private Transform parentTransform;
+
+
     [Header("Audio Settings")]
     [SerializeField] private AudioMixer masterMixer;
     [Range(-80, 20)] [SerializeField] private float masterVol;
@@ -76,7 +80,7 @@ public class SettingsMenu : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         ManageGameAudio();
         ManageSensitivity();
@@ -111,7 +115,8 @@ public class SettingsMenu : MonoBehaviour
 
     private void ManageSensitivity()
     {
-        if (Time.timeScale == 0)
+        if (Time.timeScale == 0 ||
+           (parentTransform != null && parentTransform.gameObject.activeSelf))
         {
             currentMouseSensitivity = mouseSlider.value;
 
@@ -125,7 +130,8 @@ public class SettingsMenu : MonoBehaviour
     private void ManageGameAudio()
     {
         //only adjust volume when paused;
-        if (Time.timeScale == 0)
+        if (Time.timeScale == 0 ||
+           (parentTransform != null && parentTransform.gameObject.activeSelf))
         {
             masterVol = masterSlider.value;
             musicVol = musicSlider.value;
@@ -192,22 +198,57 @@ public class SettingsMenu : MonoBehaviour
     {
         currentMouseSensitivity = mouseSensitivity.AssignedSlider.value;
         PlayerPrefs.SetFloat(MOUSE_SENSITIVITY_PREFS_KEY, currentMouseSensitivity);
+
+        if (Player.Instance != null)
+        {
+            Player.Instance.PlayerMovementControls.lookSensitivityMultiplier = currentMouseSensitivity;
+        }
     }
 
     public void SaveMasterVolume()
     {
-        PlayerPrefs.SetFloat(MASTER_VOL_PREFS_KEY, masterVol);
+        //if (this.gameObject.activeSelf)
+            StartCoroutine(SaveMasterVolDelay());
+        //else
+        //    PlayerPrefs.SetFloat(MASTER_VOL_PREFS_KEY, masterVol);
     }
 
     public void SaveMusicVolume()
     {
-        PlayerPrefs.SetFloat(MUSIC_VOL_PREFS_KEY, musicVol);
+        //if (this.gameObject.activeSelf)
+            StartCoroutine(SaveMusicVolDelay());
+        //else
+        //    PlayerPrefs.SetFloat(MUSIC_VOL_PREFS_KEY, musicVol);
     }
 
     public void SaveSFXVolume()
     {
+        if (this.gameObject.activeSelf)
+            StartCoroutine(SaveSFXVolDelay());
+        //else
+        //    PlayerPrefs.SetFloat(SFX_VOL_PREFS_KEY, soundEffectsVol);
+        //    PlayerPrefs.SetFloat(SFX_COMP_PREFS_KEY, soundEffectsVol - compressorDiffThreshold);
+    }
+    #endregion
+
+
+
+    private IEnumerator SaveMasterVolDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
+        PlayerPrefs.SetFloat(MASTER_VOL_PREFS_KEY, masterVol);
+    }
+
+    private IEnumerator SaveMusicVolDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
+        PlayerPrefs.SetFloat(MUSIC_VOL_PREFS_KEY, musicVol);
+    }
+
+    private IEnumerator SaveSFXVolDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
         PlayerPrefs.SetFloat(SFX_VOL_PREFS_KEY, soundEffectsVol);
         PlayerPrefs.SetFloat(SFX_COMP_PREFS_KEY, soundEffectsVol - compressorDiffThreshold);
     }
-    #endregion
 }
