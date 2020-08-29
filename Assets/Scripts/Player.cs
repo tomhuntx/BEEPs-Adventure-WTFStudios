@@ -571,7 +571,8 @@ public class Player : MonoBehaviour
                 
                 //Manage heavy box reference position
                 Transform hbRef = heavyBoxRef.transform;
-                hbRef.position = raycastOrigin.transform.position + raycastOrigin.transform.forward * interactionDistance.z;
+                //float mult = Vector3.Magnitude(this.transform.position - raycastOrigin.transform.position);
+                hbRef.position = controller.CharacterHead.position + raycastOrigin.transform.forward * (interactionDistance.z / 2f);
 
                 //Get transform references
                 Transform boxTRS = heavyBox.transform;
@@ -618,7 +619,7 @@ public class Player : MonoBehaviour
 
 
                 //Clamp min camera angle
-                controller.UpdateCamAngleClamp(controller.originalMinCamAngleX, 70);
+                controller.UpdateCamAngleClamp(controller.originalMinCamAngleX, 20);
 
                 float newSpeed = 0;
                 if (Input.GetButtonDown("Sprint")) newSpeed = controller.SprintSpeed;
