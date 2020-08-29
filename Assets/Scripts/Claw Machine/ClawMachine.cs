@@ -112,7 +112,7 @@ public class ClawMachine : MonoBehaviour
         else if (!isResetting)
         {
             //Player leave function
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 PlayerLeave();
                 //KickPlayer();
@@ -136,7 +136,7 @@ public class ClawMachine : MonoBehaviour
                     controlsEnabled = false;
                 }
 
-                if (Input.GetButtonDown("Drop Object"))
+                if (Input.GetButtonDown("Throw Object"))
                 {
                     grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
                     grabbedObject.DetachFromParent();
