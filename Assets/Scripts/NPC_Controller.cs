@@ -80,7 +80,7 @@ public class NPC_Controller : MonoBehaviour
 			// Otherwise, wait then move to the next patrol point
 			else
 			{
-				StartCoroutine(Wait(5));
+				StartCoroutine(Wait(6));
 
 				SwapSides();
 			}

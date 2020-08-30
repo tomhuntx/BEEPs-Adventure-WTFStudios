@@ -59,7 +59,8 @@ public class ClawMachine : MonoBehaviour
     public UnityEvent onObjectGrab;
     public UnityEvent onObjectDrop;
     public UnityEvent onObjectPlace;
-    [Space(20)]
+	public UnityEvent onNPCGrab;
+	[Space(20)]
     public UnityEvent onPlayerKick;
     public UnityEvent onPlayerLeave;
     #endregion
@@ -361,6 +362,7 @@ public class ClawMachine : MonoBehaviour
 					if (bot)
 					{
 						bot.GetGrabbed();
+						onNPCGrab.Invoke();
 					}
 				}
 
