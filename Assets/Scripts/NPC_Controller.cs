@@ -69,18 +69,21 @@ public class NPC_Controller : MonoBehaviour
 
 	void Update()
 	{
-		// If not reached location, move to it
-		if (Vector3.Distance(transform.position, currentPoints[currentIndex].transform.position) > 2.0f)
+		if (agent.enabled && agent.isOnNavMesh)
 		{
-			agent.SetDestination(currentPoints[currentIndex].transform.position);
-			currentPoint = currentPoints[currentIndex];
-		}
-		// Otherwise, wait then move to the next patrol point
-		else
-		{
-			StartCoroutine(Wait(2));
+			// If not reached location, move to it
+			if (Vector3.Distance(transform.position, currentPoints[currentIndex].transform.position) > 2.0f)
+			{
+				agent.SetDestination(currentPoints[currentIndex].transform.position);
+				currentPoint = currentPoints[currentIndex];
+			}
+			// Otherwise, wait then move to the next patrol point
+			else
+			{
+				StartCoroutine(Wait(5));
 
-			SwapSides();
+				SwapSides();
+			}
 		}
 	}
 
@@ -120,32 +123,88 @@ public class NPC_Controller : MonoBehaviour
 		//onGetExploded.Invoke();
 	}
 
-	private IEnumerator Wait(float seconds)
+	public void GetGrabbed()
 	{
-		// Stop agent before waiting
-		agent.isStopped = true;
+		agent.enabled = false;
 
+		// Turn off box if has one
 		if (box != null && box.transform.IsChildOf(this.transform))
 		{
-			box.SetActive(false);
+			box.transform.parent = null;
+			box.GetComponent<Rigidbody>().isKinematic = false;
+			box = null;
+		}
+
+		// Scared animation
+
+	}
+
+	public void GetPlaced()
+	{
+		agent.enabled = true;
+		agent.isStopped = false;
+	}
+
+	public void GetDropped()
+	{
+		StartCoroutine(WaitAfterDrop(3));
+
+		// Return to normal animations?
+	}
+
+	private IEnumerator Wait(float seconds)
+	{
+		if (agent.enabled && agent.isOnNavMesh)
+		{
+			// Stop agent before waiting
+			agent.isStopped = true;
+
+			if (box != null && box.transform.IsChildOf(this.transform))
+			{
+				box.SetActive(false);
+			}
 		}
 
 		// PLAY ANIMAITON!
 
 		yield return new WaitForSeconds(seconds);
 
-		// Start agent after waiting
-		agent.isStopped = false;
-
-		if (box != null && box.transform.IsChildOf(this.transform))
+		if (agent.enabled && agent.isOnNavMesh)
 		{
-			box.SetActive(true);
+			// Start agent after waiting
+			agent.isStopped = false;
+
+			if (box != null && box.transform.IsChildOf(this.transform))
+			{
+				box.SetActive(true);
+			}
+			else
+			{
+				box = Instantiate(boxPrefab, boxSpawnPoint.transform);
+				box.transform.position = boxSpawnPoint.transform.position;
+				box.GetComponent<Rigidbody>().isKinematic = true;
+			}
+		}
+	}
+
+
+	private IEnumerator WaitAfterDrop(float seconds)
+	{
+		yield return new WaitForSeconds(seconds);
+
+		agent.enabled = true;
+
+		if (agent.isOnNavMesh)
+		{
+			agent.isStopped = false;
+
+			// Stop animations and return to normal
 		}
 		else
 		{
-			box = Instantiate(boxPrefab, boxSpawnPoint.transform);
-			box.transform.position = boxSpawnPoint.transform.position;
-			box.GetComponent<Rigidbody>().isKinematic = true;
+			agent.enabled = false;
+
+			// Otherwise continue to freak out
 		}
 	}
 }

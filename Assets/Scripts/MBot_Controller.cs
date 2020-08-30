@@ -57,13 +57,23 @@ public class MBot_Controller : MonoBehaviour
 		}
 
 		// Detect if at start position or not
-		if (!lookingForHat && Vector3.Distance(transform.position, startPosition) < 0.5f)
+		if (!lookingForHat && Vector3.Distance(transform.position, startPosition) < 1.5f)
 		{
 			if (!anim.GetBool("isHome"))
 			{ // Nested if ensures bools are only set once (performance reasons)
 				anim.SetBool("isHome", true);
 				animFace.SetBool("isHome", true);
 				animScreen.SetBool("isHome", true);
+
+				GameObject player = GameObject.FindGameObjectWithTag("Player");
+				if (player != null && Vector3.Distance(transform.position, player.transform.position) < 2f)
+				{
+					float pow = 10f / Vector3.Distance(transform.position, player.transform.position);
+
+					Player.Instance.PlayerMovementControls.ApplyForce((
+						Player.Instance.transform.position - this.transform.position).normalized * pow,
+						PlayerCharacterController.ConvertFromForceMode(ForceMode.Impulse));
+				}
 			}
 		}
 		else 

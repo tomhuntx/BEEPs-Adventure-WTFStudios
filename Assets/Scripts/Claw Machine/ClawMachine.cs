@@ -134,11 +134,22 @@ public class ClawMachine : MonoBehaviour
                 {
                     doPlace = true;
                     controlsEnabled = false;
-                }
+				}
 
                 if (Input.GetButtonDown("Throw Object"))
                 {
-                    grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
+
+					// Drop minibot
+					if (grabbedObject.transform.tag == "MiniBot")
+					{
+						NPC_Controller bot = grabbedObject.GetComponent<NPC_Controller>();
+						if (bot)
+						{
+							bot.GetDropped();
+						}
+					}
+
+					grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
                     grabbedObject.DetachFromParent();
                     grabbedObject = null;
                     objectDetector.gameObject.SetActive(true);
@@ -342,6 +353,17 @@ public class ClawMachine : MonoBehaviour
                 GrabObject();
                 grabDelayTimer = grabDelay + Time.time;
                 onObjectGrab.Invoke();
+
+				// Grab minibot
+				if (grabbedObject.transform.tag == "MiniBot")
+				{
+					NPC_Controller bot = grabbedObject.GetComponent<NPC_Controller>();
+					if (bot)
+					{
+						bot.GetGrabbed();
+					}
+				}
+
                 return true;
             }
         }
@@ -371,12 +393,22 @@ public class ClawMachine : MonoBehaviour
 
     private void PlaceObject()
     {
-        grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
+		// Place minibot
+		if (grabbedObject.transform.tag == "MiniBot")
+		{
+			NPC_Controller bot = grabbedObject.GetComponent<NPC_Controller>();
+			if (bot)
+			{
+				bot.GetPlaced();
+			}
+		}
+
+		grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
         grabbedObject.DetachFromParent();
         grabbedObject = null;
         objectDetector.gameObject.SetActive(true);
         onObjectPlace.Invoke();
-    }
+	}
 
     private void ManageHighlighter()
     {
