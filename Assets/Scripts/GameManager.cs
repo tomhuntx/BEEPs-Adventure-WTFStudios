@@ -220,7 +220,21 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-
+	// DEPRACATED
+	// Trigger NPC scared animations after chute explosion
+	public void ScareAllNPCs()
+	{
+		GameObject[] bots = GameObject.FindGameObjectsWithTag("MiniBot");
+		
+		foreach (GameObject bot in bots)
+		{
+			NPC_Controller con = bot.GetComponent<NPC_Controller>();
+			if (con != null)
+			{
+				con.SetScaredForever(0);
+			}
+		}
+	}
 
 
 	// Feedback

@@ -35,4 +35,17 @@ public class AlarmLights : MonoBehaviour
 			rend.UpdateGIMaterials();
 		}
 	}
+
+	/// <summary>
+	/// Activate ALL lights in the scene - USE CAREFULLY AND ONLY ONCE!
+	/// </summary>
+	/// <param name="state">Activate (true) or deactivate (false)</param>
+	public void AllAlarmSwitch(bool state)
+	{
+		AlarmLights[] al = GameObject.FindObjectsOfType<AlarmLights>();
+		foreach (AlarmLights light in al)
+		{
+			light.AlarmSwitch(state);
+		}
+	}
 }

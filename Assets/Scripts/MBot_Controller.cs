@@ -9,7 +9,6 @@ public class MBot_Controller : MonoBehaviour
 	private Vector3 startPosition;
 	private NavMeshAgent agent;
 
-
 	// This Manager's Hat
 	public GameObject hardhat;
 	public GameObject hatdhatStartLoc;
@@ -25,8 +24,12 @@ public class MBot_Controller : MonoBehaviour
 	// Player
 	public Player player;
 
+	// Place to stand by at the end of the game
+	public GameObject angryLocation;
+
 	private bool lookingForHat = false;
 	private bool nearHat = true;
+	private bool lookAtPlayerForever = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -39,7 +42,7 @@ public class MBot_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (Vector3.Distance(transform.position, hardhat.transform.position) < 2.0f)
+		if (Vector3.Distance(transform.position, hardhat.transform.position) < 2.0f && !lookAtPlayerForever)
 		{
 			nearHat = true;
 
@@ -49,7 +52,7 @@ public class MBot_Controller : MonoBehaviour
 				RotateTo(hardhat.transform.position);
 			}
 		}
-		else
+		else if (!lookAtPlayerForever)
 		{
 			nearHat = false;
 			agent.SetDestination(hardhat.transform.position);
@@ -85,6 +88,22 @@ public class MBot_Controller : MonoBehaviour
 				animScreen.SetBool("isHome", false);
 			}
 		}
+
+		if (lookAtPlayerForever && player != null)
+		{
+			if (Vector3.Distance(this.transform.position, angryLocation.transform.position) < 1f)
+			{
+				agent.isStopped = true;
+				if (Vector3.Distance(this.transform.position, player.transform.position) < 10.0f)
+				{
+					RotateTo(player.transform.position);
+				}
+			}
+			else
+			{
+				agent.SetDestination(angryLocation.transform.position);
+			}
+		}
     }
 
 	public void HatMoved()
@@ -100,10 +119,10 @@ public class MBot_Controller : MonoBehaviour
 
 	private void RotateTo(Vector3 target)
 	{
-		GameObject child = this.transform.GetChild(0).gameObject;
+		//GameObject child = this.transform.GetChild(0).gameObject;
 		Vector3 direction = (target - transform.position).normalized;
 		Quaternion lookRotation = Quaternion.LookRotation(direction);
-		child.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2f);
+		this.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2f);
 	}
 
 	private void RotateTo(Quaternion target)
@@ -132,7 +151,10 @@ public class MBot_Controller : MonoBehaviour
 	private void GrabHat()
 	{
 		// Return to base with hat
-		agent.SetDestination(startPosition);
+		if (!lookAtPlayerForever)
+		{
+			agent.SetDestination(startPosition);
+		}
 		lookingForHat = false;
 
 		// Remove hat from hands
@@ -178,6 +200,23 @@ public class MBot_Controller : MonoBehaviour
 
 		agent.isStopped = false;
 		lookingForHat = true;
-		agent.SetDestination(hardhat.transform.position);
+
+		if (!lookAtPlayerForever)
+		{
+			agent.SetDestination(hardhat.transform.position);
+		}
+	}
+
+	// Become angry forever (when chute is destroyed)
+	public void AngryForever()
+	{
+		anim.SetBool("angryForever", true);
+		animFace.SetBool("angryForever", true);
+		animScreen.SetBool("angryForever", true);
+
+		lookAtPlayerForever = true;
+
+		// Stop agent
+		agent.SetDestination(angryLocation.transform.position);
 	}
 }
