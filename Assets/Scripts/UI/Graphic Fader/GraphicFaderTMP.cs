@@ -23,8 +23,6 @@ public class GraphicFaderTMP : MonoBehaviour
     }
 
 
-    private enum DestroyType { Disabled, ComponentOnly, WithGameObject }
-
     #region Exposed Variables
     [SerializeField] private TextMeshProUGUI targetGraphic;    
     [Space]

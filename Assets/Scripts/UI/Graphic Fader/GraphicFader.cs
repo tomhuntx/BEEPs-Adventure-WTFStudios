@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+
+public enum DestroyType { Disabled, ComponentOnly, WithGameObject }
+
 public class GraphicFader : MonoBehaviour
 {
     [System.Serializable]
@@ -21,9 +24,6 @@ public class GraphicFader : MonoBehaviour
 
         public UnityEvent onSequenceEntry;
     }
-
-
-    private enum DestroyType { Disabled, ComponentOnly, WithGameObject }
 
     #region Exposed Variables
     [SerializeField] private Graphic targetGraphic;
