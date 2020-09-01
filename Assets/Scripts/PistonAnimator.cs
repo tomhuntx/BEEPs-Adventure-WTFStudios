@@ -18,6 +18,7 @@ public class PistonAnimator : MonoBehaviour
     {
         if (other.tag == "Generic Destructable")
         {
+            Debug.Log("Entererd!");
             anim.SetBool("boxUnderPiston", true);
             boxExists = true;
         }
