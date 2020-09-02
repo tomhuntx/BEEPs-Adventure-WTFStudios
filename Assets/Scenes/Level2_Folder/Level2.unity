@@ -1475,7 +1475,6 @@ GameObject:
   - component: {fileID: 72185348}
   - component: {fileID: 72185347}
   - component: {fileID: 72185351}
-  - component: {fileID: 72185352}
   m_Layer: 2
   m_Name: Destroy Field (Regular)
   m_TagString: Box Chute
@@ -1511,7 +1510,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableIgnore: 0
   ignoreTags:
+  - Heavy Box
   - Box
+  - MiniBot
   forceDestroy: 1
   onObjectDestroy:
     m_PersistentCalls:
@@ -1583,7 +1584,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72185345}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12da56077e74da3449ab2be3c2b479a7, type: 3}
   m_Name: 
@@ -1595,102 +1596,7 @@ MonoBehaviour:
   forceDestroy: 1
   onObjectDestroy:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 72185352}
-        m_MethodName: WaitThenTrigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
---- !u!114 &72185352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72185345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b342e8329ec54a43a4c348b6dc1285b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0.5
-  eventsToTrigger:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1295894822}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 5133357178356861969, guid: 673b167bc68b18342a78a31dfb4b19b7,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1270035396}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2014839157}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1052033657}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 288717147}
-        m_MethodName: ContributeToTask
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: "\u2022 Clog the Pipes"
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1295894822}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 3e9403076c441f545963e1d4c7470174,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &73099993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15949,17 +15855,17 @@ Transform:
   - {fileID: 1283719559}
   - {fileID: 961531584}
   - {fileID: 167763731}
+  - {fileID: 820273925}
   - {fileID: 760678104}
   - {fileID: 1884732982}
   - {fileID: 2123356894}
-  - {fileID: 820273925}
-  - {fileID: 87238965}
   - {fileID: 952096359}
+  - {fileID: 87238965}
+  - {fileID: 1901280701}
   - {fileID: 2133180511}
   - {fileID: 131486706}
   - {fileID: 980110391}
   - {fileID: 557531134}
-  - {fileID: 1901280701}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22924,7 +22830,7 @@ PrefabInstance:
     - target: {fileID: 174886150102809406, guid: 593a613f2a27a024bbb4e1d8d59b4b39,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 593a613f2a27a024bbb4e1d8d59b4b39, type: 3}
@@ -37449,7 +37355,7 @@ Transform:
   - {fileID: 202898350}
   - {fileID: 603934806}
   m_Father: {fileID: 326641946}
-  m_RootOrder: 14
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &820510690
 PrefabInstance:
@@ -42493,7 +42399,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1033036059867370075, guid: 138e791638c97d34d84dffecfe3d7ca5, type: 3}
-    - {fileID: 2889841212770385107, guid: 138e791638c97d34d84dffecfe3d7ca5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 138e791638c97d34d84dffecfe3d7ca5, type: 3}
 --- !u!1 &887785121
 GameObject:
@@ -43567,6 +43472,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9fd9d956b8c50a4e8b5472841e656d0, type: 3}
+--- !u!137 &942187103 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1430362317342486641, guid: 138e791638c97d34d84dffecfe3d7ca5,
+    type: 3}
+  m_PrefabInstance: {fileID: 885177580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &942442259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43876,7 +43787,7 @@ Transform:
   - {fileID: 877700304}
   - {fileID: 936847009}
   m_Father: {fileID: 326641946}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &952532161 stripped
 Transform:
@@ -47328,7 +47239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!135 &1053662138
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -93509,7 +93420,7 @@ Transform:
   m_LocalScale: {x: 1.22, y: 1, z: 0.73}
   m_Children: []
   m_Father: {fileID: 326641946}
-  m_RootOrder: 21
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
 --- !u!64 &1901280703
 MeshCollider:
@@ -108703,6 +108614,14 @@ MonoBehaviour:
   animScreen: {fileID: 784766317}
   player: {fileID: 1616616328}
   angryLocation: {fileID: 107271867}
+  faceRender: {fileID: 942187103}
+  faceMatIndex: 0
+  normal: {fileID: 2800000, guid: aa5e640f250967a40b4bd18abd095c07, type: 3}
+  disturbed: {fileID: 2800000, guid: 75d1221444df5524abfc1da966603d35, type: 3}
+  angry: {fileID: 2800000, guid: 75d1221444df5524abfc1da966603d35, type: 3}
+  changeColour: 1
+  normalCol: {r: 0.8666667, g: 0.75686276, b: 0, a: 1}
+  angryCol: {r: 0.78431374, g: 0.36078432, b: 0, a: 1}
 --- !u!114 &4684652514900453668 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2407708900354487301, guid: 138e791638c97d34d84dffecfe3d7ca5,

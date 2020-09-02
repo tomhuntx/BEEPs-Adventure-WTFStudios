@@ -20,7 +20,6 @@ public class PistonParticle : MonoBehaviour
     {
         if (other.tag == "Generic Destructable")
         {
-            Debug.Log("Entererd!");
             Invoke("Puff", ParticleDelay);
             //Puff();
         }

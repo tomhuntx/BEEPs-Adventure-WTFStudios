@@ -45,11 +45,19 @@ public class NPC_Controller : MonoBehaviour
 	public Animator animFace;
 	public Animator animScreen;
 
+	[Header("Face Changing")]
+	public Renderer faceRender;
+	public int faceMatIndex = 0;
+	public Texture normal;
+	public Texture scared;
+	public Texture terrified;
+
 	// Events
 	public UnityEvent onPlayerPunch;
 
 	private void Start()
 	{
+		faceRender.materials[faceMatIndex].EnableKeyword("_NORMALMAP");
 		movePointsR = new List<GameObject> { };
 		movePointsL = new List<GameObject> { };
 
@@ -83,7 +91,7 @@ public class NPC_Controller : MonoBehaviour
 
 	void Update()
 	{
-		if (agent.enabled && agent.isOnNavMesh)
+		if (agent != null && agent.enabled && agent.isOnNavMesh)
 		{
 			// If not reached location, move to it
 			if (Vector3.Distance(transform.position, currentPoints[currentIndex].transform.position) > 2.0f)
@@ -221,6 +229,7 @@ public class NPC_Controller : MonoBehaviour
 	private void SetScared()
 	{
 		SetAnimationState("doAngry", true);
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", scared);
 
 		// Drop box if has one
 		if (box != null && box.transform.IsChildOf(this.transform))
@@ -251,6 +260,8 @@ public class NPC_Controller : MonoBehaviour
 				// Resume agent
 				agent.isStopped = false;
 			}
+
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
 		}
 	}
 
@@ -319,6 +330,7 @@ public class NPC_Controller : MonoBehaviour
 
 			// Stop animations and return to normal
 			if (clawScared) { clawScared = false; }
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
 		}
 		else
 		{
@@ -352,6 +364,8 @@ public class NPC_Controller : MonoBehaviour
 		scaredForever = true;
 
 		SetScared();
+
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", terrified);
 	}
 
 	private void Spin()

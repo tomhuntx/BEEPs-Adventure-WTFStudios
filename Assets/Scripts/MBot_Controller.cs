@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class MBot_Controller : MonoBehaviour
 {
 	private Vector3 startPosition;
+	private Quaternion startRotation;
 	private NavMeshAgent agent;
 
 	// This Manager's Hat
@@ -30,33 +31,53 @@ public class MBot_Controller : MonoBehaviour
 	private bool lookingForHat = false;
 	private bool nearHat = true;
 	private bool lookAtPlayerForever = false;
+	private bool explosionLook;
+
+	[Header("Face Changing")]
+	public Renderer faceRender;
+	public int faceMatIndex = 0;
+	public Texture normal;
+	public Texture disturbed;
+	public Texture angry;
+	public bool changeColour = false;
+	public Color normalCol;
+	public Color angryCol;
 
 	// Start is called before the first frame update
 	void Start()
     {
 		startPosition = transform.position;
+		startRotation = transform.rotation;
 		agent = GetComponent<NavMeshAgent>();
 		agent.SetDestination(startPosition);
+		faceRender.materials[faceMatIndex].EnableKeyword("_NORMALMAP");
 	}
 
     // Update is called once per frame
     void Update()
     {
-		if (Vector3.Distance(transform.position, hardhat.transform.position) < 2.0f && !lookAtPlayerForever)
+		if (explosionLook)
+		{
+			GameObject player =	Player.Instance.gameObject;
+			if (player != null)
+			{
+				RotateTo(player.transform.position);
+			}
+		}
+		else if (Vector3.Distance(transform.position, hardhat.transform.position) < 2.0f && !lookAtPlayerForever)
 		{
 			nearHat = true;
 
 			if (lookingForHat)
 			{
 				TryGrabHat();
-				RotateTo(hardhat.transform.position);
 			}
 		}
 		else if (!lookAtPlayerForever)
 		{
 			nearHat = false;
 			agent.SetDestination(hardhat.transform.position);
-			RotateTo(Quaternion.identity);
+			RotateTo(hardhat.transform.position);
 		}
 
 		// Detect if at start position or not
@@ -71,12 +92,26 @@ public class MBot_Controller : MonoBehaviour
 				GameObject player = GameObject.FindGameObjectWithTag("Player");
 				if (player != null && Vector3.Distance(transform.position, player.transform.position) < 2f)
 				{
-					float pow = 10f / Vector3.Distance(transform.position, player.transform.position);
+					float pow = 15f / Vector3.Distance(transform.position, player.transform.position);
 
 					Player.Instance.PlayerMovementControls.ApplyForce((
 						Player.Instance.transform.position - this.transform.position).normalized * pow,
 						PlayerCharacterController.ConvertFromForceMode(ForceMode.Impulse));
 				}
+
+				if (!lookAtPlayerForever)
+				{
+					// Return anims
+					faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
+					if (changeColour)
+						faceRender.materials[faceMatIndex].SetColor("_Color", normalCol);
+				}
+
+
+			}
+			else if (!lookingForHat && !lookAtPlayerForever && nearHat)
+			{
+				RotateTo(startRotation);
 			}
 		}
 		else 
@@ -117,6 +152,20 @@ public class MBot_Controller : MonoBehaviour
 		animScreen.SetTrigger("hatGrabbed");
 	}
 
+	public void GetBlownUp()
+	{
+		// Start angry pause
+		StartCoroutine(AngryPause());
+
+		// Angry animation
+		anim.SetTrigger("hatGrabbed");
+		animFace.SetTrigger("hatGrabbed");
+		animScreen.SetTrigger("hatGrabbed");
+
+		// Look at player
+		explosionLook = true;
+	}
+
 	private void RotateTo(Vector3 target)
 	{
 		//GameObject child = this.transform.GetChild(0).gameObject;
@@ -127,8 +176,8 @@ public class MBot_Controller : MonoBehaviour
 
 	private void RotateTo(Quaternion target)
 	{
-		GameObject child = this.transform.GetChild(0).gameObject;
-		child.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 2f);
+		//GameObject child = this.transform.GetChild(0).gameObject;
+		this.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 1f);
 	}
 
 	private void TryGrabHat()
@@ -194,9 +243,14 @@ public class MBot_Controller : MonoBehaviour
 	// Pause and then start looking for hat - prevents instant attempts at grabbing
 	private IEnumerator AngryPause()
 	{
+		// Face animations
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
+		if (changeColour)
+			faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
+
 		agent.isStopped = true;
 
-		yield return new WaitForSeconds(1.0f);
+		yield return new WaitForSeconds(2f);
 
 		agent.isStopped = false;
 		lookingForHat = true;
@@ -204,7 +258,13 @@ public class MBot_Controller : MonoBehaviour
 		if (!lookAtPlayerForever)
 		{
 			agent.SetDestination(hardhat.transform.position);
+
+			// Face colour stop 
+			if (changeColour)
+				faceRender.materials[faceMatIndex].SetColor("_Color", normalCol);
 		}
+
+		explosionLook = false;
 	}
 
 	// Become angry forever (when chute is destroyed)
@@ -218,5 +278,10 @@ public class MBot_Controller : MonoBehaviour
 
 		// Stop agent
 		agent.SetDestination(angryLocation.transform.position);
+
+		// Face animations
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
+		if (changeColour)
+			faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
 	}
 }

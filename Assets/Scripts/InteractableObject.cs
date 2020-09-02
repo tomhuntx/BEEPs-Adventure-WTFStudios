@@ -92,7 +92,10 @@ public class InteractableObject : MonoBehaviour
 	/// <param name="state">Set to true to show, otherwise, hides it.</param>
 	public void ShowHighlighter(bool state)
     {
-		highlighterInstance.SetActive(state);
+		if (highlighterInstance != null)
+		{
+			highlighterInstance.SetActive(state);
+		}
 
 		// Hover Events - used with tutorial boxes
 		if (state)
