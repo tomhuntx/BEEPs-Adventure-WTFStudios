@@ -96,7 +96,11 @@ public class Robot : MonoBehaviour
 				matDetector.ObjectsInTrigger.Count > 0)
 			{
 				SetAnimationState("doAssembly", true);
-				faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
+				if (!anim.GetBool("doAngry"))
+				{
+					faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
+
+				}
 			}
 			else
 			{

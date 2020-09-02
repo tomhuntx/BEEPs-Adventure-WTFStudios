@@ -92,7 +92,7 @@ public class MBot_Controller : MonoBehaviour
 				GameObject player = GameObject.FindGameObjectWithTag("Player");
 				if (player != null && Vector3.Distance(transform.position, player.transform.position) < 2f)
 				{
-					float pow = 10f / Vector3.Distance(transform.position, player.transform.position);
+					float pow = 15f / Vector3.Distance(transform.position, player.transform.position);
 
 					Player.Instance.PlayerMovementControls.ApplyForce((
 						Player.Instance.transform.position - this.transform.position).normalized * pow,

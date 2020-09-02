@@ -49,8 +49,8 @@ public class NPC_Controller : MonoBehaviour
 	public Renderer faceRender;
 	public int faceMatIndex = 0;
 	public Texture normal;
-	public Texture disturbed;
-	public Texture angry;
+	public Texture scared;
+	public Texture terrified;
 
 	// Events
 	public UnityEvent onPlayerPunch;
@@ -229,6 +229,7 @@ public class NPC_Controller : MonoBehaviour
 	private void SetScared()
 	{
 		SetAnimationState("doAngry", true);
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", scared);
 
 		// Drop box if has one
 		if (box != null && box.transform.IsChildOf(this.transform))
@@ -259,6 +260,8 @@ public class NPC_Controller : MonoBehaviour
 				// Resume agent
 				agent.isStopped = false;
 			}
+
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
 		}
 	}
 
@@ -327,6 +330,7 @@ public class NPC_Controller : MonoBehaviour
 
 			// Stop animations and return to normal
 			if (clawScared) { clawScared = false; }
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
 		}
 		else
 		{
@@ -360,6 +364,8 @@ public class NPC_Controller : MonoBehaviour
 		scaredForever = true;
 
 		SetScared();
+
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", terrified);
 	}
 
 	private void Spin()
