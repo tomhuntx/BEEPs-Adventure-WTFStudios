@@ -33,10 +33,11 @@ public class Explosion : MonoBehaviour
 
 			if (rb != null)
 			{
-				rb.AddExplosionForce(power, transform.position, radius, upforce, forceType);
 
 				if (hit.tag == "Box")
 				{
+					rb.AddExplosionForce(power, transform.position, radius, upforce, forceType);
+
 					// Deals damage to boxes based on distance
 					hit.GetComponent<DestructibleObject>().ApplyDamage(10 * power / Vector3.Distance(transform.position, hit.transform.position));
 				}
@@ -54,12 +55,15 @@ public class Explosion : MonoBehaviour
 				Player.Instance.PlayerMovementControls.ApplyForce((Player.Instance.transform.position - this.transform.position).normalized * pow,
 																	   PlayerCharacterController.ConvertFromForceMode(forceType));
 			}
-			else if (hit.tag == "Bot")
+			if (hit.tag == "Bot")
 			{
-				//Search component from main parent downwards to children
-				SearchForParent.GetParentTransform(hit.gameObject).GetComponentInChildren<Robot>().GetBlownUp(this.transform.position);
+				Robot rob = hit.gameObject.GetComponentInParent<Robot>();
+				if (rob != null)
+				{
+					rob.GetBlownUp(this.transform.position);
+				}
 			}
-			else if (hit.tag == "MiniBot")
+			if (hit.tag == "MiniBot")
 			{
 				hit.gameObject.GetComponent<NPC_Controller>().GetBlownUp(this.transform.position);
 			}
@@ -69,6 +73,12 @@ public class Explosion : MonoBehaviour
 				if (cont != null)
 				{
 					cont.GetBlownUp();
+				}
+
+				Robot rob = hit.gameObject.GetComponentInParent<Robot>();
+				if (rob != null)
+				{
+					rob.GetBlownUp(this.transform.position);
 				}
 			}
 		}

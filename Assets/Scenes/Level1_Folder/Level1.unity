@@ -6357,7 +6357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &323045498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20461,11 +20461,6 @@ PrefabInstance:
       objectReference: {fileID: 321524728}
     - target: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
         type: 3}
-      propertyPath: matDetector
-      value: 
-      objectReference: {fileID: 1499353559}
-    - target: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
-        type: 3}
       propertyPath: onPlayerPunch.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 567811575}
@@ -20536,35 +20531,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
         type: 3}
-      propertyPath: normal
+      propertyPath: matDetector
       value: 
-      objectReference: {fileID: 2800000, guid: 6785e435a07748c429664b329351f726, type: 3}
-    - target: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
-        type: 3}
-      propertyPath: disturbed
-      value: 
-      objectReference: {fileID: 2800000, guid: c9985516551533b42b41d856a885c464, type: 3}
-    - target: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
-        type: 3}
-      propertyPath: angry
-      value: 
-      objectReference: {fileID: 2800000, guid: bd530da600065064ca19be630c751398, type: 3}
-    - target: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
-        type: 3}
-      propertyPath: faceRender
-      value: 
-      objectReference: {fileID: 1135642849}
+      objectReference: {fileID: 1499353559}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02570cef1e8a7be48bab19515927ff85, type: 3}
 --- !u!4 &1135642848 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7777733366518838710, guid: 02570cef1e8a7be48bab19515927ff85,
-    type: 3}
-  m_PrefabInstance: {fileID: 1135642847}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1135642849 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5105519134025260940, guid: 02570cef1e8a7be48bab19515927ff85,
     type: 3}
   m_PrefabInstance: {fileID: 1135642847}
   m_PrefabAsset: {fileID: 0}
@@ -26815,6 +26789,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MODEL_NPC_Hardhat_Fixed
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 36bf618241c93cc48814446fa9cda46f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -5716681864270162303, guid: 36bf618241c93cc48814446fa9cda46f, type: 3}

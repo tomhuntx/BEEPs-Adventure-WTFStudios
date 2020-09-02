@@ -248,10 +248,6 @@ public class Robot : MonoBehaviour
 
 	public void GetBlownUp(Vector3 explosionPosition)
 	{
-		//lookAtPlayer = true;
-		//patience = patienceLimit;
-		//lookTime = 3f;
-
 		GetAnnoyed();
 
 		// Prevents multiple explosive boxes from sending robots flying
@@ -260,9 +256,9 @@ public class Robot : MonoBehaviour
 			Vector3 direction = transform.position - explosionPosition;
 			direction.Normalize();
 			this.transform.position += direction * expDistance;
-			canBePunched = false;
-
 			onGetExploded.Invoke();
+
+			canBePunched = false;
 		}
 	}
 
