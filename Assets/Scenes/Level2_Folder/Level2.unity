@@ -12094,6 +12094,26 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &233464326 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: aad9a663d1b1f6045a0990183ef88ad2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1393064563}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &233464327
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233464326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3387435052749825706, guid: aad9a663d1b1f6045a0990183ef88ad2, type: 3}
 --- !u!1001 &233936741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68833,6 +68853,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: aad9a663d1b1f6045a0990183ef88ad2,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: aad9a663d1b1f6045a0990183ef88ad2,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -73469,6 +73494,26 @@ Transform:
   m_Father: {fileID: 1932934464}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1515582916 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7569089510286211396, guid: b40f7846d44b04043b6f73f4fc1814cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 4184428764297022395}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1515582917
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515582916}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3387435052749825706, guid: aad9a663d1b1f6045a0990183ef88ad2, type: 3}
 --- !u!1001 &1516077432
 PrefabInstance:
   m_ObjectHideFlags: 0
