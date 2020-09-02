@@ -45,11 +45,19 @@ public class NPC_Controller : MonoBehaviour
 	public Animator animFace;
 	public Animator animScreen;
 
+	[Header("Face Changing")]
+	public Renderer faceRender;
+	public int faceMatIndex = 0;
+	public Texture normal;
+	public Texture disturbed;
+	public Texture angry;
+
 	// Events
 	public UnityEvent onPlayerPunch;
 
 	private void Start()
 	{
+		faceRender.materials[faceMatIndex].EnableKeyword("_NORMALMAP");
 		movePointsR = new List<GameObject> { };
 		movePointsL = new List<GameObject> { };
 
@@ -83,7 +91,7 @@ public class NPC_Controller : MonoBehaviour
 
 	void Update()
 	{
-		if (agent.enabled && agent.isOnNavMesh)
+		if (agent != null && agent.enabled && agent.isOnNavMesh)
 		{
 			// If not reached location, move to it
 			if (Vector3.Distance(transform.position, currentPoints[currentIndex].transform.position) > 2.0f)

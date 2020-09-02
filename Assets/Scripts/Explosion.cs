@@ -63,6 +63,14 @@ public class Explosion : MonoBehaviour
 			{
 				hit.gameObject.GetComponent<NPC_Controller>().GetBlownUp(this.transform.position);
 			}
+			if (hit.tag == "ManagerBot")
+			{
+				MBot_Controller cont = SearchForParent.GetParentTransform(hit.gameObject).GetComponentInChildren<MBot_Controller>();
+				if (cont != null)
+				{
+					cont.GetBlownUp();
+				}
+			}
 		}
 	}
 }
