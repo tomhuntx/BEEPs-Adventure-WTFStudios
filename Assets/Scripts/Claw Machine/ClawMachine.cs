@@ -108,7 +108,8 @@ public class ClawMachine : MonoBehaviour
             animatableTRS.localPosition.y >= 0)
         {
             isResetting = false;
-            controlsEnabled = true;            
+            controlsEnabled = true;
+            animatableTRS.localPosition = Vector3.zero;
         }
         else if (!isResetting)
         {
