@@ -19,11 +19,14 @@ public class AnnoyAllMinibots : MonoBehaviour
 	{
 		foreach (GameObject bot in bots)
 		{
-			NPC_Controller rob = bot.GetComponent<NPC_Controller>();
-			if (rob != null)
+			if (bot != null)
 			{
-				interval = RandomFloat();
-				rob.SetScaredForever(interval);
+				NPC_Controller rob = bot.GetComponent<NPC_Controller>();
+				if (rob != null)
+				{
+					interval = RandomFloat();
+					rob.SetScaredForever(interval);
+				}
 			}
 		}
 
