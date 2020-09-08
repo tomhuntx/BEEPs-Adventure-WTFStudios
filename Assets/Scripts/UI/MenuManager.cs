@@ -100,6 +100,9 @@ public class MenuManager : MonoBehaviour
 		ls = loadingObject.GetComponent<LoadingScreen>();
 		oldcanvas = loadingObject.transform.parent.gameObject;
 
+		// Maximum sorting order
+		oldcanvas.GetComponent<Canvas>().sortingOrder = 10;
+
 		// Activate the loading screen
 		loadingObject.SetActive(true);
 
@@ -138,15 +141,16 @@ public class MenuManager : MonoBehaviour
 
 		// Fade out
 		StartCoroutine(FadeOut());
-		yield return new WaitForSeconds(0.8f);
+		yield return new WaitForSeconds(1.2f);
 
-		SceneManager.MoveGameObjectToScene(oldcanvas, SceneManager.GetActiveScene());
+		/* REMOVED -moving loading object to current scene
+		// Get rid of the canvas (except loading object)
+		loadingObject.transform.SetParent(null);
+
+		// Move the objects into the new scene
 		SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
-
-		loadingObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
-		loadingObject.transform.SetAsLastSibling();
-
-		yield return new WaitForSeconds(0.2f);
+		SceneManager.MoveGameObjectToScene(loadingObject, SceneManager.GetActiveScene());
+		*/
 
 		if (oldcanvas)
 		{
