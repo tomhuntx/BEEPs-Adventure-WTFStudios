@@ -115,7 +115,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &53658661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,9 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetGameObject: {fileID: 0}
-  durability: 5
+  durability: 20
   isInvincible: 0
-  forceMagnitudeThreshold: 3
+  forceMagnitudeThreshold: 8
   generalImpactThreshold: 0.5
   modelPresets: []
   onPlayerPunch:
@@ -257,6 +257,7 @@ MonoBehaviour:
   enableIgnore: 1
   ignoreTags:
   - Conveyor Belt
+  acceptAll: 0
   onCollisionEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -287,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0
 --- !u!82 &53658663
 AudioSource:
   m_ObjectHideFlags: 0

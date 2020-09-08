@@ -465,15 +465,27 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ThrowGrabbedObject()
     {
-        if ((isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5 ||
+        if ((isRaycastHit && Vector3.Distance(hitInfo.point, this.transform.position) >= 2.5f ||
             !isRaycastHit) && grabbedObject)
         {
             grabbedObject.transform.localPosition = thrownObjectOffsetPos;
-            grabbedObject.ThrowObject(raycastOrigin.forward * throwForce, ForceMode.Impulse);
+            
+            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward, out RaycastHit rayHit))
+            {
+                TrajectoryTarget.RotateToTrajectory(grabbedObject.transform, grabbedObject.transform.position, 
+                                                    rayHit.point, throwForce, Mathf.Abs(Physics.gravity.y));
+
+                grabbedObject.ThrowObject(grabbedObject.transform.forward * throwForce, ForceMode.Impulse);
+            }
+            else
+            {
+                grabbedObject.ThrowObject(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
+            }
+            
             grabbedObject = null;
 
-			// Allow punching
-			allowPunch = true;
+            // Allow punching
+            allowPunch = true;
 
 			// Throw animation
 			bodyAnim.SetTrigger("Throw");
