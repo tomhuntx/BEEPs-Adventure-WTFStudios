@@ -769,7 +769,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 565255277}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1243,8 +1243,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 2008858974}
   - {fileID: 264102183}
+  - {fileID: 2008858974}
   - {fileID: 507523988}
   - {fileID: 761841285}
   - {fileID: 605593357}
@@ -1617,7 +1617,7 @@ PrefabInstance:
     - target: {fileID: 1662696416939102967, guid: 9c24b88c18cf1944194e2ba8f066ea53,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1662696416939102967, guid: 9c24b88c18cf1944194e2ba8f066ea53,
         type: 3}
@@ -2593,6 +2593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057086092552368727, guid: 15677fd7b14388b46ae1b781441e091a,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1847
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15677fd7b14388b46ae1b781441e091a, type: 3}

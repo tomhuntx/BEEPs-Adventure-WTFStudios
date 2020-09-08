@@ -19,7 +19,10 @@ public class LoadingScreen : MonoBehaviour
 
 	public void SetFade(float a)
 	{
-		img.color = new Color(1, 1, 1, a);
+		if (img != null)
+		{
+			img.color = new Color(1, 1, 1, a);
+		}
 	}
 
 	public void FadeOut()
