@@ -11771,7 +11771,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3387435052749825706, guid: aad9a663d1b1f6045a0990183ef88ad2, type: 3}
 --- !u!54 &233464328
@@ -29401,6 +29401,11 @@ PrefabInstance:
         type: 3}
       propertyPath: targetDetectionThreshold
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734992406203502214, guid: 365b08084ac361c4583783cc6de28e66,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4734992406203502215, guid: 365b08084ac361c4583783cc6de28e66,
         type: 3}
@@ -72110,7 +72115,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3387435052749825706, guid: aad9a663d1b1f6045a0990183ef88ad2, type: 3}
 --- !u!54 &1515582918
