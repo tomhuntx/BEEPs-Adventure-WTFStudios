@@ -24957,6 +24957,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1251102521, guid: 83c7499659f3efd4aafff2a9e9a73a29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -17
+      objectReference: {fileID: 0}
     - target: {fileID: 1277383061, guid: 83c7499659f3efd4aafff2a9e9a73a29, type: 3}
       propertyPath: m_Name
       value: Max X
@@ -94703,9 +94707,10 @@ GameObject:
   - component: {fileID: 1928912849}
   - component: {fileID: 1928912848}
   - component: {fileID: 1928912851}
+  - component: {fileID: 1928912852}
   m_Layer: 0
   m_Name: BlownUpChute
-  m_TagString: Untagged
+  m_TagString: Box Chute
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94785,6 +94790,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4063836790949059896, guid: 7f6973d77d842214f87b5e725cc7971e, type: 3}
+--- !u!54 &1928912852
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928912847}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &1932443752
 PrefabInstance:
   m_ObjectHideFlags: 0
