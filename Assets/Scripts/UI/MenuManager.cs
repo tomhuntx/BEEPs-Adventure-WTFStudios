@@ -111,7 +111,7 @@ public class MenuManager : MonoBehaviour
 		// Load the passed scene
 		AsyncOperation async = SceneManager.LoadSceneAsync(scene);
 
-		async.allowSceneActivation = false;
+		async.allowSceneActivation = true;
 
 		DontDestroyOnLoad(oldcanvas);
 		DontDestroyOnLoad(this.gameObject);
@@ -134,15 +134,11 @@ public class MenuManager : MonoBehaviour
 	IEnumerator PauseAfterLoad(AsyncOperation async)
 	{
 		// Pause
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(0.3f);
 
 		// Fade out
 		StartCoroutine(FadeOut());
 		yield return new WaitForSeconds(0.8f);
-		async.allowSceneActivation = true;
-		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.None;
-		yield return new WaitForSeconds(0.2f);
 
 		SceneManager.MoveGameObjectToScene(oldcanvas, SceneManager.GetActiveScene());
 		SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
@@ -150,7 +146,7 @@ public class MenuManager : MonoBehaviour
 		loadingObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
 		loadingObject.transform.SetAsLastSibling();
 
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(0.2f);
 
 		if (oldcanvas)
 		{
