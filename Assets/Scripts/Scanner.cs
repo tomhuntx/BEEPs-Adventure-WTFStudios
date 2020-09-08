@@ -107,6 +107,7 @@ public class Scanner : MonoBehaviour
 		}
 		else
 		{
+			if (other.tag == "Outline") return;
 			ChangeLight(lightColour.yellow);
 		}
 	}
