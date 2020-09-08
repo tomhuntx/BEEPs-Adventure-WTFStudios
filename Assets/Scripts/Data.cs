@@ -13,7 +13,11 @@ public class Data
 	// Set data to that of the current level
 	public Data(GameManager gm)
 	{
-		level = gm.thisLevel;
+		if (gm.thisLevel > level)
+		{
+			level = gm.thisLevel;
+		}
+
 		feedback = gm.feedbackCount;
 		feedbackTime = gm.feedbackTimeBinary;
 		//...

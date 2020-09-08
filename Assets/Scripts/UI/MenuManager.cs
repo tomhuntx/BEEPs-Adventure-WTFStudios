@@ -8,15 +8,20 @@ using TMPro;
 public class MenuManager : MonoBehaviour
 {
 	public int levelProgress = 0;
+	private bool finishing = false;
 
 	// Loading Screen
 	[SerializeField] private GameObject loadingScreen;
+	private LoadingScreen ls;
+	private GameObject loadingObject;
+	private GameObject oldcanvas;
+	private bool loading = false;
 
 	// Level Select Menu (Main Menu ONLY)
 	[SerializeField] private GameObject levelSelect;
 
 	void Awake()
-    {
+	{
 		Time.timeScale = 1;
 
 		try
@@ -28,6 +33,11 @@ public class MenuManager : MonoBehaviour
 			Debug.Log("Creating new file...");
 			Data data = DataSaver.NewData();
 		}
+	}
+
+	private void Start()
+	{
+		UnlockAllLevels();
 	}
 
 	public void Load()
@@ -58,9 +68,12 @@ public class MenuManager : MonoBehaviour
 		levelSelect.SetActive(true);
 	}
 
-	public void Settings()
+	// Unlock all levels (cheat)
+	public void UnlockAllLevels()
 	{
-
+		GameManager gm = new GameManager();
+		gm.thisLevel = 3;
+		DataSaver.SaveProgress(gm);
 	}
 
 	public void Quit()
@@ -70,26 +83,117 @@ public class MenuManager : MonoBehaviour
 
 	public void LoadScene(int scene)
 	{
-		StartCoroutine(LoadNewScene(scene));
+		if (!loading)
+		{
+			StartCoroutine(LoadNewScene(scene));
+		}
+		loading = true;
 	}
 
 	IEnumerator LoadNewScene(int scene)
 	{
-		Instantiate(loadingScreen, FindObjectOfType<Canvas>().transform);
-		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
 
-		// Wait at least 2 seconds for loading (waits 1 second plus time to load the scene)
-		// Realtime to not be affected by timescale
-		yield return new WaitForSecondsRealtime(1);
+		loadingObject = Instantiate(loadingScreen, FindObjectOfType<Canvas>().transform);
+		loadingObject.transform.SetAsLastSibling();
+		ls = loadingObject.GetComponent<LoadingScreen>();
+		oldcanvas = loadingObject.transform.parent.gameObject;
+
+		// Activate the loading screen
+		loadingObject.SetActive(true);
+
+		StartCoroutine(FadeIn());
+
+		// Wait before loading scene
+		yield return new WaitForSecondsRealtime(2f);
 
 		// Load the passed scene
 		AsyncOperation async = SceneManager.LoadSceneAsync(scene);
 
-		// Wait until the scene is loaded
+		async.allowSceneActivation = false;
+
+		DontDestroyOnLoad(oldcanvas);
+		DontDestroyOnLoad(this.gameObject);
+
+
+		// Wait until the scene is fully loaded
 		while (!async.isDone)
 		{
+			// Check if the load has almost finished
+			if (async.progress >= 0.9f && !finishing)
+			{
+				StartCoroutine(PauseAfterLoad(async));
+				finishing = true;
+			}
+
 			yield return null;
 		}
 	}
+
+	IEnumerator PauseAfterLoad(AsyncOperation async)
+	{
+		// Pause
+		yield return new WaitForSeconds(0.2f);
+
+		// Fade out
+		StartCoroutine(FadeOut());
+		yield return new WaitForSeconds(0.8f);
+		async.allowSceneActivation = true;
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
+		yield return new WaitForSeconds(0.2f);
+
+		SceneManager.MoveGameObjectToScene(oldcanvas, SceneManager.GetActiveScene());
+		SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+
+		loadingObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
+		loadingObject.transform.SetAsLastSibling();
+
+		yield return new WaitForSeconds(0.1f);
+
+		if (oldcanvas)
+		{
+			Destroy(oldcanvas);
+		}
+
+		if (loadingObject)
+		{
+			Destroy(loadingObject);
+			loadingObject = null;
+			ls = null;
+		}
+
+		// Remove this
+		Destroy(gameObject);
+	}
+
+	IEnumerator FadeIn()
+	{
+		ls.SetFade(0);
+		float time = 0;
+		while (time < 1)
+		{
+			ls.SetFade(time);
+			time += 1f * Time.unscaledDeltaTime;
+
+			yield return null;
+		}
+		ls.SetFade(1);
+	}
+
+	IEnumerator FadeOut()
+	{
+		ls.SetFade(1);
+		float time = 1;
+		while (time > 0)
+		{
+			ls.SetFade(time);
+			time -= 1f * Time.unscaledDeltaTime;
+
+			yield return null;
+		}
+		ls.SetFade(0);
+	}
+
 }

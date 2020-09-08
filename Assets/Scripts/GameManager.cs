@@ -54,8 +54,6 @@ public class GameManager : MonoBehaviour
 	public SettingsMenu SettingsMenuComponent { get { return settingsMenuComponent; } }
 	public WindowManager WindowManagerComponent { get { return windowManagerComponent; } }
 
-
-
 	private void Awake()
     {
 		settingsMenuComponent = Resources.FindObjectsOfTypeAll<SettingsMenu>()[0];
@@ -64,7 +62,11 @@ public class GameManager : MonoBehaviour
 		settingsMenuComponent.LoadPrefsData();
 
 		Instance = this;
-		mm = FindObjectOfType<MenuManager>();
+		mm = GetComponent<MenuManager>();
+		if (mm == null)
+		{
+			mm = FindObjectOfType<MenuManager>();
+		}
 
 		//Highlighter setup
 		InteractableObject.highlighterMaterial = highlighterMaterial;
