@@ -80,7 +80,7 @@ public class SettingsMenu : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         ManageGameAudio();
         ManageSensitivity();
@@ -207,15 +207,17 @@ public class SettingsMenu : MonoBehaviour
 
     public void SaveMasterVolume()
     {
-        //if (this.gameObject.activeSelf)
+        if (this.gameObject.activeSelf)
+        {
             StartCoroutine(SaveMasterVolDelay());
+        }
         //else
         //    PlayerPrefs.SetFloat(MASTER_VOL_PREFS_KEY, masterVol);
     }
 
     public void SaveMusicVolume()
     {
-        //if (this.gameObject.activeSelf)
+        if (this.gameObject.activeSelf)
             StartCoroutine(SaveMusicVolDelay());
         //else
         //    PlayerPrefs.SetFloat(MUSIC_VOL_PREFS_KEY, musicVol);
@@ -235,19 +237,19 @@ public class SettingsMenu : MonoBehaviour
 
     private IEnumerator SaveMasterVolDelay()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
         PlayerPrefs.SetFloat(MASTER_VOL_PREFS_KEY, masterVol);
     }
 
     private IEnumerator SaveMusicVolDelay()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
         PlayerPrefs.SetFloat(MUSIC_VOL_PREFS_KEY, musicVol);
     }
 
     private IEnumerator SaveSFXVolDelay()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
         PlayerPrefs.SetFloat(SFX_VOL_PREFS_KEY, soundEffectsVol);
         PlayerPrefs.SetFloat(SFX_COMP_PREFS_KEY, soundEffectsVol - compressorDiffThreshold);
     }
