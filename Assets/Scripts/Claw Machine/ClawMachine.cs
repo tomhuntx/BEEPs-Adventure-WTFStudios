@@ -312,19 +312,17 @@ public class ClawMachine : MonoBehaviour
     #region Private Methods
     private void MoveClaw()
     {
-        Vector3 camForward = clawCam.transform.forward;
-        camForward.x = Mathf.Clamp(camForward.x * 10, -1, 1);
-        camForward.z = Mathf.Clamp(camForward.z * 10, -1, 1);
-        camForward.y = 0;
+        Vector3 v1 = this.transform.position;
+        v1.y = 0;
+        
+        Vector3 v2 = clawCam.transform.position;
+        v2.y = 0;
 
-        Vector3 camRight = clawCam.transform.right;
-        camRight.x = Mathf.Clamp(camRight.x * 10, -1, 1);
-        camRight.z = Mathf.Clamp(camRight.z * 10, -1, 1);
-        camRight.y = 0;
-
-        Vector3 movementVector = camRight * Input.GetAxis("Horizontal") +
-                                 camForward * Input.GetAxis("Vertical");
+        Direction toClaw = new Direction(v2, v1);
+        Vector3 movementVector = clawCam.transform.right * Input.GetAxis("Horizontal") +
+                                 toClaw.localDirection * Input.GetAxis("Vertical");
         movementVector = Vector3.ClampMagnitude(movementVector, 1);
+        movementVector.y = 0;
         this.transform.Translate(movementVector * moveSpeed * Time.deltaTime);
         float xPos = Mathf.Clamp(this.transform.position.x, horizontalLimiters[0].position.x, horizontalLimiters[1].position.x);
         float zPos = Mathf.Clamp(this.transform.position.z, verticalLimiters[0].position.z, verticalLimiters[1].position.z);
