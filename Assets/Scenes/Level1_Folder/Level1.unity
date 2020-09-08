@@ -5472,6 +5472,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2994228195815253056, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2122883579}
+    - target: {fileID: 2994228195815253056, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TargetsSetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 7894794171717424118, guid: 7743c348cd4d2a342946aab46ba253b9,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -5907,6 +5917,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -137.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8266739292758267501, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onTargetsDisable.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 567811576}
+    - target: {fileID: 8266739292758267501, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onTargetsEnable.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 567811576}
+    - target: {fileID: 8286353412531854887, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onTargetsDisable.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 567811576}
+    - target: {fileID: 8286353412531854887, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onTargetsEnable.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 567811576}
     - target: {fileID: 9166088879729946880, guid: 7743c348cd4d2a342946aab46ba253b9,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -6312,7 +6342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &323045498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9422,30 +9452,7 @@ MonoBehaviour:
       m_Calls: []
   onAllTasksDone:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 567811581}
-        m_MethodName: SpawnToPoint
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8369074721216352910, guid: 5d2a6407abef0064e95f608993752c9d,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 567811578}
-        m_MethodName: FadeMusic
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 5
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!82 &567811580
 AudioSource:
   m_ObjectHideFlags: 0
@@ -26606,7 +26613,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 36bf618241c93cc48814446fa9cda46f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -5716681864270162303, guid: 36bf618241c93cc48814446fa9cda46f, type: 3}
@@ -41075,6 +41082,18 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2122883579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8266739292758267501, guid: 7743c348cd4d2a342946aab46ba253b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 295037295}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d37cc27e2ea8d943bec39cf06b87966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2133903151
 GameObject:
   m_ObjectHideFlags: 0

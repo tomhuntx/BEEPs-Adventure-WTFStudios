@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
 	bool moveControls = false;
 	RectTransform rect;
 	//
+	private bool pauseMenuControlsEnabled = true;
 
 	private List<AudioSource> pausedAudioSources = new List<AudioSource>();
 
@@ -118,7 +119,8 @@ public class GameManager : MonoBehaviour
 		}
 
         //Simple pause
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (pauseMenuControlsEnabled && 
+			Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenu != null)
             {
@@ -347,6 +349,11 @@ public class GameManager : MonoBehaviour
 		//Application.Quit();
 		LoadScene(0);
 	}
+
+	public void TogglePauseMenuControls(bool state)
+    {
+		pauseMenuControlsEnabled = state;
+    }
 
 	// Data management
 	public void Save()

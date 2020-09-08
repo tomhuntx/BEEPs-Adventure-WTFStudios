@@ -1211,8 +1211,8 @@ MonoBehaviour:
   onGraphicsChangeOnExit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3135605913097262302}
-        m_MethodName: SetActive
+      - m_Target: {fileID: 8286353412531854887}
+        m_MethodName: TargetsSetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3527,6 +3527,7 @@ GameObject:
   - component: {fileID: 3023136384509403712}
   - component: {fileID: 8524600138942262426}
   - component: {fileID: 3939820395677337265}
+  - component: {fileID: 8286353412531854887}
   m_Layer: 5
   m_Name: Confirm Settings
   m_TagString: Untagged
@@ -3593,6 +3594,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8286353412531854887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3135605913097262302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d37cc27e2ea8d943bec39cf06b87966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 3135605913097262302}
+  onTargetsDisable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: TogglePauseMenuControls
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  onTargetsEnable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: TogglePauseMenuControls
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onGameObjectDisable:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3397787783705998952
 GameObject:
   m_ObjectHideFlags: 0
@@ -9968,6 +10014,7 @@ GameObject:
   - component: {fileID: 3572437110789576040}
   - component: {fileID: 5734264770568563368}
   - component: {fileID: 5061711933191700437}
+  - component: {fileID: 8266739292758267501}
   m_Layer: 5
   m_Name: Confirm Reset
   m_TagString: Untagged
@@ -10033,6 +10080,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8266739292758267501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478644665192709331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d37cc27e2ea8d943bec39cf06b87966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 8478644665192709331}
+  onTargetsDisable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: TogglePauseMenuControls
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  onTargetsEnable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: TogglePauseMenuControls
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onGameObjectDisable:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8520366021714209684
 GameObject:
   m_ObjectHideFlags: 0
@@ -10801,6 +10893,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c24b88c18cf1944194e2ba8f066ea53, type: 3}
+--- !u!224 &8798480012771606953 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1662696416939102967, guid: 9c24b88c18cf1944194e2ba8f066ea53,
+    type: 3}
+  m_PrefabInstance: {fileID: 7856933485051122526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8798480012771606935 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1662696416939102921, guid: 9c24b88c18cf1944194e2ba8f066ea53,
@@ -10813,12 +10911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &8798480012771606953 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1662696416939102967, guid: 9c24b88c18cf1944194e2ba8f066ea53,
-    type: 3}
-  m_PrefabInstance: {fileID: 7856933485051122526}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7894794173202610349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11376,12 +11468,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bf8d05e8d9ade04f898f1c430843da1, type: 3}
---- !u!224 &2517470501550230641 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5719619276637809176, guid: 1bf8d05e8d9ade04f898f1c430843da1,
-    type: 3}
-  m_PrefabInstance: {fileID: 7894794173311886953}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7570615194366037933 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 333208168845339076, guid: 1bf8d05e8d9ade04f898f1c430843da1,
@@ -11394,6 +11480,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfce45d3b234f534eb971613aec0b5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2517470501550230641 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5719619276637809176, guid: 1bf8d05e8d9ade04f898f1c430843da1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7894794173311886953}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2517470501550230640 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5719619276637809177, guid: 1bf8d05e8d9ade04f898f1c430843da1,
@@ -11609,18 +11701,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bf8d05e8d9ade04f898f1c430843da1, type: 3}
---- !u!224 &2517470501885335812 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5719619276637809176, guid: 1bf8d05e8d9ade04f898f1c430843da1,
-    type: 3}
-  m_PrefabInstance: {fileID: 7894794173648171804}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2517470501885335813 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5719619276637809177, guid: 1bf8d05e8d9ade04f898f1c430843da1,
-    type: 3}
-  m_PrefabInstance: {fileID: 7894794173648171804}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7570615194567023320 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 333208168845339076, guid: 1bf8d05e8d9ade04f898f1c430843da1,
@@ -11633,3 +11713,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfce45d3b234f534eb971613aec0b5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2517470501885335812 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5719619276637809176, guid: 1bf8d05e8d9ade04f898f1c430843da1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7894794173648171804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2517470501885335813 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5719619276637809177, guid: 1bf8d05e8d9ade04f898f1c430843da1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7894794173648171804}
+  m_PrefabAsset: {fileID: 0}
