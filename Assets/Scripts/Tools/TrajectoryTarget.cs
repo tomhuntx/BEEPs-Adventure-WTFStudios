@@ -18,7 +18,7 @@ public static class TrajectoryTarget
     }
 
     /// <summary>
-    /// Calculates the trajectory angle based on a pre-determined initial and final position.
+    /// Calculates the trajectory angle based on the given distance.
     /// </summary>
     /// <param name="distance">How far the object will be thrown.</param>
     /// <param name="speed">How fast the object travels.</param>
