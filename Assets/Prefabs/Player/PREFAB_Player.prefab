@@ -366,9 +366,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7808786021717997397}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
   characterBody: {fileID: 7808786022589867787}
   characterCam: {fileID: 7808786023054035218}
   minCamAngleX: -90
-  maxCamAngleX: 90
+  maxCamAngleX: 80
   thirdPersonFOV: 90
   firstPersonFOV: 90
   lookSensitivity: 120
@@ -462,7 +462,7 @@ MonoBehaviour:
   sprintSpeed: 7
   maxAirSpeed: 6
   airSpeedMagnitude: 1
-  bumpForce: 0.8
+  bumpForce: 0.3
   maxExpForce: 40
   externalForceFalloff: 3
   jumpForce: 10
@@ -657,10 +657,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 1.4712849
+  m_Radius: 0.4
+  m_Height: 1.471285
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.1356424, z: 0}
 --- !u!1 &7808786021733205604
 GameObject:
   m_ObjectHideFlags: 0
