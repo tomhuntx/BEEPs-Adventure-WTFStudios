@@ -61,6 +61,13 @@ public class GameManager : MonoBehaviour
 
 		settingsMenuComponent.LoadPrefsData();
 
+		// Set level to maximum of saved data and current level
+		Data data = DataSaver.LoadData();
+		if (data.GetLevel() > thisLevel)
+		{
+			thisLevel = data.GetLevel();
+		}
+
 		Instance = this;
 		mm = GetComponent<MenuManager>();
 		if (mm == null)

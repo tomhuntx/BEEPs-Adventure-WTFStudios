@@ -15,6 +15,11 @@ public class LevelSelect : MonoBehaviour
 	// Start is called before the first frame update
 	void Awake()
     {
+		LoadLevels();
+	}
+
+	public void LoadLevels()
+	{
 		mm = GameObject.FindObjectOfType<MenuManager>();
 		level = mm.levelProgress;
 

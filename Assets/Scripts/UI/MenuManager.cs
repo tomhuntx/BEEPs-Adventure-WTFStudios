@@ -12,6 +12,10 @@ public class MenuManager : MonoBehaviour
 
 	// Loading Screen
 	[SerializeField] private GameObject loadingScreen;
+
+	// New Game Yes/No Prompt
+	[SerializeField] private GameObject newGamePrompt;
+
 	private LoadingScreen ls;
 	private GameObject loadingObject;
 	private GameObject oldcanvas;
@@ -35,11 +39,6 @@ public class MenuManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-		UnlockAllLevels();
-	}
-
 	public void Load()
 	{
 		Data data = DataSaver.LoadData();
@@ -56,9 +55,22 @@ public class MenuManager : MonoBehaviour
 
 	public void NewGame()
 	{
+		// If has saved progress, prompt
+		if (levelProgress > 0)
+		{
+			newGamePrompt.SetActive(true);
+		}
+		// Else load the tutorial level
+		else
+		{
+			LoadScene(1);
+		}
+	}
+
+	public void Override()
+	{
 		DataSaver.ResetProgress();
 
-		// Load tutorial level
 		LoadScene(1);
 	}
 
@@ -74,6 +86,7 @@ public class MenuManager : MonoBehaviour
 		GameManager gm = new GameManager();
 		gm.thisLevel = 3;
 		DataSaver.SaveProgress(gm);
+		levelProgress = 3;
 	}
 
 	public void Quit()
@@ -142,15 +155,6 @@ public class MenuManager : MonoBehaviour
 		// Fade out
 		StartCoroutine(FadeOut());
 		yield return new WaitForSeconds(1.2f);
-
-		/* REMOVED -moving loading object to current scene
-		// Get rid of the canvas (except loading object)
-		loadingObject.transform.SetParent(null);
-
-		// Move the objects into the new scene
-		SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
-		SceneManager.MoveGameObjectToScene(loadingObject, SceneManager.GetActiveScene());
-		*/
 
 		if (oldcanvas)
 		{
