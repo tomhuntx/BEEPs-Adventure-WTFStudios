@@ -234,8 +234,11 @@ public class NPC_Controller : MonoBehaviour
 	// Set bots as scared
 	private void SetScared()
 	{
+		if (!scaredForever)
+		{
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", scared);
+		}
 		SetAnimationState("doAngry", true);
-		faceRender.materials[faceMatIndex].SetTexture("_MainTex", scared);
 
 		// Drop box if has one
 		if (box != null && box.transform.IsChildOf(this.transform))
@@ -345,9 +348,8 @@ public class NPC_Controller : MonoBehaviour
 		}
 		else
 		{
-			agent.enabled = false;
-
 			// Otherwise continue to freak out
+			agent.enabled = false;
 		}
 	}
 

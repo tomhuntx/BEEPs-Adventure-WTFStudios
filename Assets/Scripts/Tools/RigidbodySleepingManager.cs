@@ -41,6 +41,7 @@ public class RigidbodySleepingManager : MonoBehaviour
     }
 }
 
+/*
 [CustomEditor(typeof(RigidbodySleepingManager))]
 public class RigidbodySleepingManagerEditor : Editor
 {
@@ -61,3 +62,4 @@ public class RigidbodySleepingManagerEditor : Editor
         }
     }
 }
+*/
