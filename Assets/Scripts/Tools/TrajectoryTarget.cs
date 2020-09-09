@@ -51,6 +51,10 @@ public static class TrajectoryTarget
 
         //This line of code is so that we can point torwards the target position, while also pointing to the firing angle
         tempRot.x = target.eulerAngles.x - GetTrajectoryAngle(distance, speed, gravity);
+
+        //Case: the target distance is too far and the speed is too low - set to 45 deg
+        tempRot.x = float.IsNaN(tempRot.x) ? -45 : tempRot.x;
+
         target.eulerAngles = tempRot;
     }
 
