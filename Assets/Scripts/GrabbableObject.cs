@@ -166,7 +166,8 @@ public class GrabbableObject : DestructibleObject
         {
             collider.enabled = colliderState;
         }
-        RigidbodyComponent.isKinematic = true;
+		RigidbodyComponent.collisionDetectionMode = CollisionDetectionMode.Discrete;
+		RigidbodyComponent.isKinematic = true;
 
         interactionComponent.ShowHighlighter(false);
         DetachForceAppliers();
