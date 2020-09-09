@@ -130,7 +130,13 @@ public class NPC_Controller : MonoBehaviour
 			box = Instantiate(boxPrefab, boxSpawnPoint.transform);
 			box.SetActive(false);
 			box.transform.position = boxSpawnPoint.transform.position;
-			box.GetComponent<Rigidbody>().isKinematic = true;
+
+			Rigidbody rb = box.GetComponent<Rigidbody>();
+			if (rb)
+			{
+				rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+				rb.isKinematic = true;
+			}
 
 			SetScared();
 		}
@@ -310,7 +316,12 @@ public class NPC_Controller : MonoBehaviour
 			{
 				box = Instantiate(boxPrefab, boxSpawnPoint.transform);
 				box.transform.position = boxSpawnPoint.transform.position;
-				box.GetComponent<Rigidbody>().isKinematic = true;
+				Rigidbody rb = box.GetComponent<Rigidbody>();
+				if (rb)
+				{
+					rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+					rb.isKinematic = true;
+				}
 			}
 
 			// Stop interact animation
@@ -391,10 +402,17 @@ public class NPC_Controller : MonoBehaviour
 			{
 				finalPosition = hit.position;
 			}
-			agent.SetDestination(finalPosition);
+			if (agent.enabled && agent.isOnNavMesh)
+			{
+				agent.SetDestination(finalPosition);
+			}
 
 			spinruntime = 2f;
 		}
-		agent.isStopped = false;
+
+		if (agent.enabled && agent.isOnNavMesh)
+		{
+			agent.isStopped = false;
+		}
 	}
 }
