@@ -10,6 +10,7 @@ public class GrabbableObject : DestructibleObject
     public InteractableObject interactionComponent { get; private set; }
     private GrabbableObjectPlacementChecker placementChecker;
     private bool isOffsetApplied = false;
+    private CollisionDetectionMode initialDetectionMode;
 
     [Header("Grabbed Object Events")]
     public UnityEvent onObjectGrab;
@@ -148,6 +149,8 @@ public class GrabbableObject : DestructibleObject
             collider.enabled = true;
         }
         RigidbodyComponent.isKinematic = false;
+        RigidbodyComponent.collisionDetectionMode = initialDetectionMode;
+
 
         interactionComponent.ShowHighlighter(false);
         interactionComponent.ResetHighlighter();
@@ -166,6 +169,9 @@ public class GrabbableObject : DestructibleObject
         {
             collider.enabled = colliderState;
         }
+
+        initialDetectionMode = RigidbodyComponent.collisionDetectionMode;
+        RigidbodyComponent.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;        
         RigidbodyComponent.isKinematic = true;
 
         interactionComponent.ShowHighlighter(false);

@@ -349,7 +349,8 @@ public class InteractableObject : MonoBehaviour
                 if (component.Equals(typeof(Rigidbody)))
                 {
                     Rigidbody rb = components[i] as Rigidbody;
-                    rb.isKinematic = true;
+                    rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+                    rb.isKinematic = true;                    
                 }
             }
         }
