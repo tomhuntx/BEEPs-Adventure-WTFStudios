@@ -69,6 +69,11 @@ public class Robot : MonoBehaviour
 		originalPosition = this.transform.position;
 
 		faceRender.materials[faceMatIndex].EnableKeyword("_NORMALMAP");
+
+		if (isManagerBot)
+		{
+			expDistance = 1.0f;
+		}
 	}
 
 	void FixedUpdate()
@@ -255,6 +260,7 @@ public class Robot : MonoBehaviour
 		{
 			Vector3 direction = transform.position - explosionPosition;
 			direction.Normalize();
+			direction.y = 0;
 			this.transform.position += direction * expDistance;
 			onGetExploded.Invoke();
 
