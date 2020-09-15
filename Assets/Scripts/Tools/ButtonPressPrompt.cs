@@ -40,7 +40,7 @@ public class ButtonPressPrompt : MonoBehaviour
                      string.Format("There is no collider attached on {0}... Please attach one before playing!", this.gameObject));
 
         colliderEvents = this.GetComponent<UnityEventsHandler>();
-        colliderEvents.onTriggerEnter.AddListener(ShowPrompt);
+        colliderEvents.onTriggerStay.AddListener(ShowPrompt);
         colliderEvents.onTriggerExit.AddListener(HidePrompt);
         onButtonPress.AddListener(HidePrompt);
 

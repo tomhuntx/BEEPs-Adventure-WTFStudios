@@ -67,7 +67,10 @@ public class PersistentForceRigidbody : TagFilterer
                 other.GetComponent<DestructibleObject>().AddForceApplierReference(this);
             }
         }
-        
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         if (other.tag == "Player")
         {
             isPlayerInside = true;
@@ -135,17 +138,30 @@ public class PersistentForceRigidbody : TagFilterer
     {
         //FPSController.ForceType convertedType = FPSController.ConvertFromForceMode(forceType);
         PlayerCharacterController.ForceType convertedType = PlayerCharacterController.ConvertFromForceMode(forceType);
+        Vector3 forceApplied = Vector3.zero;
 
         switch (forceDirection)
         {
             case Direction.Omnidirectional:
                 Vector3 direction = Player.Instance.transform.position - this.transform.position;
-                Player.Instance.PlayerMovementControls.ApplyForce(direction * force, convertedType);
+                //Player.Instance.PlayerMovementControls.ApplyForce(direction * force, convertedType);
+                forceApplied = direction * force;
                 break;
 
             default:
-                Player.Instance.PlayerMovementControls.ApplyForce(GetDirection(forceDirection) * force, convertedType);
+                //Player.Instance.PlayerMovementControls.ApplyForce(GetDirection(forceDirection) * force, convertedType);
+                forceApplied = GetDirection(forceDirection) * force;
                 break;
+        }
+
+        if (Player.Instance.PlayerMovementControls.enabled)
+        {
+            Player.Instance.PlayerMovementControls.ApplyForce(forceApplied, convertedType);
+        }
+        else
+        {
+            //Player.Instance.PlayerMovementControls.RigidbodyComponent.AddForce(forceApplied * Time.deltaTime, forceType);
+            Player.Instance.transform.position += forceApplied * Time.deltaTime;
         }
     }
 

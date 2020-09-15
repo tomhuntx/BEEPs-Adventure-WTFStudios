@@ -34,7 +34,8 @@ public class Explosion : MonoBehaviour
 			if (rb != null)
 			{
 
-				if (hit.tag == "Box")
+				if (hit.tag == "Box" ||
+					hit.tag == "Explosive Box")
 				{
 					rb.AddExplosionForce(power, transform.position, radius, upforce, forceType);
 

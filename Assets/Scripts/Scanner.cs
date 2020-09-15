@@ -97,7 +97,8 @@ public class Scanner : MonoBehaviour
 	// Trigger changes on trigger collision with objects
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.transform.tag == "Box")
+		if (other.transform.tag == "Box" ||
+			other.transform.tag == "Explosive Box")
 		{
 			ChangeLight(lightColour.green);
 		}

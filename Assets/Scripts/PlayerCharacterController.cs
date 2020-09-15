@@ -261,6 +261,18 @@ public class PlayerCharacterController : MonoBehaviour
             return;
 
         // Only bump boxes
+        switch(otherRB.tag)
+        {
+            case "Box":
+            case "Heavy Box":
+            case "Explosive Box":
+                Vector3 moveVelocity = velocity;
+                moveVelocity.y = 0;
+                otherRB.velocity = (moveVelocity * bumpForce) / otherRB.mass;
+                break;
+        }
+
+        /*
         if (otherRB.tag == "Box" ||
             otherRB.tag == "Heavy Box" ||
 			otherRB.tag == "Bumpable")
@@ -271,6 +283,7 @@ public class PlayerCharacterController : MonoBehaviour
             moveVelocity.y = 0;
             otherRB.velocity = (moveVelocity * bumpForce) / otherRB.mass;
         }
+        */
     }
 
 
@@ -613,8 +626,9 @@ public class PlayerCharacterController : MonoBehaviour
         switch (forceType)
         {
             case ForceType.Force:
-                externalForce += motion * Time.deltaTime;
+                externalForce += motion * Time.deltaTime * 0.297f;
                 break;
+
             case ForceType.Impulse:
                 externalForce += motion;
                 break;
@@ -672,6 +686,13 @@ public class PlayerCharacterController : MonoBehaviour
     public void RevertLookSpeed()
     {
         doLookSpeedOverride = false;
+    }
+
+    public void NegateForces()
+    {
+        externalForce = Vector3.zero;
+        velocity = Vector3.zero;
+        print(controller.velocity);
     }
     #endregion
 }

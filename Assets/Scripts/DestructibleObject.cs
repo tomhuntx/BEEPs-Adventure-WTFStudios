@@ -71,6 +71,7 @@ public class DestructibleObject : MonoBehaviour
     //public MeshRenderer MeshRendererComponent { get { return mrenderer; } }
     public Collider[] ColliderComponents { get { return colliders; } }
     public Renderer RendererComponent { get; private set; }
+    public bool IsInvincible { get { return isInvincible; } }
 
 
     void Awake()

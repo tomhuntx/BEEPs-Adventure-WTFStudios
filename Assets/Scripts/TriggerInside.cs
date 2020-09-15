@@ -19,7 +19,8 @@ public class TriggerInside : MonoBehaviour
 
 	void OnTriggerStay(Collider other)
 	{
-		if (other.tag == "Box")
+		if (other.tag == "Box" ||
+			other.tag == "Explosive Box")
 		{
 			inside = true;
 			if (!checking)

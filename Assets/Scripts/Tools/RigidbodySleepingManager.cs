@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [RequireComponent(typeof(Rigidbody))]
 public class RigidbodySleepingManager : MonoBehaviour
@@ -41,7 +44,7 @@ public class RigidbodySleepingManager : MonoBehaviour
     }
 }
 
-/*
+#if UNITY_EDITOR
 [CustomEditor(typeof(RigidbodySleepingManager))]
 public class RigidbodySleepingManagerEditor : Editor
 {
@@ -62,4 +65,4 @@ public class RigidbodySleepingManagerEditor : Editor
         }
     }
 }
-*/
+#endif

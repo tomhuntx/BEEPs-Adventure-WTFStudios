@@ -62798,7 +62798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableIgnore: 0
   ignoreTags:
-  - Box
+  - Explosive Box
   forceDestroy: 1
   onObjectDestroy:
     m_PersistentCalls:
@@ -83749,7 +83749,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!65 &1753038873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -97616,6 +97616,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7808786021717997401, guid: 278f18bb053a03347ad6eb7decfe507d,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7808786021717997402, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
       propertyPath: crosshair
@@ -108641,7 +108646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableIgnore: 0
   ignoreTags:
-  - Box
+  - Explosive Box
   forceDestroy: 1
   onObjectDestroy:
     m_PersistentCalls:

@@ -525,9 +525,8 @@ public class Player : MonoBehaviour
         switch (target.tag)
         {
             case "Box":
-                return true;
-
             case "Heavy Box":
+            case "Explosive Box":
                 return true;
 
             default:
@@ -535,14 +534,14 @@ public class Player : MonoBehaviour
         }
     }
 
-	/// <summary>
-	/// Resets all animation triggers and triggers one at a time
-	/// </summary>
-	private void SetTrigger(string trigger)
-	{
+	///// <summary>
+	///// Resets all animation triggers and triggers one at a time
+	///// </summary>
+	//private void SetTrigger(string trigger)
+	//{
 		
 
-	}
+	//}
 
 	/// <summary>
 	/// Heavy box dragging mechanic.
@@ -762,5 +761,21 @@ public class Player : MonoBehaviour
             grabbedObject.tag == "Hardhat")
 		    grabbedObject = null;
 	}
+
+    public void DestroyGrabbedObject()
+    {
+        if (grabbedObject != null)
+        {
+            Destroy(grabbedObject.interactionComponent.HighlighterInstance);
+
+            if (grabbedObject.IsInvincible)
+                Destroy(grabbedObject.gameObject);
+
+            else
+                grabbedObject.ApplyDamage(float.MaxValue);
+
+            grabbedObject = null;
+        }
+    }
     #endregion
 }
