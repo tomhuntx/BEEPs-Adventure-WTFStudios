@@ -68,7 +68,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 3.05
+  m_padding: 2.6
   m_canvasRenderer: {fileID: 236997240333766644}
   m_TextComponent: {fileID: 9145112949243496229}
   m_materialReferenceIndex: 1
@@ -296,7 +296,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 3.05
+  m_padding: 2.6
   m_canvasRenderer: {fileID: 236997241227541854}
   m_TextComponent: {fileID: 9145112949992629918}
   m_materialReferenceIndex: 1
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 3.05
+  m_padding: 2.6
   m_canvasRenderer: {fileID: 236997241240803827}
   m_TextComponent: {fileID: 9145112948228240267}
   m_materialReferenceIndex: 1
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 3.05
+  m_padding: 2.6
   m_canvasRenderer: {fileID: 236997241554486552}
   m_TextComponent: {fileID: 9145112948693616549}
   m_materialReferenceIndex: 1
@@ -455,8 +455,8 @@ GameObject:
   - component: {fileID: 9145112948228240266}
   - component: {fileID: 9145112948228240308}
   - component: {fileID: 9145112948228240267}
-  - component: {fileID: 9145112948228240264}
   - component: {fileID: 9145112948228240261}
+  - component: {fileID: 1689270761112854136}
   m_Layer: 5
   m_Name: Task2
   m_TagString: Task
@@ -603,18 +603,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9145112948228240264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9145112948228240265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9145112948228240261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +621,7 @@ MonoBehaviour:
   onTransitionPlay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9145112948228240264}
+      - m_Target: {fileID: 9145112948634771053}
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
@@ -645,6 +633,63 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1689270761112854136}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &1689270761112854136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9145112948228240265}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544899e4fbbcbc448abfd4f86b720174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetGraphic: {fileID: 9145112948228240267}
+  destroyType: 0
+  sequenceStartDelay: 0
+  ignoreDelayOnLoop: 0
+  loopSequence: 0
+  sequence:
+  - sequenceType: 2
+    fadeRate: 10
+    duration: 3
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  - sequenceType: 0
+    fadeRate: 10
+    duration: 1
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  onSequenceDone:
+    m_PersistentCalls:
+      m_Calls: []
+  onLoopSequence:
+    m_PersistentCalls:
+      m_Calls: []
+  onComponentDestroy:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameObjectDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9145112948634771058
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0
 --- !u!1 &9145112948672033443
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,8 +950,8 @@ GameObject:
   - component: {fileID: 9145112948693616571}
   - component: {fileID: 9145112948693616550}
   - component: {fileID: 9145112948693616549}
-  - component: {fileID: 9145112948693616565}
   - component: {fileID: 9145112948693616564}
+  - component: {fileID: 928709371565054394}
   m_Layer: 5
   m_Name: Task4 (Bonus)
   m_TagString: Task
@@ -1052,18 +1098,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9145112948693616565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9145112948693616570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9145112948693616564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,7 +1116,7 @@ MonoBehaviour:
   onTransitionPlay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9145112948693616565}
+      - m_Target: {fileID: 9145112948634771053}
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
@@ -1094,6 +1128,63 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 928709371565054394}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &928709371565054394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9145112948693616570}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544899e4fbbcbc448abfd4f86b720174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetGraphic: {fileID: 9145112948693616549}
+  destroyType: 0
+  sequenceStartDelay: 0
+  ignoreDelayOnLoop: 0
+  loopSequence: 0
+  sequence:
+  - sequenceType: 2
+    fadeRate: 10
+    duration: 3
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  - sequenceType: 0
+    fadeRate: 10
+    duration: 1
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  onSequenceDone:
+    m_PersistentCalls:
+      m_Calls: []
+  onLoopSequence:
+    m_PersistentCalls:
+      m_Calls: []
+  onComponentDestroy:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameObjectDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9145112949243496251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,8 +1196,8 @@ GameObject:
   - component: {fileID: 9145112949243496228}
   - component: {fileID: 9145112949243496230}
   - component: {fileID: 9145112949243496229}
-  - component: {fileID: 9145112949243496250}
   - component: {fileID: 9145112949243496245}
+  - component: {fileID: 9157363541794642466}
   m_Layer: 5
   m_Name: Task1
   m_TagString: Task
@@ -1253,18 +1344,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9145112949243496250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9145112949243496251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9145112949243496245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,7 +1362,7 @@ MonoBehaviour:
   onTransitionPlay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9145112949243496250}
+      - m_Target: {fileID: 9145112948634771053}
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
@@ -1295,6 +1374,63 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 9157363541794642466}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &9157363541794642466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9145112949243496251}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544899e4fbbcbc448abfd4f86b720174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetGraphic: {fileID: 9145112949243496229}
+  destroyType: 0
+  sequenceStartDelay: 0
+  ignoreDelayOnLoop: 0
+  loopSequence: 0
+  sequence:
+  - sequenceType: 2
+    fadeRate: 10
+    duration: 3
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  - sequenceType: 0
+    fadeRate: 10
+    duration: 1
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  onSequenceDone:
+    m_PersistentCalls:
+      m_Calls: []
+  onLoopSequence:
+    m_PersistentCalls:
+      m_Calls: []
+  onComponentDestroy:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameObjectDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9145112949992629916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,8 +1442,8 @@ GameObject:
   - component: {fileID: 9145112949992629917}
   - component: {fileID: 9145112949992629919}
   - component: {fileID: 9145112949992629918}
-  - component: {fileID: 9145112949992629913}
   - component: {fileID: 9145112949992629912}
+  - component: {fileID: 5276162470660602783}
   m_Layer: 5
   m_Name: Task3
   m_TagString: Task
@@ -1454,18 +1590,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9145112949992629913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9145112949992629916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9145112949992629912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,7 +1608,7 @@ MonoBehaviour:
   onTransitionPlay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9145112949992629913}
+      - m_Target: {fileID: 9145112948634771053}
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
@@ -1496,3 +1620,60 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5276162470660602783}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &5276162470660602783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9145112949992629916}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544899e4fbbcbc448abfd4f86b720174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetGraphic: {fileID: 9145112949992629918}
+  destroyType: 0
+  sequenceStartDelay: 0
+  ignoreDelayOnLoop: 0
+  loopSequence: 0
+  sequence:
+  - sequenceType: 2
+    fadeRate: 10
+    duration: 3
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  - sequenceType: 0
+    fadeRate: 10
+    duration: 1
+    minOpacity: 0
+    maxOpacity: 1
+    onSequenceEntry:
+      m_PersistentCalls:
+        m_Calls: []
+  onSequenceDone:
+    m_PersistentCalls:
+      m_Calls: []
+  onLoopSequence:
+    m_PersistentCalls:
+      m_Calls: []
+  onComponentDestroy:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameObjectDestroy:
+    m_PersistentCalls:
+      m_Calls: []

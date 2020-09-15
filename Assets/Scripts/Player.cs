@@ -311,7 +311,8 @@ public class Player : MonoBehaviour
 
             //Both the raycast hit and the grabbed object are boxes
             //Apply grid like locking to highlighter
-            if (isBox &&
+            if (!Input.GetButton("Disable Box Grid Placement") &&
+                isBox &&
                 IsGameObjectBox(hitInfo.transform.gameObject))
             {
                 grabbedObject.ManagePlacementHighlighter(true,
@@ -320,7 +321,8 @@ public class Player : MonoBehaviour
             }
             //One or both grabbed and raycasted target aren't boxes
             //Visualize highlighter with free movement - no grid locking
-            else if (!isBox ||
+            else if (Input.GetButton("Disable Box Grid Placement") ||
+                     !isBox ||
                      !IsGameObjectBox(hitInfo.transform.gameObject))
             {
                 Renderer highlighterRenderer = grabbedObject.RendererComponent;
@@ -766,6 +768,14 @@ public class Player : MonoBehaviour
     {
         if (grabbedObject != null)
         {
+            if (grabbedObject.tag == "Hardhat")
+            {
+                grabbedObject.HidePlacementHighlighter();
+                grabbedObject.DropObject(this.transform.position);
+                grabbedObject = null;
+                return;
+            }
+
             Destroy(grabbedObject.interactionComponent.HighlighterInstance);
 
             if (grabbedObject.IsInvincible)

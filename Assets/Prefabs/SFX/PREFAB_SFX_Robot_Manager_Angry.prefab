@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3334267170322057064
+--- !u!1 &6410431721506890351
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7118258560708749859}
-  - component: {fileID: 7005730853325139999}
-  - component: {fileID: 8322937786779996976}
-  - component: {fileID: 3377961412175298997}
+  - component: {fileID: 1475770617775443748}
+  - component: {fileID: 1696314356262442264}
+  - component: {fileID: 374603806143018551}
+  - component: {fileID: 6364485662807483570}
   m_Layer: 0
-  m_Name: PREFAB_SFX_Robot_Angry
+  m_Name: PREFAB_SFX_Robot_Manager_Angry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7118258560708749859
+--- !u!4 &1475770617775443748
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3334267170322057064}
+  m_GameObject: {fileID: 6410431721506890351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,20 +33,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &7005730853325139999
+--- !u!82 &1696314356262442264
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3334267170322057064}
+  m_GameObject: {fileID: 6410431721506890351}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 1958851086241770616, guid: 7a0787fffa79329419d584a9b440bd62,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -130,33 +130,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8322937786779996976
+--- !u!114 &374603806143018551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3334267170322057064}
+  m_GameObject: {fileID: 6410431721506890351}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 546d25c4fdef2d74c9b81e928ab7fb9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 78e9dbe0668301d49b0903d310068c74, type: 3}
-  - {fileID: 8300000, guid: 6137ec9713a6beb408e8c27ada0339ab, type: 3}
-  - {fileID: 8300000, guid: 1c4f09bd225fd54489be9f670203b350, type: 3}
+  - {fileID: 8300000, guid: a329b0b96a831f64cbd3e8fd056b47c9, type: 3}
+  - {fileID: 8300000, guid: 6b1ef732e28088243b235eb866ab342b, type: 3}
+  - {fileID: 8300000, guid: 83bbaacd827e92545a74daa04a1ca324, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 0
   onPlaybackEnd:
     m_PersistentCalls:
       m_Calls: []
---- !u!170 &3377961412175298997
+--- !u!170 &6364485662807483570
 AudioDistortionFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3334267170322057064}
+  m_GameObject: {fileID: 6410431721506890351}
   m_Enabled: 1
   m_DistortionLevel: 0.7

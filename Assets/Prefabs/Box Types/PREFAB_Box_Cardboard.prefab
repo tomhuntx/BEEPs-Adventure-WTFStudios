@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e8897b72f0cf14f991f9eae9e50793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDeadzone: 0.1
+  moveDeadzone: 0.15
   boxPlaceSFXPrefab: {fileID: 3550898150191051073, guid: 7724d282dd97d5d41864ca81f0decf0e,
     type: 3}
 --- !u!114 &308457323
@@ -152,7 +152,7 @@ MonoBehaviour:
   durability: 50
   isInvincible: 0
   forceMagnitudeThreshold: 10
-  generalImpactThreshold: 0.55
+  generalImpactThreshold: 1.5
   modelPresets:
   - assignedValue: 75
     mesh: {fileID: 9118265153525915223, guid: f6a4ee528ee32c84ea5d414c6624dd3f, type: 3}
