@@ -158,7 +158,7 @@ public class InteractableObject : MonoBehaviour
         RemoveComponents();
 
         //Setup trigger check
-        Collider[] colliders = highlighterInstance.GetComponents<Collider>();
+        Collider[] colliders = highlighterInstance.GetComponentsInChildren<Collider>();
 
         if (colliders.Length > 0)
         {
@@ -239,12 +239,12 @@ public class InteractableObject : MonoBehaviour
         RemoveComponents();
 
         //Setup trigger check
-        Collider[] colliders = highlighterInstance.GetComponents<Collider>();
+        Collider[] colliders = highlighterInstance.GetComponentsInChildren<Collider>();
 
         //No colliders exist in the instance, copy colliders from this transform.
         if (colliders.Length <= 0)
         {
-            Collider[] mainColliders = this.transform.GetComponents<Collider>();
+            Collider[] mainColliders = this.transform.GetComponentsInChildren<Collider>();
             colliders = new Collider[mainColliders.Length];
 
             for (int i = 0; i < colliders.Length; i++)

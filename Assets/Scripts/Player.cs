@@ -729,7 +729,8 @@ public class Player : MonoBehaviour
     private bool AllowHeavyBox()
     {
         if (isRaycastHit &&
-            hitInfo.transform.tag == "Heavy Box")
+            (hitInfo.transform.tag == "Heavy Box" ||
+             hitInfo.transform.tag == "Draggable Object"))
         {
             GameObject currentTarget = hitInfo.transform.gameObject;
 
