@@ -566,54 +566,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 213510356}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &25066873
-MonoBehaviour:
+--- !u!64 &25066879
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25066872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39a1b0704ae2c8c4e9d56b0bc2c5bb6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlighterBasis: {fileID: 0}
-  onObjectHover:
-    m_PersistentCalls:
-      m_Calls: []
-  onObjectNotHover:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!54 &25066874
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 25066872}
-  serializedVersion: 2
-  m_Mass: 3
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
---- !u!65 &25066878
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 25066872}
-  m_Material: {fileID: 13400000, guid: 04d51bf8bba07244383dda79fe8c6aba, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.1405761, y: 1.1946919, z: 1.6147119}
-  m_Center: {x: -0.5174076, y: -0.6063839, z: 0.1812607}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8620458319169270338, guid: 6b2c52d4c105a024eaac36bd62cd31f1, type: 3}
 --- !u!4 &33980343 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
@@ -3227,7 +3193,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 6b2c52d4c105a024eaac36bd62cd31f1,
         type: 3}
       propertyPath: m_TagString
-      value: Heavy Box
+      value: Bumpable
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 6b2c52d4c105a024eaac36bd62cd31f1,
         type: 3}
