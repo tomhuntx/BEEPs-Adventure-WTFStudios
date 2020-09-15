@@ -67,7 +67,7 @@ public class WindowManager : MonoBehaviour
         currentResolution.value = currentResolutionIndex;
 
         //Setup window modes
-        currentScreenModeIndex = PlayerPrefs.GetInt(SCREENMODE_PREF_KEY, 0);
+        currentScreenModeIndex = PlayerPrefs.GetInt(SCREENMODE_PREF_KEY, 1);
         List<string> screens = new List<string> {"Fullscreen", "Windowed Borderless"};
         currentWindowMode.AddOptions(screens);
         currentWindowMode.value = currentScreenModeIndex;
