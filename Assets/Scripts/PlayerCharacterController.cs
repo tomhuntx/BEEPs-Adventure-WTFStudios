@@ -692,7 +692,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         externalForce = Vector3.zero;
         velocity = Vector3.zero;
-        print(controller.velocity);
+        //print(controller.velocity);
     }
     #endregion
 }
