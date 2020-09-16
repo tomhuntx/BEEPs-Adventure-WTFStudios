@@ -13,6 +13,7 @@ public class GameObjectVisibilityManager : MonoBehaviour
     [Header("Events")]
     public UnityEvent onTargetsDisable;
     public UnityEvent onTargetsEnable;
+    public UnityEvent onGameObjectEnable;
     public UnityEvent onGameObjectDisable;
 
 
@@ -49,6 +50,20 @@ public class GameObjectVisibilityManager : MonoBehaviour
             }
         #else
             onGameObjectDisable.Invoke();
+        #endif
+    }
+
+    private void OnEnable()
+    {
+        //Prevents execution when the editor is paused
+        #if UNITY_EDITOR
+            if (Application.isEditor &&
+                Application.isPlaying)
+            {
+            onGameObjectEnable.Invoke();
+            }
+        #else
+            onGameObjectEnable.Invoke();
         #endif
     }
 }
