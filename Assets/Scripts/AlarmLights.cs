@@ -46,6 +46,16 @@ public class AlarmLights : MonoBehaviour
 		foreach (AlarmLights light in al)
 		{
 			light.AlarmSwitch(state);
+
+			GameObject obj = light.gameObject;
+			Light[] lights = obj.GetComponentsInChildren<Light>();
+			foreach (Light l in lights)
+			{
+				if (l.type == LightType.Point)
+				{
+					l.enabled = false;
+				}
+			}
 		}
 	}
 }

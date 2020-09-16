@@ -14,7 +14,7 @@ public class DataSaver : MonoBehaviour
 
 		// Saves in ../AppData/LocalLow/DefaultCompany/BoxGame/player.data
 		string path = Application.persistentDataPath + "/player.data";
-		FileStream stream = new FileStream(path, FileMode.CreateNew);
+		FileStream stream = new FileStream(path, FileMode.Create);
 
 		Data data = new Data();
 

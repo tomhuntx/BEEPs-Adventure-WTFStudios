@@ -3714,6 +3714,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MODEL_ENV_Conveyor_Med
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c15a8be22f38b7f4aa2a563316154ff2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Conveyor Belt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c15a8be22f38b7f4aa2a563316154ff2, type: 3}
 --- !u!1001 &227070421
@@ -24647,6 +24652,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MODEL_ENV_Conveyor_Small
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 67d60f07e80ba6041b89314a17e4369f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Conveyor Belt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67d60f07e80ba6041b89314a17e4369f, type: 3}
 --- !u!1 &1365961561
@@ -32853,6 +32863,7 @@ GameObject:
   - component: {fileID: 1792911709}
   - component: {fileID: 1792911714}
   - component: {fileID: 1792911715}
+  - component: {fileID: 1792911716}
   m_Layer: 0
   m_Name: conveyor belt end
   m_TagString: Untagged
@@ -33041,6 +33052,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1792911716}
+        m_MethodName: Disable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1792911715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33051,6 +33073,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 681d3a8ce191ef446a2dfd752a67cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1792911716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792911708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d122266a6c462c4bb932da60ed5333e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1798314623
