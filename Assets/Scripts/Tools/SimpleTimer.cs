@@ -8,6 +8,9 @@ public class SimpleTimer : MonoBehaviour
     [SerializeField] private float duration = 3.0f;
     [SerializeField] private DestroyType destroyType = DestroyType.ComponentOnly;
     [SerializeField] private bool playTimerOnStart = false;
+
+    [Tooltip("When ticked, the timer will not be interrupted when time scale is set to 0.")]
+    [SerializeField] private bool useRealTime = false;
     public UnityEvent onTimerStart;
     public UnityEvent onTimerEnd;
     private bool hasTimerStarted = false;
@@ -43,7 +46,13 @@ public class SimpleTimer : MonoBehaviour
     {
         hasTimerStarted = true;
         onTimerStart.Invoke();
-        yield return new WaitForSeconds(time);
+
+        if (useRealTime)
+            yield return new WaitForSecondsRealtime(time);
+        else
+            yield return new WaitForSeconds(time);
+        
+        
         onTimerEnd.Invoke();
 
         switch(destroyType)
