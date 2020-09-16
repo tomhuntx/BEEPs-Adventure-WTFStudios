@@ -745,7 +745,7 @@ public class Player : MonoBehaviour
     public void SetEnabled (bool isEnabled)
     {
         controller.Controller.enabled = isEnabled;
-        controller.RigidbodyComponent.isKinematic = !isEnabled;        
+        //controller.RigidbodyComponent.isKinematic = !isEnabled;        
         controller.CharacterCam.gameObject.SetActive(isEnabled);
         controller.enabled = isEnabled;
 
