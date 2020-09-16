@@ -104,14 +104,14 @@ public class ClawMachine : MonoBehaviour
     private void FixedUpdate()
     {
         //Enable claw controls when reset is done
-        if (isResetting &&
-            animatableTRS.localPosition.y >= 0)
+        if (isResetting) /*&&
+            animatableTRS.localPosition.y >= 0)*/
         {
             isResetting = false;
             controlsEnabled = true;
-            animatableTRS.localPosition = Vector3.zero;
+            //animatableTRS.localPosition = Vector3.zero;
         }
-        else if (!isResetting)
+        else //if (!isResetting)
         {
             //Player leave function
             if (Input.GetKeyDown(KeyCode.E))
@@ -120,6 +120,9 @@ public class ClawMachine : MonoBehaviour
                 //KickPlayer();
             }
         }
+
+        if (animatableTRS.localPosition.y >= 0)
+            animatableTRS.localPosition = Vector3.zero;
 
         if (controlsEnabled)
         {
