@@ -358,7 +358,7 @@ public class NPC_Controller : MonoBehaviour
 	{
 		StartCoroutine(WaitThenScare(secs));
 
-		if (secs < 0.7f) {
+		if (secs < 0.8f) {
 			scaredSpin = true;
 			spinSpeed = Random.Range(100f, 200f);
 			spinSpeed *= Random.Range(0, 2) * 2 - 1;
