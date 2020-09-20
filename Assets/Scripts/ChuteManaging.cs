@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class AnnoyAllMinibots : MonoBehaviour
+public class ChuteManaging : MonoBehaviour
 {
 	GameObject[] bots;
 	GameObject[] mbots;
 	float interval = 0;
+	int chutesDestroyed = 0;
+
+	public UnityEvent destroyedOneChute;
+	public UnityEvent destroyedTwoChutes;
+	public UnityEvent destroyedThreeChutes;
 
 	// Start is called before the first frame update
 	void Start()
@@ -43,5 +49,23 @@ public class AnnoyAllMinibots : MonoBehaviour
 	private float RandomFloat()
 	{
 		return Random.Range(0.0f, 1.8f);
+	}
+
+	public void DestroyedChute()
+	{
+		chutesDestroyed++;
+
+		switch (chutesDestroyed)
+		{
+			case 1:
+				destroyedOneChute.Invoke();
+				break;
+			case 2:
+				destroyedTwoChutes.Invoke();
+				break;
+			case 3:
+				destroyedThreeChutes.Invoke();
+				break;
+		}
 	}
 }
