@@ -14,8 +14,6 @@ public class EventTrigger : MonoBehaviour
 		if (other.transform.tag == "Player")
 		{
 			trigger.Invoke();
-
-			Destroy(this.gameObject);
 		}
 	}
 }
