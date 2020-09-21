@@ -153,6 +153,14 @@ public class ClawMachine : MonoBehaviour
 							bot.GetDropped();
 						}
 					}
+					else if (grabbedObject.transform.tag == "ManagerBot")
+					{
+						MBot_Controller bot = grabbedObject.GetComponent<MBot_Controller>();
+						if (bot)
+						{
+							bot.GetDropped();
+						}
+					}
 
 					grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
                     grabbedObject.DetachFromParent();
@@ -367,6 +375,15 @@ public class ClawMachine : MonoBehaviour
 						onNPCGrab.Invoke();
 					}
 				}
+				else if (grabbedObject.transform.tag == "ManagerBot")
+				{
+					MBot_Controller bot = grabbedObject.GetComponent<MBot_Controller>();
+					if (bot)
+					{
+						bot.GetGrabbed();
+						onNPCGrab.Invoke();
+					}
+				}
 
                 return true;
             }
@@ -401,6 +418,14 @@ public class ClawMachine : MonoBehaviour
 		if (grabbedObject.transform.tag == "MiniBot")
 		{
 			NPC_Controller bot = grabbedObject.GetComponent<NPC_Controller>();
+			if (bot)
+			{
+				bot.GetPlaced();
+			}
+		}
+		else if (grabbedObject.transform.tag == "ManagerBot")
+		{
+			MBot_Controller bot = grabbedObject.GetComponent<MBot_Controller>();
 			if (bot)
 			{
 				bot.GetPlaced();

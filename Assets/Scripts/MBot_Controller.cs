@@ -32,6 +32,7 @@ public class MBot_Controller : MonoBehaviour
 	private bool nearHat = true;
 	private bool lookAtPlayerForever = false;
 	private bool explosionLook;
+	private bool clawScared = false;
 
 	[Header("Face Changing")]
 	public Renderer faceRender;
@@ -76,7 +77,10 @@ public class MBot_Controller : MonoBehaviour
 		else if (!lookAtPlayerForever)
 		{
 			nearHat = false;
-			agent.SetDestination(hardhat.transform.position);
+			if (agent && agent.isOnNavMesh)
+			{
+				agent.SetDestination(hardhat.transform.position);
+			}
 			RotateTo(hardhat.transform.position);
 		}
 
@@ -128,7 +132,10 @@ public class MBot_Controller : MonoBehaviour
 		{
 			if (Vector3.Distance(this.transform.position, angryLocation.transform.position) < 1f)
 			{
-				agent.isStopped = true;
+				if (agent && agent.isOnNavMesh)
+				{
+					agent.isStopped = true;
+				}
 				if (Vector3.Distance(this.transform.position, player.transform.position) < 10.0f)
 				{
 					RotateTo(player.transform.position);
@@ -136,7 +143,10 @@ public class MBot_Controller : MonoBehaviour
 			}
 			else
 			{
-				agent.SetDestination(angryLocation.transform.position);
+				if (agent && agent.isOnNavMesh)
+				{
+					agent.SetDestination(angryLocation.transform.position);
+				}
 			}
 		}
     }
@@ -190,7 +200,10 @@ public class MBot_Controller : MonoBehaviour
 			animScreen.SetBool("isPickingUp", true);
 
 			// Stop agent before waiting
-			agent.isStopped = true;
+			if (agent && agent.isOnNavMesh)
+			{
+				agent.isStopped = true;
+			}
 
 			StartCoroutine(GrabPause(2.0f));
 		}
@@ -202,7 +215,10 @@ public class MBot_Controller : MonoBehaviour
 		// Return to base with hat
 		if (!lookAtPlayerForever)
 		{
-			agent.SetDestination(startPosition);
+			if (agent && agent.isOnNavMesh)
+			{
+				agent.SetDestination(startPosition);
+			}
 		}
 		lookingForHat = false;
 
@@ -218,6 +234,13 @@ public class MBot_Controller : MonoBehaviour
 		hardhat.transform.position = hatdhatStartLoc.transform.position;
 		hardhat.transform.rotation = hatdhatStartLoc.transform.rotation;
 		Rigidbody rb = hardhat.GetComponent<Rigidbody>();
+
+		SphereCollider grabSphere = hardhat.GetComponent<SphereCollider>();
+		if (grabSphere)
+		{
+			grabSphere.isTrigger = false;
+		}
+
 		rb.isKinematic = true;
 	}
 
@@ -225,7 +248,10 @@ public class MBot_Controller : MonoBehaviour
 	{
 		yield return new WaitForSeconds(seconds);
 
-		agent.isStopped = false;
+		if (agent && agent.isOnNavMesh)
+		{
+			agent.isStopped = false;
+		}
 
 		// Start interact animation
 		anim.SetBool("isPickingUp", false);
@@ -248,14 +274,20 @@ public class MBot_Controller : MonoBehaviour
 		if (changeColour)
 			faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
 
-		agent.isStopped = true;
+		if (agent && agent.isOnNavMesh)
+		{
+			agent.isStopped = true;
+		}
 
 		yield return new WaitForSeconds(2f);
 
-		agent.isStopped = false;
+		if (agent && agent.isOnNavMesh)
+		{
+			agent.isStopped = false;
+		}
 		lookingForHat = true;
 
-		if (!lookAtPlayerForever)
+		if (!lookAtPlayerForever && agent && agent.isOnNavMesh)
 		{
 			agent.SetDestination(hardhat.transform.position);
 
@@ -284,4 +316,63 @@ public class MBot_Controller : MonoBehaviour
 		if (changeColour)
 			faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
 	}
+
+	#region CLAW
+	public void GetGrabbed()
+	{
+		agent.enabled = false;
+
+		// Scared animation until dropped
+		SetScared();
+		clawScared = true;
+	}
+
+	// Set bots as scared
+	private void SetScared()
+	{
+		anim.SetBool("isHome", false);
+
+		// Face animations
+		faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
+		if (changeColour)
+			faceRender.materials[faceMatIndex].SetColor("_Color", angryCol);
+
+		if (agent.enabled && agent.isOnNavMesh)
+		{
+			// Stop agent 
+			agent.isStopped = true;
+		}
+	}
+
+	public void GetPlaced()
+	{
+		StartCoroutine(WaitAfterDrop(1));
+	}
+
+	public void GetDropped()
+	{
+		StartCoroutine(WaitAfterDrop(3));
+	}
+
+	private IEnumerator WaitAfterDrop(float seconds)
+	{
+		yield return new WaitForSeconds(seconds);
+
+		agent.enabled = true;
+
+		if (agent.isOnNavMesh)
+		{
+			agent.isStopped = false;
+
+			// Stop animations and return to normal
+			if (clawScared) { clawScared = false; }
+			faceRender.materials[faceMatIndex].SetTexture("_MainTex", normal);
+		}
+		else
+		{
+			// Otherwise continue to freak out
+			agent.enabled = false;
+		}
+	}
+	#endregion
 }
