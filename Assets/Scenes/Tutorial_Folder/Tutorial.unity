@@ -5041,7 +5041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &323744594
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24076,6 +24076,11 @@ PrefabInstance:
       propertyPath: Tutorial
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7808786021717997402, guid: 278f18bb053a03347ad6eb7decfe507d,
+        type: 3}
+      propertyPath: punchDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7808786021717997403, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
       propertyPath: targetGraphic
@@ -30962,11 +30967,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetGameObject: {fileID: 4711302359633530293}
-  durability: 20
+  durability: 13
   isInvincible: 0
-  forceMagnitudeThreshold: 1.5
-  generalImpactThreshold: 1
-  modelPresets: []
+  forceMagnitudeThreshold: 0.5
+  generalImpactThreshold: 0.5
+  modelPresets:
+  - assignedValue: 60
+    mesh: {fileID: 237679203602768868, guid: d44a1bba575951d4eb3b3049a0971621, type: 3}
+    material: {fileID: 2100000, guid: a4112d0b92e027f4198a6c4d432c4ce0, type: 2}
+  - assignedValue: 35
+    mesh: {fileID: 237679203602768868, guid: 352a8796fe586714ea6399b32a5ef0bc, type: 3}
+    material: {fileID: 2100000, guid: a4112d0b92e027f4198a6c4d432c4ce0, type: 2}
+  - assignedValue: 10
+    mesh: {fileID: 237679203602768868, guid: 352a8796fe586714ea6399b32a5ef0bc, type: 3}
+    material: {fileID: 2100000, guid: a4112d0b92e027f4198a6c4d432c4ce0, type: 2}
   onPlayerPunch:
     m_PersistentCalls:
       m_Calls:
@@ -30974,7 +30988,7 @@ MonoBehaviour:
         m_MethodName: SpawnToPoint
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 3550898150191051073, guid: 75b6542b765c2474e86cd3d52086bee2,
+          m_ObjectArgument: {fileID: 2575565754032825182, guid: 160670e28575cc04c96e8c23183f5659,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
