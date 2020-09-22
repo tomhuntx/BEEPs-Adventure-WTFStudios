@@ -41,6 +41,16 @@ public class SimpleTimer : MonoBehaviour
         StartCoroutine(DoTimer(time));
     }
 
+    /// <summary>
+    /// Interrupts the timer if it's running.
+    /// </summary>
+    public void StopTimer()
+    {
+        StopAllCoroutines();
+        hasTimerStarted = false;
+        onTimerEnd.Invoke();
+    }
+
 
     private IEnumerator DoTimer(float time)
     {
