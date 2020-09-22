@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -88,6 +89,14 @@ public class DestructibleObject : MonoBehaviour
         if (colliders.Length <= 0)
             Debug.LogError(targetGameObject.gameObject +
                 " Doesn't have a collider attached to it, please attach a collider before playing!");
+
+        List<Collider> cols = colliders.ToList();
+        for (int i = 0; i < cols.Count; i++)
+        {
+            if (cols[i].gameObject.tag == "Ignore")
+                cols.RemoveAt(i);
+        }
+        colliders = cols.ToArray();
 
         rb = colliders[0].attachedRigidbody;
 

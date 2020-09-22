@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 174886150102809401}
   - component: {fileID: 206311396}
   - component: {fileID: 1467367275}
+  - component: {fileID: -2954366516882533678}
   m_Layer: 0
   m_Name: PREFAB_Box_Heavy
   m_TagString: Heavy Box
@@ -146,7 +147,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &206311395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,3 +370,20 @@ MonoBehaviour:
   onObjectNotHover:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-2954366516882533678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174886150102809406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418a2a02554fbc94f920365b9b63f595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  skinWidth: 0.1

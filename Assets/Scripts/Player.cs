@@ -581,7 +581,31 @@ public class Player : MonoBehaviour
             }
             else
             {
-                
+                //Anti-Clipping Check
+                if (controller.CurrentDirection.magnitude > 0.1f)
+                {
+                    if (heavyBoxRB.SweepTest(controller.CurrentDirection, out RaycastHit rbSweep))
+                    {
+                        bool doCheck = true;
+                        if (rbSweep.collider.attachedRigidbody != null &&
+                            rbSweep.collider.attachedRigidbody.gameObject.tag == "Player")
+                        {
+                            doCheck = false;
+                        }
+
+                        if (doCheck &&
+                            rbSweep.distance <= 0.5f)
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+
                 //Manage heavy box reference position
                 Transform hbRef = heavyBoxRef.transform;
                 //float mult = Vector3.Magnitude(this.transform.position - raycastOrigin.transform.position);
