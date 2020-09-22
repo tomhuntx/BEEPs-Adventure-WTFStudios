@@ -157,6 +157,7 @@ public class PersistentForceRigidbody : TagFilterer
         if (Player.Instance.PlayerMovementControls.enabled)
         {
             Player.Instance.PlayerMovementControls.ApplyForce(forceApplied, convertedType);
+            //Player.Instance.transform.position += forceApplied * Time.deltaTime;
         }
         else
         {
