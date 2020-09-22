@@ -775,7 +775,7 @@ PrefabInstance:
     - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
         type: 3}
       propertyPath: onGameObjectDisable.m_PersistentCalls.m_Calls.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
         type: 3}
@@ -901,6 +901,36 @@ PrefabInstance:
         type: 3}
       propertyPath: onTargetsDisable.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onGameObjectDisable.m_PersistentCalls.m_Calls.Array.data[6].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onGameObjectDisable.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onGameObjectDisable.m_PersistentCalls.m_Calls.Array.data[6].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onGameObjectDisable.m_PersistentCalls.m_Calls.Array.data[6].m_Target
+      value: 
+      objectReference: {fileID: 1016853750}
+    - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onGameObjectDisable.m_PersistentCalls.m_Calls.Array.data[6].m_MethodName
+      value: StopTimer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789292999769855405, guid: 7743c348cd4d2a342946aab46ba253b9,
+        type: 3}
+      propertyPath: onGameObjectDisable.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7894794171717424118, guid: 7743c348cd4d2a342946aab46ba253b9,
         type: 3}
@@ -8619,6 +8649,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfce45d3b234f534eb971613aec0b5c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1016853750 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4977332294957948291, guid: 7743c348cd4d2a342946aab46ba253b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 147863671}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1023578804
