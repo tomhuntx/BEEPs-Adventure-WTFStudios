@@ -95,9 +95,9 @@ public class WindowManager : MonoBehaviour
 
         int appliedRes = PlayerPrefs.GetInt(RESOLUTION_PREF_KEY, res.Length - 1);
         if (appliedRes >= res.Length)
-        {
-            PlayerPrefs.SetInt(RESOLUTION_PREF_KEY, res.Length - 1);
+        {            
             appliedRes = Mathf.Clamp(appliedRes, 0, res.Length - 1);
+            PlayerPrefs.SetInt(RESOLUTION_PREF_KEY, appliedRes);
         }
 
         Resolution currentRes = res[appliedRes];
