@@ -692,7 +692,9 @@ public class PlayerCharacterController : MonoBehaviour
     {
         externalForce = Vector3.zero;
         velocity = Vector3.zero;
-        //print(controller.velocity);
+        rb.velocity = Vector3.zero;
+        rb.inertiaTensor = Vector3.zero;
+        rb.inertiaTensorRotation = Quaternion.identity;
     }
     #endregion
 }

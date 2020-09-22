@@ -768,6 +768,8 @@ public class Player : MonoBehaviour
     #region Public Methods
     public void SetEnabled (bool isEnabled)
     {
+        if (isEnabled) this.enabled = isEnabled;
+
         controller.Controller.enabled = isEnabled;
         //controller.RigidbodyComponent.isKinematic = !isEnabled;        
         controller.CharacterCam.gameObject.SetActive(isEnabled);
@@ -779,7 +781,7 @@ public class Player : MonoBehaviour
         crosshair.gameObject.SetActive(isEnabled);
         if (SecondCrosshair) crosshair2.gameObject.SetActive(isEnabled);
 
-        this.enabled = isEnabled;
+        if (!isEnabled) this.enabled = isEnabled;
     }
 
 	public void RemoveGrabbedObject()
