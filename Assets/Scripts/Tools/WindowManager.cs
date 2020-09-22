@@ -92,7 +92,15 @@ public class WindowManager : MonoBehaviour
     public static void InitializeGameWindow()
     {
         Resolution[] res = Screen.resolutions;
-        Resolution currentRes = res[PlayerPrefs.GetInt(RESOLUTION_PREF_KEY, res.Length - 1)];
+
+        int appliedRes = PlayerPrefs.GetInt(RESOLUTION_PREF_KEY, res.Length - 1);
+        if (appliedRes >= res.Length)
+        {
+            PlayerPrefs.SetInt(RESOLUTION_PREF_KEY, res.Length - 1);
+            appliedRes = Mathf.Clamp(appliedRes, 0, res.Length - 1);
+        }
+
+        Resolution currentRes = res[appliedRes];
 
         Screen.SetResolution(currentRes.width, currentRes.height,
                              screenModes[PlayerPrefs.GetInt(SCREENMODE_PREF_KEY, 0)]);
