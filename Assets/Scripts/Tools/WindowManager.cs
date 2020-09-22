@@ -61,8 +61,9 @@ public class WindowManager : MonoBehaviour
         
         foreach(Resolution resolution in resolutions)
         {
-            names.Add(string.Format("{0}x{1}", resolution.width, resolution.height));
+            names.Add(string.Format("{0}x{1} @ {2}Hz", resolution.width, resolution.height, resolution.refreshRate));
         }
+
         currentResolution.AddOptions(names);
         currentResolution.value = currentResolutionIndex;
 
