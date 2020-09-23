@@ -2982,6 +2982,7 @@ GameObject:
   - component: {fileID: 291320952}
   - component: {fileID: 291320951}
   - component: {fileID: 291320950}
+  - component: {fileID: 291320955}
   m_Layer: 0
   m_Name: Broken Bot Arm (1)
   m_TagString: Untagged
@@ -3045,7 +3046,19 @@ MonoBehaviour:
       m_Calls: []
   onImpactGeneral:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 291320955}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2575565754032825182, guid: 6324949426be3df428ec394301219b0e,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onImpactDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -3098,6 +3111,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 11.8810005, y: -154.88, z: 0.25500003}
+--- !u!114 &291320955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291320949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
 --- !u!1001 &298572214
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12712,6 +12738,7 @@ GameObject:
   - component: {fileID: 1397357467}
   - component: {fileID: 1397357466}
   - component: {fileID: 1397357470}
+  - component: {fileID: 1397357471}
   m_Layer: 0
   m_Name: Broken Bot Arm
   m_TagString: Untagged
@@ -12759,7 +12786,19 @@ MonoBehaviour:
       m_Calls: []
   onImpactGeneral:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1397357471}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2575565754032825182, guid: 6324949426be3df428ec394301219b0e,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onImpactDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -12828,6 +12867,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1397357471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397357465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
 --- !u!1 &1402028726
 GameObject:
   m_ObjectHideFlags: 0
