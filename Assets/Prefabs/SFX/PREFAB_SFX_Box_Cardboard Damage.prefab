@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1131028061467601513}
   - component: {fileID: 951533580524850846}
   m_Layer: 0
-  m_Name: SFX_Cardboard Damage
+  m_Name: PREFAB_SFX_Box_Cardboard Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 309550e289de900478fc59f209bdda30, type: 3}
   - {fileID: 8300000, guid: 9efbb02fd66ec834592f1595796805b4, type: 3}
   enablePitchRandomization: 1
+  repeatOnEnd: 0
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &951533580524850846
 AudioSource:
   m_ObjectHideFlags: 0

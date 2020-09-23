@@ -2712,7 +2712,19 @@ MonoBehaviour:
       m_Calls: []
   onImpactGeneral:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4907187331271189112}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8456651308626678554, guid: 99808d40af7287f4b9d357aa29c9715b,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onImpactDamage:
     m_PersistentCalls:
       m_Calls: []

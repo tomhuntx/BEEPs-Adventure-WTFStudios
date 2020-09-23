@@ -45,7 +45,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -145,3 +145,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5554f5907c9f70c4c88511feeb3270bb, type: 3}
   enablePitchRandomization: 0
   repeatOnEnd: 0
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []

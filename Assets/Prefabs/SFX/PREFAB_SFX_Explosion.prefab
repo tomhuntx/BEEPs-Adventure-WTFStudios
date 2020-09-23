@@ -48,6 +48,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9a11d881fe00032478c05b6b510ccc4a, type: 3}
   enablePitchRandomization: 1
   repeatOnEnd: 0
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &951533580524850846
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61,7 +64,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

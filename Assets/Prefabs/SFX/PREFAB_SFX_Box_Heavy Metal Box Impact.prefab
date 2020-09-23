@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8036659232203594980}
   - component: {fileID: 8299077799798134434}
   m_Layer: 0
-  m_Name: SFX_Heavy Metal Box Impact
+  m_Name: PREFAB_SFX_Box_Heavy Metal Box Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -7160951078001057830, guid: 7a0787fffa79329419d584a9b440bd62,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -144,3 +144,7 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: aaf315fafb73740478be7220a9f63bf3, type: 3}
   enablePitchRandomization: 1
+  repeatOnEnd: 0
+  onPlaybackEnd:
+    m_PersistentCalls:
+      m_Calls: []
