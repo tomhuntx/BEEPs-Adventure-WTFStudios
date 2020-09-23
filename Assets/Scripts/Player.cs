@@ -406,6 +406,13 @@ public class Player : MonoBehaviour
 						target.ApplyDamage(punchDamage);
 						break;
 
+                    default:
+                        if (hitInfo.rigidbody != null)
+                        {
+                            hitInfo.rigidbody.AddForce(controller.CharacterCam.transform.forward * throwForce, ForceMode.Impulse);
+                        }
+                        break;
+
 				}
             }
         }

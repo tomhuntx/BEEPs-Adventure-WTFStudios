@@ -69,7 +69,19 @@ MonoBehaviour:
       m_Calls: []
   onImpactGeneral:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7491275566886912390}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1588727590919122699, guid: 4afb5776b3c806c4eb6c3e9ca0473fb1,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onImpactDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -118,6 +130,19 @@ MonoBehaviour:
   onObjectNotHover:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7491275566886912390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4314209971621109802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
 --- !u!1001 &5259863562920392995
 PrefabInstance:
   m_ObjectHideFlags: 0
