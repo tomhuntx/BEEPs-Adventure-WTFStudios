@@ -453,7 +453,11 @@ public class TaskList : MonoBehaviour
 		anim = GetComponent<Animator>();
 		if (anim == null)
 		{
-			Debug.LogWarning("This tasklist does not have an Animator. Please fix this. Thank.");
+			anim = GameObject.FindGameObjectWithTag("TaskList").GetComponent<Animator>();
+			if (anim == null)
+			{
+				Debug.LogWarning("This tasklist does not have an Animator. Please fix this. Thank.");
+			}
 		}
 
         //Check for name errors
@@ -485,8 +489,8 @@ public class TaskList : MonoBehaviour
 				{
 					// Trigger any task complete event and animations
 					onTaskComplete.Invoke();
-					anim.ResetTrigger("TaskList");
-					anim.Play("TaskList");
+					anim.ResetTrigger("onTaskComplete");
+					anim.SetTrigger("onTaskComplete");
 				}
 
 				switch (targetTask.taskType)
