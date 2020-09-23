@@ -35,7 +35,7 @@ public class PersistentForceRigidbody : TagFilterer
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         //prevent from stacking forces
         if (Time.timeScale > 0)
@@ -71,10 +71,11 @@ public class PersistentForceRigidbody : TagFilterer
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
-        {
-            isPlayerInside = true;
-        }
+        //if (other.attachedRigidbody != null &&
+        //    other.attachedRigidbody.gameObject.tag == "Player")
+        //{
+        //    isPlayerInside = true;
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -84,11 +85,12 @@ public class PersistentForceRigidbody : TagFilterer
             Rigidbody reference = other.transform.GetComponent<Rigidbody>();
             if (rbs.Contains(reference)) rbs.Remove(reference);
         }
-        
-        if (other.tag == "Player")
-        {
-            isPlayerInside = false;
-        }
+
+        //if (other.attachedRigidbody != null &&
+        //    other.attachedRigidbody.gameObject.tag == "Player")
+        //{
+        //    isPlayerInside = false;
+        //}
     }
 
 
@@ -194,5 +196,10 @@ public class PersistentForceRigidbody : TagFilterer
         {
             rbs.Remove(target);
         }
+    }
+
+    public void SetPlayerInside(bool state)
+    {
+        isPlayerInside = state;
     }
 }
