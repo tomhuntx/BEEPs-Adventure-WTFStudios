@@ -217,7 +217,9 @@ public class GrabbableObject : DestructibleObject
             
             if (rb != null)
             {
-                rb.isKinematic = true;
+                if (rb.collisionDetectionMode != CollisionDetectionMode.ContinuousDynamic)
+                    rb.isKinematic = true;
+
                 PersistentForceRigidbody[] forceAppliers = FindObjectsOfType<PersistentForceRigidbody>();
                 if (forceAppliers.Length > 0)
                 {

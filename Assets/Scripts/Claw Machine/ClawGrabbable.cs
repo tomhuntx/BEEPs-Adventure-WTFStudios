@@ -30,7 +30,9 @@ public class ClawGrabbable : MonoBehaviour
         //Disable any rigidbody component
         if (rigidbodyComponent != null)
         {
-            rigidbodyComponent.isKinematic = true;
+            if (rigidbodyComponent.collisionDetectionMode != CollisionDetectionMode.ContinuousDynamic) 
+                rigidbodyComponent.isKinematic = true;
+            
             rigidbodyComponent.useGravity = false;
         }
 

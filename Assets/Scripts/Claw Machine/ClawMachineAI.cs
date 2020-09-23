@@ -174,6 +174,7 @@ public class ClawMachineAI : MonoBehaviour
         if (grabbedObjectOffset.childCount > 0)
         {
             SetClawAnimation(false);
+            SetShaftAnimation(false);
             ClawGrabbable grabbed = grabbedObjectOffset.GetChild(0).GetComponent<ClawGrabbable>();
             grabbed.DetachFromParent();
         }
