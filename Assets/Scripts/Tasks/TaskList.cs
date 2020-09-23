@@ -398,10 +398,12 @@ public class TaskList : MonoBehaviour
     private bool isOptionalTasksDone = false;
     private bool isAllTasksDone = false;
 	private bool contribute = false;
+	private Animator anim;
 
 	[Header("Task List Events")]
     public UnityEvent onTaskContribute;
-    public UnityEvent onMainTasksDone;
+	public UnityEvent onTaskComplete;
+	public UnityEvent onMainTasksDone;
     public UnityEvent onOptionalTasksDone;
     public UnityEvent onAllTasksDone;
     #endregion
@@ -448,6 +450,12 @@ public class TaskList : MonoBehaviour
             }
         }
 
+		anim = GetComponent<Animator>();
+		if (anim == null)
+		{
+			Debug.LogWarning("This tasklist does not have an Animator. Please fix this. Thank.");
+		}
+
         //Check for name errors
         UpdateTaskNamesList();
     }
@@ -473,7 +481,15 @@ public class TaskList : MonoBehaviour
             if (targetTask.isTaskDone &&
                 !isPreviouslyDone)
             {
-                switch (targetTask.taskType)
+				if (targetTask.taskType != Task.Type.Ignore)
+				{
+					// Trigger any task complete event and animations
+					onTaskComplete.Invoke();
+					anim.ResetTrigger("TaskList");
+					anim.Play("TaskList");
+				}
+
+				switch (targetTask.taskType)
                 {
                     case Task.Type.Main:
                         numMainTasksDone++;
