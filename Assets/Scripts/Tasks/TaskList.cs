@@ -489,8 +489,15 @@ public class TaskList : MonoBehaviour
 				{
 					// Trigger any task complete event and animations
 					onTaskComplete.Invoke();
-					anim.ResetTrigger("onTaskComplete");
-					anim.SetTrigger("onTaskComplete");
+					if (anim)
+					{
+						anim.ResetTrigger("onTaskComplete");
+						anim.SetTrigger("onTaskComplete");
+					}
+					else
+					{
+						Debug.LogWarning("Animation did not trigger. No animator found.");
+					}
 				}
 
 				switch (targetTask.taskType)

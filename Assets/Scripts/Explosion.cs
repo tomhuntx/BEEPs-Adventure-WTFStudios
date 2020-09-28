@@ -33,7 +33,6 @@ public class Explosion : MonoBehaviour
 
 			if (rb != null)
 			{
-
 				if (hit.tag == "Box" ||
 					hit.tag == "Explosive Box")
 				{
