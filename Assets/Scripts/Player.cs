@@ -796,6 +796,12 @@ public class Player : MonoBehaviour
         if (grabbedObject != null &&
             grabbedObject.tag == "Hardhat")
 		    grabbedObject = null;
+
+		// Turn off animations
+		bodyAnim.SetBool("isHoldingBox", false);
+		headAnim.SetBool("isHoldingBox", false);
+		bodyAnim.SetTrigger("Place");
+		headAnim.SetTrigger("Place");
 	}
 
     public void DestroyGrabbedObject()
