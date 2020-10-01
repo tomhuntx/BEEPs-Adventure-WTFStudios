@@ -57,6 +57,12 @@ public class MBot_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (hardhat == null)
+		{
+			AngryForever();
+		}
+
+
 		if (explosionLook)
 		{
 			GameObject player =	Player.Instance.gameObject;
@@ -65,7 +71,7 @@ public class MBot_Controller : MonoBehaviour
 				RotateTo(player.transform.position);
 			}
 		}
-		else if (Vector3.Distance(transform.position, hardhat.transform.position) < 2.0f && !lookAtPlayerForever)
+		else if (hardhat && (Vector3.Distance(transform.position, hardhat.transform.position) < 2.0f && !lookAtPlayerForever))
 		{
 			nearHat = true;
 
