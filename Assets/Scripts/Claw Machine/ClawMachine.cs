@@ -161,6 +161,16 @@ public class ClawMachine : MonoBehaviour
 							bot.GetDropped();
 						}
 					}
+					else if (grabbedObject.transform.tag == "Explosive Box")
+					{
+						GrabbableObject grab = grabbedObject.GetComponent<GrabbableObject>();
+						if (grab)
+						{
+							grab.DestroyOnImpact();
+							Transform trans = grab.transform;
+							trans.Rotate(trans.rotation.x + 3, trans.rotation.y, trans.rotation.z, Space.World);
+						}
+					}
 
 					grabbedObject.gameObject.layer = LayerMask.NameToLayer("Default");
                     grabbedObject.DetachFromParent();
