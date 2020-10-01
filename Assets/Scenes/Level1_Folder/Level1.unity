@@ -21314,12 +21314,12 @@ PrefabInstance:
     - target: {fileID: 7808786021717997398, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.824
+      value: 7.69
       objectReference: {fileID: 0}
     - target: {fileID: 7808786021717997398, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.054
+      value: -4.19
       objectReference: {fileID: 0}
     - target: {fileID: 7808786021717997398, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
@@ -21380,6 +21380,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cameraOffset.z
       value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808786021717997401, guid: 278f18bb053a03347ad6eb7decfe507d,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7808786021717997402, guid: 278f18bb053a03347ad6eb7decfe507d,
         type: 3}
@@ -33283,7 +33288,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668804534}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6, y: -21, z: -459.7}
+  m_LocalPosition: {x: 3.6, y: -21, z: -438}
   m_LocalScale: {x: 379.3316, y: 23.179821, z: 319.0901}
   m_Children: []
   m_Father: {fileID: 1044407559}
@@ -35698,6 +35703,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a3ef0d90e7b3545ab11bfdd6dad46e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1723711113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723711110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 1
+  destroyType: 1
+  playTimerOnStart: 1
+  useRealTime: 0
+  onTimerStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1723711112}
+        m_MethodName: SetGravity
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTimerEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1723711112}
+        m_MethodName: SetGravity
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 20
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1723711118 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7808786021717997402, guid: 278f18bb053a03347ad6eb7decfe507d,
@@ -40505,7 +40554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1898582945}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 44.47, y: 25.05, z: -9.399}
+  m_LocalPosition: {x: 44.47, y: 28.2, z: -9.399}
   m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_Children:
   - {fileID: 450696291}

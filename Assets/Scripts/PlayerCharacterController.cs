@@ -696,5 +696,11 @@ public class PlayerCharacterController : MonoBehaviour
         //rb.inertiaTensor = Vector3.zero;
         //rb.inertiaTensorRotation = Quaternion.identity;
     }
+
+	public void SetGravity(float newGravity)
+	{
+		gravity = newGravity;
+	}
+
     #endregion
 }
