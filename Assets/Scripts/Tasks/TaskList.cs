@@ -526,7 +526,7 @@ public class TaskList : MonoBehaviour
             numMainTasksDone >= numMainTasks)
         {
             onMainTasksDone.Invoke();
-            isOptionalTasksDone = true;
+            isMainTasksDone = true;
         }
 
         if (!isOptionalTasksDone &&

@@ -2187,16 +2187,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104996280}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.004}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0010000002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 559797932}
-  m_Father: {fileID: 481285298}
-  m_RootOrder: 8
+  m_Father: {fileID: 236997241115763966}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 324.36002, y: 139.52864}
+  m_AnchoredPosition: {x: 14.550018, y: 2.0999908}
   m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &104996282
@@ -2217,7 +2217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Go Deeper into the Factory"
+  m_text: "\u2022 Go deeper into the factory"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c44c10fa4c0f4da4daa9267bea18d475, type: 2}
   m_sharedMaterial: {fileID: -2267961822215073268, guid: c44c10fa4c0f4da4daa9267bea18d475,
@@ -6166,6 +6166,12 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &276341693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9145112949243496251, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 236997241115763965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &278807455 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8696484507004691617, guid: 15da28a35307d0047a0719a44e233741,
@@ -10367,7 +10373,6 @@ RectTransform:
   - {fileID: 236997241115763966}
   - {fileID: 295037296}
   - {fileID: 1472694890}
-  - {fileID: 104996281}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10600,6 +10605,12 @@ MonoBehaviour:
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &500840874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9145112949992629916, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 236997241115763965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &506295380
 GameObject:
   m_ObjectHideFlags: 0
@@ -11416,6 +11427,8 @@ GameObject:
   - component: {fileID: 567811582}
   - component: {fileID: 567811579}
   - component: {fileID: 567811581}
+  - component: {fileID: 567811583}
+  - component: {fileID: 567811584}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -11566,17 +11579,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_MethodName: AlarmSwitch
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
         - m_Target: {fileID: 409580293}
           m_MethodName: AlarmSwitch
           m_Mode: 6
@@ -11621,9 +11623,9 @@ MonoBehaviour:
     onTaskReset:
       m_PersistentCalls:
         m_Calls: []
-  - taskType: 0
+  - taskType: 2
     resetType: 0
-    taskName: "\u2022 Go Deeper into the Factory"
+    taskName: "\u2022 Go deeper into the factory"
     requiredContributions: 1
     onTaskContribute:
       m_PersistentCalls:
@@ -11645,10 +11647,32 @@ MonoBehaviour:
       m_Calls: []
   onMainTasksDone:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 567811583}
+        m_MethodName: CompleteMain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onOptionalTasksDone:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 567811583}
+        m_MethodName: CompleteOptional
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onAllTasksDone:
     m_PersistentCalls:
       m_Calls: []
@@ -11779,6 +11803,112 @@ MonoBehaviour:
     type: 3}
   newGamePrompt: {fileID: 0}
   levelSelect: {fileID: 0}
+--- !u!114 &567811583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567811575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c089abe501d0014b9af80c412fd2b5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMainComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 567811584}
+        m_MethodName: StartTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMainAndOptionalComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1126867584}
+        m_MethodName: StartTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &567811584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567811575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 2
+  destroyType: 0
+  playTimerOnStart: 0
+  useRealTime: 0
+  onTimerStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTimerEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 276341693}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 682441014}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 500840874}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 104996280}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &570596422
 GameObject:
   m_ObjectHideFlags: 0
@@ -13177,6 +13307,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2229526011650007075, guid: 79fa45ace439c374ba2ba37c5135c1d1,
     type: 3}
   m_PrefabInstance: {fileID: 676404859}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &682441014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9145112948228240265, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 236997241115763965}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &683622635 stripped
 Transform:
@@ -21887,6 +22023,67 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce35bf9ae0b855f429878a40c4b36f6c, type: 3}
+--- !u!1 &1126867583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9145112948634771058, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 236997241115763965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1126867584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126867583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 2
+  destroyType: 0
+  playTimerOnStart: 0
+  useRealTime: 0
+  onTimerStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTimerEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1422742699}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1393440357}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 78757651}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1129653881
 GameObject:
   m_ObjectHideFlags: 0
@@ -28349,6 +28546,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1393440357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9145112948693616570, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 236997241115763965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1394096126
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29030,6 +29233,12 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1422742699 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9145112948672033443, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 236997241115763965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1432233197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30738,7 +30947,8 @@ GameObject:
   - component: {fileID: 1492426020}
   - component: {fileID: 1492426019}
   - component: {fileID: 1492426018}
-  - component: {fileID: 1492426017}
+  - component: {fileID: 1492426022}
+  - component: {fileID: 1492426021}
   m_Layer: 0
   m_Name: Next Level Trigger
   m_TagString: Untagged
@@ -30760,18 +30970,6 @@ Transform:
   m_Father: {fileID: 1817555992}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1492426017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1492426015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3695cb220e13b5429da19cf3ec0a70c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1492426018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30832,6 +31030,76 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492426015}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1492426021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492426015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  destroyType: 0
+  playTimerOnStart: 0
+  useRealTime: 0
+  onTimerStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTimerEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 567811582}
+        m_MethodName: LoadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1492426022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492426015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394fd7971f6202149a0ebc1aa20a9a66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 567811579}
+        m_MethodName: ContributeToTask
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u2022 Go deeper into the factory"
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1492426021}
+        m_MethodName: StartTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1499353557
 GameObject:
   m_ObjectHideFlags: 0
@@ -47108,7 +47376,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 236997241115763965}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1126867583}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}

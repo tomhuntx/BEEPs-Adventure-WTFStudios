@@ -136,11 +136,7 @@ public class GameManager : MonoBehaviour
 				//Unpause
                 if (pauseMenu.activeSelf)
                 {
-					ResumeAllAudio();
-                    Time.timeScale = 1;
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
-                    pauseMenu.SetActive(false);
+					ResumeGame();
 					//settingsMenuComponent.ToggleMute(false);
                 }
 				//Pause
@@ -341,8 +337,8 @@ public class GameManager : MonoBehaviour
 	{
 		ResumeAllAudio();
 		Time.timeScale = 1;
-		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
 		pauseMenu.SetActive(false);
 	}
 
