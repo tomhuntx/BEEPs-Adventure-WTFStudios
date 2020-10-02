@@ -47,8 +47,8 @@ public class DestructibleObject : MonoBehaviour
     [Tooltip("Presets when changing visuals upon damage.")]
     [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();
 
-	[Tooltip("Bool to adjust mesh of vent highlighter. Set in bool to prevent issues with other objects.")]
-	[SerializeField] private bool isVent = false;
+	//[Tooltip("Bool to adjust mesh of vent highlighter. Set in bool to prevent issues with other objects.")]
+	//[SerializeField] private bool isVent = false;
 	#endregion
 
 	#region Hidden Variables
@@ -156,16 +156,15 @@ public class DestructibleObject : MonoBehaviour
         mesh.mesh = preset.mesh;
 		RendererComponent.material = preset.material;
 
-		Debug.LogFormat("mesh is: {0} & preset mesh is: {1}", mesh, preset.mesh);
-
-		if (isVent)
-		{
-			GameObject highlighter = this.transform.GetChild(0).gameObject;
-			if (highlighter)
-			{
-				highlighter.GetComponent<MeshFilter>().mesh = preset.mesh;
-			}
-		}
+		//Debug.LogFormat("mesh is: {0} & preset mesh is: {1}", mesh, preset.mesh);
+		//if (isVent)
+		//{
+		//	GameObject highlighter = this.transform.GetChild(0).gameObject;
+		//	if (highlighter)
+		//	{
+		//		highlighter.GetComponent<MeshFilter>().mesh = preset.mesh;
+		//	}
+		//}
 	}
 	#endregion
 

@@ -3586,7 +3586,6 @@ MonoBehaviour:
   forceMagnitudeThreshold: 1.5
   generalImpactThreshold: 0.55
   modelPresets: []
-  isVent: 0
   onPlayerPunch:
     m_PersistentCalls:
       m_Calls: []
@@ -11897,7 +11896,6 @@ MonoBehaviour:
   forceMagnitudeThreshold: 5
   generalImpactThreshold: 0
   modelPresets: []
-  isVent: 0
   onPlayerPunch:
     m_PersistentCalls:
       m_Calls:
@@ -14880,7 +14878,6 @@ MonoBehaviour:
   forceMagnitudeThreshold: 1.5
   generalImpactThreshold: 0.55
   modelPresets: []
-  isVent: 0
   onPlayerPunch:
     m_PersistentCalls:
       m_Calls: []
@@ -28430,7 +28427,6 @@ MonoBehaviour:
   - assignedValue: 10
     mesh: {fileID: 237679203602768868, guid: 352a8796fe586714ea6399b32a5ef0bc, type: 3}
     material: {fileID: 2100000, guid: a4112d0b92e027f4198a6c4d432c4ce0, type: 2}
-  isVent: 1
   onPlayerPunch:
     m_PersistentCalls:
       m_Calls:
@@ -28477,7 +28473,18 @@ MonoBehaviour:
       m_Calls: []
   onImpactDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4711302359633530297}
+        m_MethodName: CopyDestructibleObjectMeshToHighlighter
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4711302359633530295}
+          m_ObjectArgumentAssemblyTypeName: DestructibleObject, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onObjectDestroy:
     m_PersistentCalls:
       m_Calls:

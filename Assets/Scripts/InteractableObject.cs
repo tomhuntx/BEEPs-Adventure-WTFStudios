@@ -305,6 +305,18 @@ public class InteractableObject : MonoBehaviour
         //Hide highlighter
         highlighterInstance.SetActive(false);
 	}
+
+    public void CopyDestructibleObjectMeshToHighlighter(DestructibleObject destructible)
+    {
+        Mesh mesh = destructible.TargetGameObject.GetComponentInChildren<MeshFilter>().mesh;
+        highlighterInstance.GetComponentInChildren<MeshFilter>().mesh = mesh;
+    }
+
+    public void CopyDestructibleObjectMaterialToHighlighter(DestructibleObject destructible)
+    {
+        Material material = destructible.TargetGameObject.GetComponentInChildren<Renderer>().material;
+        highlighterRenderer.material = material;
+    }
     #endregion
 
 
