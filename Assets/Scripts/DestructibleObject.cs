@@ -16,7 +16,6 @@ public struct ModelStates
     [Tooltip("Assigned object health based on percentage.")]
     [Range(1, 100)]
     public float assignedValue;
-
     public Mesh mesh;
     public Material material;
 }
@@ -47,10 +46,13 @@ public class DestructibleObject : MonoBehaviour
 
     [Tooltip("Presets when changing visuals upon damage.")]
     [SerializeField] List<ModelStates> modelPresets = new List<ModelStates>();
-    #endregion
 
-    #region Hidden Variables
-    private Rigidbody rb;
+	[Tooltip("Bool to adjust mesh of vent highlighter. Set in bool to prevent issues with other objects.")]
+	[SerializeField] private bool isVent = false;
+	#endregion
+
+	#region Hidden Variables
+	private Rigidbody rb;
     private MeshFilter mesh;
     //private MeshRenderer mrenderer;
     private Collider[] colliders;
@@ -107,6 +109,7 @@ public class DestructibleObject : MonoBehaviour
         });
 
         mesh = targetGameObject.GetComponent<MeshFilter>();
+		//mesh = targetGameObject.GetComponentInChildren<MeshFilter>();
         //mrenderer = targetGameObject.GetComponent<MeshRenderer>();
         RendererComponent = targetGameObject.GetComponent<Renderer>();
     }
@@ -152,17 +155,28 @@ public class DestructibleObject : MonoBehaviour
         //can inject code for instanciating destruction transition prefab here
         mesh.mesh = preset.mesh;
 		RendererComponent.material = preset.material;
-    }
-    #endregion
 
-    #region Public Methods
-    /// <summary>
-    /// Reduces durability and manages model changing.
-    /// </summary>
-    /// <param name="damage">Amount from durability will be taken away.</param>
-    public void ApplyDamage(float damage)
+		Debug.LogFormat("mesh is: {0} & preset mesh is: {1}", mesh, preset.mesh);
+
+		if (isVent)
+		{
+			GameObject highlighter = this.transform.GetChild(0).gameObject;
+			if (highlighter)
+			{
+				highlighter.GetComponent<MeshFilter>().mesh = preset.mesh;
+			}
+		}
+	}
+	#endregion
+
+	#region Public Methods
+	/// <summary>
+	/// Reduces durability and manages model changing.
+	/// </summary>
+	/// <param name="damage">Amount from durability will be taken away.</param>
+	public void ApplyDamage(float damage)
     {
-        if (!isInvincible)
+		if (!isInvincible)
         {
             durability -= damage;
             if (durability > 0)
