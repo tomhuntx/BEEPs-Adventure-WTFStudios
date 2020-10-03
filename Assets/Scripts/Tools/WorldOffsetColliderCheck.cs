@@ -40,7 +40,7 @@ public class WorldOffsetColliderCheck : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (targetTRS != null) this.transform.position = targetTRS.position + worldOffset;
         
