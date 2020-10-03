@@ -211,7 +211,7 @@ public class ClawMachine : MonoBehaviour
             {
                 if (!DetectObject())
                 {
-                    animatableTRS.position -= animatableTRS.up * shaftMoveSpeed * Time.deltaTime;
+                    animatableTRS.position -= animatableTRS.up * shaftMoveSpeed * Time.fixedDeltaTime;
 
                     if (highlightedObject != null &&
                         DoRaycast(objectDetector.transform) &&
@@ -228,7 +228,7 @@ public class ClawMachine : MonoBehaviour
             else
             {
                 if (grabDelayTimer < Time.time)
-                    animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.deltaTime;
+                    animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.fixedDeltaTime;
 
                 if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
                 {
@@ -254,7 +254,7 @@ public class ClawMachine : MonoBehaviour
             //Upwards motion
             else
             {
-                animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.deltaTime;
+                animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.fixedDeltaTime;
 
                 if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
                 {

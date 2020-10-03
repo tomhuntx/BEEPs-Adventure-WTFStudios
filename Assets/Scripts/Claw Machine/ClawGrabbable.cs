@@ -47,10 +47,11 @@ public class ClawGrabbable : MonoBehaviour
         }
 
         //Heavy box case
-        Box heavyBox = this.GetComponent<Box>();
+        Box heavyBox = this.GetComponentInChildren<Box>();
         if (heavyBox != null &&
             heavyBox.TypeOf == Box.Type.Heavy)
         {
+            heavyBox.GetComponentInChildren<Rigidbody>().isKinematic = true;
             GrabbableObject.AttachToParent(this.transform, parentTransform, colliderState, ignoreRaycast);
             return;
         }

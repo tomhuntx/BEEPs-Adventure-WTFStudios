@@ -267,7 +267,7 @@ public class ClawMachineAI : MonoBehaviour
     {
         if (targetObject == null)
         {
-            GameObject newInstance = Instantiate(boxPrefabs[Random.Range(0, boxPrefabs.Length)], new Vector3(9999, 9999, 9999), Quaternion.identity);
+            GameObject newInstance = Instantiate(boxPrefabs[Random.Range(0, boxPrefabs.Length)], raycastOrigin.position, Quaternion.identity);
             targetObject = newInstance.GetComponent<ClawGrabbable>();
             Panda.Task.current.Succeed();
         }
@@ -278,7 +278,7 @@ public class ClawMachineAI : MonoBehaviour
     {
         targetObject.transform.parent = null;
         //GrabbableObject.AttachToParent(targetObject.transform, grabbedObjectOffset, true, true);
-        targetObject.AttachToParent(grabbedObjectOffset, true, true);
+        targetObject.AttachToParent(grabbedObjectOffset, false, true);
         grabbedObject = targetObject;
         targetObject = null;
         Panda.Task.current.Succeed();
