@@ -3331,12 +3331,12 @@ PrefabInstance:
     - target: {fileID: 4354720809523929113, guid: f610ff3bd8d8ed64fb281ee073a32d0c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 23.7
+      value: 119.3
       objectReference: {fileID: 0}
     - target: {fileID: 4354720809523929113, guid: f610ff3bd8d8ed64fb281ee073a32d0c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 63.2
+      value: 31.3
       objectReference: {fileID: 0}
     - target: {fileID: 4354720809523929113, guid: f610ff3bd8d8ed64fb281ee073a32d0c,
         type: 3}
@@ -7278,6 +7278,8 @@ GameObject:
   - component: {fileID: 688748201}
   - component: {fileID: 688748200}
   - component: {fileID: 688748199}
+  - component: {fileID: 688748203}
+  - component: {fileID: 688748202}
   m_Layer: 0
   m_Name: Dead Bot
   m_TagString: Draggable Object
@@ -7357,6 +7359,76 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: -14.818001, z: 0}
+--- !u!114 &688748202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688748198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
+--- !u!114 &688748203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688748198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f87038210d4c974aa7f1e58a53f0953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetGameObject: {fileID: 0}
+  durability: 10
+  isInvincible: 1
+  forceMagnitudeThreshold: 1.5
+  generalImpactThreshold: 0.55
+  modelPresets: []
+  onPlayerPunch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 688748202}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 9189358308068484908, guid: 8393512dbac775c4cb0ed600c64581df,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 688748202}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5691244010909103157, guid: 36ea8333de5965549bd734277866ca31,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onColliderEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onImpactGeneral:
+    m_PersistentCalls:
+      m_Calls: []
+  onImpactDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &694932413
 PrefabInstance:
   m_ObjectHideFlags: 0
