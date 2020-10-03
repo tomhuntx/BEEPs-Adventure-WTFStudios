@@ -15,6 +15,11 @@ public class Explosion : MonoBehaviour
 
 	void Start()
 	{
+		foreach (CameraShaker shaker in CameraShaker.Instances)
+		{
+			shaker.DoExplosionShake(power, this.transform.position);
+		}
+
 		Explode();
 
 		// Destroy this object after the set time
