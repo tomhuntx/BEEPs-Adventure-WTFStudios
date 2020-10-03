@@ -68,7 +68,7 @@ public class ClawMachineAI : MonoBehaviour
         //hasArrived = false;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         //Only move if there's a set valid location
         if (!hasArrived &&

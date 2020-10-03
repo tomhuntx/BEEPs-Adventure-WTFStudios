@@ -77,7 +77,8 @@ public class ClawMachine : MonoBehaviour
             controlsEnabled = false;
             doGrab = false;
             doPlace = true;
-            highlightedObject = null;            
+            highlightedObject = null;
+            ClawRelease();
         }
 
         //Get grabbed object if any

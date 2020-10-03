@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SensorToolkit;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class TagFilterer : MonoBehaviour
     [SerializeField] private bool enableIgnore = true;
 
     [Tooltip("Tags of gameobjects that will be ignored. Leave blank if everything will be detected.")]
-    [SerializeField] private List<string> ignoreTags = new List<string>();
+    [TagSelector] [SerializeField] private List<string> ignoreTags = new List<string>();
 
     public bool DoIgnore(string tag)
     {
