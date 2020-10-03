@@ -58,10 +58,13 @@ public class ButtonPressPrompt : MonoBehaviour
         }
     }
 
+
+
     public void TogglePromptVisibility(bool state)
     {
         prefabInstance.gameObject.SetActive(state);
     }
+
 
     #region Auto Added Unity Events Listener Methods
     private void ShowPrompt()

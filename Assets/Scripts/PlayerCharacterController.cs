@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityStandardAssets.Cameras;
+using UnityEngine.Events;
 
 
 [System.Serializable]
@@ -12,6 +13,10 @@ public struct TransformPreset
     public Vector3 localPosition;
     public Vector3 localEulerAngles;
     public Vector3 localScale;
+
+    public UnityEvent onPositionUpdate;
+    public UnityEvent onRotationUpdate;
+    public UnityEvent onScaleUpdate;
     #endregion
 
 
@@ -24,6 +29,10 @@ public struct TransformPreset
         localPosition = thisPosition;
         localEulerAngles = thisEulerRotation;
         localScale = thisScale;
+
+        onPositionUpdate = new UnityEvent();
+        onRotationUpdate = new UnityEvent();
+        onScaleUpdate = new UnityEvent();
     }
 
     public TransformPreset(Vector3 thisPosition,
@@ -32,6 +41,10 @@ public struct TransformPreset
         localPosition = thisPosition;
         localEulerAngles = thisEulerRotation;
         localScale = Vector3.one;
+
+        onPositionUpdate = new UnityEvent();
+        onRotationUpdate = new UnityEvent();
+        onScaleUpdate = new UnityEvent();
     }
 
     public TransformPreset(Vector3 thisPosition)
@@ -39,6 +52,10 @@ public struct TransformPreset
         localPosition = thisPosition;
         localEulerAngles = Vector3.zero;
         localScale = Vector3.one;
+
+        onPositionUpdate = new UnityEvent();
+        onRotationUpdate = new UnityEvent();
+        onScaleUpdate = new UnityEvent();
     }
     #endregion
 
@@ -55,20 +72,66 @@ public struct TransformPreset
         if (applyScaling) targetTransform.localScale = localScale;
     }
 
+
+    #region Local Position Methods
     public void UpdateTransformPosition(Transform targetTransform)
     {
         UpdateTransform(targetTransform, true, false, false);
+        onPositionUpdate.Invoke();
     }
 
+    public void UpdateVectorPosition(ref Vector3 sourceLocalPosition)
+    {
+        sourceLocalPosition = localPosition;
+        onPositionUpdate.Invoke();
+    }
+
+    public Vector3 UpdateVectorPosition(Vector3 sourceLocalPosition)
+    {
+        return UpdateVectorPosition(sourceLocalPosition);
+    }
+    #endregion
+
+
+    #region Local Euler Angles Methods
     public void UpdateTransformRotation(Transform targetTransform)
     {
         UpdateTransform(targetTransform, false, true, false);
+        onRotationUpdate.Invoke();
     }
 
+    public void UpdateEulerAngles(ref Vector3 sourceLocalEulerAngles)
+    {
+        sourceLocalEulerAngles = localEulerAngles;
+        onPositionUpdate.Invoke();
+    }
+
+    public Vector3 UpdateEulerAngles(Vector3 sourceLocalEulerAngles)
+    {
+        return UpdateEulerAngles(sourceLocalEulerAngles);
+    }
+    #endregion
+
+
+    #region Local Scale Methods
     public void UpdateTransformScale(Transform targetTransform)
     {
         UpdateTransform(targetTransform, false, false, true);
+        onScaleUpdate.Invoke();
     }
+
+    public void UpdateVectorScale(ref Vector3 sourceLocalScale)
+    {
+        sourceLocalScale = localScale;
+        onScaleUpdate.Invoke();
+    }
+
+    public Vector3 UpdateVectorScale(Vector3 sourceLocalScale)
+    {
+        return UpdateVectorScale(sourceLocalScale);
+    }
+    #endregion
+
     #endregion
 }
 

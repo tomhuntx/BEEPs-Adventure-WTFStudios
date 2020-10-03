@@ -11,7 +11,7 @@ public class InteractableTRS : MonoBehaviour
 
     private bool isMoving = false;
     private int currentTransformIndex = 0;
-    private int currentRotationIndex = 0;
+    private int currentRotationIndex = 0; 
     private int currentLocalScaleIndex = 0;
 
     private void Update()
@@ -56,52 +56,67 @@ public class InteractableTRS : MonoBehaviour
         }
     }
 
+
+
+    #region Translation Methods
     public void TranslateToIndex(int index)
     {
         if (movementInteruptible &&
             Vector3.Distance(this.transform.localPosition, PresetsTRS[currentTransformIndex].localPosition) > 0.1f)
         {
             currentTransformIndex = index;
+            PresetsTRS[currentTransformIndex].onPositionUpdate.Invoke();
         }
     }
 
     public void TranslateToNextIndex()
     {
         if (!movementInteruptible) return;
+
         currentTransformIndex = currentTransformIndex + 1 >= PresetsTRS.Length ? 0 : currentTransformIndex + 1;
+        PresetsTRS[currentTransformIndex].onPositionUpdate.Invoke();
     }
+    #endregion
 
 
-
+    #region Rotation Methods
     public void RotateToIndex(int index)
     {
         if (movementInteruptible &&
-            Vector3.Distance(this.transform.localEulerAngles, PresetsTRS[currentTransformIndex].localEulerAngles) > 0.1f)
+            Vector3.Distance(this.transform.localEulerAngles, PresetsTRS[currentRotationIndex].localEulerAngles) > 0.1f)
         {
             currentRotationIndex = index;
+            PresetsTRS[currentRotationIndex].onRotationUpdate.Invoke();
         }
     }
     
     public void RotateToNextIndex()
     {
         if (!movementInteruptible) return;
+        
         currentRotationIndex = currentRotationIndex + 1 >= PresetsTRS.Length ? 0 : currentRotationIndex + 1;
+        PresetsTRS[currentRotationIndex].onRotationUpdate.Invoke();
     }
+    #endregion
 
 
-
+    #region Scaling Methods
     public void ScaleToIndex(int index)
     {
         if (movementInteruptible &&
             Vector3.Distance(this.transform.localEulerAngles, PresetsTRS[currentLocalScaleIndex].localEulerAngles) > 0.1f)
         {
             currentLocalScaleIndex = index;
+            PresetsTRS[currentLocalScaleIndex].onScaleUpdate.Invoke();
         }
     }
 
     public void ScaleToNextIndex()
     {
         if (!movementInteruptible) return;
+        
         currentLocalScaleIndex = currentLocalScaleIndex + 1 >= PresetsTRS.Length ? 0 : currentLocalScaleIndex + 1;
+        PresetsTRS[currentLocalScaleIndex].onScaleUpdate.Invoke();
     }
+    #endregion
 }

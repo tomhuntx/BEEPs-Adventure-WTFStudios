@@ -9730,6 +9730,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2085306214}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &442428973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442428972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
 --- !u!114 &442428974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9746,11 +9759,53 @@ MonoBehaviour:
   - localPosition: {x: -0.407, y: 0.41453, z: 0.41028}
     localEulerAngles: {x: 0, y: 0, z: 0}
     localScale: {x: 1, y: 1, z: 1}
+    onPositionUpdate:
+      m_PersistentCalls:
+        m_Calls: []
+    onRotationUpdate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 442428973}
+          m_MethodName: SpawnToPoint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 4422304536997420700, guid: 23482e8762a78344b9f4e474e67ac9ad,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onScaleUpdate:
+      m_PersistentCalls:
+        m_Calls: []
   - localPosition: {x: -0.407, y: 0.41453, z: 0.41028}
     localEulerAngles: {x: 0, y: -90, z: 0}
     localScale: {x: 1, y: 1, z: 1}
+    onPositionUpdate:
+      m_PersistentCalls:
+        m_Calls: []
+    onRotationUpdate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 442428973}
+          m_MethodName: SpawnToPoint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 5942211288381942476, guid: bce979e6f7cc0fc459de41423d2adc5a,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onScaleUpdate:
+      m_PersistentCalls:
+        m_Calls: []
   movementInteruptible: 1
-  transitionSpeed: 2
+  transitionSpeed: 5
 --- !u!114 &442428977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15832,6 +15887,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2085306214}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &818822210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818822208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
 --- !u!65 &818822212
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15964,11 +16032,53 @@ MonoBehaviour:
   - localPosition: {x: -0.404, y: -0.13865, z: 0.41}
     localEulerAngles: {x: 0, y: 0, z: 0}
     localScale: {x: 1, y: 1, z: 1}
+    onPositionUpdate:
+      m_PersistentCalls:
+        m_Calls: []
+    onRotationUpdate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 818822210}
+          m_MethodName: SpawnToPoint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 4422304536997420700, guid: 23482e8762a78344b9f4e474e67ac9ad,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onScaleUpdate:
+      m_PersistentCalls:
+        m_Calls: []
   - localPosition: {x: -0.404, y: -0.13865, z: 0.41}
     localEulerAngles: {x: 0, y: -90, z: 0}
     localScale: {x: 1, y: 1, z: 1}
+    onPositionUpdate:
+      m_PersistentCalls:
+        m_Calls: []
+    onRotationUpdate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 818822210}
+          m_MethodName: SpawnToPoint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 5942211288381942476, guid: bce979e6f7cc0fc459de41423d2adc5a,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onScaleUpdate:
+      m_PersistentCalls:
+        m_Calls: []
   movementInteruptible: 1
-  transitionSpeed: 2
+  transitionSpeed: 5
 --- !u!1001 &830292159
 PrefabInstance:
   m_ObjectHideFlags: 0
