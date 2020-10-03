@@ -587,8 +587,8 @@ public class PlayerCharacterController : MonoBehaviour
     /// <param name="max">This value is clamped between 0 and 90, both inclusive.</param>
     public void UpdateCamAngleClamp(float min, float max)
     {
-        minCamAngleX = Mathf.Clamp(min, -90, 0);
-        maxCamAngleX = Mathf.Clamp(max, 0, 90);
+        minCamAngleX = Mathf.Clamp(min, -90, 90);
+        maxCamAngleX = Mathf.Clamp(max, -90, 90);
     }
 
     /// <summary>

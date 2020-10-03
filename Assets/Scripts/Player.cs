@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
     [Tooltip("How far the raycast is.")]
     [SerializeField] private float raycastDistance = 4f;
 
+    [SerializeField] private LayerMask acceptedRaycastLayers;
+
     [Tooltip("How far from the player's body is an object interactable.")]
     [SerializeField] private Vector3 interactionDistance = new Vector3(2, 10, 2);
 
@@ -74,6 +76,10 @@ public class Player : MonoBehaviour
 	[Header("Tutorial - Limit Controls")]
 	[Tooltip("If it is the tutorial - limits doesnt allow punch or throw if not placed boxes.")]
 	[SerializeField] private bool Tutorial = false;
+
+    [Header("Draggable Objects Options")]
+    [SerializeField] private float minAngleClamp = 60;
+    [SerializeField] private float maxAngleClamp = -60;
 	#endregion
 
 	#region Hidden Variables
@@ -83,6 +89,7 @@ public class Player : MonoBehaviour
     private bool isRaycastHit = false;
     private GameObject heavyBox;
     private Rigidbody heavyBoxRB;
+    private Renderer heavyBoxRenderer;
     private GrabbableObject grabbedObject;
     private Transform previousRaycastTarget;
 	// Tutorial control limiting
@@ -573,20 +580,22 @@ public class Player : MonoBehaviour
                 AllowHeavyBox())
             {
                 heavyBox = hitInfo.transform.gameObject;
-                //heavyBox.transform.parent = heavyBoxRef.transform;
+                heavyBox.layer = LayerMask.NameToLayer("DraggedObject");
+                heavyBoxRenderer = heavyBox.GetComponentInChildren<Renderer>();
                 heavyBoxRB = heavyBox.GetComponent<Rigidbody>();
                 controller.JumpingEnabled = false;
             }
         }
         else
         {
-            bool heavyBoxOnSight = isRaycastHit &&
-                                   hitInfo.transform.gameObject == heavyBox;
+            //Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
+            //bool heavyBoxOnSight = Physics.Raycast(ray, out RaycastHit hit, raycastDistance) &&
+            //                       hit.transform.gameObject == heavyBox;
 
-            if (Input.GetButtonUp("Grab Object") ||
-                !heavyBoxOnSight)
+            if (!Input.GetButton("Grab Object"))
             {
                 heavyBox.transform.parent = null;
+                heavyBox.layer = LayerMask.NameToLayer("Default");
                 heavyBox = null;
                 heavyBoxRB = null;
                 controller.RevertMoveSpeed();
@@ -597,34 +606,79 @@ public class Player : MonoBehaviour
             else
             {
                 //Anti-Clipping Check
-                if (controller.CurrentDirection.magnitude > 0.1f)
-                {
-                    if (heavyBoxRB.SweepTest(controller.CurrentDirection, out RaycastHit rbSweep))
-                    {
-                        bool doCheck = true;
-                        if (rbSweep.collider.attachedRigidbody != null &&
-                            rbSweep.collider.attachedRigidbody.gameObject.tag == "Player")
-                        {
-                            doCheck = false;
-                        }
+                //if (controller.CurrentDirection.magnitude > 0.1f)
+                //{
+                //    if (heavyBoxRB.SweepTest(controller.CurrentDirection, out RaycastHit rbSweep))
+                //    {
+                //        bool doCheck = true;
+                //        if (rbSweep.collider.attachedRigidbody != null &&
+                //            rbSweep.collider.attachedRigidbody.gameObject.tag == "Player")
+                //        {
+                //            doCheck = false;
+                //        }
 
-                        if (doCheck &&
-                            rbSweep.distance <= 0.5f)
-                        {
-                            return;
-                        }
+                //        if (doCheck &&
+                //            rbSweep.distance <= 0.5f)
+                //        {
+                //            return;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        return;
+                //    }
+                //}
+
+                
+
+
+                Vector3 targetPos = Vector3.zero;
+                bool enableClamp = true;
+                if (controller.CharacterHead.localEulerAngles.x > maxAngleClamp + 1)
+                {
+                    if ((heavyBox.transform.position.y - controller.CharacterHead.position.y) > 0.3f &&
+                        Physics.Raycast(raycastOrigin.position, raycastOrigin.forward, out RaycastHit hit) &&
+                        hit.transform.gameObject == heavyBox)
+                    {
+                        targetPos = raycastOrigin.position + raycastOrigin.forward * raycastDistance;
+                        targetPos.y = heavyBox.transform.position.y;
+                        enableClamp = false;
                     }
                     else
                     {
+                        heavyBox.transform.parent = null;
+                        heavyBox.layer = LayerMask.NameToLayer("Default");
+                        heavyBox = null;
+                        heavyBoxRB = null;
+                        controller.RevertMoveSpeed();
+                        controller.RevertLookSpeed();
+                        controller.RevertCamAngleClamp();
+                        controller.JumpingEnabled = true;
                         return;
                     }
                 }
+                else if (isRaycastHit)
+                {
+                    Bounds bounds = heavyBoxRenderer.bounds;
+                    Vector3 contactOffset = new Vector3(bounds.extents.x - 0.5f,
+                                                        bounds.extents.y - 0.5f,
+                                                        bounds.extents.z - 0.5f);
 
+                    Vector3 offset = new Vector3(hitInfo.normal.x * (bounds.extents.x - contactOffset.x),
+                                                 hitInfo.normal.y * (bounds.extents.y - contactOffset.y),
+                                                 hitInfo.normal.z * (bounds.extents.z - contactOffset.z));
+                    targetPos = hitInfo.point + offset;
+                }
+                else
+                {
+                    return;
+                }
+                //Clamp min camera angle
+                if (enableClamp) controller.UpdateCamAngleClamp(minAngleClamp, maxAngleClamp);
 
                 //Manage heavy box reference position
                 Transform hbRef = heavyBoxRef.transform;
-                //float mult = Vector3.Magnitude(this.transform.position - raycastOrigin.transform.position);
-                hbRef.position = controller.CharacterHead.position + raycastOrigin.transform.forward * (interactionDistance.z / 2f);
+                hbRef.position = targetPos;
 
                 //Get transform references
                 Transform boxTRS = heavyBox.transform;
@@ -668,10 +722,6 @@ public class Player : MonoBehaviour
                 //Apply transform changes and smoothening
                 heavyBox.transform.position = Vector3.Lerp(heavyBox.transform.position, newPos, 15 * Time.deltaTime);
                 heavyBox.transform.rotation = Quaternion.Lerp(heavyBox.transform.rotation, newRot, 15 * Time.deltaTime);
-
-
-                //Clamp min camera angle
-                controller.UpdateCamAngleClamp(controller.originalMinCamAngleX, 20);
 
                 float newSpeed = 0;
                 if (Input.GetButtonDown("Sprint")) newSpeed = controller.SprintSpeed;
@@ -757,7 +807,8 @@ public class Player : MonoBehaviour
     /// <returns>Returns true if the raycast hits a collider.</returns>
     private bool DoRaycast(out RaycastHit hitInfo)
     {
-        return Physics.Raycast(raycastOrigin.position, raycastOrigin.forward, out hitInfo, raycastDistance);
+        Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
+        return Physics.Raycast(ray, out hitInfo, raycastDistance, acceptedRaycastLayers);
     }
 
     /// <summary>

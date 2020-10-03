@@ -1,3 +1,4 @@
+using SensorToolkit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace UnityStandardAssets.Cameras
         [SerializeField] private float closestDistance = 0.5f;
 
         [Tooltip("Don't clip against objects with this tag (useful for not clipping against the targeted object).")]
-        [SerializeField] private List<string> dontClipTags = new List<string>() { "Player" };
+        [TagSelector][SerializeField] private List<string> dontClipTags = new List<string>() { "Player" };
         #endregion
 
 

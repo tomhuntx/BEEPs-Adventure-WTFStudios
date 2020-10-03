@@ -419,9 +419,14 @@ MonoBehaviour:
   otherObjectOffset: {x: 0, y: 0, z: 0}
   raycastOrigin: {fileID: 7808786023054035221}
   raycastDistance: 5
+  acceptedRaycastLayers:
+    serializedVersion: 2
+    m_Bits: 7987
   interactionDistance: {x: 4, y: 10, z: 4}
   boxPlacementDeadzone: 0
   Tutorial: 0
+  minAngleClamp: 25
+  maxAngleClamp: 45
   bodyAnim: {fileID: 1431124425272433729}
   headAnim: {fileID: 5634563327157023313}
 --- !u!114 &7808786021717997396
