@@ -228,6 +228,7 @@ public class InteractableObject : MonoBehaviour
         highlighterInstance.transform.parent = highlighterBasis.transform;
         highlighterInstance.transform.localRotation = Quaternion.identity;
         highlighterInstance.transform.localPosition = Vector3.zero;
+        highlighterInstance.transform.localScale = Vector3.one;
         //highlighterInstance.transform.localScale += HIGHLIGHTER_OFFSET_SIZE; //Prevent z-fighting  
         RemoveIgnoredObjects();
 
