@@ -29,7 +29,6 @@ public class NPC_Controller : MonoBehaviour
 	private int currentIndex = 0;
 	private int newPoint = 0;
 	bool moveLeft = false;
-	private float punchForce = 0.5f;
 
 	// Scared timer
 	private float scaredTime = 4.0f;
@@ -39,6 +38,7 @@ public class NPC_Controller : MonoBehaviour
 	private bool scaredRun;
 	private float spinruntime = 2.0f;
 	private float spinSpeed = 100.0f;
+	private float punchForce = 0.5f;
 
 	[Header("Animators")]
 	public Animator anim;
@@ -51,9 +51,6 @@ public class NPC_Controller : MonoBehaviour
 	public Texture normal;
 	public Texture scared;
 	public Texture terrified;
-
-	// Events
-	public UnityEvent onPlayerPunch;
 
 	private void Start()
 	{
@@ -190,7 +187,8 @@ public class NPC_Controller : MonoBehaviour
 	{
 		this.transform.position += direction * punchForce;
 
-		onPlayerPunch.Invoke(); 
+		// Scared animation for a few seconds
+		SetScared();
 	}
 
 	public void GetBlownUp(Vector3 explosionPosition)

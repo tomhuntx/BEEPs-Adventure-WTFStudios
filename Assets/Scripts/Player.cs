@@ -401,6 +401,14 @@ public class Player : MonoBehaviour
 						{
 							mrob.GetPunched(raycastOrigin.forward);
 						}
+						else
+						{
+							MBot_Controller mcont = mparent.GetComponentInChildren<MBot_Controller>();
+							if (mcont != null)
+							{
+								mcont.GetPunched(raycastOrigin.forward);
+							}
+						}
 						break;
 					case "Generic Destructable":
 						target.ApplyDamage(punchDamage);

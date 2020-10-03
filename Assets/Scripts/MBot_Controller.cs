@@ -44,6 +44,9 @@ public class MBot_Controller : MonoBehaviour
 	public Color normalCol;
 	public Color angryCol;
 
+	// Punch
+	private float punchForce = 0.1f;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -156,6 +159,20 @@ public class MBot_Controller : MonoBehaviour
 			}
 		}
     }
+
+	public void GetPunched(Vector3 direction)
+	{
+		this.transform.position += direction * punchForce;
+		StartCoroutine(AngryPause());
+
+		// Angry animation
+		anim.SetTrigger("hatGrabbed");
+		animFace.SetTrigger("hatGrabbed");
+		animScreen.SetTrigger("hatGrabbed");
+
+		// Look at player
+		explosionLook = true;
+	}
 
 	public void HatMoved()
 	{
