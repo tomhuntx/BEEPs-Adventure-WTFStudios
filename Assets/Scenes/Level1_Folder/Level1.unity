@@ -280,6 +280,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22677309}
   m_CullTransparentMesh: 0
+--- !u!1 &38855871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7777733366518838857, guid: 02570cef1e8a7be48bab19515927ff85,
+    type: 3}
+  m_PrefabInstance: {fileID: 1669577012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &38855872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38855871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1b4078b442e624781632a1962a4752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignedRobot: {fileID: 38855875}
+  craftingParticle: {fileID: 751848223}
+--- !u!114 &38855875 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
+    type: 3}
+  m_PrefabInstance: {fileID: 1669577012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38855871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb161fb489e6c9c4696f8cf5acf8fa30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &42994361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1120,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1669577012}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 38855871}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
@@ -12489,7 +12521,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576452157}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -448970409364714878, guid: 7a0787fffa79329419d584a9b440bd62,
     type: 2}
@@ -13103,6 +13135,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 811ae2477c5ccdb4d9a25c65690ed383, type: 3}
+--- !u!1 &591752310 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4690097412610857781, guid: c8254e2ad7de9ae4d96c2b51ecc06ac8,
+    type: 3}
+  m_PrefabInstance: {fileID: 841840881}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &592204780
 GameObject:
   m_ObjectHideFlags: 0
@@ -13387,7 +13425,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1135642847}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 780192189}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
@@ -14097,7 +14135,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690802084}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -448970409364714878, guid: 7a0787fffa79329419d584a9b440bd62,
     type: 2}
@@ -15544,6 +15582,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 740030872}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &751848223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4690097412610857781, guid: c8254e2ad7de9ae4d96c2b51ecc06ac8,
+    type: 3}
+  m_PrefabInstance: {fileID: 442406264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &756044445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15825,6 +15869,38 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7058157578162966916, guid: b466b03256132954e8eecc71fa120f8b, type: 3}
+--- !u!1 &780192189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7777733366518838857, guid: 02570cef1e8a7be48bab19515927ff85,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135642847}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &780192190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780192189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1b4078b442e624781632a1962a4752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignedRobot: {fileID: 780192193}
+  craftingParticle: {fileID: 1193166245}
+--- !u!114 &780192193 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135642847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780192189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb161fb489e6c9c4696f8cf5acf8fa30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &782058210 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 71d98b5d97deae6408239418eb6930bc,
@@ -17573,7 +17649,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1560983226}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1248198456}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
@@ -25086,111 +25162,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: d41cfa9b1da03984fa6204ca004aeb10, type: 3}
---- !u!1 &1190770735
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1190770738}
-  - component: {fileID: 1190770737}
-  - component: {fileID: 1190770736}
-  - component: {fileID: 1190770739}
-  m_Layer: 0
-  m_Name: CraftDetector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1190770736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190770735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1b4078b442e624781632a1962a4752, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CraftingBurstParticle: {fileID: 3805323246549724957, guid: 8f31011b68d67834fa9d37b8374b7072,
-    type: 3}
-  ParticleDelay: 3.3
---- !u!65 &1190770737
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190770735}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.4556808, y: 1, z: 4.0672455}
-  m_Center: {x: 4.155258, y: 0, z: -0.11381149}
---- !u!4 &1190770738
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190770735}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.73, y: 2.15, z: 18.19}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1190770739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190770735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 3
-  destroyType: 1
-  playTimerOnStart: 0
-  useRealTime: 0
-  onTimerStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1190770735}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onTimerEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1190770735}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!1 &1192007370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 0d8b61214621d7f4f9aa7a22d778034a,
@@ -25396,6 +25367,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9fd9d956b8c50a4e8b5472841e656d0, type: 3}
+--- !u!1 &1193166245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4690097412610857781, guid: c8254e2ad7de9ae4d96c2b51ecc06ac8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1502290914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1193242264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: fa51df21862e84a4697e3af4790e6eb7,
@@ -27062,6 +27039,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 5.9}
   m_SizeDelta: {x: 200, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1248198456 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7777733366518838857, guid: 02570cef1e8a7be48bab19515927ff85,
+    type: 3}
+  m_PrefabInstance: {fileID: 1560983226}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1248198457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248198456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1b4078b442e624781632a1962a4752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignedRobot: {fileID: 1248198460}
+  craftingParticle: {fileID: 1869274832}
+--- !u!114 &1248198460 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
+    type: 3}
+  m_PrefabInstance: {fileID: 1560983226}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248198456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb161fb489e6c9c4696f8cf5acf8fa30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1260736589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29570,6 +29579,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 248275122}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1380205315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
+    type: 3}
+  m_PrefabInstance: {fileID: 248275122}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380205311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb161fb489e6c9c4696f8cf5acf8fa30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1380205316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29614,6 +29635,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1380205317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380205311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1b4078b442e624781632a1962a4752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignedRobot: {fileID: 1380205315}
+  craftingParticle: {fileID: 591752310}
 --- !u!1 &1393440357 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9145112948693616570, guid: 0fa7fca5a730de644a4ed061de6dd9e7,
@@ -32051,7 +32086,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1135642847}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 780192189}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
@@ -34264,7 +34299,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onGetAnnoyed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1190770739}
+      objectReference: {fileID: 0}
     - target: {fileID: 9178885967677003796, guid: 02570cef1e8a7be48bab19515927ff85,
         type: 3}
       propertyPath: onGetAnnoyed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -34600,7 +34635,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1669577012}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 38855871}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc4965791d5ffa4893c784887deb90f, type: 3}
@@ -34977,7 +35012,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1560983226}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1248198456}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
@@ -39150,6 +39185,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1898171222}
+        m_MethodName: set_pitch
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1792911715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41496,6 +41542,12 @@ MonoBehaviour:
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1869274832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4690097412610857781, guid: c8254e2ad7de9ae4d96c2b51ecc06ac8,
+    type: 3}
+  m_PrefabInstance: {fileID: 346681295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1869889221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42273,14 +42325,14 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 609db9202ed9ab442b9eb0f6a23a882c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 200
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0

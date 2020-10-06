@@ -11,6 +11,7 @@ public class Robot : MonoBehaviour
 	private float lookTime = 3f;
 	private float lookTimer;
 	private bool lookAtPlayer = false;
+	public bool IsLookingAtPlayer { get { return lookAtPlayer; } }
 
 	// Punch Variables
 	private float punchDistance = 0.5f;
