@@ -808,7 +808,21 @@ public class Player : MonoBehaviour
     private bool DoRaycast(out RaycastHit hitInfo)
     {
         Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
-        return Physics.Raycast(ray, out hitInfo, raycastDistance, acceptedRaycastLayers);
+        bool isRayHit = Physics.Raycast(ray, out RaycastHit rayTest, raycastDistance, acceptedRaycastLayers);
+
+        if (!isRayHit)
+        {
+            hitInfo = rayTest;
+            return false;
+        }
+        else
+        {
+            //Prevent placement from behind the raycast origin
+            Direction rayDir = new Direction(controller.CharacterHead.position, rayTest.point);
+
+            hitInfo = rayTest;
+            return Vector3.Angle(controller.CharacterHead.forward, rayDir.localDirection) <= 90;
+        }
     }
 
     /// <summary>
