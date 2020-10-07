@@ -24455,18 +24455,7 @@ MonoBehaviour:
         m_Calls: []
     onTaskDone:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 252026209}
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
+        m_Calls: []
     onTaskCreate:
       m_PersistentCalls:
         m_Calls: []
@@ -28757,6 +28746,17 @@ MonoBehaviour:
           m_StringArgument: "\u2022 Find a way out"
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8296172667620734914}
+        m_MethodName: StartTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4711302359633530296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29208,6 +29208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5006512736914392530}
+  - component: {fileID: 8296172667620734914}
   m_Layer: 0
   m_Name: Vent
   m_TagString: Untagged
@@ -29215,6 +29216,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 65
   m_IsActive: 1
+--- !u!114 &8296172667620734914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667620734913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  destroyType: 0
+  playTimerOnStart: 0
+  useRealTime: 0
+  onTimerStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTimerEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 252026209}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!23 &8747966081101655462
 MeshRenderer:
   m_ObjectHideFlags: 0
