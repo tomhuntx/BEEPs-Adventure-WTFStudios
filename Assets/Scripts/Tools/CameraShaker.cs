@@ -56,7 +56,8 @@ public class CameraShaker : MonoBehaviour
 
     public void DoExplosionShake(float magnitude, Vector3 explosionSourcePosition)
     {
-        if (!this.isActiveAndEnabled) return;
+		if (!this) return;
+		else if (!this.isActiveAndEnabled) return;
         float distance = Vector3.Distance(Player.Instance.transform.position, explosionSourcePosition);
         currentMagnitude += magnitude / distance;
         currentMagnitude = Mathf.Clamp(currentMagnitude, 0, intensity);

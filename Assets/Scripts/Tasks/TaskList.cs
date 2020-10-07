@@ -496,6 +496,7 @@ public class TaskList : MonoBehaviour
 					}
 					else
 					{
+						anim = GetComponent<Animator>();
 						Debug.LogWarning("Animation did not trigger. No animator found.");
 					}
 				}
