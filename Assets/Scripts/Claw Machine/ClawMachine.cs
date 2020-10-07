@@ -115,7 +115,7 @@ public class ClawMachine : MonoBehaviour
         else //if (!isResetting)
         {
             //Player leave function
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 PlayerLeave();
                 //KickPlayer();
