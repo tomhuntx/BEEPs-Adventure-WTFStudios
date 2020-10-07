@@ -332,7 +332,10 @@ public class MBot_Controller : MonoBehaviour
 		lookAtPlayerForever = true;
 
 		// Stop agent
-		agent.SetDestination(angryLocation.transform.position);
+		if (agent.enabled && agent.isOnNavMesh)
+		{
+			agent.SetDestination(angryLocation.transform.position);
+		}
 
 		// Face animations
 		faceRender.materials[faceMatIndex].SetTexture("_MainTex", angry);
