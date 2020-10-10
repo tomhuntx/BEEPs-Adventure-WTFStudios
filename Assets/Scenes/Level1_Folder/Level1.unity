@@ -19263,6 +19263,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 871970330}
+        m_MethodName: SpawnToPoint
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3550898150191051073, guid: 75b6542b765c2474e86cd3d52086bee2,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onColliderEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -19384,6 +19396,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
+        type: 3}
       propertyPath: onObjectPlace.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 567811579}
@@ -19477,6 +19494,11 @@ PrefabInstance:
       propertyPath: onObjectPlace.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Box Collide
       objectReference: {fileID: 0}
+    - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
+        type: 3}
+      propertyPath: isInvincible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8948450110406902007, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19550,7 +19572,7 @@ PrefabInstance:
     - target: {fileID: 8948450110406902013, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
       propertyPath: m_Name
-      value: PREFAB_Box_Explosive (27)
+      value: MiniExplosiveBoxes
       objectReference: {fileID: 0}
     - target: {fileID: 8948450110406902013, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
@@ -25031,6 +25053,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
+        type: 3}
       propertyPath: onObjectPlace.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 567811579}
@@ -25124,6 +25151,11 @@ PrefabInstance:
       propertyPath: onObjectPlace.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Box Collide
       objectReference: {fileID: 0}
+    - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
+        type: 3}
+      propertyPath: isInvincible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8948450110406902007, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25197,7 +25229,7 @@ PrefabInstance:
     - target: {fileID: 8948450110406902013, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
       propertyPath: m_Name
-      value: PREFAB_Box_Explosive (22)
+      value: MiniExplosiveBoxes
       objectReference: {fileID: 0}
     - target: {fileID: 8948450110406902013, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
@@ -46203,6 +46235,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
+      propertyPath: onObjectThrow.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
+        type: 3}
       propertyPath: onObjectPlace.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 567811579}
@@ -46296,6 +46333,11 @@ PrefabInstance:
       propertyPath: onObjectPlace.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Box Collide
       objectReference: {fileID: 0}
+    - target: {fileID: 7992170500711693709, guid: e9fd9d956b8c50a4e8b5472841e656d0,
+        type: 3}
+      propertyPath: isInvincible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8948450110406902007, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -46369,7 +46411,7 @@ PrefabInstance:
     - target: {fileID: 8948450110406902013, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}
       propertyPath: m_Name
-      value: PREFAB_Box_Explosive (28)
+      value: MiniExplosiveBoxes
       objectReference: {fileID: 0}
     - target: {fileID: 8948450110406902013, guid: e9fd9d956b8c50a4e8b5472841e656d0,
         type: 3}

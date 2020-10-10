@@ -35,14 +35,14 @@ public class PunchButton : MonoBehaviour
 
 	IEnumerator Cooldown()
 	{
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(0.4f);
 
 		punched = false;
 	}
 
 	IEnumerator PauseThenSpawn()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.15f);
 
 		if (!boxDetection.inside)
 		{
@@ -58,7 +58,7 @@ public class PunchButton : MonoBehaviour
 			punched = true;
 			anim.Play("button");
 
-			spawner.SpawnToPoint(punchSFX);
+			//spawner.SpawnToPoint(punchSFX);
 
 			StartCoroutine(PauseThenSpawn());
 			StartCoroutine(Cooldown());
