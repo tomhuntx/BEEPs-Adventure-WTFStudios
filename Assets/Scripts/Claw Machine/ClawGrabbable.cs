@@ -34,6 +34,7 @@ public class ClawGrabbable : MonoBehaviour
                 rigidbodyComponent.isKinematic = true;
             
             rigidbodyComponent.useGravity = false;
+            rigidbodyComponent.velocity = Vector3.zero;
         }
 
         onGrab.Invoke();
