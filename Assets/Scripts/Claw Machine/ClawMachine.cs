@@ -16,6 +16,7 @@ public class ClawMachine : MonoBehaviour
     [SerializeField] private float moveSpeed = 2.5f;
     [SerializeField] private float shaftMoveSpeed = 5.0f;
     [SerializeField] private float grabDelay = 0.5f;
+    [SerializeField] private float extensDeadzone = 0.1f;
     private float grabDelayTimer;
 
     [Tooltip("The size of the detection area from the grabbable object's center. " +
@@ -54,6 +55,8 @@ public class ClawMachine : MonoBehaviour
     [SerializeField] private Transform[] horizontalLimiters = new Transform[2];
     [Tooltip("0 = min, 1 = max")]
     [SerializeField] private Transform[] verticalLimiters = new Transform[2];
+    [Tooltip("0 = min, 1 = max")]
+    [SerializeField] private Transform[] elevationLimiters = new Transform[2];
 
     [Header("Events")]
     public UnityEvent onObjectGrab;
@@ -203,7 +206,8 @@ public class ClawMachine : MonoBehaviour
             }
         }
 
-        
+        if (doGrab || doPlace) LimitElevation();
+
         if (doGrab)
         {
             //Downwards motion
@@ -230,10 +234,15 @@ public class ClawMachine : MonoBehaviour
                 if (grabDelayTimer < Time.time)
                     animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.fixedDeltaTime;
 
-                if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
+                float distanceToMin = Vector3.Distance(animatableTRS.localPosition, Vector3.zero);
+                if (distanceToMin < extensDeadzone)
                 {
                     controlsEnabled = true;
-                    doGrab = false;
+                    doGrab = false;                    
+                }
+
+                if (distanceToMin < 0.1f)
+                {
                     animatableTRS.localPosition = Vector3.zero;
                 }
             }
@@ -256,10 +265,15 @@ public class ClawMachine : MonoBehaviour
             {
                 animatableTRS.position += animatableTRS.up * shaftMoveSpeed * Time.fixedDeltaTime;
 
-                if (Vector3.Distance(animatableTRS.localPosition, Vector3.zero) < 0.1f)
+                float distanceToMin = Vector3.Distance(animatableTRS.localPosition, Vector3.zero);
+                if (distanceToMin < extensDeadzone)
                 {
                     controlsEnabled = true;
                     doPlace = false;
+                }
+
+                if (distanceToMin < 0.1f)
+                {
                     animatableTRS.localPosition = Vector3.zero;
                 }
             }
@@ -478,6 +492,22 @@ public class ClawMachine : MonoBehaviour
         if (lightTRS.gameObject.activeSelf)
         {
             lightTRS.position = raycastHit.transform.position + raycastHit.normal * 1.5f;
+        }
+    }
+
+    private void LimitElevation()
+    {
+        if (animatableTRS.position.y < elevationLimiters[0].position.y)
+        {
+            Vector3 minPos = animatableTRS.position;
+            minPos.y = elevationLimiters[0].position.y;
+            animatableTRS.position = minPos;
+        }
+        else if (animatableTRS.position.y > elevationLimiters[1].position.y)
+        {
+            Vector3 maxPos = animatableTRS.position;
+            maxPos.y = elevationLimiters[1].position.y;
+            animatableTRS.position = maxPos;
         }
     }
 
