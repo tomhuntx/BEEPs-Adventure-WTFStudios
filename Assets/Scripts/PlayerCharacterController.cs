@@ -648,6 +648,11 @@ public class PlayerCharacterController : MonoBehaviour
 
 
     #region Public Methods
+    public void OverrideRotationX(float value)
+    {
+        headRotX = value;
+    }
+
     /// <summary>
     /// Updates the min/max clamp values for rotating the camera in the x-axis.
     /// </summary>

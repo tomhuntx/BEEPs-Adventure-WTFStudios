@@ -400,6 +400,10 @@ public class Player : MonoBehaviour
                     }
                 }
 
+                bool validPos = newPos.x <= interactionDistance.x &&
+                                newPos.y <= interactionDistance.y &&
+                                newPos.z <= interactionDistance.z;
+                if (!validPos) return;
 
                 grabbedObject.ManagePlacementHighlighter(true,
                                                          newPos,
@@ -615,15 +619,6 @@ public class Player : MonoBehaviour
         }
     }
 
-	///// <summary>
-	///// Resets all animation triggers and triggers one at a time
-	///// </summary>
-	//private void SetTrigger(string trigger)
-	//{
-		
-
-	//}
-
 	/// <summary>
 	/// Heavy box dragging mechanic.
 	/// </summary>
@@ -645,10 +640,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
-            //bool heavyBoxOnSight = Physics.Raycast(ray, out RaycastHit hit, raycastDistance) &&
-            //                       hit.transform.gameObject == heavyBox;
-
             if (!Input.GetButton("Grab Object"))
             {
                 heavyBox.transform.parent = null;
@@ -662,33 +653,6 @@ public class Player : MonoBehaviour
             }
             else
             {
-                //Anti-Clipping Check
-                //if (controller.CurrentDirection.magnitude > 0.1f)
-                //{
-                //    if (heavyBoxRB.SweepTest(controller.CurrentDirection, out RaycastHit rbSweep))
-                //    {
-                //        bool doCheck = true;
-                //        if (rbSweep.collider.attachedRigidbody != null &&
-                //            rbSweep.collider.attachedRigidbody.gameObject.tag == "Player")
-                //        {
-                //            doCheck = false;
-                //        }
-
-                //        if (doCheck &&
-                //            rbSweep.distance <= 0.5f)
-                //        {
-                //            return;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        return;
-                //    }
-                //}
-
-                
-
-
                 Vector3 targetPos = Vector3.zero;
                 bool enableClamp = true;
                 if (controller.CharacterHead.localEulerAngles.x > maxAngleClamp + 1)
@@ -703,15 +667,13 @@ public class Player : MonoBehaviour
                     }
                     else
                     {
-                        heavyBox.transform.parent = null;
-                        heavyBox.layer = LayerMask.NameToLayer("Default");
-                        heavyBox = null;
-                        heavyBoxRB = null;
-                        controller.RevertMoveSpeed();
-                        controller.RevertLookSpeed();
-                        controller.RevertCamAngleClamp();
-                        controller.JumpingEnabled = true;
-                        return;
+                        Vector3 hbPos = heavyBoxRef.transform.position;
+                        float origY = hbPos.y;
+                        hbPos = this.transform.position + this.transform.forward * (interactionDistance.z - 2);
+                        hbPos.y = origY;
+                        heavyBoxRef.transform.position = hbPos;
+                        controller.UpdateCamAngleClamp(minAngleClamp, maxAngleClamp);
+                        return;          
                     }
                 }
                 else if (isRaycastHit)
@@ -728,6 +690,7 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
+                    controller.OverrideRotationX(controller.CharacterHead.localEulerAngles.x + 250 * Time.fixedDeltaTime);
                     return;
                 }
                 //Clamp min camera angle
