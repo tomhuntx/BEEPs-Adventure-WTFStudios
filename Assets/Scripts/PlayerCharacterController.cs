@@ -193,6 +193,7 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 7.0f;
     [SerializeField] private float maxAirSpeed = 10.0f;
     [SerializeField] private float airSpeedMagnitude = 3.0f;
+    [SerializeField] private float airControlBias = 1.5f;
     private float currentMoveSpeed;
 
     [Header("Other Forces")]
@@ -520,12 +521,16 @@ public class PlayerCharacterController : MonoBehaviour
             {
                 newDirection = groundedMotion;
                 currentAirSpeed += newDirection.magnitude * currentMoveSpeed * Time.deltaTime;
+
+                if (direction != Vector3.zero)
+                    groundedMotion = Vector3.Lerp(groundedMotion, Vector3.zero, airControlBias * Time.deltaTime);
             }
             else
             {
                 newDirection = direction;
                 currentAirSpeed = direction.magnitude * currentMoveSpeed;
             }
+
             newVelocity = newDirection * currentAirSpeed + (direction * airSpeedMagnitude);
             newVelocity = Vector3.ClampMagnitude(newVelocity, maxAirSpeed);
         }
