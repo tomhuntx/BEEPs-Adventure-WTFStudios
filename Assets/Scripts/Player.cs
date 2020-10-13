@@ -71,7 +71,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 interactionDistance = new Vector3(2, 10, 2);
 
     [Tooltip("The area around the player where box placement should be ignored.")]
-    [SerializeField] private float boxPlacementDeadzone = 1f;	
+    [SerializeField] private float boxPlacementDeadzone = 1f;
+
+    [SerializeField] private AdjacentDetector adjacentDetector;
+
+
 
 	[Header("Tutorial - Limit Controls")]
 	[Tooltip("If it is the tutorial - limits doesnt allow punch or throw if not placed boxes.")]
@@ -81,6 +85,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float minAngleClamp = 60;
     [SerializeField] private float maxAngleClamp = -60;
 	#endregion
+
 
 	#region Hidden Variables
 	private PlayerCharacterController controller;
@@ -351,8 +356,60 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //No surfaces are hit, hide the grabbed object's highlighter
-            grabbedObject.HidePlacementHighlighter();
+            if (adjacentDetector.HasOffset &&
+                adjacentDetector.NearestObject != null)
+            {
+                if (adjacentDetector.DetectedGameObject.Contains(grabbedObject.gameObject))
+                    adjacentDetector.DetectedGameObject.Remove(grabbedObject.gameObject);
+
+                Vector3 newPos = adjacentDetector.NearestObject.transform.position;
+
+                if (adjacentDetector.ActualOffset.x != 0)
+                {
+                    //from left
+                    if (adjacentDetector.ActualOffset.x > 0)
+                    {
+                        if (adjacentDetector.ObjectOnLeft != null &&
+                            adjacentDetector.ObjectOnLeft == adjacentDetector.NearestObject)
+                            newPos += this.transform.right * 1;
+                    }
+                    //from right
+                    else
+                    {
+                        if (adjacentDetector.ObjectOnRight != null &&
+                            adjacentDetector.ObjectOnRight == adjacentDetector.NearestObject)
+                            newPos -= this.transform.right * 1;
+                    }
+                }
+                
+                if (adjacentDetector.ActualOffset.y != 0)
+                {
+                    //from below
+                    if (adjacentDetector.ActualOffset.y > 0)
+                    {
+                        if (adjacentDetector.ObjectOnBottom != null &&
+                            adjacentDetector.ObjectOnBottom == adjacentDetector.NearestObject)
+                            newPos += this.transform.up * 1;
+                    }
+                    //from above
+                    else
+                    {
+                        if (adjacentDetector.ObjectAbove != null &&
+                            adjacentDetector.ObjectAbove == adjacentDetector.NearestObject)
+                            newPos -= this.transform.up * 1;
+                    }
+                }
+
+
+                grabbedObject.ManagePlacementHighlighter(true,
+                                                         newPos,
+                                                         adjacentDetector.NearestObject.transform.rotation);
+            }
+            else
+            {
+                //No surfaces are hit, hide the grabbed object's highlighter
+                grabbedObject.HidePlacementHighlighter();
+            }
         }
     }
 
@@ -467,7 +524,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void PlaceGrabbedObject()
     {
-        if (isRaycastHit &&
+        if (//isRaycastHit &&
             grabbedObject.interactionComponent.HighlighterInstance.activeSelf &&
             grabbedObject.PlaceObject())
         {
