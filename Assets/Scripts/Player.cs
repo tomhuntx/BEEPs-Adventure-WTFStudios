@@ -400,10 +400,10 @@ public class Player : MonoBehaviour
                     }
                 }
 
-                bool validPos = newPos.x <= interactionDistance.x &&
-                                newPos.y <= interactionDistance.y &&
-                                newPos.z <= interactionDistance.z;
-                if (!validPos) return;
+                //bool validPos = newPos.x - this.transform.position.x <= interactionDistance.x &&
+                //                newPos.y - this.transform.position.y <= interactionDistance.y &&
+                //                newPos.z - this.transform.position.z <= interactionDistance.z;
+                //if (!validPos) return;
 
                 grabbedObject.ManagePlacementHighlighter(true,
                                                          newPos,
