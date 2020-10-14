@@ -28,6 +28,11 @@ public class MenuManager : MonoBehaviour
 	{
 		Time.timeScale = 1;
 
+		if (SceneManager.GetActiveScene().name == "EndScreen")
+		{
+			UnlockAllLevels();
+		}
+
 		try
 		{
 			Load();
