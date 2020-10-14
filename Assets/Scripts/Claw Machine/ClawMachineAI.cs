@@ -276,12 +276,15 @@ public class ClawMachineAI : MonoBehaviour
     [Panda.Task]
     private void GrabObject()
     {
-        targetObject.transform.parent = null;
-        //GrabbableObject.AttachToParent(targetObject.transform, grabbedObjectOffset, true, true);
-        targetObject.AttachToParent(grabbedObjectOffset, false, true);
-        grabbedObject = targetObject;
-        targetObject = null;
-        Panda.Task.current.Succeed();
+		if (targetObject && targetObject.transform.parent)
+		{
+			targetObject.transform.parent = null;
+			//GrabbableObject.AttachToParent(targetObject.transform, grabbedObjectOffset, true, true);
+			targetObject.AttachToParent(grabbedObjectOffset, false, true);
+			grabbedObject = targetObject;
+			targetObject = null;
+			Panda.Task.current.Succeed();
+		}
     }
 
     [Panda.Task]
