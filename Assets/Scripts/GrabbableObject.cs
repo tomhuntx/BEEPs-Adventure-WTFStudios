@@ -184,6 +184,7 @@ public class GrabbableObject : DestructibleObject
 	public void DestroyOnImpact()
 	{
 		GetComponent<DestructibleObject>().forceMagnitudeThreshold = 0.1f;
+        RigidbodyComponent.WakeUp();
 	}
 
     private void UpdateHighlighterModel()
