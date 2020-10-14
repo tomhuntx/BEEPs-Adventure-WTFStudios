@@ -271,6 +271,11 @@ public class ClawMachineAI : MonoBehaviour
             targetObject = newInstance.GetComponent<ClawGrabbable>();
             Panda.Task.current.Succeed();
         }
+        else
+        {
+            targetObject = null;
+            Panda.Task.current.Fail();            
+        }
     }
 
     [Panda.Task]
@@ -285,6 +290,10 @@ public class ClawMachineAI : MonoBehaviour
 			targetObject = null;
 			Panda.Task.current.Succeed();
 		}
+        else
+        {
+            Panda.Task.current.Fail();
+        }
     }
 
     [Panda.Task]
