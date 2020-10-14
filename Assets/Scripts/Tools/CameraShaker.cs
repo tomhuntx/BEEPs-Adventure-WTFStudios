@@ -41,7 +41,7 @@ public class CameraShaker : MonoBehaviour
             int newIndex = Random.Range(0, shakeDir.Length);
             while(previousIndex == newIndex) newIndex = Random.Range(0, shakeDir.Length);
             this.transform.localPosition = originalLocalPos + shakeDir[newIndex] * currentMagnitude;
-            currentMagnitude -= shakeFalloff * Time.deltaTime;
+            currentMagnitude -= shakeFalloff * Time.unscaledDeltaTime;
             previousIndex = newIndex;
 
             if (currentMagnitude < 0)
