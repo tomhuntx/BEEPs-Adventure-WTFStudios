@@ -185,7 +185,21 @@ public class GrabbableObject : DestructibleObject
 	{
 		GetComponent<DestructibleObject>().forceMagnitudeThreshold = 0.1f;
         RigidbodyComponent.WakeUp();
+
+        UnityEventsHandler colliderEvents = this.GetComponent<UnityEventsHandler>();
+        if (colliderEvents == null)
+            colliderEvents = this.gameObject.AddComponent<UnityEventsHandler>();
+
+        colliderEvents.onCollisionStay.AddListener(ForceDestroy);
 	}
+
+    /// <summary>
+    /// Applies extreme amound of damage forcing the object to be destroyed;
+    /// </summary>
+    public void ForceDestroy()
+    {
+        ApplyDamage(float.MaxValue);
+    }
 
     private void UpdateHighlighterModel()
     {
