@@ -105,6 +105,8 @@ public class ClawMachine : MonoBehaviour
         clawAI = this.GetComponent<ClawMachineAI>();
     }
 
+
+
     private void FixedUpdate()
     {
         //Enable claw controls when reset is done
@@ -134,6 +136,11 @@ public class ClawMachine : MonoBehaviour
             UpdateClawRails();
         }
 
+        if (doGrab || doPlace) LimitElevation();
+    }
+
+    private void LateUpdate()
+    {
         if (grabbedObject != null)
         {
             if (controlsEnabled)
@@ -206,8 +213,6 @@ public class ClawMachine : MonoBehaviour
             }
         }
 
-        if (doGrab || doPlace) LimitElevation();
-
         if (doGrab)
         {
             //Downwards motion
@@ -225,6 +230,13 @@ public class ClawMachine : MonoBehaviour
                         doPlace = true;
                         highlightedObject = null;
                         lightTRS.gameObject.SetActive(false);
+                    }
+                    else if (Mathf.Abs(elevationLimiters[0].position.y) - Mathf.Abs(animatableTRS.position.y) <= 0.1f)
+                    {
+                        doGrab = false;
+                        doPlace = true;
+                        highlightedObject = null;
+                        ClawRelease();
                     }
                 }
             }
