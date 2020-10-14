@@ -920,5 +920,6 @@ public class Player : MonoBehaviour
             grabbedObject = null;
         }
     }
-    #endregion
+
+	#endregion
 }

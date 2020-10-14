@@ -66,7 +66,10 @@ public class AdjacentDetector : MonoBehaviour
         {
             detectedGameObjects.Sort(delegate(GameObject a, GameObject b)
             {
-
+				if (a == null || b == null)
+				{
+					return -1;
+				}
                 return Vector3.Distance(a.transform.position, this.transform.position).CompareTo
                        (Vector3.Distance(b.transform.position, this.transform.position));
             });

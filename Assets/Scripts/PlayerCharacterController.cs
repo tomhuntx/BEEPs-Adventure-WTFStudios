@@ -330,6 +330,7 @@ public class PlayerCharacterController : MonoBehaviour
             case "Box":
             case "Heavy Box":
             case "Explosive Box":
+			case "Bumpable":
                 Vector3 moveVelocity = velocity;
                 moveVelocity.y = 0;
                 otherRB.velocity = (moveVelocity * bumpForce) / otherRB.mass;
@@ -775,5 +776,5 @@ public class PlayerCharacterController : MonoBehaviour
 		gravity = newGravity;
 	}
 
-    #endregion
+	#endregion
 }

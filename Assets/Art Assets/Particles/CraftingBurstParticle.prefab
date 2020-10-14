@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3805323246549724960}
   - component: {fileID: 3805323246549724963}
   - component: {fileID: 3805323246549724962}
+  - component: {fileID: 2970248145029204008}
   m_Layer: 0
   m_Name: CraftingBurstParticle
   m_TagString: Untagged
@@ -46,7 +47,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4812,3 +4813,25 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2970248145029204008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3805323246549724957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba479ccf1a8a24c997132a0b5ec975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 1
+  destroyType: 1
+  playTimerOnStart: 0
+  useRealTime: 0
+  onTimerStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTimerEnd:
+    m_PersistentCalls:
+      m_Calls: []

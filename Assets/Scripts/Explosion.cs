@@ -36,6 +36,15 @@ public class Explosion : MonoBehaviour
 		{
 			Rigidbody rb = hit.GetComponent<Rigidbody>();
 
+			if (hit.tag == "Bumpable")
+			{
+				Rigidbody bump_rb = hit.GetComponentInParent<Rigidbody>();
+				if (bump_rb)
+				{
+					bump_rb.AddExplosionForce(power / 2, transform.position, radius, upforce, forceType);
+				}
+			}
+
 			if (rb != null)
 			{
 				if (hit.tag == "Box" ||

@@ -149,8 +149,16 @@ public class MenuManager : MonoBehaviour
 
 	IEnumerator PauseAfterLoad(AsyncOperation async)
 	{
+		//GameObject player = GameObject.FindGameObjectWithTag("Player");
+		//if (player)
+		//{
+		//	// Disable the player
+		//	player.GetComponent<Player>().SetEnabled(false);
+		//}
+
 		// Pause
 		yield return new WaitForSeconds(0.3f);
+
 
 		// Fade out
 		StartCoroutine(FadeOut());
@@ -167,6 +175,12 @@ public class MenuManager : MonoBehaviour
 			loadingObject = null;
 			ls = null;
 		}
+
+		//if (player)
+		//{
+		//	// Enable the player
+		//	player.GetComponent<Player>().SetEnabled(true);
+		//}
 
 		// Remove this
 		Destroy(gameObject);

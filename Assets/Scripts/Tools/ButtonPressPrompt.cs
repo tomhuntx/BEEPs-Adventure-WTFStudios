@@ -36,7 +36,7 @@ public class ButtonPressPrompt : MonoBehaviour
         buttonText = texts[1];
         prefabInstance.gameObject.SetActive(showOnAwake);
 
-        Debug.Assert(this.GetComponent<Collider>() != null, 
+		Debug.Assert(this.GetComponent<Collider>() != null, 
                      string.Format("There is no collider attached on {0}... Please attach one before playing!", this.gameObject));
 
         colliderEvents = this.GetComponent<UnityEventsHandler>();
