@@ -18,6 +18,8 @@ public class ButtonPressPrompt : MonoBehaviour
     [Header("Properties")]
     [Tooltip("Tick this if you want the button prompt game object to be visible upon start.")]
     [SerializeField] private bool showOnAwake = false;
+    [Tooltip("Tick this if you want to automatically setup to show prompts upon trigger enter.")]
+    public bool autoShowPrompt = true;
     [SerializeField] private KeyCode assignedButton = KeyCode.E;
     public UnityEvent onButtonPress;
 
@@ -39,10 +41,13 @@ public class ButtonPressPrompt : MonoBehaviour
 		Debug.Assert(this.GetComponent<Collider>() != null, 
                      string.Format("There is no collider attached on {0}... Please attach one before playing!", this.gameObject));
 
-        colliderEvents = this.GetComponent<UnityEventsHandler>();
-        colliderEvents.onTriggerStay.AddListener(ShowPrompt);
-        colliderEvents.onTriggerExit.AddListener(HidePrompt);
-        onButtonPress.AddListener(HidePrompt);
+        if (autoShowPrompt)
+        {
+            colliderEvents = this.GetComponent<UnityEventsHandler>();
+            colliderEvents.onTriggerStay.AddListener(ShowPrompt);
+            colliderEvents.onTriggerExit.AddListener(HidePrompt);
+            onButtonPress.AddListener(HidePrompt);
+        }
 
         messageText.text = promptMessage;
         buttonText.text = assignedButton.ToString();
