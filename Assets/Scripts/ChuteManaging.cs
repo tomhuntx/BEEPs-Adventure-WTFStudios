@@ -38,10 +38,13 @@ public class ChuteManaging : MonoBehaviour
 
 		foreach (GameObject mbot in mbots)
 		{
-			MBot_Controller rob = mbot.GetComponent<MBot_Controller>();
-			if (rob != null)
+			if (mbot != null)
 			{
-				rob.AngryForever();
+				MBot_Controller rob = mbot.GetComponent<MBot_Controller>();
+				if (rob != null)
+				{
+					rob.AngryForever();
+				}
 			}
 		}
 	}
