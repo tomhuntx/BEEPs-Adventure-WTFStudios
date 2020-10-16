@@ -79,6 +79,9 @@ public class GameManager : MonoBehaviour
 		InteractableObject.highlighterMaterial = highlighterMaterial;
         InteractableObject.normalHighlightColor = normalHighlightColor;
         InteractableObject.invalidHighlightColor = invalidHighlightColor;
+
+		// Save on awake
+		DataSaver.SaveProgress(this);
 	}
 
     // Update is called once per frame
