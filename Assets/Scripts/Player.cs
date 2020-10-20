@@ -830,6 +830,17 @@ public class Player : MonoBehaviour
         Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
         bool isRayHit = Physics.Raycast(ray, out RaycastHit rayTest, raycastDistance, acceptedRaycastLayers);
 
+        if (isRayHit &&
+            IsGameObjectBox(rayTest.transform.gameObject) &&
+            rayTest.transform.gameObject.tag == "Heavy Box")
+        {
+            if (this.transform.position.y - rayTest.transform.position.y > 0.7f ||
+                controller.CharacterHead.localEulerAngles.x > maxAngleClamp)
+            {
+                isRayHit = false;
+            }
+        }
+
         if (!isRayHit)
         {
             hitInfo = rayTest;
