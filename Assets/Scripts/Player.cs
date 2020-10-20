@@ -640,7 +640,8 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (!Input.GetButton("Grab Object"))
+            if (!Input.GetButton("Grab Object") ||
+                this.transform.position.y - heavyBox.transform.position.y > 0.7f)
             {
                 heavyBox.transform.parent = null;
                 heavyBox.layer = LayerMask.NameToLayer("Default");
